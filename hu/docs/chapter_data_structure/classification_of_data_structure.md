@@ -1,48 +1,48 @@
-# Classification of Data Structures
+# Az adatszerkezetek osztályozása
 
-Common data structures include arrays, linked lists, stacks, queues, hash tables, trees, heaps, and graphs. They can be classified from two dimensions: "logical structure" and "physical structure".
+A közismert adatszerkezetek közé tartoznak a tömbök, a láncolt listák, veremek, sorok, hasítótáblák, fák, kupacok és gráfok. Ezek két dimenzió szerint osztályozhatók: „logikai szerkezet" és „fizikai szerkezet".
 
-## Logical Structure: Linear and Non-Linear
+## Logikai szerkezet: lineáris és nemlineáris
 
-**Logical structure reveals the logical relationships between data elements**. In arrays and linked lists, data is arranged in a certain order, embodying the linear relationship between data; while in trees, data is arranged hierarchically from top to bottom, showing the derived relationship between "ancestors" and "descendants"; graphs are composed of nodes and edges, reflecting complex network relationships.
+**A logikai szerkezet feltárja az adatelemek közötti logikai kapcsolatokat**. A tömbökben és a láncolt listákban az adatok bizonyos sorrendben vannak elrendezve, megtestesítve az adatok lineáris viszonyát; míg a fákban az adatok felülről lefelé hierarchikusan rendeződnek, megmutatva az „ősök" és „leszármazottak" közötti levezetési kapcsolatot; a gráfok csomópontokból és élekből épülnek fel, tükrözve az összetett hálózati kapcsolatokat.
 
-As shown in the figure below, logical structures can be divided into two major categories: "linear" and "non-linear". Linear structures are more intuitive, indicating that data is linearly arranged in logical relationships; non-linear structures are the opposite, arranged non-linearly.
+Ahogy az alábbi ábra mutatja, a logikai szerkezetek két fő kategóriába sorolhatók: „lineáris" és „nemlineáris". A lineáris szerkezetek szemléletesebbek, azt jelzik, hogy az adatok logikai kapcsolataikban lineárisan rendeződnek el; a nemlineáris szerkezetek ezzel szemben nemlineárisan rendeződnek.
 
-- **Linear data structures**: Arrays, linked lists, stacks, queues, hash tables, where elements have a one-to-one sequential relationship.
-- **Non-linear data structures**: Trees, heaps, graphs, hash tables.
+- **Lineáris adatszerkezetek**: Tömbök, láncolt listák, veremek, sorok, hasítótáblák, ahol az elemek egy-egy sorrendi kapcsolatban állnak egymással.
+- **Nemlineáris adatszerkezetek**: Fák, kupacok, gráfok, hasítótáblák.
 
-Non-linear data structures can be further divided into tree structures and network structures.
+A nemlineáris adatszerkezetek tovább bonthatók faszerkezetekre és hálózati szerkezetekre.
 
-- **Tree structures**: Trees, heaps, hash tables, where elements have a one-to-many relationship.
-- **Network structures**: Graphs, where elements have a many-to-many relationship.
+- **Faszerkezetek**: Fák, kupacok, hasítótáblák, ahol az elemek egy-sok kapcsolatban állnak egymással.
+- **Hálózati szerkezetek**: Gráfok, ahol az elemek sok-sok kapcsolatban állnak egymással.
 
-![Linear and non-linear data structures](classification_of_data_structure.assets/classification_logic_structure.png)
+![Lineáris és nemlineáris adatszerkezetek](classification_of_data_structure.assets/classification_logic_structure.png)
 
-## Physical Structure: Contiguous and Dispersed
+## Fizikai szerkezet: összefüggő és szétszórt
 
-**When an algorithm program runs, the data being processed is mainly stored in memory**. The figure below shows a computer memory stick, where each black square contains a memory space. We can imagine memory as a huge Excel spreadsheet, where each cell can store a certain amount of data.
+**Amikor egy algoritmusprogram fut, a feldolgozandó adatok főként a memóriában tárolódnak**. Az alábbi ábra egy számítógépes memóriamodult mutat, ahol minden fekete négyzet egy memóriahelyet tartalmaz. A memóriát egy hatalmas Excel-táblázatnak képzelhetjük el, ahol minden cella bizonyos mennyiségű adatot tud tárolni.
 
-**The system accesses data at the target location through memory addresses**. As shown in the figure below, the computer assigns a number to each cell in the spreadsheet according to specific rules, ensuring that each memory space has a unique memory address. With these addresses, the program can access data in memory.
+**A rendszer memóriacímek segítségével fér hozzá az adatokhoz a célhelyen**. Ahogy az alábbi ábra mutatja, a számítógép meghatározott szabályok szerint számot rendel a táblázat minden cellájához, biztosítva, hogy minden memóriahely egyedi memóriacímmel rendelkezzen. E címek segítségével a program hozzáférhet a memóriában lévő adatokhoz.
 
-![Memory stick, memory space, memory address](classification_of_data_structure.assets/computer_memory_location.png)
-
-!!! tip
-
-    It is worth noting that comparing memory to an Excel spreadsheet is a simplified analogy. The actual working mechanism of memory is quite complex, involving concepts such as address space, memory management, cache mechanisms, virtual memory, and physical memory.
-
-Memory is a shared resource for all programs. When a block of memory is occupied by a program, it usually cannot be used by other programs at the same time. **Therefore, in the design of data structures and algorithms, memory resources are an important consideration**. For example, the peak memory occupied by an algorithm should not exceed the remaining free memory of the system; if there is a lack of contiguous large memory blocks, then the data structure chosen must be able to be stored in dispersed memory spaces.
-
-As shown in the figure below, **physical structure reflects the way data is stored in computer memory**, and can be divided into contiguous space storage (arrays) and dispersed space storage (linked lists). The two physical structures exhibit complementary characteristics in terms of time efficiency and space efficiency.
-
-![Contiguous space storage and dispersed space storage](classification_of_data_structure.assets/classification_phisical_structure.png)
-
-It is worth noting that **all data structures are implemented based on arrays, linked lists, or a combination of both**. For example, stacks and queues can be implemented using either arrays or linked lists; while the implementation of hash tables may include both arrays and linked lists.
-
-- **Can be implemented based on arrays**: Stacks, queues, hash tables, trees, heaps, graphs, matrices, tensors (arrays with dimensions $\geq 3$), etc.
-- **Can be implemented based on linked lists**: Stacks, queues, hash tables, trees, heaps, graphs, etc.
-
-After initialization, linked lists can still adjust their length during program execution, so they are also called "dynamic data structures". After initialization, the length of arrays cannot be changed, so they are also called "static data structures". It is worth noting that arrays can achieve length changes by reallocating memory, thus possessing a certain degree of "dynamism".
+![Memóriamodul, memóriahely, memóriacím](classification_of_data_structure.assets/computer_memory_location.png)
 
 !!! tip
 
-    If you find it difficult to understand physical structure, it is recommended to read the next chapter first, and then review this section.
+    Érdemes megjegyezni, hogy a memória Excel-táblázathoz való hasonlítása egyszerűsített analógia. A memória tényleges működési mechanizmusa sokkal összetettebb, olyan fogalmakat érint, mint a címtér, a memóriakezelés, a gyorsítótárazási mechanizmusok, a virtuális memória és a fizikai memória.
+
+A memória az összes program közös erőforrása. Amikor egy memóriablokk el van foglalva egy program által, általában nem használható egyidejűleg más programok által. **Ezért az adatszerkezetek és algoritmusok tervezésekor a memória-erőforrások fontos szempontok**. Például egy algoritmus által elfoglalt csúcsmemória nem lépheti túl a rendszer fennmaradó szabad memóriáját; ha nincs elegendő összefüggő nagy memóriablokk, akkor a kiválasztott adatszerkezetnek szétszórt memóriaterületeken is tárolhatónak kell lennie.
+
+Ahogy az alábbi ábra mutatja, **a fizikai szerkezet azt tükrözi, hogyan tárolódnak az adatok a számítógép memóriájában**, és két részre osztható: összefüggő tárterület-tárolás (tömbök) és szétszórt tárterület-tárolás (láncolt listák). A két fizikai szerkezet az időbeli hatékonyság és a térbeli hatékonyság tekintetében kiegészítő jellemzőket mutat.
+
+![Összefüggő tárterület-tárolás és szétszórt tárterület-tárolás](classification_of_data_structure.assets/classification_phisical_structure.png)
+
+Érdemes megjegyezni, hogy **minden adatszerkezet tömbök, láncolt listák alapján vagy mindkettő kombinációján valósul meg**. Például a veremek és sorok megvalósíthatók tömbökkel és láncolt listákkal egyaránt; a hasítótáblák megvalósítása tartalmazhat tömböket és láncolt listákat is.
+
+- **Tömbök alapján megvalósítható**: Veremek, sorok, hasítótáblák, fák, kupacok, gráfok, mátrixok, tenzorok (legalább $3$ dimenziós tömbök) stb.
+- **Láncolt listák alapján megvalósítható**: Veremek, sorok, hasítótáblák, fák, kupacok, gráfok stb.
+
+Az inicializálás után a láncolt listák a programfutás közben is módosíthatják hosszukat, ezért „dinamikus adatszerkezeteknek" is nevezzük őket. Az inicializálás után a tömbök hossza nem változtatható meg, ezért „statikus adatszerkezeteknek" is nevezzük őket. Érdemes megjegyezni, hogy a tömbök memória-átfoglalással képesek hosszváltoztatásra, így bizonyos fokú „dinamizmust" tesznek lehetővé.
+
+!!! tip
+
+    Ha nehéznek találja a fizikai szerkezet megértését, javasolt először elolvasni a következő fejezetet, majd visszatérni erre a részre.

@@ -1,87 +1,87 @@
-# Character Encoding *
+# Karakterkódolás *
 
-In computers, all data is stored in binary form, and character `char` is no exception. To represent characters, we need to establish a "character set" that defines a one-to-one correspondence between each character and binary numbers. With a character set, computers can convert binary numbers to characters by looking up the table.
+A számítógépekben minden adat bináris formában tárolódik, és a `char` karakter sem kivétel. A karakterek ábrázolásához egy „karakterkészletet" kell kialakítani, amely egyértelmű megfeleltetést határoz meg az egyes karakterek és a bináris számok között. Egy karakterkészlettel a számítógépek a bináris számokat táblázatban való keresés segítségével karakterekké tudják alakítani.
 
-## Ascii Character Set
+## ASCII karakterkészlet
 
-<u>ASCII code</u> is the earliest character set, with the full name American Standard Code for Information Interchange. It uses 7 binary bits (the lower 7 bits of one byte) to represent a character, and can represent a maximum of 128 different characters. As shown in the figure below, ASCII code includes uppercase and lowercase English letters, numbers 0 ~ 9, some punctuation marks, and some control characters (such as newline and tab).
+Az <u>ASCII kód</u> a legkorábbi karakterkészlet, teljes neve American Standard Code for Information Interchange (Amerikai Szabványos Kódolás Információcserére). 7 bináris bitet (egy bájt alsó 7 bitjét) használ egy karakter ábrázolásához, és legfeljebb 128 különböző karaktert tud megjeleníteni. Ahogy az alábbi ábra mutatja, az ASCII kód tartalmaz nagybetűs és kisbetűs angol betűket, 0-tól 9-ig terjedő számjegyeket, egyes írásjeleket és bizonyos vezérlőkaraktereket (például sortörés és tabulátor).
 
-![ASCII code](character_encoding.assets/ascii_table.png)
+![ASCII kód](character_encoding.assets/ascii_table.png)
 
-However, **ASCII code can only represent English**. With the globalization of computers, a character set called <u>EASCII</u> that can represent more languages emerged. It expands from the 7-bit basis of ASCII to 8 bits, and can represent 256 different characters.
+Azonban **az ASCII kód csak az angolt tudja ábrázolni**. A számítógépek globalizálódásával megjelent egy <u>EASCII</u> nevű karakterkészlet, amely több nyelvet is képes megjeleníteni. Az ASCII 7 bites alapjáról 8 bitre bővül, és 256 különböző karaktert tud ábrázolni.
 
-Worldwide, a batch of EASCII character sets suitable for different regions have appeared successively. The first 128 characters of these character sets are unified as ASCII code, and the last 128 characters are defined differently to adapt to the needs of different languages.
+Világszerte egymás után jelentek meg a különböző régiókhoz alkalmazkodó EASCII karakterkészletek. E karakterkészletek első 128 karaktere egységesen az ASCII kódra épül, az utolsó 128 karakter pedig különbözőképpen van meghatározva az egyes nyelvek igényeinek megfelelően.
 
-## Gbk Character Set
+## GBK karakterkészlet
 
-Later, people found that **EASCII code still cannot meet the character quantity requirements of many languages**. For example, there are nearly one hundred thousand Chinese characters, and several thousand are used daily. In 1980, the China National Standardization Administration released the <u>GB2312</u> character set, which included 6,763 Chinese characters, basically meeting the needs for computer processing of Chinese characters.
+Később kiderült, hogy **az EASCII kód sem tud eleget tenni sok nyelv karaktermennyiségi igényeinek**. Például a kínai jelekből közel százezer létezik, és naponta több ezret használnak. 1980-ban a Kínai Nemzeti Szabványügyi Hivatal közzétette a <u>GB2312</u> karakterkészletet, amely 6763 kínai karaktert tartalmazott, alapvetően kielégítve a kínai karakterek számítógépes feldolgozásának igényeit.
 
-However, GB2312 cannot handle some rare characters and traditional Chinese characters. The <u>GBK</u> character set is an extension based on GB2312, which includes a total of 21,886 Chinese characters. In the GBK encoding scheme, ASCII characters are represented using one byte, and Chinese characters are represented using two bytes.
+A GB2312 azonban nem tudott kezelni bizonyos ritka és hagyományos kínai karaktereket. A <u>GBK</u> karakterkészlet a GB2312 alapján bővített változat, összesen 21 886 kínai karaktert tartalmaz. A GBK kódolási sémában az ASCII karakterek egy bájttal, a kínai karakterek két bájttal vannak ábrázolva.
 
-## Unicode Character Set
+## Unicode karakterkészlet
 
-With the vigorous development of computer technology, character sets and encoding standards flourished, which brought many problems. On the one hand, these character sets generally only define characters for specific languages and cannot work normally in multilingual environments. On the other hand, multiple character set standards exist for the same language, and if two computers use different encoding standards, garbled characters will appear during information transmission.
+A számítógépes technológia dinamikus fejlődésével a karakterkészletek és kódolási szabványok elburjánzottak, ami sok problémát okozott. Egyrészt ezek a karakterkészletek általában csak adott nyelvek karaktereit határozzák meg, és többnyelvű környezetben nem működnek rendesen. Másrészt ugyanahhoz a nyelvhez is több karakterkészlet-szabvány létezik, és ha két számítógép különböző kódolási szabványt alkalmaz, az információcsere során torz karakterek (mojibake) jelennek meg.
 
-Researchers of that era thought: **If a sufficiently complete character set is released that includes all languages and symbols in the world, wouldn't it be possible to solve cross-language environment and garbled character problems**? Driven by this idea, a large and comprehensive character set, Unicode, was born.
+Az akkori kutatók gondolkodásának lényege ez volt: **Ha kiadnak egy kellően átfogó karakterkészletet, amely a világ összes nyelvét és szimbólumát tartalmazza, vajon nem oldhatók-e meg ezzel a többnyelvű környezeti problémák és a torz karakterek?** Ettől az ötlettől hajtva megszületett egy nagy és átfogó karakterkészlet: a Unicode.
 
-<u>Unicode</u> is called "统一码" (Unified Code) in Chinese and can theoretically accommodate over one million characters. It is committed to including characters from around the world into a unified character set, providing a universal character set to handle and display various language texts, reducing garbled character problems caused by different encoding standards.
+A <u>Unicode</u>-ot magyarban „Egységes kódolásnak" nevezhetjük, és elméletben egymillió karakternél is többet képes befogadni. Célja, hogy a világ összes nyelvének karakterét egységes karakterkészletbe foglalja, és egy általános karakterkészletet biztosítson a különböző nyelvű szövegek kezeléséhez és megjelenítéséhez, csökkentve a különböző kódolási szabványok által okozott torz karakterek problémáját.
 
-Since its release in 1991, Unicode has continuously expanded to include new languages and characters. As of September 2022, Unicode has included 149,186 characters, including characters, symbols, and even emojis from various languages. In the vast Unicode character set, commonly used characters occupy 2 bytes, and some rare characters occupy 3 bytes or even 4 bytes.
+1991-es kiadása óta a Unicode folyamatosan bővül, új nyelveket és karaktereket foglal magába. 2022 szeptemberétől a Unicode 149 186 karaktert tartalmazott, köztük különböző nyelvek karaktereit, szimbólumait és még emojikat is. A hatalmas Unicode karakterkészletben a közhasználatú karakterek 2 bájtot, egyes ritka karakterek 3 vagy akár 4 bájtot foglalnak el.
 
-Unicode is a universal character set that essentially assigns a number (called a "code point") to each character, **but it does not specify how to store these character code points in computers**. We can't help but ask: when Unicode code points of multiple lengths appear simultaneously in a text, how does the system parse the characters? For example, given an encoding with a length of 2 bytes, how does the system determine whether it is one 2-byte character or two 1-byte characters?
+A Unicode egy általános karakterkészlet, amely lényegében minden karakterhez hozzárendel egy számot (ezt „kódpontnak" nevezzük), **de nem határozza meg, hogyan kell ezeket a karakterkódpontokat a számítógépekben tárolni**. Felvetődik a kérdés: ha egy szövegben különböző hosszúságú Unicode kódpontok jelennek meg egyszerre, hogyan értelmezi a rendszer a karaktereket? Például egy 2 bájt hosszú kódolás esetén hogyan határozza meg a rendszer, hogy az egy 2 bájtos karakter-e vagy két 1 bájtos karakter?
 
-For the above problem, **a straightforward solution is to store all characters as equal-length encodings**. As shown in the figure below, each character in "Hello" occupies 1 byte, and each character in "算法" (algorithm) occupies 2 bytes. We can encode all characters in "Hello 算法" as 2 bytes in length by padding the high bits with 0. In this way, the system can parse one character every 2 bytes and restore the content of this phrase.
+A fenti problémára **egy egyszerű megoldás az összes karakter azonos hosszúságú kódolásban való tárolása**. Ahogy az alábbi ábra mutatja, a „Hello" minden karaktere 1 bájtot foglal el, az „算法" (algoritmus) minden karaktere pedig 2 bájtot. A „Hello 算法" összes karakterét 2 bájt hosszúságú kódolásra hozhatjuk azáltal, hogy a magas biteket nullákkal töltjük ki. Így a rendszer minden 2 bájtot egy karakterként értelmezhet, és visszaállíthatja az összetétel tartalmát.
 
-![Unicode encoding example](character_encoding.assets/unicode_hello_algo.png)
+![Unicode kódolási példa](character_encoding.assets/unicode_hello_algo.png)
 
-However, ASCII code has already proven to us that encoding English only requires 1 byte. If the above scheme is adopted, the size of English text will be twice that under ASCII encoding, which is very wasteful of memory space. Therefore, we need a more efficient Unicode encoding method.
+Az ASCII kód azonban már bebizonyította, hogy az angol kódolásához elegendő 1 bájt. Ha a fenti sémát alkalmazzuk, az angol szöveg mérete kétszerese lenne az ASCII kódoláshoz képest, ami nagy memóriapazarlást jelent. Ezért hatékonyabb Unicode kódolási módszerre van szükségünk.
 
-## Utf-8 Encoding
+## UTF-8 kódolás
 
-Currently, UTF-8 has become the most widely used Unicode encoding method internationally. **It is a variable-length encoding** that uses 1 to 4 bytes to represent a character, depending on the complexity of the character. ASCII characters only require 1 byte, Latin and Greek letters require 2 bytes, commonly used Chinese characters require 3 bytes, and some other rare characters require 4 bytes.
+Jelenleg az UTF-8 a legelterjedtebb Unicode kódolási módszer nemzetközileg. **Ez egy változó hosszúságú kódolás**, amely 1-től 4 bájtot használ egy karakter ábrázolásához, a karakter összetettségétől függően. Az ASCII karakterekhez csak 1 bájt szükséges, a latin és görög betűkhöz 2 bájt, a közhasználatú kínai karakterekhez 3 bájt, egyes más ritka karakterekhez pedig 4 bájt.
 
-The encoding rules of UTF-8 are not complicated and can be divided into the following two cases.
+Az UTF-8 kódolási szabályai nem bonyolultak, és a következő két esetre bonthatók.
 
-- For 1-byte characters, set the highest bit to $0$, and set the remaining 7 bits to the Unicode code point. It is worth noting that ASCII characters occupy the first 128 code points in the Unicode character set. That is to say, **UTF-8 encoding is backward compatible with ASCII code**. This means we can use UTF-8 to parse very old ASCII code text.
-- For characters with a length of $n$ bytes (where $n > 1$), set the highest $n$ bits of the first byte to $1$, and set the $(n + 1)$-th bit to $0$; starting from the second byte, set the highest 2 bits of each byte to $10$; use all remaining bits to fill in the Unicode code point of the character.
+- Az 1 bájtos karakterek esetén a legmagasabb bitet $0$-ra kell állítani, a maradék 7 bitet pedig a Unicode kódpontra. Érdemes megjegyezni, hogy az ASCII karakterek a Unicode karakterkészlet első 128 kódpontját foglalják el. Vagyis **az UTF-8 kódolás visszafelé kompatibilis az ASCII kóddal**. Ez azt jelenti, hogy UTF-8-cal régi ASCII kódolású szövegeket is értelmezhetünk.
+- Az $n$ bájt hosszúságú karakterek esetén (ahol $n > 1$) az első bájt legmagasabb $n$ bitjét $1$-re kell állítani, az $(n + 1)$-edik bitet $0$-ra; a második bájttól kezdve minden bájt legmagasabb 2 bitjét $10$-re kell állítani; a fennmaradó összes bitet a karakter Unicode kódpontjának kitöltésére használjuk.
 
-The figure below shows the UTF-8 encoding corresponding to "Hello算法". It can be observed that since the highest $n$ bits are all set to $1$, the system can parse the length of the character as $n$ by reading the number of highest bits that are $1$.
+Az alábbi ábra a „Hello算法" UTF-8 kódolását mutatja. Megfigyelhető, hogy mivel a legmagasabb $n$ bit mind $1$-re van állítva, a rendszer az $1$-es legmagasabb bitek számának olvasásával meg tudja határozni a karakter $n$ hosszát.
 
-But why set the highest 2 bits of all other bytes to $10$? In fact, this $10$ can serve as a check symbol. Assuming the system starts parsing text from an incorrect byte, the $10$ at the beginning of the byte can help the system quickly determine an anomaly.
+De miért kell minden más bájt legmagasabb 2 bitjét $10$-re állítani? Valójában ez a $10$ ellenőrző szimbólumként szolgál. Tegyük fel, hogy a rendszer egy helytelen bájtból kezdi a szöveg értelmezését; a bájt elején lévő $10$ segít a rendszernek gyorsan felismerni a rendellenességet.
 
-The reason for using $10$ as a check symbol is that under UTF-8 encoding rules, it is impossible for a character's highest two bits to be $10$. This conclusion can be proven by contradiction: assuming the highest two bits of a character are $10$, it means the length of the character is $1$, corresponding to ASCII code. However, the highest bit of ASCII code should be $0$, which contradicts the assumption.
+A $10$ ellenőrző szimbólumként való alkalmazásának oka az, hogy az UTF-8 kódolási szabályok szerint lehetetlen, hogy egy karakter legmagasabb két bitje $10$ legyen. Ez az állítás ellentmondással igazolható: feltételezve, hogy egy karakter legmagasabb két bitje $10$, ez azt jelenti, hogy a karakter hossza $1$, ami ASCII kódnak felel meg. Az ASCII kód legmagasabb bitje azonban $0$ kellene legyen, ami ellentmond a feltételezésnek.
 
-![UTF-8 encoding example](character_encoding.assets/utf-8_hello_algo.png)
+![UTF-8 kódolási példa](character_encoding.assets/utf-8_hello_algo.png)
 
-In addition to UTF-8, common encoding methods also include the following two.
+Az UTF-8-on kívül a közismert kódolási módszerek közé tartozik még a következő kettő.
 
-- **UTF-16 encoding**: Uses 2 or 4 bytes to represent a character. All ASCII characters and commonly used non-English characters are represented with 2 bytes; a few characters need to use 4 bytes. For 2-byte characters, UTF-16 encoding is equal to the Unicode code point.
-- **UTF-32 encoding**: Every character uses 4 bytes. This means that UTF-32 takes up more space than UTF-8 and UTF-16, especially for text with a high proportion of ASCII characters.
+- **UTF-16 kódolás**: 2 vagy 4 bájtot használ egy karakter ábrázolásához. Az összes ASCII karakter és a közhasználatú nem-angol karakterek 2 bájttal vannak ábrázolva; néhány karakterhez 4 bájt szükséges. A 2 bájtos karakterek esetén az UTF-16 kódolás egyenlő a Unicode kódponttal.
+- **UTF-32 kódolás**: Minden karakter 4 bájtot használ. Ez azt jelenti, hogy az UTF-32 több helyet foglal el, mint az UTF-8 és az UTF-16, különösen az ASCII karaktereket nagy arányban tartalmazó szövegek esetén.
 
-From the perspective of storage space occupation, using UTF-8 to represent English characters is very efficient because it only requires 1 byte; using UTF-16 encoding for some non-English characters (such as Chinese) will be more efficient because it only requires 2 bytes, while UTF-8 may require 3 bytes.
+A tárolt hely szempontjából az UTF-8 nagyon hatékony az angol karakterek ábrázolásához, mivel csak 1 bájt szükséges; az UTF-16 kódolás bizonyos nem-angol karakterek (például kínai) esetén hatékonyabb, mivel csak 2 bájt szükséges, míg az UTF-8 esetleg 3 bájtot igényel.
 
-From a compatibility perspective, UTF-8 has the best universality, and many tools and libraries support UTF-8 first.
+Kompatibilitás szempontjából az UTF-8 rendelkezik a legjobb általánossággal, és sok eszköz és könyvtár elsődlegesen az UTF-8-at támogatja.
 
-## Character Encoding in Programming Languages
+## Karakterkódolás a programozási nyelvekben
 
-For most past programming languages, strings during program execution use fixed-length encodings such as UTF-16 or UTF-32. Under fixed-length encoding, we can treat strings as arrays for processing, and this approach has the following advantages.
+A legtöbb korábbi programozási nyelvben a programfutás közbeni karakterláncok rögzített hosszúságú kódolást, például UTF-16-ot vagy UTF-32-t alkalmaznak. Rögzített hosszúságú kódolás esetén a karakterláncokat tömbként kezelhetjük a feldolgozáshoz, és ennek a megközelítésnek a következő előnyei vannak.
 
-- **Random access**: UTF-16 encoded strings can be easily accessed randomly. UTF-8 is a variable-length encoding. To find the $i$-th character, we need to traverse from the beginning of the string to the $i$-th character, which requires $O(n)$ time.
-- **Character counting**: Similar to random access, calculating the length of a UTF-16 encoded string is also an $O(1)$ operation. However, calculating the length of a UTF-8 encoded string requires traversing the entire string.
-- **String operations**: Many string operations (such as splitting, joining, inserting, deleting, etc.) on UTF-16 encoded strings are easier to perform. Performing these operations on UTF-8 encoded strings usually requires additional calculations to ensure that invalid UTF-8 encoding is not generated.
+- **Véletlenszerű hozzáférés**: Az UTF-16 kódolású karakterláncokhoz könnyen lehet véletlenszerűen hozzáférni. Az UTF-8 változó hosszúságú kódolás. Az $i$-edik karakter megkereséséhez a karakterlánc elejétől az $i$-edik karakterig kell bejárni, ami $O(n)$ időt igényel.
+- **Karakterszámlálás**: A véletlenszerű hozzáféréshez hasonlóan egy UTF-16 kódolású karakterlánc hosszának kiszámítása is $O(1)$ műveleti idejű. Egy UTF-8 kódolású karakterlánc hosszának kiszámításához azonban az egész karakterláncot be kell járni.
+- **Karakterlánc-műveletek**: Sok karakterlánc-művelet (például felosztás, összefűzés, beillesztés, törlés stb.) az UTF-16 kódolású karakterláncokkal könnyebben elvégezhető. Az UTF-8 kódolású karakterláncokon végzett ilyen műveletek általában további számításokat igényelnek, hogy biztosítsák, ne keletkezzen érvénytelen UTF-8 kódolás.
 
-In fact, the design of character encoding schemes for programming languages is a very interesting topic involving many factors.
+Valójában a programozási nyelvek karakterkódolási sémáinak tervezése nagyon érdekes téma, sok tényezőt érint.
 
-- Java's `String` type uses UTF-16 encoding, with each character occupying 2 bytes. This is because at the beginning of Java language design, people believed that 16 bits were sufficient to represent all possible characters. However, this was an incorrect judgment. Later, the Unicode specification expanded beyond 16 bits, so characters in Java may now be represented by a pair of 16-bit values (called "surrogate pairs").
-- The strings of JavaScript and TypeScript use UTF-16 encoding for reasons similar to Java. When Netscape first introduced the JavaScript language in 1995, Unicode was still in its early stages of development, and at that time, using 16-bit encoding was sufficient to represent all Unicode characters.
-- C# uses UTF-16 encoding mainly because the .NET platform was designed by Microsoft, and many of Microsoft's technologies (including the Windows operating system) extensively use UTF-16 encoding.
+- A Java `String` típusa UTF-16 kódolást alkalmaz, minden karakter 2 bájtot foglal el. Ennek oka, hogy a Java nyelv tervezésekor úgy gondolták, hogy 16 bit elegendő az összes lehetséges karakter ábrázolásához. Ez azonban helytelen ítélet volt. Később a Unicode specifikáció meghaladta a 16 bitet, így a Java karakterei most „helyettesítő párok" formájában is megjelenhetnek (16 bites értékek párja).
+- A JavaScript és TypeScript karakterláncai UTF-16 kódolást alkalmaznak, hasonló okokból mint a Java. Amikor a Netscape 1995-ben bevezette a JavaScript nyelvet, a Unicode még fejlesztés korai szakaszában volt, és akkoriban a 16 bites kódolás elegendő volt az összes Unicode karakter ábrázolásához.
+- A C# UTF-16 kódolást alkalmaz főként azért, mert a .NET platformot a Microsoft tervezte, és a Microsoft technológiái (köztük a Windows operációs rendszer) széles körben használják az UTF-16 kódolást.
 
-Due to the underestimation of character quantities by the above programming languages, they had to adopt the "surrogate pair" method to represent Unicode characters with lengths exceeding 16 bits. This is a reluctant compromise. On the one hand, in strings containing surrogate pairs, one character may occupy 2 bytes or 4 bytes, thus losing the advantage of fixed-length encoding. On the other hand, handling surrogate pairs requires additional code, which increases the complexity and difficulty of debugging in programming.
+A fenti programozási nyelvek karaktermennyiségre vonatkozó alábecsülése miatt „helyettesítő párok" módszerét kellett alkalmazni a 16 bitet meghaladó hosszúságú Unicode karakterek ábrázolásához. Ez egy kényszer kompromisszum. Egyrészt helyettesítő párokat tartalmazó karakterláncokban egy karakter 2 bájtot vagy 4 bájtot is elfoglalhat, elveszítve ezzel a rögzített hosszúságú kódolás előnyét. Másrészt a helyettesítő párok kezelése további kódot igényel, ami növeli a programozás összetettségét és a hibakeresés nehézségét.
 
-For the above reasons, some programming languages have proposed different encoding schemes.
+A fentiek miatt egyes programozási nyelvek különböző kódolási sémákat javasoltak.
 
-- Python's `str` uses Unicode encoding and adopts a flexible string representation where the stored character length depends on the largest Unicode code point in the string. If all characters in the string are ASCII characters, each character occupies 1 byte; if there are characters exceeding the ASCII range but all within the Basic Multilingual Plane (BMP), each character occupies 2 bytes; if there are characters exceeding the BMP, each character occupies 4 bytes.
-- Go language's `string` type uses UTF-8 encoding internally. Go language also provides the `rune` type, which is used to represent a single Unicode code point.
-- Rust language's `str` and `String` types use UTF-8 encoding internally. Rust also provides the `char` type for representing a single Unicode code point.
+- A Python `str` típusa Unicode kódolást alkalmaz, és rugalmas karakterlánc-ábrázolást valósít meg, ahol a tárolt karakterek hossza a karakterláncban lévő legnagyobb Unicode kódponttól függ. Ha a karakterlánc összes karaktere ASCII karakter, minden karakter 1 bájtot foglal el; ha vannak az ASCII tartományon túli, de az Alapvető Többnyelvű Síkon (BMP) belüli karakterek, minden karakter 2 bájtot foglal el; ha vannak a BMP-t meghaladó karakterek, minden karakter 4 bájtot foglal el.
+- A Go nyelv `string` típusa belsőleg UTF-8 kódolást alkalmaz. A Go nyelv biztosítja a `rune` típust is, amely egy egyedi Unicode kódpont ábrázolására szolgál.
+- A Rust nyelv `str` és `String` típusai belsőleg UTF-8 kódolást alkalmaznak. A Rust biztosítja a `char` típust is egy egyedi Unicode kódpont ábrázolásához.
 
-It should be noted that the above discussion is about how strings are stored in programming languages, **which is different from how strings are stored in files or transmitted over networks**. In file storage or network transmission, we usually encode strings into UTF-8 format to achieve optimal compatibility and space efficiency.
+Megjegyzendő, hogy a fenti megbeszélés arról szól, hogyan tárolódnak a karakterláncok a programozási nyelvekben, **ami különbözik attól, ahogy a karakterláncok fájlokban tárolódnak vagy hálózaton keresztül kerülnek átvitelre**. Fájltárolás vagy hálózati átvitel esetén a karakterláncokat általában UTF-8 formátumba kódoljuk az optimális kompatibilitás és tárhelyek hatékonysága érdekében.
