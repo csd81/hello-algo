@@ -1,95 +1,95 @@
-# Permutations Problem
+# Permutációs feladat
 
-The permutations problem is a classic application of backtracking algorithms. It is defined as finding all possible arrangements of elements in a given collection (such as an array or string).
+A permutációs feladat a visszalépéses keresési algoritmusok klasszikus alkalmazása. Úgy van meghatározva, mint egy adott gyűjtemény (például tömb vagy karakterlánc) elemeinek összes lehetséges elrendezésének megkeresése.
 
-The table below shows several example datasets, including input arrays and their corresponding permutations.
+Az alábbi táblázat néhány példa adathalmazt mutat, beleértve a bemeneti tömböket és a megfelelő permutációkat.
 
-<p align="center"> Table <id> &nbsp; Permutations Examples </p>
+<p align="center"> Táblázat <id> &nbsp; Permutációs példák </p>
 
-| Input Array | All Permutations                                                   |
-| :---------- | :----------------------------------------------------------------- |
-| $[1]$       | $[1]$                                                              |
-| $[1, 2]$    | $[1, 2], [2, 1]$                                                   |
-| $[1, 2, 3]$ | $[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]$ |
+| Bemeneti tömb | Összes permutáció                                                  |
+| :------------ | :----------------------------------------------------------------- |
+| $[1]$         | $[1]$                                                              |
+| $[1, 2]$      | $[1, 2], [2, 1]$                                                   |
+| $[1, 2, 3]$   | $[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]$ |
 
-## Case with Distinct Elements
+## Eset különálló elemekkel
 
 !!! question
 
-    Given an integer array with no duplicate elements, return all possible permutations.
+    Adott egy egész számokból álló tömb, amely nem tartalmaz ismétlődő elemeket. Adja vissza az összes lehetséges permutációt.
 
-From the perspective of backtracking algorithms, **we can imagine the process of generating permutations as the result of a series of choices**. Suppose the input array is $[1, 2, 3]$. If we first choose $1$, then choose $3$, and finally choose $2$, we obtain the permutation $[1, 3, 2]$. Backtracking means undoing a choice and then trying other choices.
+A visszalépéses keresési algoritmus szemszögéből **a permutációk generálásának folyamatát egy sor választás eredményeként képzelhetjük el**. Tegyük fel, hogy a bemeneti tömb $[1, 2, 3]$. Ha először $1$-et választunk, majd $3$-at, és végül $2$-t, megkapjuk a $[1, 3, 2]$ permutációt. A visszalépés a választás visszavonását, majd más választások kipróbálását jelenti.
 
-From the perspective of backtracking code, the candidate set `choices` consists of all elements in the input array, and the state `state` is the elements that have been chosen so far. Note that each element can only be chosen once, **therefore all elements in `state` should be unique**.
+A visszalépéses keresési kód szemszögéből a jelöltek halmaza `choices` a bemeneti tömb összes eleméből áll, az állapot `state` pedig az eddig kiválasztott elemek. Megjegyzendő, hogy minden elem csak egyszer választható ki, **ezért a `state`-ben lévő összes elemnek egyedinek kell lennie**.
 
-As shown in the figure below, we can unfold the search process into a recursion tree, where each node in the tree represents the current state `state`. Starting from the root node, after three rounds of choices, we reach a leaf node, and each leaf node corresponds to a permutation.
+Ahogy az alábbi ábrán látható, a keresési folyamatot kibonthatjuk egy rekurziós fává, ahol a fa minden csomópontja az aktuális állapotot `state` jelöli. A gyökércsomóponttól kiindulva három forduló választás után elérjük a levélcsomópontokat, és minden levélcsomópont egy permutációnak felel meg.
 
-![Recursion tree of permutations](permutations_problem.assets/permutations_i.png)
+![A permutációk rekurziós fája](permutations_problem.assets/permutations_i.png)
 
-### Pruning Duplicate Choices
+### Ismétlődő választások metszése
 
-To ensure that each element is chosen only once, we consider introducing a boolean array `selected`, where `selected[i]` indicates whether `choices[i]` has been chosen. We implement the following pruning operation based on it.
+Annak biztosítására, hogy minden elemet csak egyszer válasszunk ki, fontoljuk meg egy `selected` logikai tömb bevezetését, ahol a `selected[i]` jelzi, hogy a `choices[i]` ki lett-e választva. Erre alapozva a következő metszési műveletet valósítjuk meg.
 
-- After making a choice `choice[i]`, we set `selected[i]` to $\text{True}$, indicating that it has been chosen.
-- When traversing the candidate list `choices`, we skip all nodes that have been chosen, which is pruning.
+- Miután megtettük a `choice[i]` választást, a `selected[i]`-t $\text{True}$ értékre állítjuk, jelezve, hogy ki lett választva.
+- A `choices` jelöltek listájának bejárásakor kihagyjuk az összes már kiválasztott csomópontot, ami a metszés.
 
-As shown in the figure below, suppose we choose $1$ in the first round, $3$ in the second round, and $2$ in the third round. Then we need to prune the branch of element $1$ in the second round and prune the branches of elements $1$ and $3$ in the third round.
+Ahogy az alábbi ábrán látható, tegyük fel, hogy az első fordulóban $1$-et, a második fordulóban $3$-at, a harmadik fordulóban $2$-t választunk. Ekkor a második fordulóban meg kell metszeni az $1$ elem ágát, és a harmadik fordulóban meg kell metszeni az $1$ és $3$ elemek ágait.
 
-![Pruning example of permutations](permutations_problem.assets/permutations_i_pruning.png)
+![A permutációk metszési példája](permutations_problem.assets/permutations_i_pruning.png)
 
-Observing the above figure, we find that this pruning operation reduces the search space size from $O(n^n)$ to $O(n!)$.
+A fenti ábrát megfigyelve megállapítjuk, hogy ez a metszési művelet csökkenti a keresési tér méretét $O(n^n)$-ről $O(n!)$-re.
 
-### Code Implementation
+### Kód megvalósítás
 
-After understanding the above information, we can fill in the blanks in the template code. To shorten the overall code, we do not implement each function in the template separately, but instead unfold them in the `backtrack()` function:
+A fenti információk megértése után kitölthetjük a sablon kód hiányos részeit. Az összesített kód rövidítése érdekében nem valósítjuk meg külön a sablon egyes függvényeit, hanem kibontjuk őket a `backtrack()` függvényen belül:
 
 ```src
 [file]{permutations_i}-[class]{}-[func]{permutations_i}
 ```
 
-## Case with Duplicate Elements
+## Eset ismétlődő elemekkel
 
 !!! question
 
-    Given an integer array that **may contain duplicate elements**, return all unique permutations.
+    Adott egy egész számokból álló tömb, amely **tartalmazhat ismétlődő elemeket**. Adja vissza az összes egyedi permutációt.
 
-Suppose the input array is $[1, 1, 2]$. To distinguish the two duplicate elements $1$, we denote the second $1$ as $\hat{1}$.
+Tegyük fel, hogy a bemeneti tömb $[1, 1, 2]$. Az ismétlődő $1$ elemek megkülönböztetéséhez a második $1$-et $\hat{1}$-nek jelöljük.
 
-As shown in the figure below, the method described above generates permutations where half are duplicates.
+Ahogy az alábbi ábrán látható, a fent leírt módszer olyan permutációkat generál, amelyek fele ismétlődés.
 
-![Duplicate permutations](permutations_problem.assets/permutations_ii.png)
+![Ismétlődő permutációk](permutations_problem.assets/permutations_ii.png)
 
-So how do we remove duplicate permutations? The most direct approach is to use a hash set to directly deduplicate the permutation results. However, this is not elegant because **the search branches that generate duplicate permutations are unnecessary and should be identified and pruned early**, which can further improve algorithm efficiency.
+Tehát hogyan távolítsuk el az ismétlődő permutációkat? A legközvetlenebb megközelítés egy hash-halmaz használata a permutációs eredmények közvetlen deduplikálásához. Azonban ez nem elegáns, mert **azok a keresési ágak, amelyek ismétlődő permutációkat generálnak, szükségtelenek, és korán azonosítani és megmetszeni kell őket**, ami tovább javíthatja az algoritmus hatékonyságát.
 
-### Pruning Duplicate Elements
+### Ismétlődő elemek metszése
 
-Observe the figure below. In the first round, choosing $1$ or choosing $\hat{1}$ is equivalent. All permutations generated under these two choices are duplicates. Therefore, we should prune $\hat{1}$.
+Figyeljük meg az alábbi ábrát. Az első fordulóban $1$ vagy $\hat{1}$ kiválasztása egyenértékű. A két választás alatt generált összes permutáció ismétlődő. Ezért meg kell metszeni a $\hat{1}$-et.
 
-Similarly, after choosing $2$ in the first round, the $1$ and $\hat{1}$ in the second round also produce duplicate branches, so the second round's $\hat{1}$ should also be pruned.
+Hasonlóképpen, miután az első fordulóban $2$-t választottunk, a második forduló $1$-e és $\hat{1}$-je szintén ismétlődő ágakat produkál, ezért a második forduló $\hat{1}$-jét is meg kell metszeni.
 
-Essentially, **our goal is to ensure that multiple equal elements are chosen only once in a certain round of choices**.
+Lényegében **célunk annak biztosítása, hogy több egyenlő elemet csak egyszer válasszanak ki egy bizonyos választási fordulóban**.
 
-![Pruning duplicate permutations](permutations_problem.assets/permutations_ii_pruning.png)
+![Ismétlődő permutációk metszése](permutations_problem.assets/permutations_ii_pruning.png)
 
-### Code Implementation
+### Kód megvalósítás
 
-Building on the code from the previous problem, we consider opening a hash set `duplicated` in each round of choices to record which elements have been tried in this round, and prune duplicate elements:
+Az előző feladat kódjára építve fontolóra vesszük egy `duplicated` hash-halmaz megnyitását minden választási fordulóban, hogy nyomon kövessük, melyik elemeket próbálták ki ebben a fordulóban, és metszük az ismétlődő elemeket:
 
 ```src
 [file]{permutations_ii}-[class]{}-[func]{permutations_ii}
 ```
 
-Assuming elements are pairwise distinct, there are $n!$ (factorial) permutations of $n$ elements. When recording results, we need to copy a list of length $n$, using $O(n)$ time. **Therefore, the time complexity is $O(n! \cdot n)$**.
+Feltéve, hogy az elemek páronként különbözők, $n$ elem esetén $n!$ (faktoriális) permutáció létezik. Az eredmények rögzítésekor egy $n$ hosszúságú lista másolatát kell készíteni, ami $O(n)$ időt vesz igénybe. **Ezért az időbonyolultság $O(n! \cdot n)$**.
 
-The maximum recursion depth is $n$, using $O(n)$ stack frame space. `selected` uses $O(n)$ space. At most $n$ `duplicated` sets exist simultaneously, using $O(n^2)$ space. **Therefore, the space complexity is $O(n^2)$**.
+A maximális rekurziós mélység $n$, ami $O(n)$ veremkeret tárhelyet használ. A `selected` $O(n)$ tárhelyet használ. Legfeljebb $n$ `duplicated` halmaz létezik egyidejűleg, ami $O(n^2)$ tárhelyet vesz igénybe. **Ezért a térbonyolultság $O(n^2)$**.
 
-### Comparison of Two Pruning Methods
+### A két metszési módszer összehasonlítása
 
-Note that although both `selected` and `duplicated` are used for pruning, they have different objectives.
+Megjegyzendő, hogy bár mind a `selected`, mind a `duplicated` metszésre használatos, különböző céljaik vannak.
 
-- **Pruning duplicate choices**: There is only one `selected` throughout the entire search process. It records which elements are included in the current state, and its purpose is to prevent an element from appearing repeatedly in `state`.
-- **Pruning duplicate elements**: Each round of choices (each `backtrack` function call) contains a `duplicated` set. It records which elements have been chosen in this round's iteration (the `for` loop), and its purpose is to ensure that equal elements are chosen only once.
+- **Ismétlődő választások metszése**: Az egész keresési folyamat során csak egy `selected` létezik. Nyomon követi, hogy mely elemek szerepelnek az aktuális állapotban, és célja, hogy megakadályozza egy elem ismételt megjelenését az `state`-ben.
+- **Ismétlődő elemek metszése**: Minden választási forduló (minden `backtrack` függvényhívás) tartalmaz egy `duplicated` halmazt. Nyomon követi, hogy melyik elemeket választották ki ebben a forduló iterációjában (a `for` ciklusban), és célja, hogy az egyenlő elemeket csak egyszer válasszák ki.
 
-The figure below shows the effective scope of the two pruning conditions. Note that each node in the tree represents a choice, and the nodes on the path from the root to a leaf node form a permutation.
+Az alábbi ábra mutatja a két metszési feltétel hatókörét. Megjegyezzük, hogy a fa minden csomópontja egy választást jelöl, és a gyökértől egy levélcsomópontig vezető úton lévő csomópontok egy permutációt alkotnak.
 
-![Effective scope of two pruning conditions](permutations_problem.assets/permutations_ii_pruning_summary.png)
+![A két metszési feltétel hatóköre](permutations_problem.assets/permutations_ii_pruning_summary.png)

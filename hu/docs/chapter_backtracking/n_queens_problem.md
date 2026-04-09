@@ -1,53 +1,53 @@
-# N-Queens Problem
+# N-királynő feladat
 
 !!! question
 
-    According to the rules of chess, a queen can attack pieces that share the same row, column, or diagonal line. Given $n$ queens and an $n \times n$ chessboard, find a placement scheme such that no two queens can attack each other.
+    A sakk szabályai szerint a királynő megtámadhatja azokat a bábukat, amelyek ugyanabban a sorban, oszlopban vagy átlós irányban találhatók. Adott $n$ királynő és egy $n \times n$-es sakktábla, keressd meg azt az elhelyezési sémát, amelynél egy sem tudja megtámadni a másikat.
 
-As shown in the figure below, when $n = 4$, there are two solutions that can be found. From the perspective of the backtracking algorithm, an $n \times n$ chessboard has $n^2$ squares, which provide all the choices `choices`. During the process of placing queens one by one, the chessboard state changes continuously, and the chessboard at each moment represents the state `state`.
+Ahogy az alábbi ábrán látható, amikor $n = 4$, két megoldás található. A visszalépéses keresési algoritmus szemszögéből, egy $n \times n$-es sakktáblának $n^2$ mezője van, amelyek az összes lehetséges választást `choices` biztosítják. A királynők egyenkénti elhelyezésének folyamata során a sakktábla állapota folyamatosan változik, és az egyes pillanatokban a sakktábla az állapotot `state` jelöli.
 
-![Solution to the 4-queens problem](n_queens_problem.assets/solution_4_queens.png)
+![A 4-királynő feladat megoldása](n_queens_problem.assets/solution_4_queens.png)
 
-The figure below illustrates the three constraints of this problem: **multiple queens cannot be in the same row, the same column, or on the same diagonal**. It is worth noting that diagonals are divided into two types: the main diagonal `\` and the anti-diagonal `/`.
+Az alábbi ábra mutatja a feladat három feltételét: **több királynő nem lehet ugyanabban a sorban, ugyanabban az oszlopban vagy ugyanazon az átlón**. Érdemes megjegyezni, hogy az átlók két típusra oszthatók: a főátlóra `\` és a mellékátlóra `/`.
 
-![Constraints of the n-queens problem](n_queens_problem.assets/n_queens_constraints.png)
+![Az n-királynő feladat feltételei](n_queens_problem.assets/n_queens_constraints.png)
 
-### Row-By-Row Placement Strategy
+### Soronkénti elhelyezési stratégia
 
-Since both the number of queens and the number of rows on the chessboard are $n$, we can easily derive a conclusion: **each row of the chessboard allows and only allows exactly one queen to be placed**.
+Mivel mind a királynők száma, mind a sakktábla sorainak száma $n$, könnyen levonhatjuk a következtetést: **a sakktábla minden sora pontosan egy királynő elhelyezését engedi meg és követeli meg**.
 
-This means we can adopt a row-by-row placement strategy: starting from the first row, place one queen in each row until the last row is completed.
+Ez azt jelenti, hogy soronkénti elhelyezési stratégiát fogadhatunk el: az első sortól kezdve helyezzünk el egy királynőt minden sorban, amíg az utolsó sor be nem fejeződik.
 
-The figure below shows the row-by-row placement process for the 4-queens problem. Due to space limitations, the figure only expands one search branch of the first row, and all schemes that do not satisfy the column constraint and diagonal constraints are pruned.
+Az alábbi ábra mutatja a 4-királynő feladat soronkénti elhelyezési folyamatát. A hely korlátai miatt az ábra csak az első sor egy keresési ágát bontja ki, és az összes olyan séma metszésre kerül, amely nem teljesíti az oszlop- és átlóbeliség-feltételeket.
 
-![Row-by-row placement strategy](n_queens_problem.assets/n_queens_placing.png)
+![Soronkénti elhelyezési stratégia](n_queens_problem.assets/n_queens_placing.png)
 
-Essentially, **the row-by-row placement strategy serves a pruning function**, as it avoids all search branches where multiple queens appear in the same row.
+Lényegében **a soronkénti elhelyezési stratégia metszési funkciót tölt be**, mivel elkerüli az összes olyan keresési ágat, ahol több királynő ugyanabban a sorban jelenik meg.
 
-### Column and Diagonal Pruning
+### Oszlop és átló metszése
 
-To satisfy the column constraint, we can use a boolean array `cols` of length $n$ to record whether each column has a queen. Before each placement decision, we use `cols` to prune columns that already have queens, and dynamically update the state of `cols` during backtracking.
+Az oszlopfeltétel teljesítéséhez használhatunk egy $n$ hosszúságú `cols` logikai tömböt, amely rögzíti, hogy minden oszlopban van-e királynő. Minden elhelyezési döntés előtt a `cols` segítségével metszük azokat az oszlopokat, amelyekben már van királynő, és dinamikusan frissítjük a `cols` állapotát a visszalépés során.
 
 !!! tip
 
-    Please note that the origin of the matrix is located in the upper-left corner, where the row index increases from top to bottom, and the column index increases from left to right.
+    Kérjük, vegyük figyelembe, hogy a mátrix origója a bal felső sarokban van, ahol a sor index felülről lefelé nő, az oszlop index pedig balról jobbra nő.
 
-So how do we handle diagonal constraints? Consider a square on the chessboard with row and column indices $(row, col)$. If we select a specific main diagonal in the matrix, we find that all squares on that diagonal have the same difference between their row and column indices, **meaning that $row - col$ is a constant value for all squares on the main diagonal**.
+Hogyan kezeljük az átlós feltételeket? Vegyünk egy $(row, col)$ sor- és oszlopindexű mezőt a sakktáblán. Ha kiválasztunk egy adott főátlót a mátrixban, azt tapasztaljuk, hogy az ezen az átlón lévő összes mezőnek azonos a különbsége a sor- és oszlopindexük között, **azaz a $row - col$ értéke állandó a főátló összes mezőjére**.
 
-In other words, if two squares satisfy $row_1 - col_1 = row_2 - col_2$, they must be on the same main diagonal. Using this pattern, we can use the array `diags1` shown in the figure below to record whether there is a queen on each main diagonal.
+Más szóval, ha két mező teljesíti a $row_1 - col_1 = row_2 - col_2$ feltételt, akkor biztosan ugyanazon a főátlón vannak. Ezt a mintát felhasználva az alábbi ábrán látható `diags1` tömbbel rögzíthetjük, hogy van-e királynő minden főátlón.
 
-Similarly, **for all squares on an anti-diagonal, the sum $row + col$ is a constant value**. We can likewise use the array `diags2` to handle anti-diagonal constraints.
+Hasonlóképpen, **egy mellékátlón lévő összes mező esetén a $row + col$ összeg állandó értékű**. Ugyanúgy használhatjuk a `diags2` tömböt a mellékátlós feltételek kezelésére.
 
-![Handling column and diagonal constraints](n_queens_problem.assets/n_queens_cols_diagonals.png)
+![Oszlop- és átlóbeliség-feltételek kezelése](n_queens_problem.assets/n_queens_cols_diagonals.png)
 
-### Code Implementation
+### Kód megvalósítás
 
-Please note that in an $n$-dimensional square matrix, the range of $row - col$ is $[-n + 1, n - 1]$, and the range of $row + col$ is $[0, 2n - 2]$. Therefore, the number of both main diagonals and anti-diagonals is $2n - 1$, meaning the length of both arrays `diags1` and `diags2` is $2n - 1$.
+Vegyük figyelembe, hogy egy $n$-dimenziós négyzetes mátrixban a $row - col$ értéktartománya $[-n + 1, n - 1]$, a $row + col$ értéktartománya $[0, 2n - 2]$. Ezért a főátlók és mellékátlók száma egyaránt $2n - 1$, ami azt jelenti, hogy mind a `diags1`, mind a `diags2` tömb hossza $2n - 1$.
 
 ```src
 [file]{n_queens}-[class]{}-[func]{n_queens}
 ```
 
-Placing $n$ queens row by row, considering the column constraint, from the first row to the last row there are $n$, $n-1$, $\dots$, $2$, $1$ choices, using $O(n!)$ time. When recording a solution, it is necessary to copy the matrix `state` and add it to `res`, and the copy operation uses $O(n^2)$ time. Therefore, **the overall time complexity is $O(n! \cdot n^2)$**. In practice, pruning based on diagonal constraints can also significantly reduce the search space, so the search efficiency is often better than the time complexity mentioned above.
+$n$ királynő soronkénti elhelyezése az oszlopfeltétel figyelembevételével, az első sortól az utolsóig $n$, $n-1$, $\dots$, $2$, $1$ lehetséges választást kínál, ami $O(n!)$ időt vesz igénybe. Egy megoldás rögzítésekor szükséges az `state` mátrix másolása és hozzáadása a `res`-hez, a másolási művelet $O(n^2)$ időt vesz igénybe. Ezért **az összesített időbonyolultság $O(n! \cdot n^2)$**. A gyakorlatban az átlóbeliség-feltételeken alapuló metszés is jelentősen csökkentheti a keresési teret, így a keresési hatékonyság gyakran jobb a fent említett időbonyolultságnál.
 
-The array `state` uses $O(n^2)$ space, and the arrays `cols`, `diags1`, and `diags2` each use $O(n)$ space. The maximum recursion depth is $n$, using $O(n)$ stack frame space. Therefore, **the space complexity is $O(n^2)$**.
+Az `state` tömb $O(n^2)$ tárhelyet használ, a `cols`, `diags1` és `diags2` tömbök mindegyike $O(n)$ tárhelyet használ. A maximális rekurziós mélység $n$, ami $O(n)$ veremkeret tárhelyet vesz igénybe. Ezért **a térbonyolultság $O(n^2)$**.

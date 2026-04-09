@@ -1,45 +1,45 @@
-# Backtracking Algorithm
+# Visszalépéses keresési algoritmus
 
-<u>The backtracking algorithm</u> is a method for solving problems through exhaustive search. Its core idea is to start from an initial state and exhaustively search all possible solutions. When a correct solution is found, it is recorded. This process continues until a solution is found or all possible choices have been tried without finding a solution.
+<u>A visszalépéses keresési algoritmus</u> egy kimerítő keresésen alapuló problémamegoldó módszer. Alapgondolata az, hogy egy kezdeti állapotból kiindulva kimerítően keresi az összes lehetséges megoldást. Ha helyes megoldást talál, rögzíti azt. Ez a folyamat addig folytatódik, amíg megoldást nem talál, vagy az összes lehetséges választást ki nem próbálta megoldás nélkül.
 
-The backtracking algorithm typically employs "depth-first search" to traverse the solution space. In the "Binary Tree" chapter, we mentioned that preorder, inorder, and postorder traversals all belong to depth-first search. Next, we will construct a backtracking problem using preorder traversal to progressively understand how the backtracking algorithm works.
+A visszalépéses keresési algoritmus általában „mélységi keresést" alkalmaz a megoldástér bejárásához. A „Bináris fa" fejezetben megemlítettük, hogy az előrendű, a közbülső rendű és az utórendű bejárás mind a mélységi kereséshez tartozik. Ezután egy visszalépéses keresési feladatot fogunk felépíteni az előrendű bejárás segítségével, hogy fokozatosan megértsük a visszalépéses keresési algoritmus működését.
 
-!!! question "Example 1"
+!!! question "1. példa"
 
-    Given a binary tree, search and record all nodes with value $7$, and return a list of these nodes.
+    Adott egy bináris fa. Keressük meg és jegyezzük fel az összes $7$ értékű csomópontot, majd adjuk vissza ezeknek a csomópontoknak a listáját.
 
-For this problem, we perform a preorder traversal of the tree and check whether the current node's value is $7$. If it is, we add the node to the result list `res`. The relevant implementation is shown in the following figure and code:
+Ehhez a feladathoz előrendű bejárást végzünk a fán, és ellenőrizzük, hogy az aktuális csomópont értéke $7$-e. Ha igen, hozzáadjuk a csomópontot a `res` eredménylistához. A kapcsolódó megvalósítás az alábbi ábrán és kódban látható:
 
 ```src
 [file]{preorder_traversal_i_compact}-[class]{}-[func]{pre_order}
 ```
 
-![Search for nodes in preorder traversal](backtracking_algorithm.assets/preorder_find_nodes.png)
+![Csomópontok keresése előrendű bejárással](backtracking_algorithm.assets/preorder_find_nodes.png)
 
-## Attempt and Backtrack
+## Próbálkozás és visszalépés
 
-**The reason it is called a backtracking algorithm is that it employs "attempt" and "backtrack" strategies when searching the solution space**. When the algorithm encounters a state where it cannot continue forward or cannot find a solution that satisfies the constraints, it will undo the previous choice, return to a previous state, and try other possible choices.
+**Az algoritmust azért nevezzük visszalépéses keresési algoritmusnak, mert „próbálkozás" és „visszalépés" stratégiákat alkalmaz a megoldástér keresése során**. Amikor az algoritmus olyan állapotba kerül, amelyből nem tud tovább haladni, vagy nem talál a feltételeket kielégítő megoldást, visszavonja az előző választást, visszatér egy korábbi állapotba, és más lehetséges választásokat próbál ki.
 
-For Example 1, visiting each node represents an "attempt", while skipping over a leaf node or a function `return` from the parent node represents a "backtrack".
+Az 1. példában minden egyes csomópont meglátogatása egy „próbálkozást" jelent, míg egy levélcsomópontnál való megállás, vagy a szülő csomópontból való `return` egy „visszalépést" jelent.
 
-It is worth noting that **backtracking is not limited to function returns alone**. To illustrate this, let's extend Example 1 slightly.
+Érdemes megjegyezni, hogy **a visszalépés nem korlátozódik csupán a függvény visszatérésére**. Ennek szemléltetéséhez bővítsük ki kissé az 1. példát.
 
-!!! question "Example 2"
+!!! question "2. példa"
 
-    In a binary tree, search all nodes with value $7$, **and return the paths from the root node to these nodes**.
+    Egy bináris fában keressen minden $7$ értékű csomópontot, **és adja vissza a gyökércsomóponttól ezen csomópontokig vezető utakat**.
 
-Based on the code from Example 1, we need to use a list `path` to record the visited node path. When we reach a node with value $7$, we copy `path` and add it to the result list `res`. After traversal is complete, `res` contains all the solutions. The code is as follows:
+Az 1. példa kódjára alapozva szükségünk van egy `path` listára a meglátogatott csomópontok útjának rögzítéséhez. Amikor elérünk egy $7$ értékű csomópontot, lemásoljuk a `path`-t és hozzáadjuk a `res` eredménylistához. A bejárás befejezése után a `res` tartalmazza az összes megoldást. A kód a következő:
 
 ```src
 [file]{preorder_traversal_ii_compact}-[class]{}-[func]{pre_order}
 ```
 
-In each "attempt", we record the path by adding the current node to `path`; before "backtracking", we need to remove the node from `path`, **to restore the state before this attempt**.
+Minden „próbálkozásnál" az aktuális csomópontot hozzáadjuk a `path`-hoz, hogy rögzítsük az utat; a „visszalépés" előtt el kell távolítani a csomópontot a `path`-ból, **hogy visszaállítsuk az állapotot a próbálkozás előttre**.
 
-Observing the process shown in the following figure, **we can understand attempt and backtrack as "advance" and "undo"**, two operations that are the reverse of each other.
+Az alábbi ábrán látható folyamatot megfigyelve **a próbálkozást és visszalépést „előrehaladásként" és „visszavonásként" érthetjük**, amelyek két egymással ellentétes művelet.
 
 === "<1>"
-    ![Attempt and backtrack](backtracking_algorithm.assets/preorder_find_paths_step1.png)
+    ![Próbálkozás és visszalépés](backtracking_algorithm.assets/preorder_find_paths_step1.png)
 
 === "<2>"
     ![preorder_find_paths_step2](backtracking_algorithm.assets/preorder_find_paths_step2.png)
@@ -71,72 +71,72 @@ Observing the process shown in the following figure, **we can understand attempt
 === "<11>"
     ![preorder_find_paths_step11](backtracking_algorithm.assets/preorder_find_paths_step11.png)
 
-## Pruning
+## Metszés
 
-Complex backtracking problems usually contain one or more constraints. **Constraints can typically be used for "pruning"**.
+Az összetett visszalépéses keresési feladatok általában egy vagy több feltételt tartalmaznak. **A feltételek általában „metszésre" használhatók**.
 
-!!! question "Example 3"
+!!! question "3. példa"
 
-    In a binary tree, search all nodes with value $7$ and return the paths from the root node to these nodes, **but require that the paths do not contain nodes with value $3$**.
+    Egy bináris fában keressen minden $7$ értékű csomópontot, és adja vissza a gyökércsomóponttól ezen csomópontokig vezető utakat, **de azzal a követelménnyel, hogy az utak ne tartalmazzanak $3$ értékű csomópontokat**.
 
-To satisfy the above constraints, **we need to add pruning operations**: during the search process, if we encounter a node with value $3$, we return early and do not continue searching. The code is as follows:
+A fenti feltételek teljesítéséhez **metszési műveleteket kell hozzáadnunk**: a keresési folyamat során, ha $3$ értékű csomóponttal találkozunk, korán visszatérünk, és nem folytatjuk a keresést. A kód a következő:
 
 ```src
 [file]{preorder_traversal_iii_compact}-[class]{}-[func]{pre_order}
 ```
 
-"Pruning" is a vivid term. As shown in the following figure, during the search process, **we "prune" search branches that do not satisfy the constraints**, avoiding many meaningless attempts and thus improving search efficiency.
+A „metszés" egy szemléletes kifejezés. Ahogy az alábbi ábrán látható, a keresési folyamat során **„lenyessük" azokat a keresési ágakat, amelyek nem felelnek meg a feltételeknek**, elkerülve ezzel sok értelmetlen próbálkozást, és így javítva a keresési hatékonyságot.
 
-![Pruning according to constraints](backtracking_algorithm.assets/preorder_find_constrained_paths.png)
+![Metszés feltételek alapján](backtracking_algorithm.assets/preorder_find_constrained_paths.png)
 
-## Framework Code
+## Keretrendszer kód
 
-Next, we attempt to extract the main framework of backtracking's "attempt, backtrack, and pruning", to improve code generality.
+Következőként megpróbáljuk kinyerni a visszalépéses keresés „próbálkozás, visszalépés és metszés" főbb keretrendszerét, hogy javítsuk a kód általánosíthatóságát.
 
-In the following framework code, `state` represents the current state of the problem, and `choices` represents the choices available in the current state:
+Az alábbi keretrendszer kódban a `state` a feladat jelenlegi állapotát jelöli, a `choices` pedig az aktuális állapotban elérhető választásokat:
 
 === "Python"
 
     ```python title=""
     def backtrack(state: State, choices: list[choice], res: list[state]):
-        """Backtracking algorithm framework"""
-        # Check if it is a solution
+        """Visszalépéses keresési algoritmus keretrendszere"""
+        # Ellenőrzés, hogy ez megoldás-e
         if is_solution(state):
-            # Record the solution
+            # A megoldás rögzítése
             record_solution(state, res)
-            # Stop searching
+            # Keresés leállítása
             return
-        # Traverse all choices
+        # Az összes választás bejárása
         for choice in choices:
-            # Pruning: check if the choice is valid
+            # Metszés: ellenőrzés, hogy a választás érvényes-e
             if is_valid(state, choice):
-                # Attempt: make a choice and update the state
+                # Próbálkozás: választás megtétele és állapot frissítése
                 make_choice(state, choice)
                 backtrack(state, choices, res)
-                # Backtrack: undo the choice and restore to the previous state
+                # Visszalépés: a választás visszavonása és visszaállítás az előző állapotra
                 undo_choice(state, choice)
     ```
 
 === "C++"
 
     ```cpp title=""
-    /* Backtracking algorithm framework */
+    /* Visszalépéses keresési algoritmus keretrendszere */
     void backtrack(State *state, vector<Choice *> &choices, vector<State *> &res) {
-        // Check if it is a solution
+        // Ellenőrzés, hogy ez megoldás-e
         if (isSolution(state)) {
-            // Record the solution
+            // A megoldás rögzítése
             recordSolution(state, res);
-            // Stop searching
+            // Keresés leállítása
             return;
         }
-        // Traverse all choices
+        // Az összes választás bejárása
         for (Choice choice : choices) {
-            // Pruning: check if the choice is valid
+            // Metszés: ellenőrzés, hogy a választás érvényes-e
             if (isValid(state, choice)) {
-                // Attempt: make a choice and update the state
+                // Próbálkozás: választás megtétele és állapot frissítése
                 makeChoice(state, choice);
                 backtrack(state, choices, res);
-                // Backtrack: undo the choice and restore to the previous state
+                // Visszalépés: a választás visszavonása és visszaállítás az előző állapotra
                 undoChoice(state, choice);
             }
         }
@@ -146,23 +146,23 @@ In the following framework code, `state` represents the current state of the pro
 === "Java"
 
     ```java title=""
-    /* Backtracking algorithm framework */
+    /* Visszalépéses keresési algoritmus keretrendszere */
     void backtrack(State state, List<Choice> choices, List<State> res) {
-        // Check if it is a solution
+        // Ellenőrzés, hogy ez megoldás-e
         if (isSolution(state)) {
-            // Record the solution
+            // A megoldás rögzítése
             recordSolution(state, res);
-            // Stop searching
+            // Keresés leállítása
             return;
         }
-        // Traverse all choices
+        // Az összes választás bejárása
         for (Choice choice : choices) {
-            // Pruning: check if the choice is valid
+            // Metszés: ellenőrzés, hogy a választás érvényes-e
             if (isValid(state, choice)) {
-                // Attempt: make a choice and update the state
+                // Próbálkozás: választás megtétele és állapot frissítése
                 makeChoice(state, choice);
                 backtrack(state, choices, res);
-                // Backtrack: undo the choice and restore to the previous state
+                // Visszalépés: a választás visszavonása és visszaállítás az előző állapotra
                 undoChoice(state, choice);
             }
         }
@@ -172,23 +172,23 @@ In the following framework code, `state` represents the current state of the pro
 === "C#"
 
     ```csharp title=""
-    /* Backtracking algorithm framework */
+    /* Visszalépéses keresési algoritmus keretrendszere */
     void Backtrack(State state, List<Choice> choices, List<State> res) {
-        // Check if it is a solution
+        // Ellenőrzés, hogy ez megoldás-e
         if (IsSolution(state)) {
-            // Record the solution
+            // A megoldás rögzítése
             RecordSolution(state, res);
-            // Stop searching
+            // Keresés leállítása
             return;
         }
-        // Traverse all choices
+        // Az összes választás bejárása
         foreach (Choice choice in choices) {
-            // Pruning: check if the choice is valid
+            // Metszés: ellenőrzés, hogy a választás érvényes-e
             if (IsValid(state, choice)) {
-                // Attempt: make a choice and update the state
+                // Próbálkozás: választás megtétele és állapot frissítése
                 MakeChoice(state, choice);
                 Backtrack(state, choices, res);
-                // Backtrack: undo the choice and restore to the previous state
+                // Visszalépés: a választás visszavonása és visszaállítás az előző állapotra
                 UndoChoice(state, choice);
             }
         }
@@ -198,23 +198,23 @@ In the following framework code, `state` represents the current state of the pro
 === "Go"
 
     ```go title=""
-    /* Backtracking algorithm framework */
+    /* Visszalépéses keresési algoritmus keretrendszere */
     func backtrack(state *State, choices []Choice, res *[]State) {
-        // Check if it is a solution
+        // Ellenőrzés, hogy ez megoldás-e
         if isSolution(state) {
-            // Record the solution
+            // A megoldás rögzítése
             recordSolution(state, res)
-            // Stop searching
+            // Keresés leállítása
             return
         }
-        // Traverse all choices
+        // Az összes választás bejárása
         for _, choice := range choices {
-            // Pruning: check if the choice is valid
+            // Metszés: ellenőrzés, hogy a választás érvényes-e
             if isValid(state, choice) {
-                // Attempt: make a choice and update the state
+                // Próbálkozás: választás megtétele és állapot frissítése
                 makeChoice(state, choice)
                 backtrack(state, choices, res)
-                // Backtrack: undo the choice and restore to the previous state
+                // Visszalépés: a választás visszavonása és visszaállítás az előző állapotra
                 undoChoice(state, choice)
             }
         }
@@ -224,23 +224,23 @@ In the following framework code, `state` represents the current state of the pro
 === "Swift"
 
     ```swift title=""
-    /* Backtracking algorithm framework */
+    /* Visszalépéses keresési algoritmus keretrendszere */
     func backtrack(state: inout State, choices: [Choice], res: inout [State]) {
-        // Check if it is a solution
+        // Ellenőrzés, hogy ez megoldás-e
         if isSolution(state: state) {
-            // Record the solution
+            // A megoldás rögzítése
             recordSolution(state: state, res: &res)
-            // Stop searching
+            // Keresés leállítása
             return
         }
-        // Traverse all choices
+        // Az összes választás bejárása
         for choice in choices {
-            // Pruning: check if the choice is valid
+            // Metszés: ellenőrzés, hogy a választás érvényes-e
             if isValid(state: state, choice: choice) {
-                // Attempt: make a choice and update the state
+                // Próbálkozás: választás megtétele és állapot frissítése
                 makeChoice(state: &state, choice: choice)
                 backtrack(state: &state, choices: choices, res: &res)
-                // Backtrack: undo the choice and restore to the previous state
+                // Visszalépés: a választás visszavonása és visszaállítás az előző állapotra
                 undoChoice(state: &state, choice: choice)
             }
         }
@@ -250,23 +250,23 @@ In the following framework code, `state` represents the current state of the pro
 === "JS"
 
     ```javascript title=""
-    /* Backtracking algorithm framework */
+    /* Visszalépéses keresési algoritmus keretrendszere */
     function backtrack(state, choices, res) {
-        // Check if it is a solution
+        // Ellenőrzés, hogy ez megoldás-e
         if (isSolution(state)) {
-            // Record the solution
+            // A megoldás rögzítése
             recordSolution(state, res);
-            // Stop searching
+            // Keresés leállítása
             return;
         }
-        // Traverse all choices
+        // Az összes választás bejárása
         for (let choice of choices) {
-            // Pruning: check if the choice is valid
+            // Metszés: ellenőrzés, hogy a választás érvényes-e
             if (isValid(state, choice)) {
-                // Attempt: make a choice and update the state
+                // Próbálkozás: választás megtétele és állapot frissítése
                 makeChoice(state, choice);
                 backtrack(state, choices, res);
-                // Backtrack: undo the choice and restore to the previous state
+                // Visszalépés: a választás visszavonása és visszaállítás az előző állapotra
                 undoChoice(state, choice);
             }
         }
@@ -276,23 +276,23 @@ In the following framework code, `state` represents the current state of the pro
 === "TS"
 
     ```typescript title=""
-    /* Backtracking algorithm framework */
+    /* Visszalépéses keresési algoritmus keretrendszere */
     function backtrack(state: State, choices: Choice[], res: State[]): void {
-        // Check if it is a solution
+        // Ellenőrzés, hogy ez megoldás-e
         if (isSolution(state)) {
-            // Record the solution
+            // A megoldás rögzítése
             recordSolution(state, res);
-            // Stop searching
+            // Keresés leállítása
             return;
         }
-        // Traverse all choices
+        // Az összes választás bejárása
         for (let choice of choices) {
-            // Pruning: check if the choice is valid
+            // Metszés: ellenőrzés, hogy a választás érvényes-e
             if (isValid(state, choice)) {
-                // Attempt: make a choice and update the state
+                // Próbálkozás: választás megtétele és állapot frissítése
                 makeChoice(state, choice);
                 backtrack(state, choices, res);
-                // Backtrack: undo the choice and restore to the previous state
+                // Visszalépés: a választás visszavonása és visszaállítás az előző állapotra
                 undoChoice(state, choice);
             }
         }
@@ -302,23 +302,23 @@ In the following framework code, `state` represents the current state of the pro
 === "Dart"
 
     ```dart title=""
-    /* Backtracking algorithm framework */
+    /* Visszalépéses keresési algoritmus keretrendszere */
     void backtrack(State state, List<Choice>, List<State> res) {
-      // Check if it is a solution
+      // Ellenőrzés, hogy ez megoldás-e
       if (isSolution(state)) {
-        // Record the solution
+        // A megoldás rögzítése
         recordSolution(state, res);
-        // Stop searching
+        // Keresés leállítása
         return;
       }
-      // Traverse all choices
+      // Az összes választás bejárása
       for (Choice choice in choices) {
-        // Pruning: check if the choice is valid
+        // Metszés: ellenőrzés, hogy a választás érvényes-e
         if (isValid(state, choice)) {
-          // Attempt: make a choice and update the state
+          // Próbálkozás: választás megtétele és állapot frissítése
           makeChoice(state, choice);
           backtrack(state, choices, res);
-          // Backtrack: undo the choice and restore to the previous state
+          // Visszalépés: a választás visszavonása és visszaállítás az előző állapotra
           undoChoice(state, choice);
         }
       }
@@ -328,23 +328,23 @@ In the following framework code, `state` represents the current state of the pro
 === "Rust"
 
     ```rust title=""
-    /* Backtracking algorithm framework */
+    /* Visszalépéses keresési algoritmus keretrendszere */
     fn backtrack(state: &mut State, choices: &Vec<Choice>, res: &mut Vec<State>) {
-        // Check if it is a solution
+        // Ellenőrzés, hogy ez megoldás-e
         if is_solution(state) {
-            // Record the solution
+            // A megoldás rögzítése
             record_solution(state, res);
-            // Stop searching
+            // Keresés leállítása
             return;
         }
-        // Traverse all choices
+        // Az összes választás bejárása
         for choice in choices {
-            // Pruning: check if the choice is valid
+            // Metszés: ellenőrzés, hogy a választás érvényes-e
             if is_valid(state, choice) {
-                // Attempt: make a choice and update the state
+                // Próbálkozás: választás megtétele és állapot frissítése
                 make_choice(state, choice);
                 backtrack(state, choices, res);
-                // Backtrack: undo the choice and restore to the previous state
+                // Visszalépés: a választás visszavonása és visszaállítás az előző állapotra
                 undo_choice(state, choice);
             }
         }
@@ -354,23 +354,23 @@ In the following framework code, `state` represents the current state of the pro
 === "C"
 
     ```c title=""
-    /* Backtracking algorithm framework */
+    /* Visszalépéses keresési algoritmus keretrendszere */
     void backtrack(State *state, Choice *choices, int numChoices, State *res, int numRes) {
-        // Check if it is a solution
+        // Ellenőrzés, hogy ez megoldás-e
         if (isSolution(state)) {
-            // Record the solution
+            // A megoldás rögzítése
             recordSolution(state, res, numRes);
-            // Stop searching
+            // Keresés leállítása
             return;
         }
-        // Traverse all choices
+        // Az összes választás bejárása
         for (int i = 0; i < numChoices; i++) {
-            // Pruning: check if the choice is valid
+            // Metszés: ellenőrzés, hogy a választás érvényes-e
             if (isValid(state, &choices[i])) {
-                // Attempt: make a choice and update the state
+                // Próbálkozás: választás megtétele és állapot frissítése
                 makeChoice(state, &choices[i]);
                 backtrack(state, choices, numChoices, res, numRes);
-                // Backtrack: undo the choice and restore to the previous state
+                // Visszalépés: a választás visszavonása és visszaállítás az előző állapotra
                 undoChoice(state, &choices[i]);
             }
         }
@@ -380,23 +380,23 @@ In the following framework code, `state` represents the current state of the pro
 === "Kotlin"
 
     ```kotlin title=""
-    /* Backtracking algorithm framework */
+    /* Visszalépéses keresési algoritmus keretrendszere */
     fun backtrack(state: State?, choices: List<Choice?>, res: List<State?>?) {
-        // Check if it is a solution
+        // Ellenőrzés, hogy ez megoldás-e
         if (isSolution(state)) {
-            // Record the solution
+            // A megoldás rögzítése
             recordSolution(state, res)
-            // Stop searching
+            // Keresés leállítása
             return
         }
-        // Traverse all choices
+        // Az összes választás bejárása
         for (choice in choices) {
-            // Pruning: check if the choice is valid
+            // Metszés: ellenőrzés, hogy a választás érvényes-e
             if (isValid(state, choice)) {
-                // Attempt: make a choice and update the state
+                // Próbálkozás: választás megtétele és állapot frissítése
                 makeChoice(state, choice)
                 backtrack(state, choices, res)
-                // Backtrack: undo the choice and restore to the previous state
+                // Visszalépés: a választás visszavonása és visszaállítás az előző állapotra
                 undoChoice(state, choice)
             }
         }
@@ -406,98 +406,98 @@ In the following framework code, `state` represents the current state of the pro
 === "Ruby"
 
     ```ruby title=""
-    ### Backtracking algorithm framework ###
+    ### Visszalépéses keresési algoritmus keretrendszere ###
     def backtrack(state, choices, res)
-        # Check if it is a solution
+        # Ellenőrzés, hogy ez megoldás-e
         if is_solution?(state)
-            # Record the solution
+            # A megoldás rögzítése
             record_solution(state, res)
             return
         end
 
-        # Traverse all choices
+        # Az összes választás bejárása
         for choice in choices
-            # Pruning: check if the choice is valid
+            # Metszés: ellenőrzés, hogy a választás érvényes-e
             if is_valid?(state, choice)
-                # Attempt: make a choice and update the state
+                # Próbálkozás: választás megtétele és állapot frissítése
                 make_choice(state, choice)
                 backtrack(state, choices, res)
-                # Backtrack: undo the choice and restore to the previous state
+                # Visszalépés: a választás visszavonása és visszaállítás az előző állapotra
                 undo_choice(state, choice)
             end
         end
     end
     ```
 
-Next, we solve Example 3 based on the framework code. The state `state` is the node traversal path, the choices `choices` are the left and right child nodes of the current node, and the result `res` is a list of paths:
+Ezután a keretrendszer kód alapján megoldjuk a 3. példát. Az állapot `state` a csomópontok bejárási útja, a választások `choices` az aktuális csomópont bal és jobb gyermek csomópontjai, az eredmény `res` pedig az utak listája:
 
 ```src
 [file]{preorder_traversal_iii_template}-[class]{}-[func]{backtrack}
 ```
 
-As per the problem statement, we should continue searching after finding a node with value $7$. **Therefore, we need to remove the `return` statement after recording the solution**. The following figure compares the search process with and without the `return` statement.
+A feladat leírása szerint a $7$ értékű csomópont megtalálása után folytatni kell a keresést. **Ezért el kell távolítanunk a `return` utasítást a megoldás rögzítése után**. Az alábbi ábra összehasonlítja a `return` utasítással és anélküli keresési folyamatot.
 
-![Comparison of search process with and without return statement](backtracking_algorithm.assets/backtrack_remove_return_or_not.png)
+![A keresési folyamat összehasonlítása return utasítással és anélkül](backtracking_algorithm.assets/backtrack_remove_return_or_not.png)
 
-Compared to code based on preorder traversal, code based on the backtracking algorithm framework appears more verbose, but has better generality. In fact, **many backtracking problems can be solved within this framework**. We only need to define `state` and `choices` for the specific problem and implement each method in the framework.
+Az előrendű bejáráson alapuló kódhoz képest a visszalépéses keresési algoritmus keretrendszerén alapuló kód részletesebb, de jobb általánosíthatósággal rendelkezik. Valójában **sok visszalépéses keresési feladat megoldható ezen keretrendszeren belül**. Csak az adott feladathoz kell meghatároznunk az `state`-t és a `choices`-t, és meg kell valósítanunk a keretrendszer egyes metódusait.
 
-## Common Terminology
+## Általános terminológia
 
-To analyze algorithmic problems more clearly, we summarize the meanings of common terminology used in backtracking algorithms and provide corresponding examples from Example 3, as shown in the following table.
+Az algoritmikus feladatok világosabb elemzéséhez összefoglaljuk a visszalépéses keresési algoritmusokban használt általános terminológia jelentéseit, és a 3. példából megfelelő példákat adunk, ahogy az alábbi táblázatban látható.
 
-<p align="center"> Table <id> &nbsp; Common Backtracking Algorithm Terminology </p>
+<p align="center"> Táblázat <id> &nbsp; A visszalépéses keresési algoritmus általános terminológiája </p>
 
-| Term                      | Definition                                                                                                                   | Example 3                                                                          |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| Solution (solution)       | A solution is an answer that satisfies the specific conditions of a problem; there may be one or more solutions             | All paths from root to nodes with value $7$ that satisfy the constraint            |
-| Constraint (constraint)   | A constraint is a condition in the problem that limits the feasibility of solutions, typically used for pruning              | Paths do not contain nodes with value $3$                                          |
-| State (state)             | State represents the situation of a problem at a certain moment, including the choices already made                           | The currently visited node path, i.e., the `path` list of nodes                    |
-| Attempt (attempt)         | An attempt is the process of exploring the solution space according to available choices, including making choices, updating state, and checking if it is a solution | Recursively visit left (right) child nodes, add nodes to `path`, check if node value is $7$ |
-| Backtrack (backtracking)  | Backtracking refers to undoing previous choices and returning to a previous state when encountering a state that does not satisfy constraints | Stop searching when passing over leaf nodes, ending node visits, or encountering nodes with value $3$; function returns |
-| Pruning (pruning)         | Pruning is a method of avoiding meaningless search paths according to problem characteristics and constraints, which can improve search efficiency | When encountering a node with value $3$, do not continue searching                 |
+| Kifejezés                     | Definíció                                                                                                                    | 3. példa                                                                           |
+| ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| Megoldás (solution)           | A megoldás egy olyan válasz, amely kielégíti a feladat meghatározott feltételeit; lehet egy vagy több megoldás               | Minden gyökértől a $7$ értékű csomópontokig vezető út, amely kielégíti a feltételt |
+| Feltétel (constraint)         | A feltétel a feladatban szereplő olyan kikötés, amely korlátozza a megoldások megvalósíthatóságát, általában metszésre használják | Az utak nem tartalmaznak $3$ értékű csomópontokat                              |
+| Állapot (state)               | Az állapot a feladat egy adott pillanatbeli helyzetét jelöli, beleértve az eddig meghozott választásokat                     | A jelenleg meglátogatott csomópontok útja, azaz a `path` csomópontlista            |
+| Próbálkozás (attempt)         | A próbálkozás a megoldástér felfedezésének folyamata az elérhető választások alapján, beleértve a választások megtételét, az állapot frissítését és annak ellenőrzését, hogy ez megoldás-e | Rekurzívan meglátogatjuk a bal (jobb) gyermek csomópontokat, hozzáadjuk a csomópontokat a `path`-hoz, ellenőrizzük, hogy a csomópont értéke $7$-e |
+| Visszalépés (backtracking)    | A visszalépés az előző választások visszavonására és egy korábbi állapotba való visszatérésre vonatkozik, amikor olyan állapottal találkozunk, amely nem elégíti ki a feltételeket | Leállítjuk a keresést, amikor áthaladunk a levélcsomópontokon, befejezzük a csomópontok meglátogatását, vagy $3$ értékű csomópontokkal találkozunk; a függvény visszatér |
+| Metszés (pruning)             | A metszés egy módszer az értelmetlen keresési utak elkerülésére a feladat jellemzői és feltételei alapján, amely javíthatja a keresési hatékonyságot | Amikor $3$ értékű csomóponttal találkozunk, nem folytatjuk a keresést             |
 
 !!! tip
 
-    The concepts of problem, solution, state, etc. are universal and are involved in divide-and-conquer, backtracking, dynamic programming, greedy and other algorithms.
+    A feladat, megoldás, állapot stb. fogalmai univerzálisak, és a divide-and-conquer (oszd meg és uralkodj), visszalépéses keresés, dinamikus programozás, mohó és más algoritmusokban egyaránt megjelennek.
 
-## Advantages and Limitations
+## Előnyök és korlátok
 
-The backtracking algorithm is essentially a depth-first search algorithm that tries all possible solutions until it finds one that satisfies the conditions. The advantage of this approach is that it can find all possible solutions, and with reasonable pruning operations, it achieves high efficiency.
+A visszalépéses keresési algoritmus lényegében egy mélységi keresési algoritmus, amely az összes lehetséges megoldást kipróbálja, amíg meg nem talál egyet, amely kielégíti a feltételeket. Ennek a megközelítésnek az az előnye, hogy megtalálja az összes lehetséges megoldást, és megfelelő metszési műveletekkel magas hatékonyságot ér el.
 
-However, when dealing with large-scale or complex problems, **the running efficiency of the backtracking algorithm may be unacceptable**.
+Azonban nagy méretű vagy összetett feladatok esetén **a visszalépéses keresési algoritmus futási hatékonysága elfogadhatatlan lehet**.
 
-- **Time**: The backtracking algorithm usually needs to traverse all possibilities in the solution space, and the time complexity can reach exponential or factorial order.
-- **Space**: During recursive calls, the current state needs to be saved (such as paths, auxiliary variables used for pruning, etc.), and when the depth is large, the space requirement can become very large.
+- **Idő**: A visszalépéses keresési algoritmusnak általában be kell járnia a megoldástér összes lehetőségét, és az időbonyolultság exponenciális vagy faktoriális rendet érhet el.
+- **Tér**: A rekurzív hívások során el kell menteni az aktuális állapotot (például az utakat, a metszéshez használt segédváltozókat stb.), és ha a mélység nagy, a tárhely-igény nagyon megnőhet.
 
-Nevertheless, **the backtracking algorithm is still the best solution for certain search problems and constraint satisfaction problems**. For these problems, since we cannot predict which choices will generate valid solutions, we must traverse all possible choices. In this case, **the key is how to optimize efficiency**. There are two common efficiency optimization methods.
+Mindazonáltal **a visszalépéses keresési algoritmus még mindig a legjobb megoldás bizonyos keresési feladatokra és feltétel-kielégítési feladatokra**. Ezeknél a feladatoknál, mivel nem tudjuk előre megjósolni, hogy melyik választások generálnak érvényes megoldásokat, be kell járnunk az összes lehetséges választást. Ebben az esetben **a kulcs az, hogyan optimalizáljuk a hatékonyságot**. Két általánosan alkalmazott hatékonyság-optimalizálási módszer van.
 
-- **Pruning**: Avoid searching paths that are guaranteed not to produce solutions, thereby saving time and space.
-- **Heuristic search**: Introduce certain strategies or estimation values during the search process to prioritize searching paths that are most likely to produce valid solutions.
+- **Metszés**: Kerüljük el azoknak az utaknak a keresését, amelyekről garantált, hogy nem termelnek megoldásokat, ezáltal időt és tárhelyet takarítva meg.
+- **Heurisztikus keresés**: Vezessünk be bizonyos stratégiákat vagy becslési értékeket a keresési folyamat során, hogy elsőbbséget adjunk azoknak az utaknak, amelyek a legvalószínűbben érvényes megoldásokat termelnek.
 
-## Typical Backtracking Examples
+## Jellemző visszalépéses keresési példák
 
-The backtracking algorithm can be used to solve many search problems, constraint satisfaction problems, and combinatorial optimization problems.
+A visszalépéses keresési algoritmus számos keresési feladat, feltétel-kielégítési feladat és kombinatorikus optimalizálási feladat megoldásához használható.
 
-**Search problems**: The goal of these problems is to find solutions that satisfy specific conditions.
+**Keresési feladatok**: Ezeknek a feladatoknak a célja, hogy meghatározott feltételeknek megfelelő megoldásokat találjunk.
 
-- Permutation problem: Given a set, find all possible permutations and combinations.
-- Subset sum problem: Given a set and a target sum, find all subsets in the set whose elements sum to the target.
-- Tower of Hanoi: Given three pegs and a series of disks of different sizes, move all disks from one peg to another, moving only one disk at a time, and never placing a larger disk on a smaller disk.
+- Permutációs feladat: Adott egy halmaz, keressd meg az összes lehetséges permutációt és kombinációt.
+- Részösszeg feladat: Adott egy halmaz és egy célösszeg, keressd meg a halmaz összes olyan részhalmazát, amelynek elemei összege egyenlő a céllal.
+- Hanoi-tornyok: Adott három cölöp és különböző méretű korongok sorozata, mozgasd az összes korongot az egyik cölöpről a másikra, egyszerre csak egy korongot mozgatva, és soha ne helyezz nagyobb korongot kisebbre.
 
-**Constraint satisfaction problems**: The goal of these problems is to find solutions that satisfy all constraints.
+**Feltétel-kielégítési feladatok**: Ezeknek a feladatoknak a célja, hogy az összes feltételt kielégítő megoldásokat találjunk.
 
-- N-Queens: Place $n$ queens on an $n \times n$ chessboard such that they do not attack each other.
-- Sudoku: Fill numbers $1$ to $9$ in a $9 \times 9$ grid such that each row, column, and $3 \times 3$ subgrid contains no repeated digits.
-- Graph coloring: Given an undirected graph, color each vertex with the minimum number of colors such that adjacent vertices have different colors.
+- N-királynő: Helyezz $n$ királynőt egy $n \times n$-es sakktáblára úgy, hogy ne támadhassák meg egymást.
+- Sudoku: Töltsd ki az $1$-től $9$-ig terjedő számokkal a $9 \times 9$-es rácsot úgy, hogy minden sor, oszlop és $3 \times 3$-as alrács ne tartalmazzon ismétlődő számjegyeket.
+- Gráfszínezés: Adott egy irányítatlan gráf, színezd ki az összes csúcsot a minimális számú színnel úgy, hogy a szomszédos csúcsoknak különböző színük legyen.
 
-**Combinatorial optimization problems**: The goal of these problems is to find an optimal solution that satisfies certain conditions in a combinatorial space.
+**Kombinatorikus optimalizálási feladatok**: Ezeknek a feladatoknak a célja, hogy egy kombinatorikus térben bizonyos feltételeket kielégítő optimális megoldást találjunk.
 
-- 0-1 Knapsack: Given a set of items and a knapsack, each item has a value and weight. Under the knapsack capacity constraint, select items to maximize total value.
-- Traveling Salesman Problem: Starting from a point in a graph, visit all other points exactly once and return to the starting point, finding the shortest path.
-- Maximum Clique: Given an undirected graph, find the largest complete subgraph, i.e., a subgraph where any two vertices are connected by an edge.
+- 0-1 Hátizsák: Adott tárgyak halmaza és egy hátizsák, minden tárgynak van értéke és súlya. A hátizsák kapacitásának korlátja alatt válassz tárgyakat az összérték maximalizálásához.
+- Utazó ügynök probléma: Egy gráf egy pontjából kiindulva látogasd meg az összes többi pontot pontosan egyszer, és térj vissza a kiindulási pontba, megkeresve a legrövidebb utat.
+- Maximális klikk: Adott egy irányítatlan gráf, keressd meg a legnagyobb teljes részgráfot, azaz azt a részgráfot, amelyben bármely két csúcs össze van kötve egy éllel.
 
-Note that for many combinatorial optimization problems, backtracking is not the optimal solution.
+Megjegyzendő, hogy sok kombinatorikus optimalizálási feladatnál a visszalépéses keresés nem az optimális megoldás.
 
-- The 0-1 Knapsack problem is usually solved using dynamic programming to achieve higher time efficiency.
-- The Traveling Salesman Problem is a famous NP-Hard problem; common solutions include genetic algorithms and ant colony algorithms.
-- The Maximum Clique problem is a classical problem in graph theory and can be solved using heuristic algorithms such as greedy algorithms.
+- A 0-1 hátizsák feladatot általában dinamikus programozással oldják meg a nagyobb időhatékonyság érdekében.
+- Az utazó ügynök probléma egy ismert NP-nehéz feladat; általánosan alkalmazott megoldások közé tartoznak a genetikus algoritmusok és a hangyakolónia algoritmusok.
+- A maximális klikk feladat egy klasszikus gráfelméleti feladat, amely mohó algoritmusokhoz hasonló heurisztikus algoritmusokkal oldható meg.

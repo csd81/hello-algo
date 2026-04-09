@@ -1,9 +1,9 @@
-# Backtracking
+# Visszalépéses keresés
 
-![Backtracking](../assets/covers/chapter_backtracking.jpg)
+![Visszalépéses keresés](../assets/covers/chapter_backtracking.jpg)
 
 !!! abstract
 
-    We are like explorers in a maze, and may encounter difficulties on the path forward.
+    Olyanok vagyunk, mint egy labirintus felfedezői, és előre haladás közben nehézségekbe ütközhetünk.
 
-    The power of backtracking allows us to start over, keep trying, and eventually find the exit leading to light.
+    A visszalépéses keresés ereje lehetővé teszi számunkra, hogy újrakezdjük, tovább próbálkozzunk, és végül megtaláljuk a fényre vezető kijáratot.
