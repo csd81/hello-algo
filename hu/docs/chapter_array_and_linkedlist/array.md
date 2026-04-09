@@ -1,19 +1,19 @@
-# Array
+# Tömb
 
-An <u>array</u> is a linear data structure that stores elements of the same type in contiguous memory space. The position of an element in the array is called the element's <u>index</u>. The figure below illustrates the main concepts and storage method of arrays.
+A <u>tömb</u> egy lineáris adatstruktúra, amely azonos típusú elemeket tárol összefüggő memóriaterületen. Az elem tömbön belüli helyzetét az elem <u>indexének</u> nevezzük. Az alábbi ábra a tömbök fő fogalmait és tárolási módszerét szemlélteti.
 
-![Array definition and storage method](array.assets/array_definition.png)
+![Tömb definíciója és tárolási módszere](array.assets/array_definition.png)
 
-## Common Array Operations
+## A Tömb Általános Műveletei
 
-### Initializing Arrays
+### Tömbök Inicializálása
 
-We can choose between two array initialization methods based on our needs: without initial values or with given initial values. When no initial values are specified, most programming languages will initialize array elements to $0$:
+Az igényeink szerint két inicializálási módszer közül választhatunk: kezdőértékek nélkül vagy megadott kezdőértékekkel. Ha nem adunk meg kezdőértékeket, a legtöbb programozási nyelv a tömbeleméket $0$-ra inicializálja:
 
 === "Python"
 
     ```python title="array.py"
-    # Initialize array
+    # Tömb inicializálása
     arr: list[int] = [0] * 5  # [ 0, 0, 0, 0, 0 ]
     nums: list[int] = [1, 3, 2, 5, 4]
     ```
@@ -21,11 +21,11 @@ We can choose between two array initialization methods based on our needs: witho
 === "C++"
 
     ```cpp title="array.cpp"
-    /* Initialize array */
-    // Stored on stack
+    /* Tömb inicializálása */
+    // Veremtárolón tárolva
     int arr[5];
     int nums[5] = { 1, 3, 2, 5, 4 };
-    // Stored on heap (requires manual memory release)
+    // Halomtárolón tárolva (manuális memóriafelszabadítás szükséges)
     int* arr1 = new int[5];
     int* nums1 = new int[5] { 1, 3, 2, 5, 4 };
     ```
@@ -33,7 +33,7 @@ We can choose between two array initialization methods based on our needs: witho
 === "Java"
 
     ```java title="array.java"
-    /* Initialize array */
+    /* Tömb inicializálása */
     int[] arr = new int[5]; // { 0, 0, 0, 0, 0 }
     int[] nums = { 1, 3, 2, 5, 4 };
     ```
@@ -41,7 +41,7 @@ We can choose between two array initialization methods based on our needs: witho
 === "C#"
 
     ```csharp title="array.cs"
-    /* Initialize array */
+    /* Tömb inicializálása */
     int[] arr = new int[5]; // [ 0, 0, 0, 0, 0 ]
     int[] nums = [1, 3, 2, 5, 4];
     ```
@@ -49,18 +49,18 @@ We can choose between two array initialization methods based on our needs: witho
 === "Go"
 
     ```go title="array.go"
-    /* Initialize array */
+    /* Tömb inicializálása */
     var arr [5]int
-    // In Go, specifying length ([5]int) creates an array; not specifying length ([]int) creates a slice
-    // Since Go's arrays are designed to have their length determined at compile time, only constants can be used to specify the length
-    // For convenience in implementing the extend() method, slices are treated as arrays below
+    // Go-ban a hossz megadása ([5]int) tömböt, a hossz elhagyása ([]int) szeletet hoz létre
+    // Mivel a Go tömbjeinek hosszát fordítási időben kell meghatározni, csak konstansok használhatók a hossz megadásához
+    // Az extend() metódus megvalósításának egyszerűsítése érdekében alább szeleteket tömbként kezelünk
     nums := []int{1, 3, 2, 5, 4}
     ```
 
 === "Swift"
 
     ```swift title="array.swift"
-    /* Initialize array */
+    /* Tömb inicializálása */
     let arr = Array(repeating: 0, count: 5) // [0, 0, 0, 0, 0]
     let nums = [1, 3, 2, 5, 4]
     ```
@@ -68,7 +68,7 @@ We can choose between two array initialization methods based on our needs: witho
 === "JS"
 
     ```javascript title="array.js"
-    /* Initialize array */
+    /* Tömb inicializálása */
     var arr = new Array(5).fill(0);
     var nums = [1, 3, 2, 5, 4];
     ```
@@ -76,7 +76,7 @@ We can choose between two array initialization methods based on our needs: witho
 === "TS"
 
     ```typescript title="array.ts"
-    /* Initialize array */
+    /* Tömb inicializálása */
     let arr: number[] = new Array(5).fill(0);
     let nums: number[] = [1, 3, 2, 5, 4];
     ```
@@ -84,7 +84,7 @@ We can choose between two array initialization methods based on our needs: witho
 === "Dart"
 
     ```dart title="array.dart"
-    /* Initialize array */
+    /* Tömb inicializálása */
     List<int> arr = List.filled(5, 0); // [0, 0, 0, 0, 0]
     List<int> nums = [1, 3, 2, 5, 4];
     ```
@@ -92,20 +92,20 @@ We can choose between two array initialization methods based on our needs: witho
 === "Rust"
 
     ```rust title="array.rs"
-    /* Initialize array */
+    /* Tömb inicializálása */
     let arr: [i32; 5] = [0; 5]; // [0, 0, 0, 0, 0]
     let slice: &[i32] = &[0; 5];
-    // In Rust, specifying length ([i32; 5]) creates an array; not specifying length (&[i32]) creates a slice
-    // Since Rust's arrays are designed to have their length determined at compile time, only constants can be used to specify the length
-    // Vector is the type generally used as a dynamic array in Rust
-    // For convenience in implementing the extend() method, vectors are treated as arrays below
+    // Rustban a hossz megadása ([i32; 5]) tömböt, a hossz elhagyása (&[i32]) szeletet hoz létre
+    // Mivel a Rust tömbjeinek hosszát fordítási időben kell meghatározni, csak konstansok használhatók a hossz megadásához
+    // A Vector az általánosan használt dinamikus tömb típus Rustban
+    // Az extend() metódus megvalósításának egyszerűsítése érdekében alább vektorokat tömbként kezelünk
     let nums: Vec<i32> = vec![1, 3, 2, 5, 4];
     ```
 
 === "C"
 
     ```c title="array.c"
-    /* Initialize array */
+    /* Tömb inicializálása */
     int arr[5] = { 0 }; // { 0, 0, 0, 0, 0 }
     int nums[5] = { 1, 3, 2, 5, 4 };
     ```
@@ -113,7 +113,7 @@ We can choose between two array initialization methods based on our needs: witho
 === "Kotlin"
 
     ```kotlin title="array.kt"
-    /* Initialize array */
+    /* Tömb inicializálása */
     var arr = IntArray(5) // { 0, 0, 0, 0, 0 }
     var nums = intArrayOf(1, 3, 2, 5, 4)
     ```
@@ -121,107 +121,107 @@ We can choose between two array initialization methods based on our needs: witho
 === "Ruby"
 
     ```ruby title="array.rb"
-    # Initialize array
+    # Tömb inicializálása
     arr = Array.new(5, 0)
     nums = [1, 3, 2, 5, 4]
     ```
 
-??? pythontutor "Code Visualization"
+??? pythontutor "Kód Vizualizáció"
 
     https://pythontutor.com/render.html#code=%23%20%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E7%BB%84%0Aarr%20%3D%20%5B0%5D%20*%205%20%20%23%20%5B%200,%200,%200,%200,%200%20%5D%0Anums%20%3D%20%5B1,%203,%202,%205,%204%5D&cumulative=false&curInstr=0&heapPrimitives=nevernest&mode=display&origin=opt-frontend.js&py=311&rawInputLstJSON=%5B%5D&textReferences=false
 
-### Accessing Elements
+### Elemek Elérése
 
-Array elements are stored in contiguous memory space, which means calculating the memory address of array elements is very easy. Given the array's memory address (the memory address of the first element) and an element's index, we can use the formula shown in the figure below to calculate the element's memory address and directly access that element.
+A tömbelemek összefüggő memóriaterületen tárolódnak, ami azt jelenti, hogy a tömbelemek memóriacímének kiszámítása nagyon egyszerű. A tömb memóriacímét (az első elem memóriacímét) és egy elem indexét ismerve az alábbi ábrán látható képlettel kiszámítható az elem memóriacíme, és közvetlenül hozzáférhetünk ahhoz az elemhez.
 
-![Memory address calculation for array elements](array.assets/array_memory_location_calculation.png)
+![Tömbelemek memóriacímének kiszámítása](array.assets/array_memory_location_calculation.png)
 
-Observing the figure above, we find that the first element of an array has an index of $0$, which may seem counterintuitive since counting from $1$ would be more natural. However, from the perspective of the address calculation formula, **an index is essentially an offset from the memory address**. The address offset of the first element is $0$, so it is reasonable for its index to be $0$.
+A fenti ábrát megvizsgálva megfigyeljük, hogy a tömb első elemének indexe $0$, ami elsőre talán nem tűnik természetesnek, hiszen $1$-től számolni természetesebb lenne. Azonban a címkiszámítási képlet szempontjából **az index lényegében egy eltolás a memóriacímtől**. Az első elem címeltolása $0$, ezért indokolt, hogy indexe is $0$ legyen.
 
-Accessing elements in an array is highly efficient; we can randomly access any element in the array in $O(1)$ time.
+A tömbben lévő elemek elérése rendkívül hatékony; bármely elem véletlenszerűen elérhető $O(1)$ idő alatt.
 
 ```src
 [file]{array}-[class]{}-[func]{random_access}
 ```
 
-### Inserting Elements
+### Elemek Beszúrása
 
-Array elements are stored "tightly adjacent" in memory, with no space between them to store any additional data. As shown in the figure below, if we want to insert an element in the middle of an array, we need to shift all elements after that position backward by one position, and then assign the value to that index.
+A tömbelemek memóriában "szorosan egymás mellett" tárolódnak, köztük nincs hely további adatok tárolására. Ahogy az alábbi ábra mutatja, ha egy elemet szeretnénk a tömb közepébe szúrni, az adott pozíció utáni összes elemet egy pozícióval hátra kell tolni, majd az értéket hozzá kell rendelni az adott indexhez.
 
-![Example of inserting an element into an array](array.assets/array_insert_element.png)
+![Elem tömbhöz való hozzáadásának példája](array.assets/array_insert_element.png)
 
-It is worth noting that since the length of an array is fixed, inserting an element will inevitably cause the element at the end of the array to be "lost". We will leave the solution to this problem for discussion in the "List" chapter.
+Érdemes megjegyezni, hogy mivel a tömb hossza rögzített, egy elem beszúrása elkerülhetetlenül a tömb végén lévő elem "elvesztéséhez" vezet. Ennek a problémának a megoldását a "Lista" fejezetnél tárgyaljuk majd.
 
 ```src
 [file]{array}-[class]{}-[func]{insert}
 ```
 
-### Removing Elements
+### Elemek Törlése
 
-Similarly, as shown in the figure below, to delete the element at index $i$, we need to shift all elements after index $i$ forward by one position.
+Hasonlóképpen, ahogy az alábbi ábra mutatja, a $i$ indexű elem törléséhez az összes $i$ index utáni elemet egy pozícióval előre kell tolni.
 
-![Example of removing an element from an array](array.assets/array_remove_element.png)
+![Elem tömbből való eltávolításának példája](array.assets/array_remove_element.png)
 
-Note that after the deletion is complete, the original last element becomes "meaningless", so we do not need to specifically modify it.
+Vegyük észre, hogy a törlés befejezése után az eredetileg utolsó elem "értelmetlenné" válik, így azt nem szükséges kifejezetten módosítani.
 
 ```src
 [file]{array}-[class]{}-[func]{remove}
 ```
 
-Overall, array insertion and deletion operations have the following drawbacks:
+Összességében a tömb beszúrási és törlési műveleteinek a következő hátrányai vannak:
 
-- **High time complexity**: The average time complexity for both insertion and deletion in arrays is $O(n)$, where $n$ is the length of the array.
-- **Loss of elements**: Since the length of an array is immutable, after inserting an element, elements that exceed the array's length will be lost.
-- **Memory waste**: We can initialize a relatively long array and only use the front portion, so that when inserting data, the lost elements at the end are "meaningless", but this causes some memory space to be wasted.
+- **Magas időbonyolultság**: A tömbben végzett beszúrás és törlés átlagos időbonyolultsága $O(n)$, ahol $n$ a tömb hossza.
+- **Elemvesztés**: Mivel a tömb hossza nem változtatható, egy elem beszúrása után a tömb hosszát meghaladó elemek elvesznek.
+- **Memória-pazarlás**: Inicializálhatunk egy viszonylag hosszú tömböt, és csak az első részét használjuk, így az adatok beszúrásakor az elveszett elemek a végén "értelmetlenek", de ez némi memóriaterület-pazarlást okoz.
 
-### Traversing Arrays
+### Tömbök Bejárása
 
-In most programming languages, we can traverse an array either by index or by directly iterating through each element in the array:
+A legtöbb programozási nyelvben a tömböt index szerint vagy közvetlenül az elemek iterálásával is bejárhatjuk:
 
 ```src
 [file]{array}-[class]{}-[func]{traverse}
 ```
 
-### Finding Elements
+### Elemek Keresése
 
-Finding a specified element in an array requires traversing the array and checking whether the element value matches in each iteration; if it matches, output the corresponding index.
+Egy adott elem megkeresése a tömbben a tömb bejárását és minden iterációban az elemérték egyezésének ellenőrzését igényli; egyezés esetén kiírjuk a megfelelő indexet.
 
-Since an array is a linear data structure, the above search operation is called a "linear search".
+Mivel a tömb lineáris adatstruktúra, a fenti keresési művelet "lineáris keresésnek" nevezzük.
 
 ```src
 [file]{array}-[class]{}-[func]{find}
 ```
 
-### Expanding Arrays
+### Tömbök Bővítése
 
-In complex system environments, programs cannot guarantee that the memory space after an array is available, making it unsafe to expand the array's capacity. Therefore, in most programming languages, **the length of an array is immutable**.
+Összetett rendszerkörnyezetekben a programok nem garantálhatják, hogy a tömb utáni memóriaterület szabad, így a tömb kapacitásának bővítése nem biztonságos. Ezért a legtöbb programozási nyelvben **a tömb hossza nem változtatható**.
 
-If we want to expand an array, we need to create a new, larger array and then copy the original array elements to the new array one by one. This is an $O(n)$ operation, which is very time-consuming when the array is large. The code is shown below:
+Ha bővíteni szeretnénk egy tömböt, létre kell hoznunk egy új, nagyobb tömböt, majd az eredeti tömb elemeit egyenként át kell másolnunk az új tömbbe. Ez egy $O(n)$ műveleti bonyolultságú folyamat, amely nagy tömbök esetén nagyon időigényes. Az alábbi kód szemlélteti ezt:
 
 ```src
 [file]{array}-[class]{}-[func]{extend}
 ```
 
-## Advantages and Limitations of Arrays
+## A Tömbök Előnyei és Korlátai
 
-Arrays are stored in contiguous memory space with elements of the same type. This approach contains rich prior information that the system can use to optimize the efficiency of data structure operations.
+A tömbök összefüggő memóriaterületen tárolódnak, azonos típusú elemekkel. Ez a megközelítés gazdag előzetes információkat tartalmaz, amelyeket a rendszer felhasználhat az adatstruktúra-műveletek hatékonyságának optimalizálásához.
 
-- **High space efficiency**: Arrays allocate contiguous memory blocks for data without additional structural overhead.
-- **Support for random access**: Arrays allow accessing any element in $O(1)$ time.
-- **Cache locality**: When accessing array elements, the computer not only loads the element but also caches the surrounding data, thereby leveraging the cache to improve the execution speed of subsequent operations.
+- **Magas tárhelyhatékonyság**: A tömbök összefüggő memóriablokkokat foglalnak az adatok számára, további strukturális többletterhelés nélkül.
+- **Véletlenszerű hozzáférés támogatása**: A tömbök lehetővé teszik bármely elem $O(1)$ idő alatt való elérését.
+- **Gyorsítótár-lokalitás**: Tömbelemek elérésekor a számítógép nemcsak az elemet tölti be, hanem a közeli adatokat is gyorsítótárba helyezi, ezáltal kihasználva a gyorsítótárat a következő műveletek végrehajtási sebességének javítása érdekében.
 
-Contiguous space storage is a double-edged sword with the following limitations:
+Az összefüggő tárhelytárolás kétélű kard, a következő korlátokkal:
 
-- **Low insertion and deletion efficiency**: When an array has many elements, insertion and deletion operations require shifting a large number of elements.
-- **Immutable length**: After an array is initialized, its length is fixed. Expanding the array requires copying all data to a new array, which is very costly.
-- **Space waste**: If the allocated size of an array exceeds what is actually needed, the extra space is wasted.
+- **Alacsony beszúrási és törlési hatékonyság**: Ha egy tömbnek sok eleme van, a beszúrási és törlési műveletek nagyszámú elem eltolását igénylik.
+- **Változtathatatlan hossz**: Egy tömb inicializálása után annak hossza rögzített. A tömb bővítése az összes adat új tömbbe való másolását igényli, ami nagyon költséges.
+- **Tárhelypazarlás**: Ha egy tömb lefoglalt mérete meghaladja a ténylegesen szükségeset, a felesleges hely elpazarolódik.
 
-## Typical Applications of Arrays
+## A Tömbök Tipikus Alkalmazásai
 
-Arrays are a fundamental and common data structure, frequently used in various algorithms and for implementing various complex data structures.
+A tömbök alapvető és elterjedt adatstruktúrák, amelyeket különféle algoritmusokban és összetett adatstruktúrák megvalósítására is rendszeresen alkalmaznak.
 
-- **Random access**: If we want to randomly sample some items, we can use an array to store them and generate a random sequence to implement random sampling based on indices.
-- **Sorting and searching**: Arrays are the most commonly used data structure for sorting and searching algorithms. Quick sort, merge sort, binary search, and others are primarily performed on arrays.
-- **Lookup tables**: When we need to quickly find an element or its corresponding relationship, we can use an array as a lookup table. For example, if we want to implement a mapping from characters to ASCII codes, we can use the ASCII code value of a character as an index, with the corresponding element stored at that position in the array.
-- **Machine learning**: Neural networks make extensive use of linear algebra operations between vectors, matrices, and tensors, all of which are constructed in the form of arrays. Arrays are the most commonly used data structure in neural network programming.
-- **Data structure implementation**: Arrays can be used to implement stacks, queues, hash tables, heaps, graphs, and other data structures. For example, the adjacency matrix representation of a graph is essentially a two-dimensional array.
+- **Véletlenszerű hozzáférés**: Ha véletlenszerűen szeretnénk mintát venni néhány elemből, tömbben tárolhatjuk őket, és egy véletlenszám-sorozatot generálhatunk a véletlenszerű mintavételhez indexek alapján.
+- **Rendezés és keresés**: A tömbök a leggyakrabban használt adatstruktúrák rendezési és keresési algoritmusokhoz. A gyorsrendezés, összefésüléses rendezés, bináris keresés és más algoritmusok elsősorban tömbökön végzik a műveleteket.
+- **Keresési táblák**: Ha gyorsan kell megtalálni egy elemet vagy annak megfelelő kapcsolatát, tömböt használhatunk keresési táblaként. Például ha karakterek ASCII-kódokra való leképezését szeretnénk megvalósítani, a karakter ASCII-kódértékét használhatjuk indexként, a tömb adott pozícióján a megfelelő elemet tárolva.
+- **Gépi tanulás**: A neurális hálók kiterjedten használnak lineáris algebrai műveleteket vektorok, mátrixok és tenzorok között, amelyek mindegyike tömb formájában van felépítve. A tömbök a leggyakrabban használt adatstruktúrák a neurális hálók programozásában.
+- **Adatstruktúrák megvalósítása**: A tömbök segítségével veremek, sorok, hasítótáblák, kupacok, gráfok és egyéb adatstruktúrák valósíthatók meg. Például egy gráf szomszédsági mátrixos ábrázolása lényegében egy kétdimenziós tömb.

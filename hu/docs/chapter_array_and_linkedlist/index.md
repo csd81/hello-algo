@@ -1,9 +1,9 @@
-# Array and Linked List
+# Tömb és Láncolt Lista
 
-![Array and Linked List](../assets/covers/chapter_array_and_linkedlist.jpg)
+![Tömb és Láncolt Lista](../assets/covers/chapter_array_and_linkedlist.jpg)
 
 !!! abstract
 
-    The world of data structures is like a solid brick wall.
+    Az adatstruktúrák világa olyan, mint egy szilárd téglakerítés.
 
-    Array bricks are neatly arranged, tightly packed one by one. Linked list bricks are scattered everywhere, with connecting vines freely weaving through the gaps between bricks.
+    A tömb téglái szabályosan sorakoznak, szorosan egymás mellé illesztve. A láncolt lista téglái szerte szóródnak, összekötő indákkal, amelyek szabadon fonódnak át a téglák közötti réseken.
