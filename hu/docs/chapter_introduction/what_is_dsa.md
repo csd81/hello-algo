@@ -1,53 +1,53 @@
-# What Is an Algorithm
+# Mi az algoritmus?
 
-## Algorithm Definition
+## Az algoritmus definíciója
 
-An <u>algorithm</u> is a set of instructions or operational steps that solves a specific problem within a finite amount of time. It has the following characteristics.
+Az <u>algoritmus</u> egy adott probléma megoldására szolgáló utasítások vagy műveleti lépések halmaza, amely véges idő alatt elvégezhető. A következő jellemzőkkel rendelkezik.
 
-- The problem is well-defined, with clear input and output definitions.
-- It is feasible and can be completed within a finite number of steps, time, and memory space.
-- Each step has a definite meaning, and under the same input and operating conditions, the output is always the same.
+- A probléma jól meghatározott, világos bemeneti és kimeneti definíciókkal.
+- Megvalósítható, és véges számú lépésben, időben és memóriaterületben elvégezhető.
+- Minden lépésnek egyértelű jelentése van, és azonos bemenet és működési feltételek mellett a kimenet mindig ugyanaz.
 
-## Data Structure Definition
+## Az adatszerkezet definíciója
 
-A <u>data structure</u> is a way of organizing and storing data, covering the data content, relationships between data, and methods for data operations. It has the following design objectives.
+Az <u>adatszerkezet</u> az adatok szervezésének és tárolásának módja, amely lefedi az adatok tartalmát, az adatok közötti kapcsolatokat és az adatműveletek módszereit. A következő tervezési célokkal rendelkezik.
 
-- Occupy as little space as possible to save computer memory.
-- Data operations should be as fast as possible, covering data access, addition, deletion, update, etc.
-- Provide a concise data representation and logical information so that algorithms can run efficiently.
+- Foglaljon el a lehető legkevesebb tárhelyet a számítógép memóriájának megtakarítása érdekében.
+- Az adatműveletek legyenek a lehető leggyorsabbak, beleértve az adatok hozzáférését, hozzáadását, törlését, frissítését stb.
+- Nyújtson tömör adatábrázolást és logikai információkat, hogy az algoritmusok hatékonyan futhassanak.
 
-**Data structure design is a process full of trade-offs**. If we want to achieve improvements in one aspect, we often need to make compromises in another aspect. Here are two examples.
+**Az adatszerkezet tervezése kompromisszumokkal teli folyamat**. Ha az egyik területen javítást szeretnénk elérni, gyakran a másik területen kell engedményeket tennünk. Íme két példa.
 
-- Compared to arrays, linked lists are more convenient for data addition and deletion operations but sacrifice data access speed.
-- Compared to linked lists, graphs provide richer logical information but require larger memory space.
+- A tömbökkel összehasonlítva a láncolt listáknál kényelmesebb az adatok hozzáadása és törlése, de feláldozzák az adathozzáférés sebességét.
+- A láncolt listákhoz képest a gráfok gazdagabb logikai információkat nyújtanak, de nagyobb memóriaterületet igényelnek.
 
-## The Relationship Between Data Structures and Algorithms
+## Az adatszerkezetek és algoritmusok kapcsolata
 
-As shown in the figure below, data structures and algorithms are highly related and tightly coupled, specifically manifested in the following three aspects.
+Ahogy az alábbi ábra mutatja, az adatszerkezetek és az algoritmusok szorosan összefüggnek és szorosan kapcsolódnak egymáshoz, amit konkrétan a következő három szempontból lehet megragadni.
 
-- Data structures are the foundation of algorithms. Data structures provide algorithms with structured storage of data and methods for operating on data.
-- Algorithms breathe life into data structures. Data structures themselves only store data information; combined with algorithms, they can solve specific problems.
-- Algorithms can usually be implemented based on different data structures, but execution efficiency may vary greatly. Choosing the appropriate data structure is key.
+- Az adatszerkezetek az algoritmusok alapjai. Az adatszerkezetek strukturált adattárolást és adatkezelési módszereket biztosítanak az algoritmusok számára.
+- Az algoritmusok életet lehelnek az adatszerkezetekbe. Az adatszerkezetek önmagukban csak adatinformációkat tárolnak; az algoritmusokkal kombinálva konkrét problémák megoldhatók.
+- Az algoritmusok általában különböző adatszerkezetek alapján valósíthatók meg, de a végrehajtás hatékonysága nagymértékben eltérhet. A megfelelő adatszerkezet kiválasztása kulcsfontosságú.
 
-![The relationship between data structures and algorithms](what_is_dsa.assets/relationship_between_data_structure_and_algorithm.png)
+![Az adatszerkezetek és az algoritmusok kapcsolata](what_is_dsa.assets/relationship_between_data_structure_and_algorithm.png)
 
-Data structures and algorithms are like assembling building blocks as shown in the figure below. A set of building blocks, in addition to containing many parts, also comes with detailed assembly instructions. By following the instructions step by step, we can assemble an exquisite building block model.
+Az adatszerkezetek és az algoritmusok olyanok, mint az építőkövek összerakása, ahogy az alábbi ábra mutatja. Egy csomag építőkő sok részből áll, és részletes összeszerelési utasításokat is tartalmaz. Az utasítások lépésről lépésre való követésével egy kifinomult építőkő-modellt rakhatunk össze.
 
-![Assembling blocks](what_is_dsa.assets/assembling_blocks.png)
+![Építőkövek összerakása](what_is_dsa.assets/assembling_blocks.png)
 
-The detailed correspondence between the two is shown in the table below.
+A két fogalom közötti részletes megfeleltetést az alábbi táblázat mutatja.
 
-<p align="center"> Table <id> &nbsp; Comparing data structures and algorithms to assembling building blocks </p>
+<p align="center"> Táblázat <id> &nbsp; Az adatszerkezetek és az algoritmusok összehasonlítása az építőkövek összerakásával </p>
 
-| Data structures and algorithms | Assembling building blocks                                        |
-| ------------------------------ | ------------------------------------------------------------------ |
-| Input data                     | Unassembled building blocks                                        |
-| Data structure                 | Organization form of building blocks, including shape, size, connection method, etc. |
-| Algorithm                      | A series of operational steps to assemble the blocks into the target form |
-| Output data                    | Building block model                                               |
+| Adatszerkezetek és algoritmusok | Építőkövek összerakása                                            |
+| ------------------------------- | ------------------------------------------------------------------ |
+| Bemeneti adatok                 | Összeszerelemlen építőkövek                                        |
+| Adatszerkezet                   | Építőkövek szervezési formája, beleértve az alakot, méretet, kapcsolási módszert stb. |
+| Algoritmus                      | Műveleti lépések sorozata a kövek célformába való összerakásához  |
+| Kimeneti adatok                 | Építőkő-modell                                                     |
 
-It is worth noting that data structures and algorithms are independent of programming languages. For this reason, this book is able to provide implementations based on multiple programming languages.
+Érdemes megjegyezni, hogy az adatszerkezetek és az algoritmusok függetlenek a programozási nyelvektől. Emiatt ez a könyv képes több programozási nyelven alapuló megvalósításokat nyújtani.
 
-!!! tip "Conventional abbreviation"
+!!! tip "Hagyományos rövidítés"
 
-    In actual discussions, we usually abbreviate "data structures and algorithms" as "algorithms". For example, the well-known LeetCode algorithm problems actually examine knowledge of both data structures and algorithms.
+    A tényleges megbeszélésekben általában az „adatszerkezetek és algoritmusok" kifejezést „algoritmusokra" rövidítjük. Például a jól ismert LeetCode algoritmus-feladatok valójában mind az adatszerkezetek, mind az algoritmusok ismeretét vizsgálják.

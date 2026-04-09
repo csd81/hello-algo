@@ -1,24 +1,24 @@
-# Summary
+# Összefoglaló
 
-### Key Review
+### Kulcsfontosságú áttekintés
 
-- Algorithms are ubiquitous in daily life and are not distant, esoteric knowledge. In fact, we have already learned many algorithms unconsciously and use them to solve problems big and small in life.
-- The principle of looking up a dictionary is consistent with the binary search algorithm. Binary search embodies the important algorithmic idea of divide and conquer.
-- The process of organizing playing cards is very similar to the insertion sort algorithm. Insertion sort is suitable for sorting small datasets.
-- The steps of making change are essentially a greedy algorithm, where the best choice is made at each step based on the current situation.
-- An algorithm is a set of instructions or operational steps that solves a specific problem within a finite amount of time, while a data structure is the way computers organize and store data.
-- Data structures and algorithms are closely connected. Data structures are the foundation of algorithms, and algorithms breathe life into data structures.
-- We can compare data structures and algorithms to assembling building blocks. The blocks represent data, the shape and connection method of the blocks represent the data structure, and the steps to assemble the blocks correspond to the algorithm.
+- Az algoritmusok mindenütt jelen vannak a mindennapi életben, és nem távoli, homályos tudás. Valójában már öntudatlanul sok algoritmust megtanultunk, és azokat az élet nagy és kis problémáinak megoldásához használjuk.
+- A szótárban keresés elve megfelel a bináris keresés algoritmusának. A bináris keresés megtestesíti az oszd meg és uralkodj fontos algoritmikus elvét.
+- A kártyák rendezésének folyamata nagyon hasonlít a beszúrásos rendezés algoritmusához. A beszúrásos rendezés kis adatkészletek rendezéséhez alkalmas.
+- A visszajáró adásának lépései lényegében egy mohó algoritmus, amelynél minden lépésben a jelenlegi helyzet alapján a legjobb választást tesszük.
+- Az algoritmus olyan utasítások vagy műveleti lépések halmaza, amely egy adott problémát véges idő alatt old meg, míg az adatszerkezet az a mód, ahogyan a számítógépek az adatokat szervezik és tárolják.
+- Az adatszerkezetek és az algoritmusok szorosan összefüggenek. Az adatszerkezetek az algoritmusok alapjai, az algoritmusok pedig életet lehelnek az adatszerkezetekbe.
+- Az adatszerkezeteket és algoritmusokat összehasonlíthatjuk építőkövek összerakásával. A kövek az adatokat képviselik, a kövek alakja és kapcsolódási módja az adatszerkezetet, a kövek összerakásának lépései pedig az algoritmusnak felelnek meg.
 
-### Q & A
+### Kérdések és válaszok
 
-**Q**: As a programmer, I have never used algorithms to solve problems in my daily work. Common algorithms are already encapsulated by programming languages and can be used directly. Does this mean that the problems in our work have not yet reached the level where algorithms are needed?
+**K**: Programozóként soha nem használtam algoritmusokat a mindennapi munkám során felmerülő problémák megoldásához. A programozási nyelvek már tartalmazzák a szokásos algoritmusokat, amelyek közvetlenül használhatók. Ez azt jelenti, hogy a munkánkban felmerülő problémák még nem érték el azt a szintet, ahol algoritmusokra lenne szükség?
 
-If we compare specific work skills to "techniques" in martial arts, then fundamental subjects should be more like "internal skills".
+Ha a konkrét munkakészségeket a harcművészet „technikáihoz" hasonlítjuk, akkor az alapvető tantárgyak inkább az „belső erőre" hasonlítanak.
 
-I believe the significance of learning algorithms (and other fundamental subjects) is not to implement them from scratch at work, but rather to be able to make professional reactions and judgments when solving problems based on the knowledge learned, thereby improving the overall quality of work. Here is a simple example. Every programming language has a built-in sorting function:
+Úgy vélem, az algoritmusok (és más alapvető tantárgyak) tanulásának jelentősége nem az, hogy azokat a munkában a semmiből valósítsuk meg, hanem az, hogy a tanult ismeretek alapján profi reakciókra és ítéletekre legyünk képesek a problémák megoldásakor, ezáltal javítva a munka általános minőségét. Íme egy egyszerű példa. Minden programozási nyelvnek van beépített rendezési funkciója:
 
-- If we have not studied data structures and algorithms, we might simply feed any given data to this sorting function. It runs smoothly with good performance, and there doesn't seem to be any problem.
-- But if we have studied algorithms, we would know that the time complexity of the built-in sorting function is $O(n \log n)$. However, if the given data consists of integers with a fixed number of digits (such as student IDs), we can use the more efficient "radix sort", reducing the time complexity to $O(nk)$, where $k$ is the number of digits. When the data volume is very large, the saved running time can create significant value (reduced costs, improved experience, etc.).
+- Ha nem tanulmányoztuk az adatszerkezeteket és algoritmusokat, egyszerűen bármilyen adatot betápláltunk ebbe a rendezési funkcióba. Simán fut, jó teljesítménnyel, és látszólag nincs probléma.
+- De ha tanulmányoztuk az algoritmusokat, tudni fogjuk, hogy a beépített rendezési funkció időbonyolultsága $O(n \log n)$. Ha azonban az adatok fix jegyű egészekből állnak (például diákazonosítókból), a hatékonyabb „radix sort" algoritmust használhatjuk, az időbonyolultságot $O(nk)$-ra csökkentve, ahol $k$ a jegyek száma. Nagy adatmennyiségnél a megtakarított futási idő jelentős értéket teremthet (csökkentett költségek, jobb élmény stb.).
 
-In the field of engineering, a large number of problems are difficult to reach optimal solutions, and many problems are only solved "approximately". The difficulty of a problem depends on one hand on the nature of the problem itself, and on the other hand on the knowledge reserve of the person observing the problem. The more complete a person's knowledge and the more experience they have, the deeper their analysis of the problem will be, and the more elegantly the problem can be solved.
+A mérnöki területen sok probléma nehezen ér el optimális megoldásokat, és sok problémát csak „közelítőleg" oldanak meg. A probléma nehézségét egyrészt maga a probléma természete, másrészt a problémát vizsgáló személy tudásrezerve határozza meg. Minél teljesebb valakinek a tudása és minél több tapasztalata van, annál mélyebb lesz a probléma elemzése, és annál elegánsabban oldható meg a probléma.
