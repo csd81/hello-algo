@@ -1,17 +1,17 @@
-# Summary
+# Összefoglalás
 
-### Key Review
+### Főbb áttekintés
 
-- A heap is a complete binary tree that can be categorized as a max heap or min heap based on its property. The heap top element of a max heap (min heap) is the largest (smallest).
-- A priority queue is defined as a queue with priority sorting, typically implemented using heaps.
-- Common heap operations and their corresponding time complexities include: element insertion $O(\log n)$, heap top element removal $O(\log n)$, and accessing the heap top element $O(1)$.
-- Complete binary trees are well-suited for array representation, so we typically use arrays to store heaps.
-- Heapify operations are used to maintain the heap property and are employed in both element insertion and removal operations.
-- The time complexity of building a heap with $n$ input elements can be optimized to $O(n)$, which is highly efficient.
-- Top-k is a classic algorithm problem that can be efficiently solved using the heap data structure, with a time complexity of $O(n \log k)$.
+- A kupac egy teljes bináris fa, amely tulajdonsága alapján max-kupacként vagy min-kupacként kategorizálható. A max-kupac (min-kupac) tetején lévő elem a legnagyobb (legkisebb).
+- A prioritásos sor prioritás szerinti rendezéssel rendelkező sorként van definiálva, és általában kupacokkal valósítják meg.
+- A kupac leggyakoribb műveletei és azok megfelelő időbonyolultságai: elembeillesztés $O(\log n)$, kupac tetején lévő elem eltávolítása $O(\log n)$, és a kupac tetején lévő elem elérése $O(1)$.
+- A teljes bináris fák jól alkalmasak tömb alapú reprezentációra, ezért általában tömböket használunk a kupacok tárolásához.
+- A kupacosítási műveletek a kupac tulajdonságának fenntartására szolgálnak, és mind az elembeillesztési, mind az eltávolítási műveletekben alkalmazzák őket.
+- $n$ bemeneti elemmel rendelkező kupac felépítésének időbonyolultsága $O(n)$-re optimalizálható, ami rendkívül hatékony.
+- A top-k egy klasszikus algoritmus-probléma, amely hatékonyan megoldható a kupac adatstruktúra segítségével, $O(n \log k)$ időbonyolultsággal.
 
-### Q & A
+### Kérdések és válaszok
 
-**Q**: Are the "heap" in data structures and the "heap" in memory management the same concept?
+**K**: Az adatstruktúrákban lévő „kupac" és a memóriakezelésben lévő „kupac" ugyanaz a fogalom?
 
-The two are not the same concept; they just happen to share the name "heap." The heap in computer system memory is part of dynamic memory allocation, where programs can use it to store data during runtime. Programs can request a certain amount of heap memory to store complex structures such as objects and arrays. When this data is no longer needed, the program needs to release this memory to prevent memory leaks. Compared to stack memory, heap memory management and usage require more caution, as improper use can lead to issues such as memory leaks and dangling pointers.
+A kettő nem ugyanaz a fogalom; csupán véletlenszerűen osztoznak a „kupac" névben. A számítógépes rendszer memóriájában lévő kupac a dinamikus memória-kiosztás része, ahol a programok futás közben adatok tárolására használhatják. A programok bizonyos mennyiségű kupacmemóriát igényelhetnek összetett struktúrák, például objektumok és tömbök tárolásához. Ha ezekre az adatokra már nincs szükség, a programnak fel kell szabadítania ezt a memóriát a memóriaszivárgás megelőzése érdekében. A verem memóriához képest a kupacmemória kezelése és használata több óvatosságot igényel, mivel nem megfelelő használat esetén olyan problémák merülhetnek fel, mint a memóriaszivárgás és a lógó mutatók.

@@ -1,42 +1,42 @@
-# Top-K Problem
+# Top-k probléma
 
 !!! question
 
-    Given an unordered array `nums` of length $n$, return the largest $k$ elements in the array.
+    Adott egy $n$ hosszú, rendezetlen `nums` tömb, adjuk vissza a tömb legnagyobb $k$ elemét.
 
-For this problem, we'll first introduce two solutions with relatively straightforward approaches, then introduce a more efficient heap-based solution.
+Ennél a problémánál először két viszonylag közvetlen megközelítést mutatunk be, majd egy hatékonyabb kupac alapú megoldást.
 
-## Method 1: Iterative Selection
+## 1. módszer: Iteratív kiválasztás
 
-We can perform $k$ rounds of traversal as shown in the figure below, extracting the $1^{st}$, $2^{nd}$, $\dots$, $k^{th}$ largest elements in each round, with a time complexity of $O(nk)$.
+Az alábbi ábrán látható módon $k$ bejárási kört végezhetünk, és minden körben kinyerjük az $1$., $2.$., $\dots$, $k$. legnagyobb elemet, amelynek időbonyolultsága $O(nk)$.
 
-This method is only suitable when $k \ll n$, because when $k$ is close to $n$, the time complexity approaches $O(n^2)$, which is very time-consuming.
+Ez a módszer csak akkor alkalmazható, ha $k \ll n$, mert ha $k$ közel van $n$-hez, az időbonyolultság $O(n^2)$-hez közelít, ami nagyon időigényes.
 
-![Traversing to find the largest k elements](top_k.assets/top_k_traversal.png)
+![A legnagyobb k elem keresése bejárással](top_k.assets/top_k_traversal.png)
 
 !!! tip
 
-    When $k = n$, we can obtain a complete sorted sequence, which is equivalent to the "selection sort" algorithm.
+    Ha $k = n$, akkor egy teljes rendezett sorozatot kapunk, ami egyenértékű a „kiválasztásos rendezés" algoritmusával.
 
-## Method 2: Sorting
+## 2. módszer: Rendezés
 
-As shown in the figure below, we can first sort the array `nums`, then return the rightmost $k$ elements, with a time complexity of $O(n \log n)$.
+Az alábbi ábrán látható módon először rendezhetjük a `nums` tömböt, majd visszaadjuk a jobb szélső $k$ elemet, amelynek időbonyolultsága $O(n \log n)$.
 
-Clearly, this method "overachieves" the task, as we only need to find the largest $k$ elements, without needing to sort the other elements.
+Nyilvánvalóan ez a módszer „túlteljesíti" a feladatot, hiszen csak a legnagyobb $k$ elemet kell megtalálnunk, a többi elemet nem kell rendeznünk.
 
-![Sorting to find the largest k elements](top_k.assets/top_k_sorting.png)
+![A legnagyobb k elem keresése rendezéssel](top_k.assets/top_k_sorting.png)
 
-## Method 3: Heap
+## 3. módszer: Kupac
 
-We can solve the Top-k problem more efficiently using heaps, with the process shown in the figure below.
+A Top-k problémát hatékonyabban megoldhatjuk kupacok segítségével, ahogy az alábbi ábrán látható.
 
-1. Initialize a min heap, where the heap top element is the smallest.
-2. First, insert the first $k$ elements of the array into the heap in sequence.
-3. Starting from the $(k + 1)^{th}$ element, if the current element is greater than the heap top element, remove the heap top element and insert the current element into the heap.
-4. After traversal is complete, the heap contains the largest $k$ elements.
+1. Inicializálunk egy min-kupacot, ahol a kupac tetején lévő elem a legkisebb.
+2. Először a tömb első $k$ elemét sorban behelyezzük a kupacba.
+3. A $(k + 1)$. elemtől kezdve, ha az aktuális elem nagyobb a kupac tetején lévő elemnél, eltávolítjuk a kupac tetején lévő elemet, és az aktuális elemet behelyezzük a kupacba.
+4. A bejárás befejezése után a kupac a legnagyobb $k$ elemet tartalmazza.
 
 === "<1>"
-    ![Finding the largest k elements using a heap](top_k.assets/top_k_heap_step1.png)
+    ![A legnagyobb k elem keresése kupaccal](top_k.assets/top_k_heap_step1.png)
 
 === "<2>"
     ![top_k_heap_step2](top_k.assets/top_k_heap_step2.png)
@@ -62,12 +62,12 @@ We can solve the Top-k problem more efficiently using heaps, with the process sh
 === "<9>"
     ![top_k_heap_step9](top_k.assets/top_k_heap_step9.png)
 
-Example code is as follows:
+A példakód a következő:
 
 ```src
 [file]{top_k}-[class]{}-[func]{top_k_heap}
 ```
 
-A total of $n$ rounds of heap insertions and removals are performed, with the heap's maximum length being $k$, so the time complexity is $O(n \log k)$. This method is very efficient; when $k$ is small, the time complexity approaches $O(n)$; when $k$ is large, the time complexity does not exceed $O(n \log n)$.
+Összesen $n$ kupacba helyezési és eltávolítási kör hajtódik végre, a kupac maximális hossza $k$, így az időbonyolultság $O(n \log k)$. Ez a módszer rendkívül hatékony; ha $k$ kicsi, az időbonyolultság $O(n)$-hez közelít; ha $k$ nagy, az időbonyolultság nem haladja meg az $O(n \log n)$-t.
 
-Additionally, this method is suitable for dynamic data stream scenarios. By continuously adding data, we can maintain the elements in the heap, thus achieving dynamic updates of the largest $k$ elements.
+Ráadásul ez a módszer dinamikus adatfolyam forgatókönyvekre is alkalmas. Folyamatos adathozzáadással fenntarthatjuk a kupacban lévő elemeket, így a legnagyobb $k$ elem dinamikus frissítését érhetjük el.

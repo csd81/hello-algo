@@ -1,9 +1,9 @@
-# Heap
+# Kupac
 
-![Heap](../assets/covers/chapter_heap.jpg)
+![Kupac](../assets/covers/chapter_heap.jpg)
 
 !!! abstract
 
-    Heaps are like mountain peaks, layered and undulating, each with its unique form.
+    A kupacok olyanok, mint a hegycsúcsok, rétegezve és hullámzón, mindegyik egyedi formában.
 
-    The peaks rise and fall at varying heights, yet the tallest peak always catches the eye first.
+    A csúcsok különböző magasságokban emelkednek és süllyednek, mégis a legmagasabb csúcs mindig először kapja el a szemet.

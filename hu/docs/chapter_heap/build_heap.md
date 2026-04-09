@@ -1,52 +1,52 @@
-# Heap Construction Operation
+# Kupac építése
 
-In some cases, we want to build a heap using all elements of a list, and this process is called "heap construction operation."
+Bizonyos esetekben egy lista összes eleméből kupacot szeretnénk felépíteni, ezt a folyamatot „kupac építési műveletnek" nevezzük.
 
-## Implementing with Element Insertion
+## Megvalósítás elembeillesztéssel
 
-We first create an empty heap, then iterate through the list, performing the "element insertion operation" on each element in sequence. This means adding the element to the bottom of the heap and then performing "bottom-to-top" heapify on that element.
+Először létrehozunk egy üres kupacot, majd végigiterálunk a listán, és minden egyes elemen sorban elvégezzük az „elembeillesztési műveletet". Ez azt jelenti, hogy az elemet a kupac aljára adjuk, majd „alulról felfelé" kupacosítást végzünk azon az elemen.
 
-Each time an element is inserted into the heap, the heap's length increases by one. Since nodes are added to the binary tree sequentially from top to bottom, the heap is constructed "from top to bottom."
+Minden egyes elembeillesztéssel a kupac hossza eggyel nő. Mivel a csomópontokat felülről lefelé haladva adjuk a bináris fához sorban, a kupac „felülről lefelé" épül fel.
 
-Given $n$ elements, each element's insertion operation takes $O(\log{n})$ time, so the time complexity of this heap construction method is $O(n \log n)$.
+$n$ elem esetén minden elembeillesztési művelet $O(\log{n})$ időt igényel, így ez a kupac-felépítési módszer időbonyolultsága $O(n \log n)$.
 
-## Implementing Through Heapify Traversal
+## Megvalósítás kupacosítási bejárással
 
-In fact, we can implement a more efficient heap construction method in two steps.
+Valójában egy hatékonyabb kupac-felépítési módszert is megvalósíthatunk két lépésben.
 
-1. Add all elements of the list as-is to the heap, at which point the heap property is not yet satisfied.
-2. Traverse the heap in reverse order (reverse of level-order traversal), performing "top-to-bottom heapify" on each non-leaf node in sequence.
+1. A lista összes elemét változtatás nélkül hozzáadjuk a kupachoz, ekkor a kupac tulajdonsága még nem teljesül.
+2. A kupacot fordított sorrendben bejárjuk (a szintenkénti bejárás fordítottja), és minden nem-levél csomóponton sorban „felülről lefelé kupacosítást" végzünk.
 
-**After heapifying a node, the subtree rooted at that node becomes a valid sub-heap**. Since we traverse in reverse order, the heap is constructed "from bottom to top."
+**Egy csomópont kupacosítása után az adott csomópontból gyökerező részfa érvényes al-kupaccá válik**. Mivel fordított sorrendben járjuk be, a kupac „alulról felfelé" épül fel.
 
-The reason for choosing reverse order traversal is that it ensures the subtree below the current node is already a valid sub-heap, making the heapification of the current node effective.
+A fordított sorrendű bejárás azért lett választva, mert biztosítja, hogy az aktuális csomópont alatti részfa már érvényes al-kupac legyen, így az aktuális csomópont kupacosítása hatékony.
 
-It's worth noting that **since leaf nodes have no children, they are naturally valid sub-heaps and do not require heapification**. As shown in the code below, the last non-leaf node is the parent of the last node; we start from it and traverse in reverse order to perform heapification:
+Érdemes megjegyezni, hogy **mivel a levélcsomópontoknak nincsenek gyerekeik, természetesen érvényes al-kupacok, és nem igényelnek kupacosítást**. Ahogy az alábbi kódban látható, az utolsó nem-levél csomópont az utolsó csomópont szülője; ettől kezdve járjuk be fordított sorrendben a kupacosítás elvégzéséhez:
 
 ```src
 [file]{my_heap}-[class]{max_heap}-[func]{__init__}
 ```
 
-## Complexity Analysis
+## Bonyolultságelemzés
 
-Next, let's attempt to derive the time complexity of this second heap construction method.
+Következőként megpróbáljuk levezetni ennek a második kupac-felépítési módszernek az időbonyolultságát.
 
-- Assuming the complete binary tree has $n$ nodes, then the number of leaf nodes is $(n + 1) / 2$, where $/$ is floor division. Therefore, the number of nodes that need heapification is $(n - 1) / 2$.
-- In the top-to-bottom heapify process, each node is heapified at most to the leaf nodes, so the maximum number of iterations is the binary tree height $\log n$.
+- Feltéve, hogy a teljes bináris fának $n$ csomópontja van, akkor a levélcsomópontok száma $(n + 1) / 2$, ahol $/$ egészrész osztás. Ezért a kupacosítást igénylő csomópontok száma $(n - 1) / 2$.
+- A felülről lefelé kupacosítási folyamatban minden csomópontot legfeljebb a levélcsomópontokig kupacosítanak, így az iterációk maximális száma a bináris fa $\log n$ magassága.
 
-Multiplying these two together, we get a time complexity of $O(n \log n)$ for the heap construction process. **However, this estimate is not accurate because it doesn't account for the property that binary trees have far more nodes at lower levels than at upper levels**.
+E kettőt összeszorozva $O(n \log n)$ időbonyolultságot kapunk a kupac-felépítési folyamatra. **Ez a becslés azonban nem pontos, mivel nem veszi figyelembe azt a tulajdonságot, hogy a bináris fáknak sokkal több csomópontjuk van az alsóbb szinteken, mint a felsőbb szinteken**.
 
-Let's perform a more accurate calculation. To reduce calculation difficulty, assume a "perfect binary tree" with $n$ nodes and height $h$; this assumption does not affect the correctness of the result.
+Végezzünk pontosabb számítást. A számítás nehézségének csökkentése érdekében feltételezzük, hogy egy „tökéletes bináris fa" $n$ csomóponttal és $h$ magassággal rendelkezik; ez a feltételezés nem befolyásolja az eredmény helyességét.
 
-![Node count at each level of a perfect binary tree](build_heap.assets/heapify_operations_count.png)
+![Csomópontok száma egy tökéletes bináris fa egyes szintjein](build_heap.assets/heapify_operations_count.png)
 
-As shown in the figure above, the maximum number of iterations for a node's "top-to-bottom heapify" equals the distance from that node to the leaf nodes, which is precisely the "node height." Therefore, we can sum the "number of nodes $\times$ node height" at each level to **obtain the total number of heapify iterations for all nodes**.
+Ahogy a fenti ábrán látható, egy csomópont „felülről lefelé kupacosításának" maximális iterációszáma egyenlő a csomóponttól a levélcsomópontokig tartó távolsággal, ami pontosan a „csomópont magassága". Ezért összegezhetjük az egyes szinteken a „csomópontok száma × csomópont magassága" értékeket az **összes csomópont kupacosítási iterációinak összesített számának meghatározásához**.
 
 $$
 T(h) = 2^0h + 2^1(h-1) + 2^2(h-2) + \dots + 2^{(h-1)}\times1
 $$
 
-To simplify the above expression, we need to use sequence knowledge from high school. First, multiply $T(h)$ by $2$ to get:
+A fenti kifejezés egyszerűsítéséhez középiskolai sorozatismeretekre van szükségünk. Először szorozzuk meg $T(h)$-t $2$-vel:
 
 $$
 \begin{aligned}
@@ -55,13 +55,13 @@ T(h) & = 2^0h + 2^1(h-1) + 2^2(h-2) + \dots + 2^{h-1}\times1 \newline
 \end{aligned}
 $$
 
-Using the method of differences, subtract the first equation $T(h)$ from the second equation $2 T(h)$ to get:
+A különbségmódszer alkalmazásával vonjuk ki az első egyenletet $T(h)$-t a második egyenletből $2 T(h)$-ból:
 
 $$
 2T(h) - T(h) = T(h) = -2^0h + 2^1 + 2^2 + \dots + 2^{h-1} + 2^h
 $$
 
-Observing the above expression, we find that $T(h)$ is a geometric series, which can be calculated directly using the sum formula, yielding a time complexity of:
+A fenti kifejezést megfigyelve látjuk, hogy $T(h)$ egy mértani sor, amely közvetlenül kiszámítható az összegképlettel, és az időbonyolultság:
 
 $$
 \begin{aligned}
@@ -71,4 +71,4 @@ T(h) & = 2 \frac{1 - 2^h}{1 - 2} - h \newline
 \end{aligned}
 $$
 
-Furthermore, a perfect binary tree with height $h$ has $n = 2^{h+1} - 1$ nodes, so the complexity is $O(2^h) = O(n)$. This derivation shows that **the time complexity of building a heap from an input list is $O(n)$, which is highly efficient**.
+Továbbá egy $h$ magasságú tökéletes bináris fának $n = 2^{h+1} - 1$ csomópontja van, így a bonyolultság $O(2^h) = O(n)$. Ez a levezetés megmutatja, hogy **egy bemeneti listából kupac felépítésének időbonyolultsága $O(n)$, ami rendkívül hatékony**.
