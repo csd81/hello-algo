@@ -1,158 +1,158 @@
-# Space Complexity
+# Térbonyolultság
 
-<u>Space complexity</u> measures the growth trend of memory space occupied by an algorithm as the data size increases. This concept is very similar to time complexity, except that "running time" is replaced with "occupied memory space".
+A <u>térbonyolultság</u> azt a növekedési trendet méri, ahogyan egy algoritmus által elfoglalt memóriaterület növekszik az adatméret növekedésével. Ez a fogalom nagyon hasonló az időbonyolultsághoz, azzal a különbséggel, hogy a "futási idő" helyett a "foglalt memóriaterület" szerepel.
 
-## Algorithm-Related Space
+## Az algoritmushoz kapcsolódó tér
 
-The memory space used by an algorithm during execution mainly includes the following types.
+Az algoritmus végrehajtása során felhasznált memóriaterület főként a következő típusokat foglalja magában.
 
-- **Input space**: Used to store the input data of the algorithm.
-- **Temporary space**: Used to store variables, objects, function contexts, and other data during the algorithm's execution.
-- **Output space**: Used to store the output data of the algorithm.
+- **Bemeneti tér**: Az algoritmus bemeneti adatainak tárolására szolgál.
+- **Ideiglenes tér**: Az algoritmus végrehajtása során felhasznált változók, objektumok, függvénykontextusok és egyéb adatok tárolására szolgál.
+- **Kimeneti tér**: Az algoritmus kimeneti adatainak tárolására szolgál.
 
-In general, the scope of space complexity statistics is "temporary space" plus "output space".
+Általában a térbonyolultság statisztikájának hatóköre az "ideiglenes tér" plusz a "kimeneti tér".
 
-Temporary space can be further divided into three parts.
+Az ideiglenes tér tovább osztható három részre.
 
-- **Temporary data**: Used to save various constants, variables, objects, etc., during the algorithm's execution.
-- **Stack frame space**: Used to save the context data of called functions. The system creates a stack frame at the top of the stack each time a function is called, and the stack frame space is released after the function returns.
-- **Instruction space**: Used to save compiled program instructions, which are usually ignored in actual statistics.
+- **Ideiglenes adatok**: Az algoritmus végrehajtása során különböző konstansok, változók, objektumok stb. mentésére szolgál.
+- **Veremkeret-tér**: A meghívott függvények kontextusadatainak mentésére szolgál. A rendszer minden függvényhíváskor egy veremkeretet hoz létre a verem tetején, és a veremkeret-tér felszabadul, amikor a függvény visszatér.
+- **Utasítástér**: A lefordított programutasítások mentésére szolgál, amelyeket a tényleges statisztikákban általában figyelmen kívül hagynak.
 
-When analyzing the space complexity of a program, **we usually count three parts: temporary data, stack frame space, and output data**, as shown in the following figure.
+Egy program térbonyolultságának elemzésekor **általában három részt számolunk: az ideiglenes adatokat, a veremkeret-teret és a kimeneti adatokat**, ahogyan az az alábbi ábrán látható.
 
-![Algorithm-related space](space_complexity.assets/space_types.png)
+![Az algoritmushoz kapcsolódó tér](space_complexity.assets/space_types.png)
 
-The related code is as follows:
+A kapcsolódó kód a következő:
 
 === "Python"
 
     ```python title=""
     class Node:
-        """Class"""
+        """Osztály"""
         def __init__(self, x: int):
-            self.val: int = x              # Node value
-            self.next: Node | None = None  # Reference to the next node
+            self.val: int = x              # Csomópont értéke
+            self.next: Node | None = None  # Hivatkozás a következő csomópontra
 
     def function() -> int:
-        """Function"""
-        # Perform some operations...
+        """Függvény"""
+        # Néhány művelet elvégzése...
         return 0
 
-    def algorithm(n) -> int:  # Input data
-        A = 0                 # Temporary data (constant, usually represented by uppercase letters)
-        b = 0                 # Temporary data (variable)
-        node = Node(0)        # Temporary data (object)
-        c = function()        # Stack frame space (function call)
-        return A + b + c      # Output data
+    def algorithm(n) -> int:  # Bemeneti adat
+        A = 0                 # Ideiglenes adat (konstans, általában nagybetűvel jelöljük)
+        b = 0                 # Ideiglenes adat (változó)
+        node = Node(0)        # Ideiglenes adat (objektum)
+        c = function()        # Veremkeret-tér (függvényhívás)
+        return A + b + c      # Kimeneti adat
     ```
 
 === "C++"
 
     ```cpp title=""
-    /* Structure */
+    /* Struktúra */
     struct Node {
         int val;
         Node *next;
         Node(int x) : val(x), next(nullptr) {}
     };
 
-    /* Function */
+    /* Függvény */
     int func() {
-        // Perform some operations...
+        // Néhány művelet elvégzése...
         return 0;
     }
 
-    int algorithm(int n) {        // Input data
-        const int a = 0;          // Temporary data (constant)
-        int b = 0;                // Temporary data (variable)
-        Node* node = new Node(0); // Temporary data (object)
-        int c = func();           // Stack frame space (function call)
-        return a + b + c;         // Output data
+    int algorithm(int n) {        // Bemeneti adat
+        const int a = 0;          // Ideiglenes adat (konstans)
+        int b = 0;                // Ideiglenes adat (változó)
+        Node* node = new Node(0); // Ideiglenes adat (objektum)
+        int c = func();           // Veremkeret-tér (függvényhívás)
+        return a + b + c;         // Kimeneti adat
     }
     ```
 
 === "Java"
 
     ```java title=""
-    /* Class */
+    /* Osztály */
     class Node {
         int val;
         Node next;
         Node(int x) { val = x; }
     }
 
-    /* Function */
+    /* Függvény */
     int function() {
-        // Perform some operations...
+        // Néhány művelet elvégzése...
         return 0;
     }
 
-    int algorithm(int n) {        // Input data
-        final int a = 0;          // Temporary data (constant)
-        int b = 0;                // Temporary data (variable)
-        Node node = new Node(0);  // Temporary data (object)
-        int c = function();       // Stack frame space (function call)
-        return a + b + c;         // Output data
+    int algorithm(int n) {        // Bemeneti adat
+        final int a = 0;          // Ideiglenes adat (konstans)
+        int b = 0;                // Ideiglenes adat (változó)
+        Node node = new Node(0);  // Ideiglenes adat (objektum)
+        int c = function();       // Veremkeret-tér (függvényhívás)
+        return a + b + c;         // Kimeneti adat
     }
     ```
 
 === "C#"
 
     ```csharp title=""
-    /* Class */
+    /* Osztály */
     class Node(int x) {
         int val = x;
         Node next;
     }
 
-    /* Function */
+    /* Függvény */
     int Function() {
-        // Perform some operations...
+        // Néhány művelet elvégzése...
         return 0;
     }
 
-    int Algorithm(int n) {        // Input data
-        const int a = 0;          // Temporary data (constant)
-        int b = 0;                // Temporary data (variable)
-        Node node = new(0);       // Temporary data (object)
-        int c = Function();       // Stack frame space (function call)
-        return a + b + c;         // Output data
+    int Algorithm(int n) {        // Bemeneti adat
+        const int a = 0;          // Ideiglenes adat (konstans)
+        int b = 0;                // Ideiglenes adat (változó)
+        Node node = new(0);       // Ideiglenes adat (objektum)
+        int c = Function();       // Veremkeret-tér (függvényhívás)
+        return a + b + c;         // Kimeneti adat
     }
     ```
 
 === "Go"
 
     ```go title=""
-    /* Structure */
+    /* Struktúra */
     type node struct {
         val  int
         next *node
     }
 
-    /* Create node structure */
+    /* Csomópont struktúra létrehozása */
     func newNode(val int) *node {
         return &node{val: val}
     }
 
-    /* Function */
+    /* Függvény */
     func function() int {
-        // Perform some operations...
+        // Néhány művelet elvégzése...
         return 0
     }
 
-    func algorithm(n int) int { // Input data
-        const a = 0             // Temporary data (constant)
-        b := 0                  // Temporary data (variable)
-        newNode(0)              // Temporary data (object)
-        c := function()         // Stack frame space (function call)
-        return a + b + c        // Output data
+    func algorithm(n int) int { // Bemeneti adat
+        const a = 0             // Ideiglenes adat (konstans)
+        b := 0                  // Ideiglenes adat (változó)
+        newNode(0)              // Ideiglenes adat (objektum)
+        c := function()         // Veremkeret-tér (függvényhívás)
+        return a + b + c        // Kimeneti adat
     }
     ```
 
 === "Swift"
 
     ```swift title=""
-    /* Class */
+    /* Osztály */
     class Node {
         var val: Int
         var next: Node?
@@ -162,99 +162,99 @@ The related code is as follows:
         }
     }
 
-    /* Function */
+    /* Függvény */
     func function() -> Int {
-        // Perform some operations...
+        // Néhány művelet elvégzése...
         return 0
     }
 
-    func algorithm(n: Int) -> Int { // Input data
-        let a = 0             // Temporary data (constant)
-        var b = 0             // Temporary data (variable)
-        let node = Node(x: 0) // Temporary data (object)
-        let c = function()    // Stack frame space (function call)
-        return a + b + c      // Output data
+    func algorithm(n: Int) -> Int { // Bemeneti adat
+        let a = 0             // Ideiglenes adat (konstans)
+        var b = 0             // Ideiglenes adat (változó)
+        let node = Node(x: 0) // Ideiglenes adat (objektum)
+        let c = function()    // Veremkeret-tér (függvényhívás)
+        return a + b + c      // Kimeneti adat
     }
     ```
 
 === "JS"
 
     ```javascript title=""
-    /* Class */
+    /* Osztály */
     class Node {
         val;
         next;
         constructor(val) {
-            this.val = val === undefined ? 0 : val; // Node value
-            this.next = null;                       // Reference to the next node
+            this.val = val === undefined ? 0 : val; // Csomópont értéke
+            this.next = null;                       // Hivatkozás a következő csomópontra
         }
     }
 
-    /* Function */
+    /* Függvény */
     function constFunc() {
-        // Perform some operations
+        // Néhány művelet elvégzése
         return 0;
     }
 
-    function algorithm(n) {       // Input data
-        const a = 0;              // Temporary data (constant)
-        let b = 0;                // Temporary data (variable)
-        const node = new Node(0); // Temporary data (object)
-        const c = constFunc();    // Stack frame space (function call)
-        return a + b + c;         // Output data
+    function algorithm(n) {       // Bemeneti adat
+        const a = 0;              // Ideiglenes adat (konstans)
+        let b = 0;                // Ideiglenes adat (változó)
+        const node = new Node(0); // Ideiglenes adat (objektum)
+        const c = constFunc();    // Veremkeret-tér (függvényhívás)
+        return a + b + c;         // Kimeneti adat
     }
     ```
 
 === "TS"
 
     ```typescript title=""
-    /* Class */
+    /* Osztály */
     class Node {
         val: number;
         next: Node | null;
         constructor(val?: number) {
-            this.val = val === undefined ? 0 : val; // Node value
-            this.next = null;                       // Reference to the next node
+            this.val = val === undefined ? 0 : val; // Csomópont értéke
+            this.next = null;                       // Hivatkozás a következő csomópontra
         }
     }
 
-    /* Function */
+    /* Függvény */
     function constFunc(): number {
-        // Perform some operations
+        // Néhány művelet elvégzése
         return 0;
     }
 
-    function algorithm(n: number): number { // Input data
-        const a = 0;                        // Temporary data (constant)
-        let b = 0;                          // Temporary data (variable)
-        const node = new Node(0);           // Temporary data (object)
-        const c = constFunc();              // Stack frame space (function call)
-        return a + b + c;                   // Output data
+    function algorithm(n: number): number { // Bemeneti adat
+        const a = 0;                        // Ideiglenes adat (konstans)
+        let b = 0;                          // Ideiglenes adat (változó)
+        const node = new Node(0);           // Ideiglenes adat (objektum)
+        const c = constFunc();              // Veremkeret-tér (függvényhívás)
+        return a + b + c;                   // Kimeneti adat
     }
     ```
 
 === "Dart"
 
     ```dart title=""
-    /* Class */
+    /* Osztály */
     class Node {
       int val;
       Node next;
       Node(this.val, [this.next]);
     }
 
-    /* Function */
+    /* Függvény */
     int function() {
-      // Perform some operations...
+      // Néhány művelet elvégzése...
       return 0;
     }
 
-    int algorithm(int n) {  // Input data
-      const int a = 0;      // Temporary data (constant)
-      int b = 0;            // Temporary data (variable)
-      Node node = Node(0);  // Temporary data (object)
-      int c = function();   // Stack frame space (function call)
-      return a + b + c;     // Output data
+    int algorithm(int n) {  // Bemeneti adat
+      const int a = 0;      // Ideiglenes adat (konstans)
+      int b = 0;            // Ideiglenes adat (változó)
+      Node node = Node(0);  // Ideiglenes adat (objektum)
+      int c = function();   // Veremkeret-tér (függvényhívás)
+      return a + b + c;     // Kimeneti adat
     }
     ```
 
@@ -264,113 +264,113 @@ The related code is as follows:
     use std::rc::Rc;
     use std::cell::RefCell;
 
-    /* Structure */
+    /* Struktúra */
     struct Node {
         val: i32,
         next: Option<Rc<RefCell<Node>>>,
     }
 
-    /* Create Node structure */
+    /* Node struktúra létrehozása */
     impl Node {
         fn new(val: i32) -> Self {
             Self { val: val, next: None }
         }
     }
 
-    /* Function */
+    /* Függvény */
     fn function() -> i32 {
-        // Perform some operations...
+        // Néhány művelet elvégzése...
         return 0;
     }
 
-    fn algorithm(n: i32) -> i32 {       // Input data
-        const a: i32 = 0;               // Temporary data (constant)
-        let mut b = 0;                  // Temporary data (variable)
-        let node = Node::new(0);        // Temporary data (object)
-        let c = function();             // Stack frame space (function call)
-        return a + b + c;               // Output data
+    fn algorithm(n: i32) -> i32 {       // Bemeneti adat
+        const a: i32 = 0;               // Ideiglenes adat (konstans)
+        let mut b = 0;                  // Ideiglenes adat (változó)
+        let node = Node::new(0);        // Ideiglenes adat (objektum)
+        let c = function();             // Veremkeret-tér (függvényhívás)
+        return a + b + c;               // Kimeneti adat
     }
     ```
 
 === "C"
 
     ```c title=""
-    /* Function */
+    /* Függvény */
     int func() {
-        // Perform some operations...
+        // Néhány művelet elvégzése...
         return 0;
     }
 
-    int algorithm(int n) { // Input data
-        const int a = 0;   // Temporary data (constant)
-        int b = 0;         // Temporary data (variable)
-        int c = func();    // Stack frame space (function call)
-        return a + b + c;  // Output data
+    int algorithm(int n) { // Bemeneti adat
+        const int a = 0;   // Ideiglenes adat (konstans)
+        int b = 0;         // Ideiglenes adat (változó)
+        int c = func();    // Veremkeret-tér (függvényhívás)
+        return a + b + c;  // Kimeneti adat
     }
     ```
 
 === "Kotlin"
 
     ```kotlin title=""
-    /* Class */
+    /* Osztály */
     class Node(var _val: Int) {
         var next: Node? = null
     }
 
-    /* Function */
+    /* Függvény */
     fun function(): Int {
-        // Perform some operations...
+        // Néhány művelet elvégzése...
         return 0
     }
 
-    fun algorithm(n: Int): Int { // Input data
-        val a = 0                // Temporary data (constant)
-        var b = 0                // Temporary data (variable)
-        val node = Node(0)       // Temporary data (object)
-        val c = function()       // Stack frame space (function call)
-        return a + b + c         // Output data
+    fun algorithm(n: Int): Int { // Bemeneti adat
+        val a = 0                // Ideiglenes adat (konstans)
+        var b = 0                // Ideiglenes adat (változó)
+        val node = Node(0)       // Ideiglenes adat (objektum)
+        val c = function()       // Veremkeret-tér (függvényhívás)
+        return a + b + c         // Kimeneti adat
     }
     ```
 
 === "Ruby"
 
     ```ruby title=""
-    ### Class ###
+    ### Osztály ###
     class Node
-        attr_accessor :val      # Node value
-        attr_accessor :next     # Reference to the next node
+        attr_accessor :val      # Csomópont értéke
+        attr_accessor :next     # Hivatkozás a következő csomópontra
 
         def initialize(x)
             @val = x
         end
     end
 
-    ### Function ###
+    ### Függvény ###
     def function
-        # Perform some operations...
+        # Néhány művelet elvégzése...
         0
     end
 
-    ### Algorithm ###
-    def algorithm(n)        # Input data
-        a = 0               # Temporary data (constant)
-        b = 0               # Temporary data (variable)
-        node = Node.new(0)  # Temporary data (object)
-        c = function        # Stack frame space (function call)
-        a + b + c           # Output data
+    ### Algoritmus ###
+    def algorithm(n)        # Bemeneti adat
+        a = 0               # Ideiglenes adat (konstans)
+        b = 0               # Ideiglenes adat (változó)
+        node = Node.new(0)  # Ideiglenes adat (objektum)
+        c = function        # Veremkeret-tér (függvényhívás)
+        a + b + c           # Kimeneti adat
     end
     ```
 
-## Calculation Method
+## Számítási módszer
 
-The calculation method for space complexity is roughly the same as for time complexity, except that the statistical object is changed from "number of operations" to "size of space used".
+A térbonyolultság számítási módszere nagyjából megegyezik az időbonyolultságéval, azzal a különbséggel, hogy a statisztikai objektum a "műveletek számáról" a "felhasznált tér méretére" változik.
 
-Unlike time complexity, **we usually only focus on the worst-case space complexity**. This is because memory space is a hard requirement, and we must ensure that sufficient memory space is reserved for all input data.
+Az időbonyolultsággal ellentétben **általában csak a legrosszabb esetű térbonyolultságra koncentrálunk**. Ez azért van, mert a memóriaterület kemény követelmény, és biztosítanunk kell, hogy elegendő memóriaterületet tartalékoljunk az összes bemeneti adathoz.
 
-Observe the following code. The "worst case" in worst-case space complexity has two meanings.
+Figyeljük meg az alábbi kódot. A legrosszabb esetű térbonyolultságban a "legrosszabb eset" két jelentéssel bír.
 
-1. **Based on the worst input data**: When $n < 10$, the space complexity is $O(1)$; but when $n > 10$, the initialized array `nums` occupies $O(n)$ space, so the worst-case space complexity is $O(n)$.
-2. **Based on the peak memory during algorithm execution**: For example, before executing the last line, the program occupies $O(1)$ space; when initializing the array `nums`, the program occupies $O(n)$ space, so the worst-case space complexity is $O(n)$.
+1. **A legrosszabb bemeneti adatok alapján**: Ha $n < 10$, a térbonyolultság $O(1)$; de ha $n > 10$, az inicializált `nums` tömb $O(n)$ teret foglal, ezért a legrosszabb esetű térbonyolultság $O(n)$.
+2. **Az algoritmus végrehajtása során a csúcsmemória alapján**: Például az utolsó sor végrehajtása előtt a program $O(1)$ teret foglal; a `nums` tömb inicializálásakor a program $O(n)$ teret foglal, ezért a legrosszabb esetű térbonyolultság $O(n)$.
 
 === "Python"
 
@@ -523,22 +523,22 @@ Observe the following code. The "worst case" in worst-case space complexity has 
     end
     ```
 
-**In recursive functions, it is necessary to count the stack frame space**. Observe the following code:
+**Rekurzív függvényeknél szükséges a veremkeret-tér számítása**. Figyeljük meg az alábbi kódot:
 
 === "Python"
 
     ```python title=""
     def function() -> int:
-        # Perform some operations
+        # Néhány művelet elvégzése
         return 0
 
     def loop(n: int):
-        """Loop has space complexity of O(1)"""
+        """A ciklus térbonyolultsága O(1)"""
         for _ in range(n):
             function()
 
     def recur(n: int):
-        """Recursion has space complexity of O(n)"""
+        """A rekurzió térbonyolultsága O(n)"""
         if n == 1:
             return
         return recur(n - 1)
@@ -548,16 +548,16 @@ Observe the following code. The "worst case" in worst-case space complexity has 
 
     ```cpp title=""
     int func() {
-        // Perform some operations
+        // Néhány művelet elvégzése
         return 0;
     }
-    /* Loop has space complexity of O(1) */
+    /* A ciklus térbonyolultsága O(1) */
     void loop(int n) {
         for (int i = 0; i < n; i++) {
             func();
         }
     }
-    /* Recursion has space complexity of O(n) */
+    /* A rekurzió térbonyolultsága O(n) */
     void recur(int n) {
         if (n == 1) return;
         recur(n - 1);
@@ -568,16 +568,16 @@ Observe the following code. The "worst case" in worst-case space complexity has 
 
     ```java title=""
     int function() {
-        // Perform some operations
+        // Néhány művelet elvégzése
         return 0;
     }
-    /* Loop has space complexity of O(1) */
+    /* A ciklus térbonyolultsága O(1) */
     void loop(int n) {
         for (int i = 0; i < n; i++) {
             function();
         }
     }
-    /* Recursion has space complexity of O(n) */
+    /* A rekurzió térbonyolultsága O(n) */
     void recur(int n) {
         if (n == 1) return;
         recur(n - 1);
@@ -588,16 +588,16 @@ Observe the following code. The "worst case" in worst-case space complexity has 
 
     ```csharp title=""
     int Function() {
-        // Perform some operations
+        // Néhány művelet elvégzése
         return 0;
     }
-    /* Loop has space complexity of O(1) */
+    /* A ciklus térbonyolultsága O(1) */
     void Loop(int n) {
         for (int i = 0; i < n; i++) {
             Function();
         }
     }
-    /* Recursion has space complexity of O(n) */
+    /* A rekurzió térbonyolultsága O(n) */
     int Recur(int n) {
         if (n == 1) return 1;
         return Recur(n - 1);
@@ -608,18 +608,18 @@ Observe the following code. The "worst case" in worst-case space complexity has 
 
     ```go title=""
     func function() int {
-        // Perform some operations
+        // Néhány művelet elvégzése
         return 0
     }
 
-    /* Loop has space complexity of O(1) */
+    /* A ciklus térbonyolultsága O(1) */
     func loop(n int) {
         for i := 0; i < n; i++ {
             function()
         }
     }
 
-    /* Recursion has space complexity of O(n) */
+    /* A rekurzió térbonyolultsága O(n) */
     func recur(n int) {
         if n == 1 {
             return
@@ -633,18 +633,18 @@ Observe the following code. The "worst case" in worst-case space complexity has 
     ```swift title=""
     @discardableResult
     func function() -> Int {
-        // Perform some operations
+        // Néhány művelet elvégzése
         return 0
     }
 
-    /* Loop has space complexity of O(1) */
+    /* A ciklus térbonyolultsága O(1) */
     func loop(n: Int) {
         for _ in 0 ..< n {
             function()
         }
     }
 
-    /* Recursion has space complexity of O(n) */
+    /* A rekurzió térbonyolultsága O(n) */
     func recur(n: Int) {
         if n == 1 {
             return
@@ -657,16 +657,16 @@ Observe the following code. The "worst case" in worst-case space complexity has 
 
     ```javascript title=""
     function constFunc() {
-        // Perform some operations
+        // Néhány művelet elvégzése
         return 0;
     }
-    /* Loop has space complexity of O(1) */
+    /* A ciklus térbonyolultsága O(1) */
     function loop(n) {
         for (let i = 0; i < n; i++) {
             constFunc();
         }
     }
-    /* Recursion has space complexity of O(n) */
+    /* A rekurzió térbonyolultsága O(n) */
     function recur(n) {
         if (n === 1) return;
         return recur(n - 1);
@@ -677,16 +677,16 @@ Observe the following code. The "worst case" in worst-case space complexity has 
 
     ```typescript title=""
     function constFunc(): number {
-        // Perform some operations
+        // Néhány művelet elvégzése
         return 0;
     }
-    /* Loop has space complexity of O(1) */
+    /* A ciklus térbonyolultsága O(1) */
     function loop(n: number): void {
         for (let i = 0; i < n; i++) {
             constFunc();
         }
     }
-    /* Recursion has space complexity of O(n) */
+    /* A rekurzió térbonyolultsága O(n) */
     function recur(n: number): void {
         if (n === 1) return;
         return recur(n - 1);
@@ -697,16 +697,16 @@ Observe the following code. The "worst case" in worst-case space complexity has 
 
     ```dart title=""
     int function() {
-      // Perform some operations
+      // Néhány művelet elvégzése
       return 0;
     }
-    /* Loop has space complexity of O(1) */
+    /* A ciklus térbonyolultsága O(1) */
     void loop(int n) {
       for (int i = 0; i < n; i++) {
         function();
       }
     }
-    /* Recursion has space complexity of O(n) */
+    /* A rekurzió térbonyolultsága O(n) */
     void recur(int n) {
       if (n == 1) return;
       recur(n - 1);
@@ -717,16 +717,16 @@ Observe the following code. The "worst case" in worst-case space complexity has 
 
     ```rust title=""
     fn function() -> i32 {
-        // Perform some operations
+        // Néhány művelet elvégzése
         return 0;
     }
-    /* Loop has space complexity of O(1) */
+    /* A ciklus térbonyolultsága O(1) */
     fn loop(n: i32) {
         for i in 0..n {
             function();
         }
     }
-    /* Recursion has space complexity of O(n) */
+    /* A rekurzió térbonyolultsága O(n) */
     fn recur(n: i32) {
         if n == 1 {
             return;
@@ -739,16 +739,16 @@ Observe the following code. The "worst case" in worst-case space complexity has 
 
     ```c title=""
     int func() {
-        // Perform some operations
+        // Néhány művelet elvégzése
         return 0;
     }
-    /* Loop has space complexity of O(1) */
+    /* A ciklus térbonyolultsága O(1) */
     void loop(int n) {
         for (int i = 0; i < n; i++) {
             func();
         }
     }
-    /* Recursion has space complexity of O(n) */
+    /* A rekurzió térbonyolultsága O(n) */
     void recur(int n) {
         if (n == 1) return;
         recur(n - 1);
@@ -759,16 +759,16 @@ Observe the following code. The "worst case" in worst-case space complexity has 
 
     ```kotlin title=""
     fun function(): Int {
-        // Perform some operations
+        // Néhány művelet elvégzése
         return 0
     }
-    /* Loop has space complexity of O(1) */
+    /* A ciklus térbonyolultsága O(1) */
     fun loop(n: Int) {
         for (i in 0..<n) {
             function()
         }
     }
-    /* Recursion has space complexity of O(n) */
+    /* A rekurzió térbonyolultsága O(n) */
     fun recur(n: Int) {
         if (n == 1) return
         return recur(n - 1)
@@ -779,102 +779,102 @@ Observe the following code. The "worst case" in worst-case space complexity has 
 
     ```ruby title=""
     def function
-        # Perform some operations
+        # Néhány művelet elvégzése
         0
     end
 
-    ### Loop has space complexity of O(1) ###
+    ### A ciklus térbonyolultsága O(1) ###
     def loop(n)
         (0...n).each { function }
     end
 
-    ### Recursion has space complexity of O(n) ###
+    ### A rekurzió térbonyolultsága O(n) ###
     def recur(n)
         return if n == 1
         recur(n - 1)
     end
     ```
 
-The time complexity of both functions `loop()` and `recur()` is $O(n)$, but their space complexities are different.
+A `loop()` és a `recur()` függvények időbonyolultsága egyaránt $O(n)$, de térbonyolultságuk különböző.
 
-- The function `loop()` calls `function()` $n$ times in a loop. In each iteration, `function()` returns and releases its stack frame space, so the space complexity remains $O(1)$.
-- The recursive function `recur()` has $n$ unreturned `recur()` instances existing simultaneously during execution, thus occupying $O(n)$ stack frame space.
+- A `loop()` függvény $n$-szer hívja meg a `function()`-t egy ciklusban. Minden iterációban a `function()` visszatér és felszabadítja a veremkeret-terét, így a térbonyolultság $O(1)$ marad.
+- A rekurzív `recur()` függvénynek $n$ vissza nem tért `recur()` példánya létezik egyidejűleg a végrehajtás során, ezáltal $O(n)$ veremkeret-teret foglalva.
 
-## Common Types
+## Általános típusok
 
-Let the input data size be $n$. The following figure shows common types of space complexity (arranged from low to high).
+Legyen a bemeneti adatméret $n$. Az alábbi ábra a térbonyolultság általános típusait mutatja (növekvő sorrendben rendezve).
 
 $$
 \begin{aligned}
 O(1) < O(\log n) < O(n) < O(n^2) < O(2^n) \newline
-\text{Constant} < \text{Logarithmic} < \text{Linear} < \text{Quadratic} < \text{Exponential}
+\text{Konstans} < \text{Logaritmikus} < \text{Lineáris} < \text{Négyzetes} < \text{Exponenciális}
 \end{aligned}
 $$
 
-![Common types of space complexity](space_complexity.assets/space_complexity_common_types.png)
+![A térbonyolultság általános típusai](space_complexity.assets/space_complexity_common_types.png)
 
-### Constant Order $O(1)$
+### Konstans rend $O(1)$
 
-Constant order is common in constants, variables, and objects whose quantity is independent of the input data size $n$.
+A konstans rend olyan konstansokban, változókban és objektumokban fordul elő, amelyek mennyisége független az $n$ bemeneti adatmérettől.
 
-It should be noted that memory occupied by initializing variables or calling functions in a loop is released when entering the next iteration, so it does not accumulate space, and the space complexity remains $O(1)$:
+Megjegyzendő, hogy a változók inicializálásával vagy a függvények ciklusban történő meghívásával elfoglalt memória felszabadul, amikor a következő iterációra lépünk, így nem halmozódik fel a tér, és a térbonyolultság $O(1)$ marad:
 
 ```src
 [file]{space_complexity}-[class]{}-[func]{constant}
 ```
 
-### Linear Order $O(n)$
+### Lineáris rend $O(n)$
 
-Linear order is common in arrays, linked lists, stacks, queues, etc., where the number of elements is proportional to $n$:
+A lineáris rend tömbökben, láncolt listákban, veremekben, sorokban stb. fordul elő, ahol az elemek száma $n$-nel arányos:
 
 ```src
 [file]{space_complexity}-[class]{}-[func]{linear}
 ```
 
-As shown in the following figure, the recursion depth of this function is $n$, meaning that there are $n$ unreturned `linear_recur()` functions existing simultaneously, using $O(n)$ stack frame space:
+Ahogyan az alábbi ábrán látható, ennek a függvénynek a rekurzióméлysége $n$, ami azt jelenti, hogy $n$ vissza nem tért `linear_recur()` függvény létezik egyidejűleg, $O(n)$ veremkeret-teret használva:
 
 ```src
 [file]{space_complexity}-[class]{}-[func]{linear_recur}
 ```
 
-![Linear order space complexity generated by recursive function](space_complexity.assets/space_complexity_recursive_linear.png)
+![Rekurzív függvény által generált lineáris rendű térbonyolultság](space_complexity.assets/space_complexity_recursive_linear.png)
 
-### Quadratic Order $O(n^2)$
+### Négyzetes rend $O(n^2)$
 
-Quadratic order is common in matrices and graphs, where the number of elements is quadratically related to $n$:
+A négyzetes rend mátrixokban és gráfokban fordul elő, ahol az elemek száma négyzetesen kapcsolódik $n$-hez:
 
 ```src
 [file]{space_complexity}-[class]{}-[func]{quadratic}
 ```
 
-As shown in the following figure, the recursion depth of this function is $n$, and an array is initialized in each recursive function with lengths of $n$, $n-1$, $\dots$, $2$, $1$, with an average length of $n / 2$, thus occupying $O(n^2)$ space overall:
+Ahogyan az alábbi ábrán látható, ennek a függvénynek a rekurzióméлysége $n$, és minden rekurzív függvényben egy tömböt inicializálnak, amelynek hossza $n$, $n-1$, $\dots$, $2$, $1$, átlagos hossza $n / 2$, így összességében $O(n^2)$ teret foglalva:
 
 ```src
 [file]{space_complexity}-[class]{}-[func]{quadratic_recur}
 ```
 
-![Quadratic order space complexity generated by recursive function](space_complexity.assets/space_complexity_recursive_quadratic.png)
+![Rekurzív függvény által generált négyzetes rendű térbonyolultság](space_complexity.assets/space_complexity_recursive_quadratic.png)
 
-### Exponential Order $O(2^n)$
+### Exponenciális rend $O(2^n)$
 
-Exponential order is common in binary trees. Observe the following figure: a "full binary tree" with $n$ levels has $2^n - 1$ nodes, occupying $O(2^n)$ space:
+Az exponenciális rend bináris fákban fordul elő. Figyeljük meg az alábbi ábrát: egy $n$ szintű "teljes bináris fa" $2^n - 1$ csomópontot tartalmaz, $O(2^n)$ teret foglalva:
 
 ```src
 [file]{space_complexity}-[class]{}-[func]{build_tree}
 ```
 
-![Exponential order space complexity generated by full binary tree](space_complexity.assets/space_complexity_exponential.png)
+![Teljes bináris fa által generált exponenciális rendű térbonyolultság](space_complexity.assets/space_complexity_exponential.png)
 
-### Logarithmic Order $O(\log n)$
+### Logaritmikus rend $O(\log n)$
 
-Logarithmic order is common in divide-and-conquer algorithms. For example, merge sort: given an input array of length $n$, each recursion divides the array in half from the midpoint, forming a recursion tree of height $\log n$, using $O(\log n)$ stack frame space.
+A logaritmikus rend oszd meg és uralkodj algoritmusokban fordul elő. Például összefésüléses rendezésnél: egy $n$ hosszúságú bemeneti tömb esetén minden rekurzió felezi a tömböt a középponttól, $\log n$ magasságú rekurziós fát alkotva, $O(\log n)$ veremkeret-teret felhasználva.
 
-Another example is converting a number to a string. Given a positive integer $n$, it has $\lfloor \log_{10} n \rfloor + 1$ digits, i.e., the corresponding string length is $\lfloor \log_{10} n \rfloor + 1$, so the space complexity is $O(\log_{10} n + 1) = O(\log n)$.
+Egy másik példa egy szám karakterlánccá való átalakítása. Egy pozitív egész $n$ esetén $\lfloor \log_{10} n \rfloor + 1$ számjegye van, azaz a megfelelő karakterlánc hossza $\lfloor \log_{10} n \rfloor + 1$, így a térbonyolultság $O(\log_{10} n + 1) = O(\log n)$.
 
-## Trading Time for Space
+## Tér és idő cseréje
 
-Ideally, we hope that both the time complexity and space complexity of an algorithm can reach optimal. However, in practice, optimizing both time complexity and space complexity simultaneously is usually very difficult.
+Ideális esetben azt szeretnénk, hogy egy algoritmus időbonyolultsága és térbonyolultsága egyaránt optimális legyen. A gyakorlatban azonban mindkét bonyolultság egyidejű optimalizálása általában nagyon nehéz.
 
-**Reducing time complexity usually comes at the cost of increasing space complexity, and vice versa**. The approach of sacrificing memory space to improve algorithm execution speed is called "trading space for time"; conversely, it is called "trading time for space".
+**Az időbonyolultság csökkentése általában a térbonyolultság növekedésének árán jár, és fordítva**. A memóriatér feláldozásának az algoritmus végrehajtási sebességének javítása érdekében való megközelítést "tér az időért cserébe" stratégiának nevezzük; fordítva, "idő a térért cserébe" stratégiának.
 
-The choice of which approach depends on which aspect we value more. In most cases, time is more precious than space, so "trading space for time" is usually the more common strategy. Of course, when the data volume is very large, controlling space complexity is also very important.
+A választás attól függ, melyik szempontot értékeljük többre. A legtöbb esetben az idő értékesebb, mint a tér, ezért a "tér az időért cserébe" általában a leggyakoribb stratégia. Természetesen, ha az adatmennyiség nagyon nagy, a térbonyolultság szabályozása is nagyon fontos.

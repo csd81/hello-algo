@@ -1,8 +1,8 @@
-# Summary
+# Összefoglalás
 
-### Key Review
+### Kulcsfontosságú áttekintés
 
-**Algorithm Efficiency Assessment**
+**Algoritmus hatékonysági értékelése**
 
 - Time efficiency and space efficiency are the two primary evaluation metrics for measuring algorithm performance.
 - We can evaluate algorithm efficiency through actual testing, but it is difficult to eliminate the influence of the testing environment, and it consumes substantial computational resources.

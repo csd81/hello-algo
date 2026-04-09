@@ -1,194 +1,194 @@
-# Iteration and Recursion
+# Iteráció és rekurzió
 
-In algorithms, repeatedly executing a task is very common and closely related to complexity analysis. Therefore, before introducing time complexity and space complexity, let's first understand how to implement repeated task execution in programs, namely the two basic program control structures: iteration and recursion.
+Az algoritmusokban egy feladat ismételt végrehajtása nagyon gyakori, és szorosan kapcsolódik a bonyolultságelemzéshez. Ezért mielőtt bevezetjük az időbonyolultságot és a térbonyolultságot, először értsük meg, hogyan valósítható meg az ismételt feladat-végrehajtás a programokban, vagyis a két alapvető programvezérlési struktúrát: az iterációt és a rekurziót.
 
-## Iteration
+## Iteráció
 
-<u>Iteration</u> is a control structure for repeatedly executing a task. In iteration, a program repeatedly executes a segment of code under certain conditions until those conditions are no longer satisfied.
+Az <u>iteráció</u> egy vezérlési struktúra, amely egy feladatot ismételten hajt végre. Az iteráció során a program bizonyos feltételek teljesülése esetén ismételten végrehajt egy kódrészletet, egészen addig, amíg ezek a feltételek már nem teljesülnek.
 
-### For Loop
+### For ciklus
 
-The `for` loop is one of the most common forms of iteration, **suitable for use when the number of iterations is known in advance**.
+A `for` ciklus az iteráció egyik leggyakoribb formája, **amely akkor alkalmas, ha az iterációk száma előre ismert**.
 
-The following function implements the summation $1 + 2 + \dots + n$ based on a `for` loop, with the sum result recorded using the variable `res`. Note that in Python, `range(a, b)` corresponds to a "left-closed, right-open" interval, with the traversal range being $a, a + 1, \dots, b-1$:
+Az alábbi függvény egy `for` ciklus alapján valósítja meg az $1 + 2 + \dots + n$ összeadást, az összeget a `res` változóban tárolja. Megjegyzendő, hogy Pythonban a `range(a, b)` egy "balról zárt, jobbról nyílt" intervallumnak felel meg, a bejárási tartomány $a, a + 1, \dots, b-1$:
 
 ```src
 [file]{iteration}-[class]{}-[func]{for_loop}
 ```
 
-The figure below shows the flowchart of this summation function.
+Az alábbi ábra ennek az összeadó függvénynek a folyamatábráját mutatja.
 
-![Flowchart of the summation function](iteration_and_recursion.assets/iteration.png)
+![Az összeadó függvény folyamatábrája](iteration_and_recursion.assets/iteration.png)
 
-The number of operations in this summation function is proportional to the input data size $n$, or has a "linear relationship". In fact, **time complexity describes precisely this "linear relationship"**. Related content will be introduced in detail in the next section.
+Az összeadó függvényben a műveletek száma arányos az $n$ bemeneti adatmérettel, vagyis "lineáris kapcsolatban" áll vele. Valójában **az időbonyolultság pontosan ezt a "lineáris kapcsolatot" írja le**. A kapcsolódó tartalmakat a következő szakaszban részletesen bemutatjuk.
 
-### While Loop
+### While ciklus
 
-Similar to the `for` loop, the `while` loop is also a method for implementing iteration. In a `while` loop, the program first checks the condition in each round; if the condition is true, it continues execution, otherwise it ends the loop.
+A `for` ciklushoz hasonlóan a `while` ciklus is az iteráció megvalósításának egyik módja. Egy `while` ciklusban a program minden fordulóban először ellenőrzi a feltételt; ha a feltétel igaz, folytatja a végrehajtást, egyébként befejezi a ciklust.
 
-Below we use a `while` loop to implement the summation $1 + 2 + \dots + n$:
+Az alábbiakban egy `while` ciklussal valósítjuk meg az $1 + 2 + \dots + n$ összeadást:
 
 ```src
 [file]{iteration}-[class]{}-[func]{while_loop}
 ```
 
-**The `while` loop has greater flexibility than the `for` loop**. In a `while` loop, we can freely design the initialization and update steps of the condition variable.
+**A `while` ciklus rugalmasabb, mint a `for` ciklus**. Egy `while` ciklusban szabadon tervezhetjük a feltételváltozó inicializálási és frissítési lépéseit.
 
-For example, in the following code, the condition variable $i$ is updated twice per round, which is not convenient to implement using a `for` loop:
+Például az alábbi kódban a $i$ feltételváltozó fordulónként kétszer frissül, amit `for` ciklussal nem kényelmes megvalósítani:
 
 ```src
 [file]{iteration}-[class]{}-[func]{while_loop_ii}
 ```
 
-Overall, **`for` loops have more compact code, while `while` loops are more flexible**; both can implement iterative structures. The choice of which to use should be determined based on the requirements of the specific problem.
+Összességében **a `for` ciklusok tömörebb kódot, míg a `while` ciklusok nagyobb rugalmasságot biztosítanak**; mindkettő megvalósíthat iteratív struktúrákat. A választás az adott feladat követelményeitől függ.
 
-### Nested Loops
+### Egymásba ágyazott ciklusok
 
-We can nest one loop structure inside another. Below is an example using `for` loops:
+Egy ciklusstruktúrát egy másikba ágyazhatunk. Az alábbiakban egy példa `for` ciklusok használatával:
 
 ```src
 [file]{iteration}-[class]{}-[func]{nested_for_loop}
 ```
 
-The figure below shows the flowchart of this nested loop.
+Az alábbi ábra ennek az egymásba ágyazott ciklusnak a folyamatábráját mutatja.
 
-![Flowchart of nested loops](iteration_and_recursion.assets/nested_iteration.png)
+![Egymásba ágyazott ciklusok folyamatábrája](iteration_and_recursion.assets/nested_iteration.png)
 
-In this case, the number of operations of the function is proportional to $n^2$, or the algorithm's running time has a "quadratic relationship" with the input data size $n$.
+Ebben az esetben a függvény műveleteinek száma $n^2$-tel arányos, vagyis az algoritmus futási ideje "négyzetes kapcsolatban" áll az $n$ bemeneti adatmérettel.
 
-We can continue adding nested loops, where each nesting is a "dimension increase", raising the time complexity to "cubic relationship", "quartic relationship", and so on.
+Tovább bővíthetjük az egymásba ágyazott ciklusokat, ahol minden egyes beágyazás egy "dimenzióbővítést" jelent, az időbonyolultságot "köbös kapcsolatra", "negyedik fokú kapcsolatra" stb. emelve.
 
-## Recursion
+## Rekurzió
 
-<u>Recursion</u> is an algorithmic strategy that solves problems by having a function call itself. It mainly consists of two phases.
+A <u>rekurzió</u> egy algoritmikus stratégia, amely úgy old meg problémákat, hogy egy függvény saját magát hívja meg. Főként két fázisból áll.
 
-1. **Descend**: The program continuously calls itself deeper, usually passing in smaller or more simplified parameters, until reaching a "termination condition".
-2. **Ascend**: After triggering the "termination condition", the program returns layer by layer from the deepest recursive function, aggregating the result of each layer.
+1. **Leszállás**: A program folyamatosan mélyebbre hívja saját magát, általában kisebb vagy egyszerűsített paramétereket adva át, egészen a "leállítási feltétel" eléréséig.
+2. **Felemelkedés**: A "leállítási feltétel" kiváltása után a program rétegről rétegre tér vissza a legmélyebb rekurzív függvénytől, aggregálva az egyes rétegek eredményét.
 
-From an implementation perspective, recursive code mainly consists of three elements.
+Megvalósítási szempontból a rekurzív kód főként három elemből áll.
 
-1. **Termination condition**: Used to determine when to switch from "descending" to "ascending".
-2. **Recursive call**: Corresponds to "descending", where the function calls itself, usually with smaller or more simplified parameters.
-3. **Return result**: Corresponds to "ascending", returning the result of the current recursion level to the previous layer.
+1. **Leállítási feltétel**: Annak meghatározására szolgál, mikor kell áttérni a "leszállásból" a "felemelkedésbe".
+2. **Rekurzív hívás**: A "leszállásnak" felel meg, ahol a függvény meghívja saját magát, általában kisebb vagy egyszerűsített paraméterekkel.
+3. **Eredmény visszaadása**: A "felemelkedésnek" felel meg, az aktuális rekurzió szintjének eredményét visszaadja az előző rétegnek.
 
-Observe the following code. We only need to call the function `recur(n)` to complete the calculation of $1 + 2 + \dots + n$:
+Figyeljük meg az alábbi kódot. Csak a `recur(n)` függvényt kell meghívnunk az $1 + 2 + \dots + n$ számítás elvégzéséhez:
 
 ```src
 [file]{recursion}-[class]{}-[func]{recur}
 ```
 
-The figure below shows the recursive process of this function.
+Az alábbi ábra ennek a függvénynek a rekurzív folyamatát mutatja.
 
-![Recursive process of the summation function](iteration_and_recursion.assets/recursion_sum.png)
+![Az összeadó függvény rekurzív folyamata](iteration_and_recursion.assets/recursion_sum.png)
 
-Although from a computational perspective, iteration and recursion can achieve the same results, **they represent two completely different paradigms for thinking about and solving problems**.
+Bár számítási szempontból az iteráció és a rekurzió azonos eredményeket érhetnek el, **két teljesen különböző gondolkodási és problémamegoldó paradigmát képviselnek**.
 
-- **Iteration**: Solves problems "bottom-up". Starting from the most basic steps, these steps are then repeatedly executed or accumulated until the task is complete.
-- **Recursion**: Solves problems "top-down". The original problem is decomposed into smaller subproblems that have the same form as the original problem. These subproblems continue to be decomposed into even smaller subproblems until reaching the base case (where the solution is known).
+- **Iteráció**: "Alulról felfelé" old meg problémákat. A legalapvetőbb lépésektől kiindulva ezeket a lépéseket ismételten végre kell hajtani vagy összegyűjteni, egészen a feladat befejezéséig.
+- **Rekurzió**: "Felülről lefelé" old meg problémákat. Az eredeti problémát kisebb részproblémákra bontja, amelyek azonos formájúak az eredeti problémával. Ezek a részproblémák tovább bontódnak még kisebb részproblémákra, egészen az alapesetig (ahol a megoldás ismert).
 
-Taking the above summation function as an example, let the problem be $f(n) = 1 + 2 + \dots + n$.
+Vegyük példaként a fenti összeadó függvényt, ahol a probléma $f(n) = 1 + 2 + \dots + n$.
 
-- **Iteration**: Simulates the summation process in a loop, traversing from $1$ to $n$, performing the summation operation in each round to obtain $f(n)$.
-- **Recursion**: Decomposes the problem into the subproblem $f(n) = n + f(n-1)$, continuously decomposing (recursively) until terminating at the base case $f(1) = 1$.
+- **Iteráció**: Szimulálja az összeadási folyamatot egy ciklusban, $1$-től $n$-ig bejárva, minden fordulóban elvégezve az összeadási műveletet az $f(n)$ megkapásához.
+- **Rekurzió**: A problémát a $f(n) = n + f(n-1)$ részproblémára bontja, folyamatosan bontva (rekurzívan), egészen az $f(1) = 1$ alapeset leállításáig.
 
-### Call Stack
+### Hívási verem
 
-Each time a recursive function calls itself, the system allocates memory for the newly opened function to store local variables, call addresses, and other information. This leads to two consequences.
+Minden alkalommal, amikor egy rekurzív függvény meghívja önmagát, a rendszer memóriát foglal az újonnan megnyitott függvénynek a lokális változók, hívási címek és egyéb információk tárolásához. Ez két következménnyel jár.
 
-- The function's context data is stored in a memory area called "stack frame space", which is not released until the function returns. Therefore, **recursion usually consumes more memory space than iteration**.
-- Recursive function calls incur additional overhead. **Therefore, recursion is usually less time-efficient than loops**.
+- A függvény kontextusadatait egy "veremkeret-tér" nevű memóriaterületen tárolják, amely nem szabadul fel, amíg a függvény vissza nem tér. Ezért **a rekurzió általában több memóriaterületet fogyaszt, mint az iteráció**.
+- A rekurzív függvényhívások további terhelést okoznak. **Ezért a rekurzió általában időhatékonyság szempontjából kisebb, mint a ciklusok**.
 
-As shown in the figure below, before the termination condition is triggered, there are $n$ unreturned recursive functions existing simultaneously, with a **recursion depth of $n$**.
+Az alábbi ábrán látható, hogy a leállítási feltétel kiváltása előtt $n$ vissza nem tért rekurzív függvény létezik egyidejűleg, **a rekurzió mélysége $n$**.
 
-![Recursion call depth](iteration_and_recursion.assets/recursion_sum_depth.png)
+![Rekurzió hívási mélysége](iteration_and_recursion.assets/recursion_sum_depth.png)
 
-In practice, the recursion depth allowed by programming languages is usually limited, and excessively deep recursion may lead to stack overflow errors.
+A gyakorlatban a programozási nyelvek által megengedett rekurzió mélysége általában korlátozott, és a túlzottan mély rekurzió veremtúlcsordulási hibákhoz vezethet.
 
-### Tail Recursion
+### Farokrekurzió
 
-Interestingly, **if a function makes the recursive call as the very last step before returning**, the function can be optimized by the compiler or interpreter to have space efficiency comparable to iteration. This case is called <u>tail recursion</u>.
+Érdekes módon, **ha egy függvény a rekurzív hívást teszi meg az utolsó lépésként visszatérés előtt**, a függvényt a fordítóprogram vagy az értelmező optimalizálhatja, hogy az iterációhoz hasonló térbeli hatékonyságot érjen el. Ezt az esetet <u>farokrekurziónak</u> nevezik.
 
-- **Regular recursion**: When a function returns to the previous level, it needs to continue executing code, so the system needs to save the context of the previous layer's call.
-- **Tail recursion**: The recursive call is the last operation before the function returns, meaning that after returning to the previous level, there is no need to continue executing other operations, so the system does not need to save the context of the previous layer's function.
+- **Szabályos rekurzió**: Amikor egy függvény visszatér az előző szintre, folytatnia kell a kód végrehajtását, így a rendszernek el kell mentenie az előző réteg hívásának kontextusát.
+- **Farokrekurzió**: A rekurzív hívás az utolsó művelet a függvény visszatérése előtt, ami azt jelenti, hogy az előző szintre való visszatérés után nincs szükség más műveletek folytatására, ezért a rendszernek nem kell elmentenie az előző réteg függvénykontextusát.
 
-Taking the calculation of $1 + 2 + \dots + n$ as an example, we can set the result variable `res` as a function parameter to implement tail recursion:
+Az $1 + 2 + \dots + n$ számítását példaként véve a `res` eredményváltozót függvényparaméterként állíthatjuk be a farokrekurzió megvalósításához:
 
 ```src
 [file]{recursion}-[class]{}-[func]{tail_recur}
 ```
 
-The execution process of tail recursion is shown in the figure below. Comparing regular recursion and tail recursion, the execution point of the summation operation is different.
+A farokrekurzió végrehajtási folyamata az alábbi ábrán látható. A szabályos rekurzió és a farokrekurzió összehasonlításakor az összeadási művelet végrehajtási pontja különböző.
 
-- **Regular recursion**: The summation operation is performed during the "ascending" process, requiring an additional summation operation after each layer returns.
-- **Tail recursion**: The summation operation is performed during the "descending" process; the "ascending" process only needs to return layer by layer.
+- **Szabályos rekurzió**: Az összeadási művelet a "felemelkedési" folyamat során hajtódik végre, minden réteg visszatérése után egy további összeadási műveletet igényelve.
+- **Farokrekurzió**: Az összeadási művelet a "leszállási" folyamat során hajtódik végre; a "felemelkedési" folyamatnak csak rétegről rétegre kell visszatérnie.
 
-![Tail recursion process](iteration_and_recursion.assets/tail_recursion_sum.png)
+![Farokrekurzió folyamata](iteration_and_recursion.assets/tail_recursion_sum.png)
 
 !!! tip
 
-    Please note that many compilers or interpreters do not support tail recursion optimization. For example, Python does not support tail recursion optimization by default, so even if a function is in tail recursive form, it may still encounter stack overflow issues.
+    Kérjük, vegye figyelembe, hogy sok fordítóprogram vagy értelmező nem támogatja a farokrekurzió optimalizálást. Például a Python alapértelmezés szerint nem támogatja a farokrekurzió optimalizálást, ezért még ha egy függvény farokrekurzív formában is van, akkor is találkozhat veremtúlcsordulási problémákkal.
 
-### Recursion Tree
+### Rekurziós fa
 
-When dealing with algorithmic problems related to "divide and conquer", recursion often provides a more intuitive approach and more readable code than iteration. Taking the "Fibonacci sequence" as an example.
+"Oszd meg és uralkodj" problémákkal kapcsolatos algoritmikus feladatok megoldásakor a rekurzió gyakran intuitívabb megközelítést és olvashatóbb kódot kínál, mint az iteráció. Vegyük példaként a "Fibonacci-sorozatot".
 
 !!! question
 
-    Given a Fibonacci sequence $0, 1, 1, 2, 3, 5, 8, 13, \dots$, find the $n$-th number in the sequence.
+    Adott egy $0, 1, 1, 2, 3, 5, 8, 13, \dots$ Fibonacci-sorozat, találjuk meg a sorozat $n$-edik számát.
 
-Let the $n$-th number of the Fibonacci sequence be $f(n)$. Two conclusions can be easily obtained.
+Legyen a Fibonacci-sorozat $n$-edik száma $f(n)$. Két következtetés könnyen levezethető.
 
-- The first two numbers of the sequence are $f(1) = 0$ and $f(2) = 1$.
-- Each number in the sequence is the sum of the previous two numbers, i.e., $f(n) = f(n - 1) + f(n - 2)$.
+- A sorozat első két száma $f(1) = 0$ és $f(2) = 1$.
+- A sorozat minden száma az előző két szám összege, azaz $f(n) = f(n - 1) + f(n - 2)$.
 
-Following the recurrence relation to make recursive calls, with the first two numbers as termination conditions, we can write the recursive code. Calling `fib(n)` will give us the $n$-th number of the Fibonacci sequence:
+A rekurrencia-reláció alapján rekurzív hívásokat hajtva végre, az első két számot leállítási feltételként használva megírhatjuk a rekurzív kódot. Az `fib(n)` meghívása megadja a Fibonacci-sorozat $n$-edik számát:
 
 ```src
 [file]{recursion}-[class]{}-[func]{fib}
 ```
 
-Observing the above code, we recursively call two functions within the function, **meaning that one call produces two call branches**. As shown in the figure below, such continuous recursive calling will eventually produce a <u>recursion tree</u> with $n$ levels.
+A fenti kódot megfigyelve, a függvényen belül két függvényt hívunk meg rekurzívan, **ami azt jelenti, hogy egy hívás két hívási ágat hoz létre**. Az alábbi ábrán látható, hogy az ilyen folyamatos rekurzív hívás végül egy $n$ szintű <u>rekurziós fát</u> hoz létre.
 
-![Recursion tree of the Fibonacci sequence](iteration_and_recursion.assets/recursion_tree.png)
+![A Fibonacci-sorozat rekurziós fája](iteration_and_recursion.assets/recursion_tree.png)
 
-Fundamentally, recursion embodies the paradigm of "decomposing a problem into smaller subproblems", and this divide-and-conquer strategy is crucial.
+Alapvetően a rekurzió magában foglalja a "probléma kisebb részproblémákra bontásának" paradigmáját, és ez az oszd meg és uralkodj stratégia döntő fontosságú.
 
-- From an algorithmic perspective, many important algorithmic strategies such as searching, sorting, backtracking, divide and conquer, and dynamic programming directly or indirectly apply this way of thinking.
-- From a data structure perspective, recursion is naturally suited for handling problems related to linked lists, trees, and graphs, because they are well-suited for analysis using divide-and-conquer thinking.
+- Algoritmikus szempontból sok fontos algoritmikus stratégia, mint a keresés, rendezés, visszalépés, oszd meg és uralkodj, és dinamikus programozás közvetlenül vagy közvetve alkalmazza ezt a gondolkodásmódot.
+- Adatszerkezetek szempontjából a rekurzió természetesen alkalmas láncolt listákkal, fákkal és gráfokkal kapcsolatos problémák kezelésére, mivel ezek jól alkalmasak az oszd meg és uralkodj gondolkodással történő elemzésre.
 
-## Comparison of the Two
+## A kettő összehasonlítása
 
-Summarizing the above content, as shown in the table below, iteration and recursion differ in implementation, performance, and applicability.
+A fenti tartalom összefoglalásként, az alábbi táblázatban látható módon, az iteráció és a rekurzió megvalósításban, teljesítményben és alkalmazhatóságban különböznek egymástól.
 
-<p align="center"> Table <id> &nbsp; Comparison of iteration and recursion characteristics </p>
+<p align="center"> Táblázat <id> &nbsp; Az iteráció és a rekurzió jellemzőinek összehasonlítása </p>
 
-|                | Iteration                                                | Recursion                                                                              |
-| -------------- | -------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| Implementation | Loop structure                                           | Function calls itself                                                                  |
-| Time efficiency | Generally more efficient, no function call overhead      | Each function call incurs overhead                                                     |
-| Memory usage   | Usually uses a fixed amount of memory space              | Accumulated function calls may use a large amount of stack frame space                 |
-| Suitable problems | Suitable for simple loop tasks, with intuitive and readable code | Suitable for subproblem decomposition, such as trees, graphs, divide and conquer, backtracking, etc., with concise and clear code structure |
+|                | Iteráció                                                  | Rekurzió                                                                                   |
+| -------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| Megvalósítás   | Ciklusstruktúra                                           | Függvény meghívja önmagát                                                                  |
+| Időhatékonyság | Általában hatékonyabb, nincs függvényhívási terhelés      | Minden függvényhívás terhelést okoz                                                        |
+| Memóriahasználat | Általában fix mennyiségű memóriaterületet használ       | Összegyűlt függvényhívások nagy mennyiségű veremkeret-teret használhatnak                  |
+| Alkalmas feladatok | Egyszerű ciklusos feladatokhoz alkalmas, intuitív és olvasható kóddal | Részproblémák felbontásához alkalmas, például fák, gráfok, oszd meg és uralkodj, visszalépés stb., tömör és áttekinthető kódszerkezettel |
 
 !!! tip
 
-    If you find the following content difficult to understand, you can review it after reading the "Stack" chapter.
+    Ha az alábbi tartalom nehezen érthető, újra áttekintheti a "Verem" fejezet elolvasása után.
 
-What is the intrinsic relationship between iteration and recursion? Taking the above recursive function as an example, the summation operation is performed during the "ascending" phase of recursion. This means that the function called first actually completes its summation operation last, **and this working mechanism is similar to the "last-in, first-out" principle of stacks**.
+Mi az iteráció és a rekurzió belső kapcsolata? A fenti rekurzív függvényt példaként véve az összeadási műveletet a rekurzió "felemelkedési" fázisában hajtják végre. Ez azt jelenti, hogy az elsőként meghívott függvény valójában utoljára fejezi be az összeadási műveletet, **és ez a munkamechanizmus hasonlít a veremek "utoljára be, először ki" elvéhez**.
 
-In fact, recursive terminology such as "call stack" and "stack frame space" already hints at the close relationship between recursion and stacks.
+Valójában az olyan rekurzív terminológia, mint a "hívási verem" és a "veremkeret-tér", már utal a rekurzió és a veremek szoros kapcsolatára.
 
-1. **Descend**: When a function is called, the system allocates a new stack frame on the "call stack" for that function to store the function's local variables, parameters, return address, and other data.
-2. **Ascend**: When the function completes execution and returns, the corresponding stack frame is removed from the "call stack", restoring the execution environment of the previous function.
+1. **Leszállás**: Amikor egy függvényt meghívnak, a rendszer egy új veremkeretet hoz létre a "hívási veremben" az adott függvény számára a függvény lokális változóinak, paramétereinek, visszatérési címének és egyéb adatainak tárolásához.
+2. **Felemelkedés**: Amikor a függvény befejezi a végrehajtást és visszatér, a megfelelő veremkeretet eltávolítják a "hívási veremből", visszaállítva az előző függvény végrehajtási környezetét.
 
-Therefore, **we can use an explicit stack to simulate the behavior of the call stack**, thus transforming recursion into iterative form:
+Ezért **explicit verem segítségével szimulálhatjuk a hívási verem viselkedését**, így a rekurziót iteratív formává alakítva:
 
 ```src
 [file]{recursion}-[class]{}-[func]{for_loop_recur}
 ```
 
-Observing the above code, when recursion is transformed into iteration, the code becomes more complex. Although iteration and recursion can be converted into each other in many cases, it may not be worthwhile to do so for the following two reasons.
+A fenti kódot megfigyelve, amikor a rekurziót iterációvá alakítjuk, a kód összetettebbé válik. Bár az iteráció és a rekurzió sok esetben egymásba alakítható, az alábbi két ok miatt ez nem mindig érdemes.
 
-- The transformed code may be more difficult to understand and less readable.
-- For some complex problems, simulating the behavior of the system call stack can be very difficult.
+- Az átalakított kód nehezebben érthető és kevésbé olvasható lehet.
+- Bizonyos összetett problémáknál a rendszer hívási veremének viselkedésének szimulálása nagyon nehéz lehet.
 
-In summary, **choosing between iteration and recursion depends on the nature of the specific problem**. In programming practice, it is crucial to weigh the pros and cons of both and choose the appropriate method based on the context.
+Összefoglalva, **az iteráció és a rekurzió közötti választás az adott probléma természetétől függ**. A programozási gyakorlatban döntő fontosságú mindkettő előnyeit és hátrányait mérlegelni, és a kontextus alapján kiválasztani a megfelelő módszert.
