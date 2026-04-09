@@ -1,9 +1,9 @@
-# Data Structures
+# Adatszerkezetek
 
-![Data structures](../assets/covers/chapter_data_structure.jpg)
+![Adatszerkezetek](../assets/covers/chapter_data_structure.jpg)
 
 !!! abstract
 
-    Data structure is like a sturdy and diverse framework.
+    Az adatszerkezet olyan, mint egy erős és sokrétű keret.
 
-    It provides a blueprint for the orderly organization of data, upon which algorithms come to life.
+    Tervrajzot nyújt az adatok rendezett megszervezéséhez, amelyen az algoritmusok életre kelnek.

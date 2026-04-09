@@ -1,66 +1,66 @@
-# Summary
+# Összefoglalás
 
-### Key Review
+### Kulcsfogalmak áttekintése
 
-- Data structures can be classified from two perspectives: logical structure and physical structure. Logical structure describes the logical relationships between data elements, while physical structure describes how data is stored in computer memory.
-- Common logical structures include linear, tree, and network structures. We typically classify data structures as linear (arrays, linked lists, stacks, queues) and non-linear (trees, graphs, heaps) based on their logical structure. The implementation of hash tables may involve both linear and non-linear data structures.
-- When a program runs, data is stored in computer memory. Each memory space has a corresponding memory address, and the program accesses data through these memory addresses.
-- Physical structures are primarily divided into contiguous space storage (arrays) and dispersed space storage (linked lists). All data structures are implemented using arrays, linked lists, or a combination of both.
-- Basic data types in computers include integers `byte`, `short`, `int`, `long`, floating-point numbers `float`, `double`, characters `char`, and booleans `bool`. Their value ranges depend on the size of space they occupy and their representation method.
-- Sign-magnitude, 1's complement, and 2's complement are three methods for encoding numbers in computers, and they can be converted into each other. The most significant bit of sign-magnitude is the sign bit, and the remaining bits represent the value of the number.
-- Integers are stored in computers in 2's complement form. Under 2's complement representation, computers can treat the addition of positive and negative numbers uniformly, without needing to design special hardware circuits for subtraction, and there is no ambiguity of positive and negative zero.
-- The encoding of floating-point numbers consists of 1 sign bit, 8 exponent bits, and 23 fraction bits. Due to the exponent bits, the range of floating-point numbers is much larger than that of integers, at the cost of sacrificing precision.
-- ASCII is the earliest English character set, with a length of 1 byte, containing a total of 127 characters. GBK is a commonly used Chinese character set, containing over 20,000 Chinese characters. Unicode is committed to providing a complete character set standard, collecting characters from various languages around the world, thereby solving the garbled text problem caused by inconsistent character encoding methods.
-- UTF-8 is the most popular Unicode encoding method, with excellent universality. It is a variable-length encoding method with good scalability, effectively improving storage space efficiency. UTF-16 and UTF-32 are fixed-length encoding methods. When encoding Chinese characters, UTF-16 occupies less space than UTF-8. Programming languages such as Java and C# use UTF-16 encoding by default.
+- Az adatszerkezetek két nézőpontból osztályozhatók: logikai szerkezet és fizikai szerkezet. A logikai szerkezet az adatelemek közötti logikai kapcsolatokat írja le, míg a fizikai szerkezet azt írja le, hogyan tárolódnak az adatok a számítógép memóriájában.
+- A közismert logikai szerkezetek közé tartoznak a lineáris, fa- és hálózati szerkezetek. Az adatszerkezeteket általában logikai szerkezetük alapján soroljuk lineárisra (tömbök, láncolt listák, veremek, sorok) és nemlineárisra (fák, gráfok, kupacok). A hasítótáblák megvalósítása lineáris és nemlineáris adatszerkezeteket egyaránt tartalmazhat.
+- Amikor egy program fut, az adatok a számítógép memóriájában tárolódnak. Minden memóriahely rendelkezik egy megfelelő memóriacímmel, és a program ezeken a memóriacímeken keresztül fér hozzá az adatokhoz.
+- A fizikai szerkezetek főként összefüggő tárterület-tárolásra (tömbök) és szétszórt tárterület-tárolásra (láncolt listák) oszthatók. Minden adatszerkezet tömbök, láncolt listák alapján vagy mindkettő kombinációján valósul meg.
+- A számítógépek alapvető adattípusai közé tartoznak az egész számok `byte`, `short`, `int`, `long`, lebegőpontos számok `float`, `double`, karakterek `char` és logikai értékek `bool`. Értékkészletük a foglalt hely méretétől és az ábrázolási módszertől függ.
+- Az előjel-abszolút érték, az egyes komplemens és a kettes komplemens a számítógépekben lévő számok kódolásának három módszere, és kölcsönösen átválthatók egymásba. Az előjel-abszolút érték legjelentősebb bitje az előjelbit, a többi bit a szám értékét adja meg.
+- Az egész számok a számítógépekben kettes komplemens formában tárolódnak. Kettes komplemens ábrázolásban a számítógépek egységesen tudják kezelni a pozitív és negatív számok összeadását, anélkül hogy speciális hardveres áramköröket kellene tervezni a kivonáshoz, és a pozitív és negatív nulla kétértelműsége sem jelent problémát.
+- A lebegőpontos számok kódolása 1 előjelbitből, 8 kitevő bitből és 23 törtbitből áll. A kitevő bitek miatt a lebegőpontos számok tartománya sokkal nagyobb, mint az egész számoké, a pontosság feláldozásának árán.
+- Az ASCII a legkorábbi angol karakterkészlet, 1 bájt hosszúságú, összesen 127 karaktert tartalmaz. A GBK egy közismert kínai karakterkészlet, több mint 20 000 kínai karaktert tartalmaz. A Unicode egy átfogó karakterkészlet-szabvány biztosítására törekszik, amely a világ összes nyelvének karakterét összegyűjti, megoldva ezzel a különböző karakterkódolási módszerek által okozott torz szöveg problémáját.
+- Az UTF-8 a legnépszerűbb Unicode kódolási módszer, kiváló általánossággal. Ez egy változó hosszúságú kódolási módszer, jó skálázhatósággal, hatékonyan javítja a tárhelyek hatékonyságát. Az UTF-16 és az UTF-32 rögzített hosszúságú kódolási módszerek. Kínai karakterek kódolásakor az UTF-16 kevesebb helyet foglal el, mint az UTF-8. Programozási nyelvek, mint a Java és a C#, alapértelmezés szerint UTF-16 kódolást alkalmaznak.
 
-### Q & A
+### Kérdések és válaszok
 
-**Q**: Why do hash tables contain both linear and non-linear data structures?
+**K**: Miért tartalmaznak a hasítótáblák lineáris és nemlineáris adatszerkezeteket egyaránt?
 
-The underlying structure of a hash table is an array. To resolve hash collisions, we may use "chaining" (discussed in the subsequent "Hash Collision" section): each bucket in the array points to a linked list, which may be converted to a tree (usually a red-black tree) when the list length exceeds a certain threshold.
+A hasítótábla alapszerkezete egy tömb. Az ütközések feloldásához „láncolást" alkalmazhatunk (amelyet a későbbi „Hasításütközés" fejezet tárgyal): a tömb minden vedrére egy láncolt lista mutat, amely bizonyos listaméret-küszöb túllépésekor fává (általában vörös-fekete fává) konvertálható.
 
-From a storage perspective, the underlying structure of a hash table is an array, where each bucket slot may contain a value, a linked list, or a tree. Therefore, hash tables may contain both linear data structures (arrays, linked lists) and non-linear data structures (trees).
+Tárolási szempontból a hasítótábla alapszerkezete egy tömb, ahol minden vödörhelyen szerepelhet egy érték, egy láncolt lista vagy egy fa. Ezért a hasítótáblák tartalmazhatnak lineáris adatszerkezeteket (tömbök, láncolt listák) és nemlineáris adatszerkezeteket (fák) egyaránt.
 
-**Q**: Is the length of the `char` type 1 byte?
+**K**: A `char` típus hossza 1 bájt?
 
-The length of the `char` type is determined by the encoding method used by the programming language. For example, Java, JavaScript, TypeScript, and C# all use UTF-16 encoding (to store Unicode code points), so the `char` type has a length of 2 bytes.
+A `char` típus hossza a programozási nyelv által alkalmazott kódolási módszertől függ. Például a Java, JavaScript, TypeScript és C# mind UTF-16 kódolást alkalmaz (Unicode kódpontok tárolásához), így a `char` típus hossza 2 bájt.
 
-**Q**: Is there ambiguity in referring to array-based data structures as "static data structures"? Stacks can also perform "dynamic" operations such as push and pop.
+**K**: Félreértelmezés-e a tömbön alapuló adatszerkezetekre „statikus adatszerkezetként" hivatkozni? A veremek is tudnak „dinamikus" műveleteket végezni, mint a push és pop.
 
-Stacks can indeed implement dynamic data operations, but the data structure is still "static" (fixed length). Although array-based data structures can dynamically add or remove elements, their capacity is fixed. If the data volume exceeds the pre-allocated size, a new larger array needs to be created, and the contents of the old array must be copied to the new array.
+A veremek valóban képesek dinamikus adatműveletek végrehajtására, de maga az adatszerkezet továbbra is „statikus" (rögzített hosszúságú). Bár a tömbalapú adatszerkezetek dinamikusan adhatnak hozzá vagy vehetnek el elemeket, kapacitásuk rögzített. Ha az adatmennyiség meghaladja az előre lefoglalt méretet, egy új, nagyobb tömböt kell létrehozni, és a régi tömb tartalmát az újba kell másolni.
 
-**Q**: When constructing a stack (queue), its size is not specified. Why are they "static data structures"?
+**K**: Verem (sor) felépítésekor a mérete nincs megadva. Miért „statikus adatszerkezetek" ezek?
 
-In high-level programming languages, we do not need to manually specify the initial capacity of a stack (queue); this work is automatically completed within the class. For example, the initial capacity of Java's `ArrayList` is typically 10. Additionally, the expansion operation is also automatically implemented. See the subsequent "List" section for details.
+A magas szintű programozási nyelvekben nincs szükség a verem (sor) kezdeti kapacitásának manuális megadására; ezt a munka automatikusan elvégzi az osztály belsejében. Például a Java `ArrayList` kezdeti kapacitása általában 10. Emellett a bővítési műveletek is automatikusan megvalósulnak. Részletekért lásd a következő „Lista" fejezetet.
 
-**Q**: The method of converting sign-magnitude to 2's complement is "first negate then add 1". So converting 2's complement to sign-magnitude should be the inverse operation "first subtract 1 then negate". However, 2's complement can also be converted to sign-magnitude through "first negate then add 1". Why is this?
+**K**: Az előjel-abszolút értékről kettes komplemensre való átváltás módszere az „először negálj, majd adj hozzá 1-et". Tehát a kettes komplemensről előjel-abszolút értékre való visszaváltás az inverz művelet lenne: „először vonj le 1-et, majd negálj". Miért hajtható végre ez az átváltás is az „először negálj, majd adj hozzá 1-et" módszerrel?
 
-This is because the mutual conversion between sign-magnitude and 2's complement is actually the process of computing the "complement". Let us first define the complement: assuming $a + b = c$, then we say that $a$ is the complement of $b$ to $c$, and conversely, $b$ is the complement of $a$ to $c$.
+Ez azért van, mert az előjel-abszolút érték és a kettes komplemens közötti kölcsönös átváltás valójában a „komplemens" kiszámításának folyamata. Először definiáljuk a komplementset: feltételezve, hogy $a + b = c$, azt mondjuk, hogy $a$ a $b$ komplementse $c$-hez képest, és fordítva, $b$ az $a$ komplementse $c$-hez képest.
 
-Given an $n = 4$ bit binary number $0010$, if we treat this number as sign-magnitude (ignoring the sign bit), then its 2's complement can be obtained through "first negate then add 1":
+Adott egy $n = 4$ bites bináris szám: $0010$. Ha ezt a számot előjel-abszolút értékként kezeljük (az előjelbit figyelmen kívül hagyásával), kettes komplemense az „először negálj, majd adj hozzá 1-et" módszerrel kapható meg:
 
 $$
 0010 \rightarrow 1101 \rightarrow 1110
 $$
 
-We find that the sum of sign-magnitude and 2's complement is $0010 + 1110 = 10000$, which means the 2's complement $1110$ is the "complement" of sign-magnitude $0010$ to $10000$. **This means the above "first negate then add 1" is actually the process of computing the complement to $10000$**.
+Megfigyeljük, hogy az előjel-abszolút érték és a kettes komplemens összege $0010 + 1110 = 10000$, ami azt jelenti, hogy a kettes komplemens $1110$ az előjel-abszolút érték $0010$ „komplementse" $10000$-hez képest. **Ez azt jelenti, hogy a fenti „először negálj, majd adj hozzá 1-et" valójában a $10000$-hez vett komplemens kiszámításának folyamata**.
 
-So, what is the "complement" of 2's complement $1110$ to $10000$? We can still use "first negate then add 1" to obtain it:
+Mi tehát a kettes komplemens $1110$ komplementse $10000$-hez képest? Ezt szintén az „először negálj, majd adj hozzá 1-et" módszerrel kaphatjuk meg:
 
 $$
 1110 \rightarrow 0001 \rightarrow 0010
 $$
 
-In other words, sign-magnitude and 2's complement are each other's "complement" to $10000$, so "sign-magnitude to 2's complement" and "2's complement to sign-magnitude" can be implemented using the same operation (first negate then add 1).
+Más szóval, az előjel-abszolút érték és a kettes komplemens kölcsönösen egymás „komplementsei" $10000$-hez képest, ezért az „előjel-abszolút értékről kettes komplemensre" és a „kettes komplemensről előjel-abszolút értékre" való átváltás ugyanazzal a művelettel (először negálj, majd adj hozzá 1-et) valósítható meg.
 
-Of course, we can also use the inverse operation to find the sign-magnitude of 2's complement $1110$, that is, "first subtract 1 then negate":
+Természetesen az inverz műveletet is alkalmazhatjuk a kettes komplemens $1110$ előjel-abszolút értékének meghatározásához, vagyis az „először vonj le 1-et, majd negálj" módszerrel:
 
 $$
 1110 \rightarrow 1101 \rightarrow 0010
 $$
 
-In summary, both "first negate then add 1" and "first subtract 1 then negate" are computing the complement to $10000$, and they are equivalent.
+Összefoglalva, mind az „először negálj, majd adj hozzá 1-et", mind az „először vonj le 1-et, majd negálj" a $10000$-hez vett komplementst számítja ki, és ezek egyenértékűek.
 
-Essentially, the "negate" operation is actually finding the complement to $1111$ (because `sign-magnitude + 1's complement = 1111` always holds); and adding 1 to the 1's complement yields the 2's complement, which is the complement to $10000$.
+Lényegében a „negálás" művelet valójában az $1111$-hez vett komplementst számolja ki (mivel az `előjel-abszolút érték + egyes komplemens = 1111` mindig igaz); és az egyes komplemenshez 1-et adva kapjuk a kettes komplementst, ami a $10000$-hez vett komplemens.
 
-The above uses $n = 4$ as an example, and it can be generalized to binary numbers of any number of bits.
+A fenti példa $n = 4$ értéket használ, és tetszőleges bites bináris számokra általánosítható.
