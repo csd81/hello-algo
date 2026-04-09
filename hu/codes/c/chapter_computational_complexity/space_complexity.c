@@ -6,55 +6,55 @@
 
 #include "../utils/common.h"
 
-/* Function */
+/* Függvény */
 int func() {
-    // Perform some operations
+    // Bizonyos műveletek elvégzése
     return 0;
 }
 
-/* Constant order */
+/* Konstans rend */
 void constant(int n) {
-    // Constants, variables, objects occupy O(1) space
+    // Konstansok, változók, objektumok O(1) helyet foglalnak
     const int a = 0;
     int b = 0;
     int nums[1000];
     ListNode *node = newListNode(0);
     free(node);
-    // Variables in the loop occupy O(1) space
+    // A ciklusban lévő változók O(1) helyet foglalnak
     for (int i = 0; i < n; i++) {
         int c = 0;
     }
-    // Functions in the loop occupy O(1) space
+    // A ciklusban lévő függvények O(1) helyet foglalnak
     for (int i = 0; i < n; i++) {
         func();
     }
 }
 
-/* Hash table */
+/* Hash tábla */
 typedef struct {
     int key;
     int val;
-    UT_hash_handle hh; // Implemented using uthash.h
+    UT_hash_handle hh; // uthash.h segítségével megvalósítva
 } HashTable;
 
-/* Linear order */
+/* Lineáris rend */
 void linear(int n) {
-    // Array of length n uses O(n) space
+    // n hosszú tömb O(n) helyet foglal
     int *nums = malloc(sizeof(int) * n);
     free(nums);
 
-    // A list of length n occupies O(n) space
+    // n hosszú lista O(n) helyet foglal
     ListNode **nodes = malloc(sizeof(ListNode *) * n);
     for (int i = 0; i < n; i++) {
         nodes[i] = newListNode(i);
     }
-    // Memory release
+    // Memória felszabadítása
     for (int i = 0; i < n; i++) {
         free(nodes[i]);
     }
     free(nodes);
 
-    // A hash table of length n occupies O(n) space
+    // n hosszú hash tábla O(n) helyet foglal
     HashTable *h = NULL;
     for (int i = 0; i < n; i++) {
         HashTable *tmp = malloc(sizeof(HashTable));
@@ -63,7 +63,7 @@ void linear(int n) {
         HASH_ADD_INT(h, key, tmp);
     }
 
-    // Memory release
+    // Memória felszabadítása
     HashTable *curr, *tmp;
     HASH_ITER(hh, h, curr, tmp) {
         HASH_DEL(h, curr);
@@ -71,7 +71,7 @@ void linear(int n) {
     }
 }
 
-/* Linear order (recursive implementation) */
+/* Lineáris rend (rekurzív megvalósítás) */
 void linearRecur(int n) {
     printf("Recursion n = %d\r\n", n);
     if (n == 1)
@@ -79,9 +79,9 @@ void linearRecur(int n) {
     linearRecur(n - 1);
 }
 
-/* Exponential order */
+/* Exponenciális rend */
 void quadratic(int n) {
-    // 2D list uses O(n^2) space
+    // 2D lista O(n^2) helyet foglal
     int **numMatrix = malloc(sizeof(int *) * n);
     for (int i = 0; i < n; i++) {
         int *tmp = malloc(sizeof(int) * n);
@@ -91,14 +91,14 @@ void quadratic(int n) {
         numMatrix[i] = tmp;
     }
 
-    // Memory release
+    // Memória felszabadítása
     for (int i = 0; i < n; i++) {
         free(numMatrix[i]);
     }
     free(numMatrix);
 }
 
-/* Quadratic order (recursive implementation) */
+/* Négyzetes rend (rekurzív megvalósítás) */
 int quadraticRecur(int n) {
     if (n <= 0)
         return 0;
@@ -109,7 +109,7 @@ int quadraticRecur(int n) {
     return res;
 }
 
-/* Driver Code */
+/* Vezérlő kód */
 TreeNode *buildTree(int n) {
     if (n == 0)
         return NULL;
@@ -119,22 +119,22 @@ TreeNode *buildTree(int n) {
     return root;
 }
 
-/* Driver Code */
+/* Vezérlő kód */
 int main() {
     int n = 5;
-    // Constant order
+    // Konstans rend
     constant(n);
-    // Linear order
+    // Lineáris rend
     linear(n);
     linearRecur(n);
-    // Exponential order
+    // Exponenciális rend
     quadratic(n);
     quadraticRecur(n);
-    // Exponential order
+    // Exponenciális rend
     TreeNode *root = buildTree(n);
     printTree(root);
 
-    // Free memory
+    // Memória felszabadítása
     freeMemoryTree(root);
 
     return 0;

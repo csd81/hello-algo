@@ -7,35 +7,35 @@
 const { GraphAdjList } = require('./graph_adjacency_list');
 const { Vertex } = require('../modules/Vertex');
 
-/* Breadth-first traversal */
-// Use adjacency list to represent the graph, in order to obtain all adjacent vertices of a specified vertex
+/* Szélességi bejárás */
+// A szomszédsági listával képviseljük a gráfot, hogy megkapjuk egy adott csúcs összes szomszédos csúcsát
 function graphBFS(graph, startVet) {
-    // Vertex traversal sequence
+    // Csúcs bejárási sorrend
     const res = [];
-    // Hash set for recording vertices that have been visited
+    // Hash halmaz a már meglátogatott csúcsok rögzítéséhez
     const visited = new Set();
     visited.add(startVet);
-    // Queue used to implement BFS
+    // BFS megvalósításhoz használt sor
     const que = [startVet];
-    // Starting from vertex vet, loop until all vertices are visited
+    // A startVet csúcstól kezdve, ciklus amíg az összes csúcsot meg nem látogattuk
     while (que.length) {
-        const vet = que.shift(); // Dequeue the front vertex
-        res.push(vet); // Record visited vertex
-        // Traverse all adjacent vertices of this vertex
+        const vet = que.shift(); // Kisorba állítjuk az első csúcsot
+        res.push(vet); // Rögzítjük a meglátogatott csúcsot
+        // Bejárjuk az adott csúcs összes szomszédos csúcsát
         for (const adjVet of graph.adjList.get(vet) ?? []) {
             if (visited.has(adjVet)) {
-                continue; // Skip vertices that have been visited
+                continue; // Kihagyjuk a már meglátogatott csúcsokat
             }
-            que.push(adjVet); // Only enqueue unvisited vertices
-            visited.add(adjVet); // Mark this vertex as visited
+            que.push(adjVet); // Csak a még nem meglátogatott csúcsokat sorba állítjuk
+            visited.add(adjVet); // Megjelöljük ezt a csúcsot meglátogatottként
         }
     }
-    // Return vertex traversal sequence
+    // Visszaadjuk a csúcs bejárási sorrendjét
     return res;
 }
 
-/* Driver Code */
-/* Add edge */
+/* Tesztkód */
+/* Él hozzáadása */
 const v = Vertex.valsToVets([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
 const edges = [
     [v[0], v[1]],
@@ -55,7 +55,7 @@ const graph = new GraphAdjList(edges);
 console.log('\nAfter initialization, graph is');
 graph.print();
 
-/* Breadth-first traversal */
+/* Szélességi bejárás */
 const res = graphBFS(graph, v[0]);
 console.log('\nBreadth-first traversal (BFS) vertex sequence is');
 console.log(Vertex.vetsToVals(res));

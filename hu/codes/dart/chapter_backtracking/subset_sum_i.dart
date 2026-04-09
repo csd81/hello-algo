@@ -4,7 +4,7 @@
  * Author: liuyuxin (gvenusleo@gmail.com)
  */
 
-/* Backtracking algorithm: Subset sum I */
+/* Visszalépéses algoritmus: Részhalmazösszeg I */
 void backtrack(
   List<int> state,
   int target,
@@ -12,39 +12,39 @@ void backtrack(
   int start,
   List<List<int>> res,
 ) {
-  // When the subset sum equals target, record the solution
+  // Ha a részhalmaz összege egyenlő a céllal, rögzítsd a megoldást
   if (target == 0) {
     res.add(List.from(state));
     return;
   }
-  // Traverse all choices
-  // Pruning 2: start traversing from start to avoid generating duplicate subsets
+  // Összes választási lehetőség bejárása
+  // Metszés 2: start-tól kezdve bejárva elkerüljük az ismétlődő részhalmazok generálását
   for (int i = start; i < choices.length; i++) {
-    // Pruning 1: if the subset sum exceeds target, end the loop directly
-    // This is because the array is sorted, and later elements are larger, so the subset sum will definitely exceed target
+    // Metszés 1: ha a részhalmaz összege meghaladja a célt, közvetlenül szakítsd meg a ciklust
+    // Mivel a tömb rendezett, a későbbi elemek nagyobbak, így a részhalmaz összege biztosan meghaladja a célt
     if (target - choices[i] < 0) {
       break;
     }
-    // Attempt: make choice, update target, start
+    // Kísérlet: válassz, frissítsd a célt és a start értéket
     state.add(choices[i]);
-    // Proceed to the next round of selection
+    // Lépj a következő kiválasztási körre
     backtrack(state, target - choices[i], choices, i, res);
-    // Backtrack: undo choice, restore to previous state
+    // Visszalépés: vonja vissza a választást, állítsa vissza az előző állapotot
     state.removeLast();
   }
 }
 
-/* Solve subset sum I */
+/* Részhalmazösszeg I megoldása */
 List<List<int>> subsetSumI(List<int> nums, int target) {
-  List<int> state = []; // State (subset)
-  nums.sort(); // Sort nums
-  int start = 0; // Start point for traversal
-  List<List<int>> res = []; // Result list (subset list)
+  List<int> state = []; // Állapot (részhalmaz)
+  nums.sort(); // nums rendezése
+  int start = 0; // Bejárás kezdőpontja
+  List<List<int>> res = []; // Eredménylista (részhalmazok listája)
   backtrack(state, target, nums, start, res);
   return res;
 }
 
-/* Driver Code */
+/* Főprogram */
 void main() {
   List<int> nums = [3, 4, 5];
   int target = 9;

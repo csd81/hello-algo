@@ -10,28 +10,28 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 from modules import ListNode
 
-"""Driver Code"""
+"""Fő kód"""
 if __name__ == "__main__":
     num = 3
     hash_num = hash(num)
-    print(f"Hash value of integer {num} is {hash_num}")
+    print(f"A(z) {num} egész szám hash értéke: {hash_num}")
 
     bol = True
     hash_bol = hash(bol)
-    print(f"Hash value of boolean {bol} is {hash_bol}")
+    print(f"A(z) {bol} logikai érték hash értéke: {hash_bol}")
 
     dec = 3.14159
     hash_dec = hash(dec)
-    print(f"Hash value of decimal {dec} is {hash_dec}")
+    print(f"A(z) {dec} tizedes tört hash értéke: {hash_dec}")
 
     str = "Hello algo"
     hash_str = hash(str)
-    print(f"Hash value of string {str} is {hash_str}")
+    print(f"A(z) {str} karakterlánc hash értéke: {hash_str}")
 
     tup = (12836, "Xiao Ha")
     hash_tup = hash(tup)
-    print(f"Hash value of tuple {tup} is {hash(hash_tup)}")
+    print(f"A(z) {tup} tuple hash értéke: {hash(hash_tup)}")
 
     obj = ListNode(0)
     hash_obj = hash(obj)
-    print(f"Hash value of node object {obj} is {hash_obj}")
+    print(f"A(z) {obj} csomópont objektum hash értéke: {hash_obj}")

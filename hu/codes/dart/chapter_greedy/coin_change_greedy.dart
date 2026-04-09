@@ -4,35 +4,35 @@
  * Author: liuyuxin (gvenusleo@gmail.com)
  */
 
-/* Coin change: Greedy algorithm */
+/* Érmecserélés: Mohó algoritmus */
 int coinChangeGreedy(List<int> coins, int amt) {
-  // Assume coins list is sorted
+  // Feltételezzük, hogy a coins lista rendezett
   int i = coins.length - 1;
   int count = 0;
-  // Loop to make greedy choices until no remaining amount
+  // Ciklusban végez mohó döntéseket, amíg nincs maradék összeg
   while (amt > 0) {
-    // Find the coin that is less than and closest to the remaining amount
+    // Megkeresi a maradék összegnél kisebb és ahhoz legközelebbi érmét
     while (i > 0 && coins[i] > amt) {
       i--;
     }
-    // Choose coins[i]
+    // coins[i] kiválasztása
     amt -= coins[i];
     count++;
   }
-  // If no feasible solution is found, return -1
+  // Ha nem található megvalósítható megoldás, adjon vissza -1-et
   return amt == 0 ? count : -1;
 }
 
-/* Driver Code */
+/* Főprogram */
 void main() {
-  // Greedy algorithm: Can guarantee finding the global optimal solution
+  // Mohó algoritmus: garantáltan megtalálja a globális optimális megoldást
   List<int> coins = [1, 5, 10, 20, 50, 100];
   int amt = 186;
   int res = coinChangeGreedy(coins, amt);
   print("\ncoins = $coins, amt = $amt");
   print("Minimum coins needed to make $amt is $res");
 
-  // Greedy algorithm: Cannot guarantee finding the global optimal solution
+  // Mohó algoritmus: nem garantáltan találja meg a globális optimális megoldást
   coins = [1, 20, 50];
   amt = 60;
   res = coinChangeGreedy(coins, amt);
@@ -40,7 +40,7 @@ void main() {
   print("Minimum coins needed to make $amt is $res");
   print("Actually the minimum number needed is 3, i.e., 20 + 20 + 20");
 
-  // Greedy algorithm: Cannot guarantee finding the global optimal solution
+  // Mohó algoritmus: nem garantáltan találja meg a globális optimális megoldást
   coins = [1, 49, 50];
   amt = 98;
   res = coinChangeGreedy(coins, amt);

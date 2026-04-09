@@ -11,7 +11,7 @@
 
 using namespace std;
 
-/* Binary tree node structure */
+/* Bináris fa csomópontjának struktúrája */
 struct TreeNode {
     int val{};
     int height = 0;
@@ -23,11 +23,11 @@ struct TreeNode {
     }
 };
 
-// For the serialization encoding rules, please refer to:
+// A sorosítási kódolási szabályokhoz lásd:
 // https://www.hello-algo.com/chapter_tree/array_representation_of_tree/
-// Array representation of binary tree:
+// Bináris fa tömb reprezentációja:
 // [1, 2, 3, 4, None, 6, 7, 8, 9, None, None, 12, None, None, 15]
-// Linked list representation of binary tree:
+// Bináris fa láncolt lista reprezentációja:
 //             /——— 15
 //         /——— 7
 //     /——— 3
@@ -39,7 +39,7 @@ struct TreeNode {
 //         \——— 4
 //             \——— 8
 
-/* Deserialize a list into a binary tree: recursion */
+/* Lista deszerializálása bináris fává: rekurzió */
 TreeNode *vectorToTreeDFS(vector<int> &arr, int i) {
     if (i < 0 || i >= arr.size() || arr[i] == INT_MAX) {
         return nullptr;
@@ -50,12 +50,12 @@ TreeNode *vectorToTreeDFS(vector<int> &arr, int i) {
     return root;
 }
 
-/* Deserialize a list into a binary tree */
+/* Lista deszerializálása bináris fává */
 TreeNode *vectorToTree(vector<int> arr) {
     return vectorToTreeDFS(arr, 0);
 }
 
-/* Serialize a binary tree into a list: recursion */
+/* Bináris fa sorosítása listává: rekurzió */
 void treeToVecorDFS(TreeNode *root, int i, vector<int> &res) {
     if (root == nullptr)
         return;
@@ -67,14 +67,14 @@ void treeToVecorDFS(TreeNode *root, int i, vector<int> &res) {
     treeToVecorDFS(root->right, 2 * i + 2, res);
 }
 
-/* Serialize a binary tree into a list */
+/* Bináris fa sorosítása listává */
 vector<int> treeToVecor(TreeNode *root) {
     vector<int> res;
     treeToVecorDFS(root, 0, res);
     return res;
 }
 
-/* Free binary tree memory */
+/* Bináris fa memóriájának felszabadítása */
 void freeMemoryTree(TreeNode *root) {
     if (root == nullptr)
         return;

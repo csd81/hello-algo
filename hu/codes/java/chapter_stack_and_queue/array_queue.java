@@ -8,65 +8,65 @@ package chapter_stack_and_queue;
 
 import java.util.*;
 
-/* Queue based on circular array implementation */
+/* Körkörös tömb alapú sor implementáció */
 class ArrayQueue {
-    private int[] nums; // Array for storing queue elements
-    private int front; // Front pointer, points to the front of the queue element
-    private int queSize; // Queue length
+    private int[] nums; // Tömb a sor elemeinak tárolásához
+    private int front; // Elő-mutató, a sor első elemére mutat
+    private int queSize; // Sor hossza
 
     public ArrayQueue(int capacity) {
         nums = new int[capacity];
         front = queSize = 0;
     }
 
-    /* Get the capacity of the queue */
+    /* Sor kapacitásának lekérése */
     public int capacity() {
         return nums.length;
     }
 
-    /* Get the length of the queue */
+    /* Sor hosszának lekérése */
     public int size() {
         return queSize;
     }
 
-    /* Check if the queue is empty */
+    /* Sor üresség ellenőrzése */
     public boolean isEmpty() {
         return queSize == 0;
     }
 
-    /* Enqueue */
+    /* Elem sorba rakása */
     public void push(int num) {
         if (queSize == capacity()) {
             System.out.println("Queue is full");
             return;
         }
-        // Use modulo operation to wrap rear around to the head after passing the tail of the array
-        // Add num to the rear of the queue
+        // Moduló műveletet használva a hátsó mutató a tömb végén túl az elejére kerül
+        // num hozzáadása a sor végéhez
         int rear = (front + queSize) % capacity();
-        // Front pointer moves one position backward
+        // Elő-mutató egy pozícióval hátra lép
         nums[rear] = num;
         queSize++;
     }
 
-    /* Dequeue */
+    /* Elem kivétele a sorból */
     public int pop() {
         int num = peek();
-        // Move front pointer backward by one position, if it passes the tail, return to array head
+        // Elő-mutató egy pozícióval hátra lép, ha eléri a végét, a tömb elejére kerül
         front = (front + 1) % capacity();
         queSize--;
         return num;
     }
 
-    /* Return list for printing */
+    /* Lista visszaadása nyomtatáshoz */
     public int peek() {
         if (isEmpty())
             throw new IndexOutOfBoundsException();
         return nums[front];
     }
 
-    /* Return array */
+    /* Tömb visszaadása */
     public int[] toArray() {
-        // Elements enqueue
+        // Elemek sorba rakása
         int[] res = new int[queSize];
         for (int i = 0, j = front; i < queSize; i++, j++) {
             res[i] = nums[j % capacity()];
@@ -77,11 +77,11 @@ class ArrayQueue {
 
 public class array_queue {
     public static void main(String[] args) {
-        /* Access front of the queue element */
+        /* Sor elejének elérése */
         int capacity = 10;
         ArrayQueue queue = new ArrayQueue(capacity);
 
-        /* Elements enqueue */
+        /* Elemek sorba rakása */
         queue.push(1);
         queue.push(3);
         queue.push(2);
@@ -89,23 +89,23 @@ public class array_queue {
         queue.push(4);
         System.out.println("Queue queue = " + Arrays.toString(queue.toArray()));
 
-        /* Return list for printing */
+        /* Lista visszaadása nyomtatáshoz */
         int peek = queue.peek();
         System.out.println("Front element peek = " + peek);
 
-        /* Element dequeue */
+        /* Elem kivétele a sorból */
         int pop = queue.pop();
         System.out.println("Dequeue element pop = " + pop + ", after dequeue, queue = " + Arrays.toString(queue.toArray()));
 
-        /* Get the length of the queue */
+        /* Sor hosszának lekérése */
         int size = queue.size();
         System.out.println("Queue length size = " + size);
 
-        /* Check if the queue is empty */
+        /* Sor üresség ellenőrzése */
         boolean isEmpty = queue.isEmpty();
         System.out.println("Queue is empty = " + isEmpty);
 
-        /* Test circular array */
+        /* Körkörös tömb tesztelése */
         for (int i = 0; i < 10; i++) {
             queue.push(i);
             queue.pop();

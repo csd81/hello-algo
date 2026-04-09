@@ -4,33 +4,33 @@ Created Time: 2022-11-29
 Author: Peng Chen (pengchzn@gmail.com)
 """
 
-"""Driver Code"""
+"""Fő kód"""
 if __name__ == "__main__":
-    # Initialize stack
-    # Python does not have a built-in stack class, we can use list as a stack
+    # Verem inicializálása
+    # A Pythonban nincs beépített verem osztály, listát használunk veremként
     stack: list[int] = []
 
-    # Elements push onto stack
+    # Elemek betolása a verembe
     stack.append(1)
     stack.append(3)
     stack.append(2)
     stack.append(5)
     stack.append(4)
-    print("stack =", stack)
+    print("verem =", stack)
 
-    # Access top of the stack element
+    # A verem tetején lévő elem elérése
     peek: int = stack[-1]
-    print("Top of the stack element peek =", peek)
+    print("Verem teteje elem peek =", peek)
 
-    # Element pop from stack
+    # Elem kivétele a veremből
     pop: int = stack.pop()
-    print("Popped element pop =", pop)
-    print("After pop stack =", stack)
+    print("Kivett elem pop =", pop)
+    print("Pop után verem =", stack)
 
-    # Get the length of the stack
+    # A verem hosszának lekérése
     size: int = len(stack)
-    print("Length of the stack size =", size)
+    print("Verem hossza size =", size)
 
-    # Check if it is empty
+    # Ellenőrzi, hogy üres-e
     is_empty: bool = len(stack) == 0
-    print("Is the stack empty =", is_empty)
+    print("A verem üres-e =", is_empty)

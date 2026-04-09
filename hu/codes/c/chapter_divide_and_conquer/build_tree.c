@@ -6,32 +6,32 @@
 
 #include "../utils/common.h"
 
-// Assume all elements less than 1000
+// Feltételezzük, hogy minden elem kisebb mint 1000
 #define MAX_SIZE 1000
 
-/* Build binary tree: divide and conquer */
+/* Bináris fa felépítése: oszd meg és uralkodj */
 TreeNode *dfs(int *preorder, int *inorderMap, int i, int l, int r, int size) {
-    // Terminate when the subtree interval is empty
+    // Leáll, ha a részfa intervalluma üres
     if (r - l < 0)
         return NULL;
-    // Initialize the root node
+    // Gyökércsomópont inicializálása
     TreeNode *root = (TreeNode *)malloc(sizeof(TreeNode));
     root->val = preorder[i];
     root->left = NULL;
     root->right = NULL;
-    // Query m to divide the left and right subtrees
+    // m lekérdezése a bal és jobb részfa elválasztásához
     int m = inorderMap[preorder[i]];
-    // Subproblem: build the left subtree
+    // Részprobléma: bal részfa felépítése
     root->left = dfs(preorder, inorderMap, i + 1, l, m - 1, size);
-    // Subproblem: build the right subtree
+    // Részprobléma: jobb részfa felépítése
     root->right = dfs(preorder, inorderMap, i + 1 + m - l, m + 1, r, size);
-    // Return the root node
+    // A gyökércsomópont visszaadása
     return root;
 }
 
-/* Build binary tree */
+/* Bináris fa felépítése */
 TreeNode *buildTree(int *preorder, int preorderSize, int *inorder, int inorderSize) {
-    // Initialize hash map, storing the mapping from inorder elements to indices
+    // Hash tábla inicializálása, az inorder elemeknek az indexekhez való leképezését tárolja
     int *inorderMap = (int *)malloc(sizeof(int) * MAX_SIZE);
     for (int i = 0; i < inorderSize; i++) {
         inorderMap[inorder[i]] = i;
@@ -41,7 +41,7 @@ TreeNode *buildTree(int *preorder, int preorderSize, int *inorder, int inorderSi
     return root;
 }
 
-/* Driver Code */
+/* Vezérlő kód */
 int main() {
     int preorder[] = {3, 9, 2, 1, 7};
     int inorder[] = {9, 3, 1, 2, 7};

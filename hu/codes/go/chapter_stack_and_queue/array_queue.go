@@ -4,15 +4,15 @@
 
 package chapter_stack_and_queue
 
-/* Queue based on circular array implementation */
+/* Körkörös tömbön alapuló sor implementáció */
 type arrayQueue struct {
-	nums        []int // Array for storing queue elements
-	front       int   // Front pointer, points to the front of the queue element
-	queSize     int   // Queue length
-	queCapacity int   // Queue capacity (maximum number of elements)
+	nums        []int // Tömb a sorabeli elemek tárolásához
+	front       int   // Elöl mutató, a sor első elemére mutat
+	queSize     int   // Sor hossza
+	queCapacity int   // Sor kapacitása (maximum elemszám)
 }
 
-/* Access front of the queue element */
+/* Sor első elemének elérése */
 func newArrayQueue(queCapacity int) *arrayQueue {
 	return &arrayQueue{
 		nums:        make([]int, queCapacity),
@@ -22,44 +22,44 @@ func newArrayQueue(queCapacity int) *arrayQueue {
 	}
 }
 
-/* Get the length of the queue */
+/* Sor hosszának lekérése */
 func (q *arrayQueue) size() int {
 	return q.queSize
 }
 
-/* Check if the queue is empty */
+/* Sor üres-e */
 func (q *arrayQueue) isEmpty() bool {
 	return q.queSize == 0
 }
 
-/* Enqueue */
+/* Sorba állítás (enqueue) */
 func (q *arrayQueue) push(num int) {
-	// When rear == queCapacity, queue is full
+	// Ha rear == queCapacity, a sor tele van
 	if q.queSize == q.queCapacity {
 		return
 	}
-	// Use modulo operation to wrap rear around to the head after passing the tail of the array
-	// Add num to the rear of the queue
+	// Moduló művelettel a rear-t visszatekerjük a tömb elejére a végének átlépése után
+	// A num elemet a sor végéhez adjuk
 	rear := (q.front + q.queSize) % q.queCapacity
-	// Front pointer moves one position backward
+	// Az elöl mutató egy pozícióval előre lép
 	q.nums[rear] = num
 	q.queSize++
 }
 
-/* Dequeue */
+/* Sorból kivétel (dequeue) */
 func (q *arrayQueue) pop() any {
 	num := q.peek()
 	if num == nil {
 		return nil
 	}
 
-	// Move front pointer backward by one position, if it passes the tail, return to array head
+	// Az elöl mutatót egy pozícióval előre mozgatjuk, ha átlépi a véget, visszatér a tömb elejére
 	q.front = (q.front + 1) % q.queCapacity
 	q.queSize--
 	return num
 }
 
-/* Return list for printing */
+/* Lista visszaadása kiíráshoz */
 func (q *arrayQueue) peek() any {
 	if q.isEmpty() {
 		return nil
@@ -67,7 +67,7 @@ func (q *arrayQueue) peek() any {
 	return q.nums[q.front]
 }
 
-/* Get Slice for printing */
+/* Szelet lekérése kiíráshoz */
 func (q *arrayQueue) toSlice() []int {
 	rear := (q.front + q.queSize)
 	if rear >= q.queCapacity {

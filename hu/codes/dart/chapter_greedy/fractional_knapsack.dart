@@ -4,44 +4,44 @@
  * Author: liuyuxin (gvenusleo@gmail.com)
  */
 
-/* Item */
+/* Tárgy */
 class Item {
-  int w; // Item weight
-  int v; // Item value
+  int w; // Tárgy súlya
+  int v; // Tárgy értéke
 
   Item(this.w, this.v);
 }
 
-/* Fractional knapsack: Greedy algorithm */
+/* Töredékes hátizsák: Mohó algoritmus */
 double fractionalKnapsack(List<int> wgt, List<int> val, int cap) {
-  // Create item list with two attributes: weight, value
+  // Tárgyak listájának létrehozása két attribútummal: súly, érték
   List<Item> items = List.generate(wgt.length, (i) => Item(wgt[i], val[i]));
-  // Sort by unit value item.v / item.w from high to low
+  // Rendezés egységérték item.v / item.w szerint csökkenő sorrendben
   items.sort((a, b) => (b.v / b.w).compareTo(a.v / a.w));
-  // Loop for greedy selection
+  // Ciklus a mohó kiválasztáshoz
   double res = 0;
   for (Item item in items) {
     if (item.w <= cap) {
-      // If remaining capacity is sufficient, put the entire current item into the knapsack
+      // Ha elegendő a maradék kapacitás, tedd be a teljes aktuális tárgyat a hátizsákba
       res += item.v;
       cap -= item.w;
     } else {
-      // If remaining capacity is insufficient, put part of the current item into the knapsack
+      // Ha nem elegendő a maradék kapacitás, tedd be az aktuális tárgy egy részét a hátizsákba
       res += item.v / item.w * cap;
-      // No remaining capacity, so break out of the loop
+      // Nincs maradék kapacitás, szakítsd meg a ciklust
       break;
     }
   }
   return res;
 }
 
-/* Driver Code */
+/* Főprogram */
 void main() {
   List<int> wgt = [10, 20, 30, 40, 50];
   List<int> val = [50, 120, 150, 210, 240];
   int cap = 50;
 
-  // Greedy algorithm
+  // Mohó algoritmus
   double res = fractionalKnapsack(wgt, val, cap);
   print("Maximum item value not exceeding knapsack capacity is $res");
 }

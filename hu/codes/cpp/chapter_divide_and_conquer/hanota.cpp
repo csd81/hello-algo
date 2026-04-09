@@ -6,40 +6,40 @@
 
 #include "../utils/common.hpp"
 
-/* Move a disk */
+/* Korong áthelyezése */
 void move(vector<int> &src, vector<int> &tar) {
-    // Take out a disk from the top of src
+    // Korong kivétele az src tetejéről
     int pan = src.back();
     src.pop_back();
-    // Place the disk on top of tar
+    // Korong elhelyezése a tar tetejére
     tar.push_back(pan);
 }
 
-/* Solve the Tower of Hanoi problem f(i) */
+/* Hanoi-torony feladat megoldása: f(i) */
 void dfs(int i, vector<int> &src, vector<int> &buf, vector<int> &tar) {
-    // If there is only one disk left in src, move it directly to tar
+    // Ha csak egy korong maradt az src-ben, közvetlenül áthelyezzük a tar-ra
     if (i == 1) {
         move(src, tar);
         return;
     }
-    // Subproblem f(i-1): move the top i-1 disks from src to buf using tar
+    // f(i-1) részfeladat: a felső i-1 korong áthelyezése src-ről buf-ra, tar segítségével
     dfs(i - 1, src, tar, buf);
-    // Subproblem f(1): move the remaining disk from src to tar
+    // f(1) részfeladat: a maradék korong áthelyezése src-ről tar-ra
     move(src, tar);
-    // Subproblem f(i-1): move the top i-1 disks from buf to tar using src
+    // f(i-1) részfeladat: a felső i-1 korong áthelyezése buf-ról tar-ra, src segítségével
     dfs(i - 1, buf, src, tar);
 }
 
-/* Solve the Tower of Hanoi problem */
+/* Hanoi-torony feladat megoldása */
 void solveHanota(vector<int> &A, vector<int> &B, vector<int> &C) {
     int n = A.size();
-    // Move the top n disks from A to C using B
+    // A felső n korong áthelyezése A-ról C-re, B segítségével
     dfs(n, A, B, C);
 }
 
-/* Driver Code */
+/* Főprogram */
 int main() {
-    // The tail of the list is the top of the rod
+    // A lista vége a rúd teteje
     vector<int> A = {5, 4, 3, 2, 1};
     vector<int> B = {};
     vector<int> C = {};

@@ -6,60 +6,60 @@
 
 #include "../utils/common.hpp"
 
-/* Check if the current state is a solution */
+/* Ellenőrzi, hogy az aktuális állapot megoldás-e */
 bool isSolution(vector<TreeNode *> &state) {
     return !state.empty() && state.back()->val == 7;
 }
 
-/* Record solution */
+/* Megoldás rögzítése */
 void recordSolution(vector<TreeNode *> &state, vector<vector<TreeNode *>> &res) {
     res.push_back(state);
 }
 
-/* Check if the choice is valid under the current state */
+/* Ellenőrzi, hogy a lehetőség érvényes-e az aktuális állapotban */
 bool isValid(vector<TreeNode *> &state, TreeNode *choice) {
     return choice != nullptr && choice->val != 3;
 }
 
-/* Update state */
+/* Állapot frissítése */
 void makeChoice(vector<TreeNode *> &state, TreeNode *choice) {
     state.push_back(choice);
 }
 
-/* Restore state */
+/* Állapot visszaállítása */
 void undoChoice(vector<TreeNode *> &state, TreeNode *choice) {
     state.pop_back();
 }
 
-/* Backtracking algorithm: Example 3 */
+/* Visszalépéses algoritmus: 3. példa */
 void backtrack(vector<TreeNode *> &state, vector<TreeNode *> &choices, vector<vector<TreeNode *>> &res) {
-    // Check if it is a solution
+    // Ellenőrzés, hogy ez megoldás-e
     if (isSolution(state)) {
-        // Record solution
+        // Megoldás rögzítése
         recordSolution(state, res);
     }
-    // Traverse all choices
+    // Az összes lehetőség bejárása
     for (TreeNode *choice : choices) {
-        // Pruning: check if the choice is valid
+        // Vágás: ellenőrzi, hogy a lehetőség érvényes-e
         if (isValid(state, choice)) {
-            // Attempt: make choice, update state
+            // Próbálkozás: lehetőség kiválasztása, állapot frissítése
             makeChoice(state, choice);
-            // Proceed to the next round of selection
+            // Következő kiválasztási kör végrehajtása
             vector<TreeNode *> nextChoices{choice->left, choice->right};
             backtrack(state, nextChoices, res);
-            // Backtrack: undo choice, restore to previous state
+            // Visszalépés: lehetőség visszavonása, előző állapot visszaállítása
             undoChoice(state, choice);
         }
     }
 }
 
-/* Driver Code */
+/* Főprogram */
 int main() {
     TreeNode *root = vectorToTree(vector<int>{1, 7, 3, 4, 5, 6, 7});
     cout << "\nInitialize binary tree" << endl;
     printTree(root);
 
-    // Backtracking algorithm
+    // Visszalépéses algoritmus
     vector<TreeNode *> state;
     vector<TreeNode *> choices = {root};
     vector<vector<TreeNode *>> res;

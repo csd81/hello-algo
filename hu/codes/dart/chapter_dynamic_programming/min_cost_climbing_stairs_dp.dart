@@ -6,23 +6,23 @@
 
 import 'dart:math';
 
-/* Minimum cost climbing stairs: Dynamic programming */
+/* Minimális költségű lépcsőmászás: Dinamikus programozás */
 int minCostClimbingStairsDP(List<int> cost) {
   int n = cost.length - 1;
   if (n == 1 || n == 2) return cost[n];
-  // Initialize dp table, used to store solutions to subproblems
+  // dp tábla inicializálása a részfeladatok megoldásainak tárolásához
   List<int> dp = List.filled(n + 1, 0);
-  // Initial state: preset the solution to the smallest subproblem
+  // Kezdőállapot: a legkisebb részfeladat megoldásának előre beállítása
   dp[1] = cost[1];
   dp[2] = cost[2];
-  // State transition: gradually solve larger subproblems from smaller ones
+  // Állapotátmenet: fokozatosan oldja meg a nagyobb részfeladatokat a kisebbekből
   for (int i = 3; i <= n; i++) {
     dp[i] = min(dp[i - 1], dp[i - 2]) + cost[i];
   }
   return dp[n];
 }
 
-/* Minimum cost climbing stairs: Space-optimized dynamic programming */
+/* Minimális költségű lépcsőmászás: Tárhelyoptimalizált dinamikus programozás */
 int minCostClimbingStairsDPComp(List<int> cost) {
   int n = cost.length - 1;
   if (n == 1 || n == 2) return cost[n];
@@ -35,7 +35,7 @@ int minCostClimbingStairsDPComp(List<int> cost) {
   return b;
 }
 
-/* Driver Code */
+/* Főprogram */
 void main() {
   List<int> cost = [0, 1, 10, 1, 1, 1, 10, 1, 1, 10, 1];
   print("Input stair cost list is $cost");

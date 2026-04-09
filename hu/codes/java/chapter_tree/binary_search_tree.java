@@ -8,62 +8,62 @@ package chapter_tree;
 
 import utils.*;
 
-/* Binary search tree */
+/* Bináris keresőfa */
 class BinarySearchTree {
     private TreeNode root;
 
-    /* Constructor */
+    /* Konstruktor */
     public BinarySearchTree() {
-        // Initialize empty tree
+        // Üres fa inicializálása
         root = null;
     }
 
-    /* Get binary tree root node */
+    /* Bináris fa gyökércsomópontjának lekérése */
     public TreeNode getRoot() {
         return root;
     }
 
-    /* Search node */
+    /* Csomópont keresése */
     public TreeNode search(int num) {
         TreeNode cur = root;
-        // Loop search, exit after passing leaf node
+        // Ciklikus keresés, levélcsomóponton túllépve kilép
         while (cur != null) {
-            // Target node is in cur's right subtree
+            // A célcsomópont cur jobb részfájában van
             if (cur.val < num)
                 cur = cur.right;
-            // Target node is in cur's left subtree
+            // A célcsomópont cur bal részfájában van
             else if (cur.val > num)
                 cur = cur.left;
-            // Found target node, exit loop
+            // Megtalálta a célcsomópontot, kilép a ciklusból
             else
                 break;
         }
-        // Return target node
+        // A célcsomópont visszaadása
         return cur;
     }
 
-    /* Insert node */
+    /* Csomópont beszúrása */
     public void insert(int num) {
-        // If tree is empty, initialize root node
+        // Ha a fa üres, inicializálja a gyökércsomópontot
         if (root == null) {
             root = new TreeNode(num);
             return;
         }
         TreeNode cur = root, pre = null;
-        // Loop search, exit after passing leaf node
+        // Ciklikus keresés, levélcsomóponton túllépve kilép
         while (cur != null) {
-            // Found duplicate node, return directly
+            // Duplikált csomópontot talált, közvetlenül visszatér
             if (cur.val == num)
                 return;
             pre = cur;
-            // Insertion position is in cur's right subtree
+            // A beszúrási pozíció cur jobb részfájában van
             if (cur.val < num)
                 cur = cur.right;
-            // Insertion position is in cur's left subtree
+            // A beszúrási pozíció cur bal részfájában van
             else
                 cur = cur.left;
         }
-        // Insert node
+        // Csomópont beszúrása
         TreeNode node = new TreeNode(num);
         if (pre.val < num)
             pre.right = node;
@@ -71,53 +71,53 @@ class BinarySearchTree {
             pre.left = node;
     }
 
-    /* Remove node */
+    /* Csomópont törlése */
     public void remove(int num) {
-        // If tree is empty, return directly
+        // Ha a fa üres, közvetlenül visszatér
         if (root == null)
             return;
         TreeNode cur = root, pre = null;
-        // Loop search, exit after passing leaf node
+        // Ciklikus keresés, levélcsomóponton túllépve kilép
         while (cur != null) {
-            // Found node to delete, exit loop
+            // Megtalálta a törlendő csomópontot, kilép a ciklusból
             if (cur.val == num)
                 break;
             pre = cur;
-            // Node to delete is in cur's right subtree
+            // A törlendő csomópont cur jobb részfájában van
             if (cur.val < num)
                 cur = cur.right;
-            // Node to delete is in cur's left subtree
+            // A törlendő csomópont cur bal részfájában van
             else
                 cur = cur.left;
         }
-        // If no node to delete, return directly
+        // Ha nem találta a törlendő csomópontot, közvetlenül visszatér
         if (cur == null)
             return;
-        // Number of child nodes = 0 or 1
+        // Gyermekcsomópontok száma = 0 vagy 1
         if (cur.left == null || cur.right == null) {
-            // When number of child nodes = 0 / 1, child = null / that child node
+            // Ha gyermekcsomópontok száma = 0 / 1, child = null / az adott gyermekcsomópont
             TreeNode child = cur.left != null ? cur.left : cur.right;
-            // Delete node cur
+            // cur csomópont törlése
             if (cur != root) {
                 if (pre.left == cur)
                     pre.left = child;
                 else
                     pre.right = child;
             } else {
-                // If deleted node is root node, reassign root node
+                // Ha a törölt csomópont a gyökércsomópont, újra hozzárendeli a gyökércsomópontot
                 root = child;
             }
         }
-        // Number of child nodes = 2
+        // Gyermekcsomópontok száma = 2
         else {
-            // Get next node of cur in inorder traversal
+            // Lekéri cur következő csomópontját a középrendű bejárásban
             TreeNode tmp = cur.right;
             while (tmp.left != null) {
                 tmp = tmp.left;
             }
-            // Recursively delete node tmp
+            // Rekurzívan törli tmp csomópontot
             remove(tmp.val);
-            // Replace cur with tmp
+            // cur értékét tmp-vel helyettesíti
             cur.val = tmp.val;
         }
     }
@@ -125,9 +125,9 @@ class BinarySearchTree {
 
 public class binary_search_tree {
     public static void main(String[] args) {
-        /* Initialize binary search tree */
+        /* Bináris keresőfa inicializálása */
         BinarySearchTree bst = new BinarySearchTree();
-        // Please note that different insertion orders will generate different binary trees, this sequence can generate a perfect binary tree
+        // Megjegyezzük, hogy a különböző beszúrási sorrendek különböző bináris fákat generálnak, ez a sorrend tökéletes bináris fát hoz létre
         int[] nums = { 8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, 9, 11, 13, 15 };
         for (int num : nums) {
             bst.insert(num);
@@ -135,16 +135,16 @@ public class binary_search_tree {
         System.out.println("\nInitialized binary tree is\n");
         PrintUtil.printTree(bst.getRoot());
 
-        /* Search node */
+        /* Csomópont keresése */
         TreeNode node = bst.search(7);
         System.out.println("\nFound node object is " + node + ", node value = " + node.val);
 
-        /* Insert node */
+        /* Csomópont beszúrása */
         bst.insert(16);
         System.out.println("\nAfter inserting node 16, binary tree is\n");
         PrintUtil.printTree(bst.getRoot());
 
-        /* Remove node */
+        /* Csomópont törlése */
         bst.remove(1);
         System.out.println("\nAfter removing node 1, binary tree is\n");
         PrintUtil.printTree(bst.getRoot());

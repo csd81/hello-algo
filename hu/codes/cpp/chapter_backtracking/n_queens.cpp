@@ -6,40 +6,40 @@
 
 #include "../utils/common.hpp"
 
-/* Backtracking algorithm: N queens */
+/* Visszalépéses algoritmus: N vezér */
 void backtrack(int row, int n, vector<vector<string>> &state, vector<vector<vector<string>>> &res, vector<bool> &cols,
                vector<bool> &diags1, vector<bool> &diags2) {
-    // When all rows are placed, record the solution
+    // Ha minden sor el van helyezve, rögzítjük a megoldást
     if (row == n) {
         res.push_back(state);
         return;
     }
-    // Traverse all columns
+    // Az összes oszlop bejárása
     for (int col = 0; col < n; col++) {
-        // Calculate the main diagonal and anti-diagonal corresponding to this cell
+        // Az adott cellához tartozó főátló és mellékátló kiszámítása
         int diag1 = row - col + n - 1;
         int diag2 = row + col;
-        // Pruning: do not allow queens to exist in the column, main diagonal, and anti-diagonal of this cell
+        // Vágás: nem engedélyezett, hogy vezér legyen az adott cella oszlopában, főátlójában és mellékátlójában
         if (!cols[col] && !diags1[diag1] && !diags2[diag2]) {
-            // Attempt: place the queen in this cell
+            // Próbálkozás: vezér elhelyezése az adott cellában
             state[row][col] = "Q";
             cols[col] = diags1[diag1] = diags2[diag2] = true;
-            // Place the next row
+            // Következő sor elhelyezése
             backtrack(row + 1, n, state, res, cols, diags1, diags2);
-            // Backtrack: restore this cell to an empty cell
+            // Visszalépés: az adott cella visszaállítása üres cellává
             state[row][col] = "#";
             cols[col] = diags1[diag1] = diags2[diag2] = false;
         }
     }
 }
 
-/* Solve N queens */
+/* N vezér megoldása */
 vector<vector<vector<string>>> nQueens(int n) {
-    // Initialize an n*n chessboard, where 'Q' represents a queen and '#' represents an empty cell
+    // n*n sakktábla inicializálása, ahol 'Q' vezért, '#' üres cellát jelöl
     vector<vector<string>> state(n, vector<string>(n, "#"));
-    vector<bool> cols(n, false);           // Record whether there is a queen in the column
-    vector<bool> diags1(2 * n - 1, false); // Record whether there is a queen on the main diagonal
-    vector<bool> diags2(2 * n - 1, false); // Record whether there is a queen on the anti-diagonal
+    vector<bool> cols(n, false);           // Rögzíti, hogy van-e vezér az oszlopban
+    vector<bool> diags1(2 * n - 1, false); // Rögzíti, hogy van-e vezér a főátlón
+    vector<bool> diags2(2 * n - 1, false); // Rögzíti, hogy van-e vezér a mellékátlón
     vector<vector<vector<string>>> res;
 
     backtrack(0, n, state, res, cols, diags1, diags2);

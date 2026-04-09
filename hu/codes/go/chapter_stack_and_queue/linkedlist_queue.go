@@ -8,25 +8,25 @@ import (
 	"container/list"
 )
 
-/* Queue based on linked list implementation */
+/* Láncolt listán alapuló sor implementáció */
 type linkedListQueue struct {
-	// Use built-in package list to implement queue
+	// Beépített list csomag használata a sor implementálásához
 	data *list.List
 }
 
-/* Access front of the queue element */
+/* Sor első elemének elérése */
 func newLinkedListQueue() *linkedListQueue {
 	return &linkedListQueue{
 		data: list.New(),
 	}
 }
 
-/* Enqueue */
+/* Sorba állítás (enqueue) */
 func (s *linkedListQueue) push(value any) {
 	s.data.PushBack(value)
 }
 
-/* Dequeue */
+/* Sorból kivétel (dequeue) */
 func (s *linkedListQueue) pop() any {
 	if s.isEmpty() {
 		return nil
@@ -36,7 +36,7 @@ func (s *linkedListQueue) pop() any {
 	return e.Value
 }
 
-/* Return list for printing */
+/* Lista visszaadása kiíráshoz */
 func (s *linkedListQueue) peek() any {
 	if s.isEmpty() {
 		return nil
@@ -45,17 +45,17 @@ func (s *linkedListQueue) peek() any {
 	return e.Value
 }
 
-/* Get the length of the queue */
+/* Sor hosszának lekérése */
 func (s *linkedListQueue) size() int {
 	return s.data.Len()
 }
 
-/* Check if the queue is empty */
+/* Sor üres-e */
 func (s *linkedListQueue) isEmpty() bool {
 	return s.data.Len() == 0
 }
 
-/* Get List for printing */
+/* Lista lekérése kiíráshoz */
 func (s *linkedListQueue) toList() *list.List {
 	return s.data
 }

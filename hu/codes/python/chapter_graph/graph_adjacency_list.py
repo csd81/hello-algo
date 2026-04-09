@@ -12,67 +12,67 @@ from modules import Vertex, vals_to_vets
 
 
 class GraphAdjList:
-    """Undirected graph class based on adjacency list"""
+    """Szomszédsági listán alapuló irányítatlan gráf osztály"""
 
     def __init__(self, edges: list[list[Vertex]]):
-        """Constructor"""
-        # Adjacency list, key: vertex, value: all adjacent vertices of that vertex
+        """Konstruktor"""
+        # Szomszédsági lista, kulcs: csúcs, érték: az adott csúcs összes szomszédja
         self.adj_list = dict[Vertex, list[Vertex]]()
-        # Add all vertices and edges
+        # Az összes csúcs és él hozzáadása
         for edge in edges:
             self.add_vertex(edge[0])
             self.add_vertex(edge[1])
             self.add_edge(edge[0], edge[1])
 
     def size(self) -> int:
-        """Get the number of vertices"""
+        """A csúcsok számának lekérése"""
         return len(self.adj_list)
 
     def add_edge(self, vet1: Vertex, vet2: Vertex):
-        """Add edge"""
+        """Él hozzáadása"""
         if vet1 not in self.adj_list or vet2 not in self.adj_list or vet1 == vet2:
             raise ValueError()
-        # Add edge vet1 - vet2
+        # vet1 - vet2 él hozzáadása
         self.adj_list[vet1].append(vet2)
         self.adj_list[vet2].append(vet1)
 
     def remove_edge(self, vet1: Vertex, vet2: Vertex):
-        """Remove edge"""
+        """Él eltávolítása"""
         if vet1 not in self.adj_list or vet2 not in self.adj_list or vet1 == vet2:
             raise ValueError()
-        # Remove edge vet1 - vet2
+        # vet1 - vet2 él eltávolítása
         self.adj_list[vet1].remove(vet2)
         self.adj_list[vet2].remove(vet1)
 
     def add_vertex(self, vet: Vertex):
-        """Add vertex"""
+        """Csúcs hozzáadása"""
         if vet in self.adj_list:
             return
-        # Add a new linked list in the adjacency list
+        # Új láncolt lista hozzáadása a szomszédsági listához
         self.adj_list[vet] = []
 
     def remove_vertex(self, vet: Vertex):
-        """Remove vertex"""
+        """Csúcs eltávolítása"""
         if vet not in self.adj_list:
             raise ValueError()
-        # Remove the linked list corresponding to vertex vet in the adjacency list
+        # A vet csúcshoz tartozó láncolt lista eltávolítása a szomszédsági listából
         self.adj_list.pop(vet)
-        # Traverse the linked lists of other vertices and remove all edges containing vet
+        # A többi csúcs láncolt listáin végigmegy és eltávolítja az összes vet-et tartalmazó élt
         for vertex in self.adj_list:
             if vet in self.adj_list[vertex]:
                 self.adj_list[vertex].remove(vet)
 
     def print(self):
-        """Print adjacency list"""
-        print("Adjacency list =")
+        """Szomszédsági lista kiírása"""
+        print("Szomszédsági lista =")
         for vertex in self.adj_list:
             tmp = [v.val for v in self.adj_list[vertex]]
             print(f"{vertex.val}: {tmp},")
 
 
-"""Driver Code"""
+"""Fő kód"""
 if __name__ == "__main__":
-    # Initialize undirected graph
+    # Irányítatlan gráf inicializálása
     v = vals_to_vets([1, 3, 2, 5, 4])
     edges = [
         [v[0], v[1]],
@@ -83,29 +83,29 @@ if __name__ == "__main__":
         [v[3], v[4]],
     ]
     graph = GraphAdjList(edges)
-    print("\nAfter initialization, the graph is")
+    print("\nInicializálás után a gráf:")
     graph.print()
 
-    # Add edge
-    # Vertices 1, 2 are v[0], v[2]
+    # Él hozzáadása
+    # Az 1-es és 2-es csúcsok v[0] és v[2]
     graph.add_edge(v[0], v[2])
-    print("\nAfter adding edge 1-2, the graph is")
+    print("\nAz 1-2 él hozzáadása után a gráf:")
     graph.print()
 
-    # Remove edge
-    # Vertices 1, 3 are v[0], v[1]
+    # Él eltávolítása
+    # Az 1-es és 3-as csúcsok v[0] és v[1]
     graph.remove_edge(v[0], v[1])
-    print("\nAfter removing edge 1-3, the graph is")
+    print("\nAz 1-3 él eltávolítása után a gráf:")
     graph.print()
 
-    # Add vertex
+    # Csúcs hozzáadása
     v5 = Vertex(6)
     graph.add_vertex(v5)
-    print("\nAfter adding vertex 6, the graph is")
+    print("\nA 6-os csúcs hozzáadása után a gráf:")
     graph.print()
 
-    # Remove vertex
-    # Vertex 3 is v[1]
+    # Csúcs eltávolítása
+    # A 3-as csúcs v[1]
     graph.remove_vertex(v[1])
-    print("\nAfter removing vertex 3, the graph is")
+    print("\nA 3-as csúcs eltávolítása után a gráf:")
     graph.print()

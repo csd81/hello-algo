@@ -13,11 +13,11 @@ import (
 )
 
 func TestDeque(t *testing.T) {
-	/* Get the length of the double-ended queue */
-	// In Go, use list as deque
+	/* Kétoldalú sor hosszának lekérése */
+	// Go-ban list-et használunk kétoldalú sorként
 	deque := list.New()
 
-	/* Elements enqueue */
+	/* Elemek sorba állítása (enqueue) */
 	deque.PushBack(2)
 	deque.PushBack(5)
 	deque.PushBack(4)
@@ -26,13 +26,13 @@ func TestDeque(t *testing.T) {
 	fmt.Print("Double-ended queue deque = ")
 	PrintList(deque)
 
-	/* Update element */
+	/* Elem frissítése */
 	front := deque.Front()
 	fmt.Println("Front element front =", front.Value)
 	rear := deque.Back()
 	fmt.Println("Rear element rear =", rear.Value)
 
-	/* Element dequeue */
+	/* Elem kivétele (dequeue) */
 	deque.Remove(front)
 	fmt.Print("Front dequeue element front = ", front.Value, ", after front dequeue, deque = ")
 	PrintList(deque)
@@ -40,34 +40,34 @@ func TestDeque(t *testing.T) {
 	fmt.Print("Rear dequeue element rear = ", rear.Value, ", after rear dequeue, deque = ")
 	PrintList(deque)
 
-	/* Get the length of the double-ended queue */
+	/* Kétoldalú sor hosszának lekérése */
 	size := deque.Len()
 	fmt.Println("Deque length size =", size)
 
-	/* Check if the double-ended queue is empty */
+	/* Kétoldalú sor üres-e */
 	isEmpty := deque.Len() == 0
 	fmt.Println("Is deque empty =", isEmpty)
 }
 
 func TestArrayDeque(t *testing.T) {
-	/* Get the length of the double-ended queue */
-	// In Go, use list as deque
+	/* Kétoldalú sor hosszának lekérése */
+	// Go-ban list-et használunk kétoldalú sorként
 	deque := newArrayDeque(16)
 
-	/* Elements enqueue */
+	/* Elemek sorba állítása (enqueue) */
 	deque.pushLast(3)
 	deque.pushLast(2)
 	deque.pushLast(5)
 	fmt.Print("Double-ended queue deque = ")
 	PrintSlice(deque.toSlice())
 
-	/* Update element */
+	/* Elem frissítése */
 	peekFirst := deque.peekFirst()
 	fmt.Println("Front element peekFirst =", peekFirst)
 	peekLast := deque.peekLast()
 	fmt.Println("Rear element peekLast =", peekLast)
 
-	/* Elements enqueue */
+	/* Elemek sorba állítása (enqueue) */
 	deque.pushLast(4)
 	fmt.Print("After element 4 enqueues at rear, deque = ")
 	PrintSlice(deque.toSlice())
@@ -75,7 +75,7 @@ func TestArrayDeque(t *testing.T) {
 	fmt.Print("After element 1 enqueues at front, deque = ")
 	PrintSlice(deque.toSlice())
 
-	/* Element dequeue */
+	/* Elem kivétele (dequeue) */
 	popFirst := deque.popFirst()
 	fmt.Print("Front dequeue element popFirst = ", popFirst, ", after front dequeue, deque = ")
 	PrintSlice(deque.toSlice())
@@ -83,20 +83,20 @@ func TestArrayDeque(t *testing.T) {
 	fmt.Print("Back dequeue element popLast = ", popLast, ", after rear dequeue, deque = ")
 	PrintSlice(deque.toSlice())
 
-	/* Get the length of the double-ended queue */
+	/* Kétoldalú sor hosszának lekérése */
 	size := deque.size()
 	fmt.Println("Deque length size =", size)
 
-	/* Check if the double-ended queue is empty */
+	/* Kétoldalú sor üres-e */
 	isEmpty := deque.isEmpty()
 	fmt.Println("Is deque empty =", isEmpty)
 }
 
 func TestLinkedListDeque(t *testing.T) {
-	// Access front of the queue element
+	// Sor első elemének elérése
 	deque := newLinkedListDeque()
 
-	// Elements enqueue
+	// Elemek sorba állítása (enqueue)
 	deque.pushLast(2)
 	deque.pushLast(5)
 	deque.pushLast(4)
@@ -105,13 +105,13 @@ func TestLinkedListDeque(t *testing.T) {
 	fmt.Print("Deque deque = ")
 	PrintList(deque.toList())
 
-	// Return list for printing
+	// Lista visszaadása kiíráshoz
 	front := deque.peekFirst()
 	fmt.Println("Front element front =", front)
 	rear := deque.peekLast()
 	fmt.Println("Rear element rear =", rear)
 
-	// Element dequeue
+	// Elem kivétele (dequeue)
 	popFirst := deque.popFirst()
 	fmt.Print("Front dequeue element popFirst = ", popFirst, ", after front dequeue, deque = ")
 	PrintList(deque.toList())
@@ -119,19 +119,19 @@ func TestLinkedListDeque(t *testing.T) {
 	fmt.Print("Back dequeue element popLast = ", popLast, ", after rear dequeue, deque = ")
 	PrintList(deque.toList())
 
-	// Get queue length
+	// Sor hosszának lekérése
 	size := deque.size()
 	fmt.Println("Queue length size =", size)
 
-	// Check if empty
+	// Üres-e
 	isEmpty := deque.isEmpty()
 	fmt.Println("Is queue empty =", isEmpty)
 }
 
-// BenchmarkLinkedListDeque 67.92 ns/op in Mac M1 Pro
+// BenchmarkLinkedListDeque 67.92 ns/op Mac M1 Pro-n
 func BenchmarkLinkedListDeque(b *testing.B) {
 	deque := newLinkedListDeque()
-	// use b.N for looping
+	// b.N használata ciklushoz
 	for i := 0; i < b.N; i++ {
 		deque.pushLast(777)
 	}

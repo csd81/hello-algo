@@ -6,44 +6,44 @@
 
 #include "../utils/common.h"
 
-// Assume at most 1000 permutations
+// Legfeljebb 1000 permutációt feltételezünk
 #define MAX_SIZE 1000
 
-/* Move a disk */
+/* Korong mozgatása */
 void move(int *src, int *srcSize, int *tar, int *tarSize) {
-    // Take out a disk from the top of src
+    // Korong kivétele az src tetejéről
     int pan = src[*srcSize - 1];
     src[*srcSize - 1] = 0;
     (*srcSize)--;
-    // Place the disk on top of tar
+    // A korong elhelyezése a tar tetejére
     tar[*tarSize] = pan;
     (*tarSize)++;
 }
 
-/* Solve the Tower of Hanoi problem f(i) */
+/* Hanoi-torony f(i) részprobléma megoldása */
 void dfs(int i, int *src, int *srcSize, int *buf, int *bufSize, int *tar, int *tarSize) {
-    // If there is only one disk left in src, move it directly to tar
+    // Ha csak egy korong marad az src-ben, közvetlenül mozgassa a tar-ra
     if (i == 1) {
         move(src, srcSize, tar, tarSize);
         return;
     }
-    // Subproblem f(i-1): move the top i-1 disks from src to buf using tar
+    // f(i-1) részprobléma: a felső i-1 korong áthelyezése src-ről buf-ra, tar segítségével
     dfs(i - 1, src, srcSize, tar, tarSize, buf, bufSize);
-    // Subproblem f(1): move the remaining disk from src to tar
+    // f(1) részprobléma: a maradék korong áthelyezése src-ről tar-ra
     move(src, srcSize, tar, tarSize);
-    // Subproblem f(i-1): move the top i-1 disks from buf to tar using src
+    // f(i-1) részprobléma: a felső i-1 korong áthelyezése buf-ról tar-ra, src segítségével
     dfs(i - 1, buf, bufSize, src, srcSize, tar, tarSize);
 }
 
-/* Solve the Tower of Hanoi problem */
+/* Hanoi-torony megoldása */
 void solveHanota(int *A, int *ASize, int *B, int *BSize, int *C, int *CSize) {
-    // Move the top n disks from A to C using B
+    // A felső n korong áthelyezése A-ról C-re, B segítségével
     dfs(*ASize, A, ASize, B, BSize, C, CSize);
 }
 
-/* Driver Code */
+/* Vezérlő kód */
 int main() {
-    // The tail of the list is the top of the rod
+    // A lista vége a rúd teteje
     int a[] = {5, 4, 3, 2, 1};
     int b[MAX_SIZE] = {0};
     int c[MAX_SIZE] = {0};

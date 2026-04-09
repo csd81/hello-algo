@@ -4,14 +4,14 @@
  * Author: RiverTwilight (contact@rene.wang)
  */
 
-/* Generate an array with elements { 1, 2, ..., n }, order shuffled */
+/* Generál egy { 1, 2, ..., n } elemeket tartalmazó, kevert sorrendű tömböt */
 function randomNumbers(n) {
     const nums = Array(n);
-    // Generate array nums = { 1, 2, 3, ..., n }
+    // Generálja a nums = { 1, 2, 3, ..., n } tömböt
     for (let i = 0; i < n; i++) {
         nums[i] = i + 1;
     }
-    // Randomly shuffle array elements
+    // Véletlenszerűen összekeveri a tömbelemeket
     for (let i = 0; i < n; i++) {
         const r = Math.floor(Math.random() * (i + 1));
         const temp = nums[i];
@@ -21,11 +21,11 @@ function randomNumbers(n) {
     return nums;
 }
 
-/* Find the index of number 1 in array nums */
+/* Megkeresi az 1-es szám indexét a nums tömbben */
 function findOne(nums) {
     for (let i = 0; i < nums.length; i++) {
-        // When element 1 is at the head of the array, best time complexity O(1) is achieved
-        // When element 1 is at the tail of the array, worst time complexity O(n) is achieved
+        // Ha az 1-es elem a tömb elején van, a legjobb esetbeli időbonyolultság O(1) érhető el
+        // Ha az 1-es elem a tömb végén van, a legrosszabb esetbeli időbonyolultság O(n) érhető el
         if (nums[i] === 1) {
             return i;
         }
@@ -33,7 +33,7 @@ function findOne(nums) {
     return -1;
 }
 
-/* Driver Code */
+/* Tesztkód */
 for (let i = 0; i < 10; i++) {
     const n = 100;
     const nums = randomNumbers(n);

@@ -4,21 +4,21 @@
  * Author: yuan0221 (yl1452491917@gmail.com)
  */
 
-/* Search */
+/* Keresés */
 function dfs(i) {
-    // Known dp[1] and dp[2], return them
+    // dp[1] és dp[2] ismert, visszaadjuk őket
     if (i === 1 || i === 2) return i;
     // dp[i] = dp[i-1] + dp[i-2]
     const count = dfs(i - 1) + dfs(i - 2);
     return count;
 }
 
-/* Climbing stairs: Search */
+/* Lépcsőmászás: Keresés */
 function climbingStairsDFS(n) {
     return dfs(n);
 }
 
-/* Driver Code */
+/* Tesztkód */
 const n = 9;
 const res = climbingStairsDFS(n);
 console.log(`Climbing ${n} stairs has ${res} solutions`);

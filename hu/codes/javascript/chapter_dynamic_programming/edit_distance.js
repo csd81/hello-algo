@@ -4,76 +4,76 @@
  * Author: Gaofer Chou (gaofer-chou@qq.com)
  */
 
-/* Edit distance: Brute-force search */
+/* Szerkesztési távolság: Nyers erő keresés */
 function editDistanceDFS(s, t, i, j) {
-    // If both s and t are empty, return 0
+    // Ha s és t is üres, visszaadjuk 0-t
     if (i === 0 && j === 0) return 0;
 
-    // If s is empty, return length of t
+    // Ha s üres, visszaadjuk t hosszát
     if (i === 0) return j;
 
-    // If t is empty, return length of s
+    // Ha t üres, visszaadjuk s hosszát
     if (j === 0) return i;
 
-    // If two characters are equal, skip both characters
+    // Ha a két karakter egyenlő, mindkét karaktert kihagyjuk
     if (s.charAt(i - 1) === t.charAt(j - 1))
         return editDistanceDFS(s, t, i - 1, j - 1);
 
-    // Minimum edit steps = minimum edit steps of insert, delete, replace + 1
+    // Minimális szerkesztési lépések = a beillesztés, törlés, csere minimális szerkesztési lépései + 1
     const insert = editDistanceDFS(s, t, i, j - 1);
     const del = editDistanceDFS(s, t, i - 1, j);
     const replace = editDistanceDFS(s, t, i - 1, j - 1);
-    // Return minimum edit steps
+    // Visszaadjuk a minimális szerkesztési lépéseket
     return Math.min(insert, del, replace) + 1;
 }
 
-/* Edit distance: Memoization search */
+/* Szerkesztési távolság: Memoizált keresés */
 function editDistanceDFSMem(s, t, mem, i, j) {
-    // If both s and t are empty, return 0
+    // Ha s és t is üres, visszaadjuk 0-t
     if (i === 0 && j === 0) return 0;
 
-    // If s is empty, return length of t
+    // Ha s üres, visszaadjuk t hosszát
     if (i === 0) return j;
 
-    // If t is empty, return length of s
+    // Ha t üres, visszaadjuk s hosszát
     if (j === 0) return i;
 
-    // If there's a record, return it directly
+    // Ha van bejegyzés, közvetlenül visszaadjuk
     if (mem[i][j] !== -1) return mem[i][j];
 
-    // If two characters are equal, skip both characters
+    // Ha a két karakter egyenlő, mindkét karaktert kihagyjuk
     if (s.charAt(i - 1) === t.charAt(j - 1))
         return editDistanceDFSMem(s, t, mem, i - 1, j - 1);
 
-    // Minimum edit steps = minimum edit steps of insert, delete, replace + 1
+    // Minimális szerkesztési lépések = a beillesztés, törlés, csere minimális szerkesztési lépései + 1
     const insert = editDistanceDFSMem(s, t, mem, i, j - 1);
     const del = editDistanceDFSMem(s, t, mem, i - 1, j);
     const replace = editDistanceDFSMem(s, t, mem, i - 1, j - 1);
-    // Record and return minimum edit steps
+    // Rögzítjük és visszaadjuk a minimális szerkesztési lépéseket
     mem[i][j] = Math.min(insert, del, replace) + 1;
     return mem[i][j];
 }
 
-/* Edit distance: Dynamic programming */
+/* Szerkesztési távolság: Dinamikus programozás */
 function editDistanceDP(s, t) {
     const n = s.length,
         m = t.length;
     const dp = Array.from({ length: n + 1 }, () => new Array(m + 1).fill(0));
-    // State transition: first row and first column
+    // Állapotátmenet: első sor és első oszlop
     for (let i = 1; i <= n; i++) {
         dp[i][0] = i;
     }
     for (let j = 1; j <= m; j++) {
         dp[0][j] = j;
     }
-    // State transition: rest of the rows and columns
+    // Állapotátmenet: többi sor és oszlop
     for (let i = 1; i <= n; i++) {
         for (let j = 1; j <= m; j++) {
             if (s.charAt(i - 1) === t.charAt(j - 1)) {
-                // If two characters are equal, skip both characters
+                // Ha a két karakter egyenlő, mindkét karaktert kihagyjuk
                 dp[i][j] = dp[i - 1][j - 1];
             } else {
-                // Minimum edit steps = minimum edit steps of insert, delete, replace + 1
+                // Minimális szerkesztési lépések = a beillesztés, törlés, csere minimális szerkesztési lépései + 1
                 dp[i][j] =
                     Math.min(dp[i][j - 1], dp[i - 1][j], dp[i - 1][j - 1]) + 1;
             }
@@ -82,31 +82,31 @@ function editDistanceDP(s, t) {
     return dp[n][m];
 }
 
-/* Edit distance: Space-optimized dynamic programming */
+/* Szerkesztési távolság: Helytakarékos dinamikus programozás */
 function editDistanceDPComp(s, t) {
     const n = s.length,
         m = t.length;
     const dp = new Array(m + 1).fill(0);
-    // State transition: first row
+    // Állapotátmenet: első sor
     for (let j = 1; j <= m; j++) {
         dp[j] = j;
     }
-    // State transition: rest of the rows
+    // Állapotátmenet: többi sor
     for (let i = 1; i <= n; i++) {
-        // State transition: first column
-        let leftup = dp[0]; // Temporarily store dp[i-1, j-1]
+        // Állapotátmenet: első oszlop
+        let leftup = dp[0]; // Ideiglenesen tároljuk dp[i-1, j-1]-et
         dp[0] = i;
-        // State transition: rest of the columns
+        // Állapotátmenet: többi oszlop
         for (let j = 1; j <= m; j++) {
             const temp = dp[j];
             if (s.charAt(i - 1) === t.charAt(j - 1)) {
-                // If two characters are equal, skip both characters
+                // Ha a két karakter egyenlő, mindkét karaktert kihagyjuk
                 dp[j] = leftup;
             } else {
-                // Minimum edit steps = minimum edit steps of insert, delete, replace + 1
+                // Minimális szerkesztési lépések = a beillesztés, törlés, csere minimális szerkesztési lépései + 1
                 dp[j] = Math.min(dp[j - 1], dp[j], leftup) + 1;
             }
-            leftup = temp; // Update for next round's dp[i-1, j-1]
+            leftup = temp; // Frissítés a következő kör dp[i-1, j-1]-éhez
         }
     }
     return dp[m];
@@ -117,19 +117,19 @@ const t = 'pack';
 const n = s.length,
     m = t.length;
 
-// Brute-force search
+// Nyers erő keresés
 let res = editDistanceDFS(s, t, n, m);
 console.log(`Changing ${s} to ${t} requires minimum ${res} edits`);
 
-// Memoization search
+// Memoizált keresés
 const mem = Array.from(new Array(n + 1), () => new Array(m + 1).fill(-1));
 res = editDistanceDFSMem(s, t, mem, n, m);
 console.log(`Changing ${s} to ${t} requires minimum ${res} edits`);
 
-// Dynamic programming
+// Dinamikus programozás
 res = editDistanceDP(s, t);
 console.log(`Changing ${s} to ${t} requires minimum ${res} edits`);
 
-// Space-optimized dynamic programming
+// Helytakarékos dinamikus programozás
 res = editDistanceDPComp(s, t);
 console.log(`Changing ${s} to ${t} requires minimum ${res} edits`);

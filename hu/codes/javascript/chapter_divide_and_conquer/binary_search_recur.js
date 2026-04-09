@@ -4,36 +4,36 @@
  * Author: yuan0221 (yl1452491917@gmail.com)
  */
 
-/* Binary search: problem f(i, j) */
+/* Bináris keresés: f(i, j) feladat */
 function dfs(nums, target, i, j) {
-    // If the interval is empty, it means there is no target element, return -1
+    // Ha az intervallum üres, a célelem nem található, visszaadjuk -1-et
     if (i > j) {
         return -1;
     }
-    // Calculate the midpoint index m
+    // Kiszámítjuk a középső indexet m
     const m = i + ((j - i) >> 1);
     if (nums[m] < target) {
-        // Recursion subproblem f(m+1, j)
+        // Rekurzió az f(m+1, j) részproblémára
         return dfs(nums, target, m + 1, j);
     } else if (nums[m] > target) {
-        // Recursion subproblem f(i, m-1)
+        // Rekurzió az f(i, m-1) részproblémára
         return dfs(nums, target, i, m - 1);
     } else {
-        // Found the target element, return its index
+        // Megtaláltuk a célelemet, visszaadjuk az indexét
         return m;
     }
 }
 
-/* Binary search */
+/* Bináris keresés */
 function binarySearch(nums, target) {
     const n = nums.length;
-    // Solve the problem f(0, n-1)
+    // Megoldjuk az f(0, n-1) feladatot
     return dfs(nums, target, 0, n - 1);
 }
 
-/* Driver Code */
+/* Tesztkód */
 const target = 6;
 const nums = [1, 3, 6, 8, 12, 15, 23, 26, 31, 35];
-// Binary search (closed interval on both sides)
+// Bináris keresés (mindkét oldalon zárt intervallum)
 const index = binarySearch(nums, target);
 console.log(`Index of target element 6 is ${index}`);

@@ -6,57 +6,57 @@
 
 #include "../utils/common.hpp"
 
-/* Random access to element */
+/* Véletlenszerű hozzáférés elemhez */
 int randomAccess(int *nums, int size) {
-    // Randomly select a number from interval [0, size)
+    // Véletlenszerűen kiválasztott szám a [0, size) intervallumból
     int randomIndex = rand() % size;
-    // Retrieve and return the random element
+    // A véletlenszerű elem lekérése és visszaadása
     int randomNum = nums[randomIndex];
     return randomNum;
 }
 
-/* Extend array length */
+/* Tömb hosszának bővítése */
 int *extend(int *nums, int size, int enlarge) {
-    // Initialize an array with extended length
+    // Bővített hosszúságú tömb inicializálása
     int *res = new int[size + enlarge];
-    // Copy all elements from the original array to the new array
+    // Az eredeti tömb összes elemének másolása az új tömbbe
     for (int i = 0; i < size; i++) {
         res[i] = nums[i];
     }
-    // Free memory
+    // Memória felszabadítása
     delete[] nums;
-    // Return the extended new array
+    // A bővített új tömb visszaadása
     return res;
 }
 
-/* Insert element num at index index in the array */
+/* A num elem beszúrása a tömb index indexébe */
 void insert(int *nums, int size, int num, int index) {
-    // Move all elements at and after index index backward by one position
+    // Az index pozíción lévő és utána következő összes elem egy pozícióval hátrafelé tolása
     for (int i = size - 1; i > index; i--) {
         nums[i] = nums[i - 1];
     }
-    // Assign num to the element at index index
+    // A num értékének hozzárendelése az index pozíción lévő elemhez
     nums[index] = num;
 }
 
-/* Remove the element at index index */
+/* Az index indexen lévő elem törlése */
 void remove(int *nums, int size, int index) {
-    // Move all elements after index index forward by one position
+    // Az index pozíció utáni összes elem egy pozícióval előre tolása
     for (int i = index; i < size - 1; i++) {
         nums[i] = nums[i + 1];
     }
 }
 
-/* Traverse array */
+/* Tömb bejárása */
 void traverse(int *nums, int size) {
     int count = 0;
-    // Traverse array by index
+    // Tömb bejárása index szerint
     for (int i = 0; i < size; i++) {
         count += nums[i];
     }
 }
 
-/* Find the specified element in the array */
+/* A megadott elem keresése a tömbben */
 int find(int *nums, int size, int target) {
     for (int i = 0; i < size; i++) {
         if (nums[i] == target)
@@ -65,9 +65,9 @@ int find(int *nums, int size, int target) {
     return -1;
 }
 
-/* Driver Code */
+/* Főprogram */
 int main() {
-    /* Initialize array */
+    /* Tömb inicializálása */
     int size = 5;
     int *arr = new int[size];
     cout << "Array arr = ";
@@ -77,35 +77,35 @@ int main() {
     cout << "Array nums = ";
     printArray(nums, size);
 
-    /* Insert element */
+    /* Elem beszúrása */
     int randomNum = randomAccess(nums, size);
     cout << "Get random element in nums " << randomNum << endl;
 
-    /* Traverse array */
+    /* Tömb bejárása */
     int enlarge = 3;
     nums = extend(nums, size, enlarge);
     size += enlarge;
     cout << "Extend array length to 8, resulting in nums = ";
     printArray(nums, size);
 
-    /* Insert element */
+    /* Elem beszúrása */
     insert(nums, size, 6, 3);
     cout << "Insert number 6 at index 3, resulting in nums = ";
     printArray(nums, size);
 
-    /* Remove element */
+    /* Elem törlése */
     remove(nums, size, 2);
     cout << "Remove element at index 2, resulting in nums = ";
     printArray(nums, size);
 
-    /* Traverse array */
+    /* Tömb bejárása */
     traverse(nums, size);
 
-    /* Find element */
+    /* Elem keresése */
     int index = find(nums, size, 3);
     cout << "Find element 3 in nums, get index = " << index << endl;
 
-    // Free memory
+    // Memória felszabadítása
     delete[] arr;
     delete[] nums;
 

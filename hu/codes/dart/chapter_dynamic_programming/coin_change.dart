@@ -6,24 +6,24 @@
 
 import 'dart:math';
 
-/* Coin change: Dynamic programming */
+/* Érmecserélés: Dinamikus programozás */
 int coinChangeDP(List<int> coins, int amt) {
   int n = coins.length;
   int MAX = amt + 1;
-  // Initialize dp table
+  // dp tábla inicializálása
   List<List<int>> dp = List.generate(n + 1, (index) => List.filled(amt + 1, 0));
-  // State transition: first row and first column
+  // Állapotátmenet: első sor és első oszlop
   for (int a = 1; a <= amt; a++) {
     dp[0][a] = MAX;
   }
-  // State transition: rest of the rows and columns
+  // Állapotátmenet: többi sor és oszlop
   for (int i = 1; i <= n; i++) {
     for (int a = 1; a <= amt; a++) {
       if (coins[i - 1] > a) {
-        // If exceeds target amount, don't select coin i
+        // Ha meghaladja a célösszeget, ne válaszd ki az i érmét
         dp[i][a] = dp[i - 1][a];
       } else {
-        // The smaller value between not selecting and selecting coin i
+        // A kisebb érték: nem választja ki vagy kiválasztja az i érmét
         dp[i][a] = min(dp[i - 1][a], dp[i][a - coins[i - 1]] + 1);
       }
     }
@@ -31,21 +31,21 @@ int coinChangeDP(List<int> coins, int amt) {
   return dp[n][amt] != MAX ? dp[n][amt] : -1;
 }
 
-/* Coin change: Space-optimized dynamic programming */
+/* Érmecserélés: Tárhelyoptimalizált dinamikus programozás */
 int coinChangeDPComp(List<int> coins, int amt) {
   int n = coins.length;
   int MAX = amt + 1;
-  // Initialize dp table
+  // dp tábla inicializálása
   List<int> dp = List.filled(amt + 1, MAX);
   dp[0] = 0;
-  // State transition
+  // Állapotátmenet
   for (int i = 1; i <= n; i++) {
     for (int a = 1; a <= amt; a++) {
       if (coins[i - 1] > a) {
-        // If exceeds target amount, don't select coin i
+        // Ha meghaladja a célösszeget, ne válaszd ki az i érmét
         dp[a] = dp[a];
       } else {
-        // The smaller value between not selecting and selecting coin i
+        // A kisebb érték: nem választja ki vagy kiválasztja az i érmét
         dp[a] = min(dp[a], dp[a - coins[i - 1]] + 1);
       }
     }
@@ -53,16 +53,16 @@ int coinChangeDPComp(List<int> coins, int amt) {
   return dp[amt] != MAX ? dp[amt] : -1;
 }
 
-/* Driver Code */
+/* Főprogram */
 void main() {
   List<int> coins = [1, 2, 5];
   int amt = 4;
 
-  // Dynamic programming
+  // Dinamikus programozás
   int res = coinChangeDP(coins, amt);
   print("Minimum coins needed to make target amount is $res");
 
-  // Space-optimized dynamic programming
+  // Tárhelyoptimalizált dinamikus programozás
   res = coinChangeDPComp(coins, amt);
   print("Minimum coins needed to make target amount is $res");
 }

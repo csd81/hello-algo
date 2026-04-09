@@ -4,39 +4,39 @@
  * Author: Justin (xiefahit@gmail.com)
  */
 
-/* Backtracking algorithm: Permutations II */
+/* Visszalépéses algoritmus: Permutációk II */
 function backtrack(state, choices, selected, res) {
-    // When the state length equals the number of elements, record the solution
+    // Ha az állapot hossza egyenlő az elemek számával, rögzítjük a megoldást
     if (state.length === choices.length) {
         res.push([...state]);
         return;
     }
-    // Traverse all choices
+    // Bejárjuk az összes választási lehetőséget
     const duplicated = new Set();
     choices.forEach((choice, i) => {
-        // Pruning: do not allow repeated selection of elements and do not allow repeated selection of equal elements
+        // Metszés: nem engedünk meg elemismétlést, és nem engedünk meg egyenlő elemek ismételt kiválasztását
         if (!selected[i] && !duplicated.has(choice)) {
-            // Attempt: make choice, update state
-            duplicated.add(choice); // Record the selected element value
+            // Kísérlet: választás megtétele, állapot frissítése
+            duplicated.add(choice); // Rögzítjük a kiválasztott elem értékét
             selected[i] = true;
             state.push(choice);
-            // Proceed to the next round of selection
+            // Folytatjuk a következő kiválasztási körrel
             backtrack(state, choices, selected, res);
-            // Backtrack: undo choice, restore to previous state
+            // Visszalépés: a választás visszavonása, visszaállítás az előző állapotra
             selected[i] = false;
             state.pop();
         }
     });
 }
 
-/* Permutations II */
+/* Permutációk II */
 function permutationsII(nums) {
     const res = [];
     backtrack([], nums, Array(nums.length).fill(false), res);
     return res;
 }
 
-// Driver Code
+// Tesztkód
 const nums = [1, 2, 2];
 const res = permutationsII(nums);
 

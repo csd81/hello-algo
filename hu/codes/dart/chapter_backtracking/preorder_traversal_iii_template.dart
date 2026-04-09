@@ -7,63 +7,63 @@
 import '../utils/print_util.dart';
 import '../utils/tree_node.dart';
 
-/* Check if the current state is a solution */
+/* Ellenőrizd, hogy az aktuális állapot megoldás-e */
 bool isSolution(List<TreeNode> state) {
   return state.isNotEmpty && state.last.val == 7;
 }
 
-/* Record solution */
+/* Megoldás rögzítése */
 void recordSolution(List<TreeNode> state, List<List<TreeNode>> res) {
   res.add(List.from(state));
 }
 
-/* Check if the choice is valid under the current state */
+/* Ellenőrizd, hogy a választás érvényes-e az aktuális állapotban */
 bool isValid(List<TreeNode> state, TreeNode? choice) {
   return choice != null && choice.val != 3;
 }
 
-/* Update state */
+/* Állapot frissítése */
 void makeChoice(List<TreeNode> state, TreeNode? choice) {
   state.add(choice!);
 }
 
-/* Restore state */
+/* Állapot visszaállítása */
 void undoChoice(List<TreeNode> state, TreeNode? choice) {
   state.removeLast();
 }
 
-/* Backtracking algorithm: Example 3 */
+/* Visszalépéses algoritmus: 3. példa */
 void backtrack(
   List<TreeNode> state,
   List<TreeNode?> choices,
   List<List<TreeNode>> res,
 ) {
-  // Check if it is a solution
+  // Ellenőrizd, hogy megoldás-e
   if (isSolution(state)) {
-    // Record solution
+    // Megoldás rögzítése
     recordSolution(state, res);
   }
-  // Traverse all choices
+  // Összes választási lehetőség bejárása
   for (TreeNode? choice in choices) {
-    // Pruning: check if the choice is valid
+    // Metszés: ellenőrizd, hogy a választás érvényes-e
     if (isValid(state, choice)) {
-      // Attempt: make choice, update state
+      // Kísérlet: válassz, frissítsd az állapotot
       makeChoice(state, choice);
-      // Proceed to the next round of selection
+      // Lépj a következő kiválasztási körre
       backtrack(state, [choice!.left, choice.right], res);
-      // Backtrack: undo choice, restore to previous state
+      // Visszalépés: vonja vissza a választást, állítsa vissza az előző állapotot
       undoChoice(state, choice);
     }
   }
 }
 
-/* Driver Code */
+/* Főprogram */
 void main() {
   TreeNode? root = listToTree([1, 7, 3, 4, 5, 6, 7]);
   print("\nInitialize binary tree");
   printTree(root);
 
-  // Backtracking algorithm
+  // Visszalépéses algoritmus
   List<List<TreeNode>> res = [];
   backtrack([], [root!], res);
   print("\nOutput all paths from root node to node 7, requiring paths do not include nodes with value 3");

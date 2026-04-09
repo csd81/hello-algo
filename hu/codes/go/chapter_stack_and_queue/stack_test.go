@@ -12,11 +12,11 @@ import (
 )
 
 func TestStack(t *testing.T) {
-	/* Access top of the stack element */
-	// In Go, recommended to use Slice as stack
+	/* Verem csúcselemének elérése */
+	// Go-ban ajánlott a Slice-t veremként használni
 	var stack []int
 
-	/* Elements push onto stack */
+	/* Elemek a verembe rakása (push) */
 	stack = append(stack, 1)
 	stack = append(stack, 3)
 	stack = append(stack, 2)
@@ -25,30 +25,30 @@ func TestStack(t *testing.T) {
 	fmt.Print("Stack stack = ")
 	PrintSlice(stack)
 
-	/* Return list for printing */
+	/* Lista visszaadása kiíráshoz */
 	peek := stack[len(stack)-1]
 	fmt.Println("Stack top element peek =", peek)
 
-	/* Element pop from stack */
+	/* Elem kivétele a veremből (pop) */
 	pop := stack[len(stack)-1]
 	stack = stack[:len(stack)-1]
 	fmt.Print("Pop element pop = ", pop, ", after pop, stack = ")
 	PrintSlice(stack)
 
-	/* Get the length of the stack */
+	/* Verem hosszának lekérése */
 	size := len(stack)
 	fmt.Println("Stack length size =", size)
 
-	/* Check if empty */
+	/* Üres-e */
 	isEmpty := len(stack) == 0
 	fmt.Println("Is stack empty =", isEmpty)
 }
 
 func TestArrayStack(t *testing.T) {
-	// Initialize stack using interface
+	// Verem inicializálása interfészen keresztül
 	stack := newArrayStack()
 
-	// Elements push onto stack
+	// Elemek a verembe rakása (push)
 	stack.push(1)
 	stack.push(3)
 	stack.push(2)
@@ -57,28 +57,28 @@ func TestArrayStack(t *testing.T) {
 	fmt.Print("Stack stack = ")
 	PrintSlice(stack.toSlice())
 
-	// Return list for printing
+	// Lista visszaadása kiíráshoz
 	peek := stack.peek()
 	fmt.Println("Stack top element peek =", peek)
 
-	// Element pop from stack
+	// Elem kivétele a veremből (pop)
 	pop := stack.pop()
 	fmt.Print("Pop element pop = ", pop, ", after pop, stack = ")
 	PrintSlice(stack.toSlice())
 
-	// Get the length of the stack
+	// Verem hosszának lekérése
 	size := stack.size()
 	fmt.Println("Stack length size =", size)
 
-	// Check if empty
+	// Üres-e
 	isEmpty := stack.isEmpty()
 	fmt.Println("Is stack empty =", isEmpty)
 }
 
 func TestLinkedListStack(t *testing.T) {
-	// Access top of the stack element
+	// Verem csúcselemének elérése
 	stack := newLinkedListStack()
-	// Elements push onto stack
+	// Elemek a verembe rakása (push)
 	stack.push(1)
 	stack.push(3)
 	stack.push(2)
@@ -87,28 +87,28 @@ func TestLinkedListStack(t *testing.T) {
 	fmt.Print("Stack stack = ")
 	PrintList(stack.toList())
 
-	// Return list for printing
+	// Lista visszaadása kiíráshoz
 	peek := stack.peek()
 	fmt.Println("Stack top element peek =", peek)
 
-	// Element pop from stack
+	// Elem kivétele a veremből (pop)
 	pop := stack.pop()
 	fmt.Print("Pop element pop = ", pop, ", after pop, stack = ")
 	PrintList(stack.toList())
 
-	// Get the length of the stack
+	// Verem hosszának lekérése
 	size := stack.size()
 	fmt.Println("Stack length size =", size)
 
-	// Check if empty
+	// Üres-e
 	isEmpty := stack.isEmpty()
 	fmt.Println("Is stack empty =", isEmpty)
 }
 
-// BenchmarkArrayStack 8 ns/op in Mac M1 Pro
+// BenchmarkArrayStack 8 ns/op Mac M1 Pro-n
 func BenchmarkArrayStack(b *testing.B) {
 	stack := newArrayStack()
-	// use b.N for looping
+	// b.N használata ciklushoz
 	for i := 0; i < b.N; i++ {
 		stack.push(777)
 	}
@@ -117,10 +117,10 @@ func BenchmarkArrayStack(b *testing.B) {
 	}
 }
 
-// BenchmarkLinkedListStack 65.02 ns/op in Mac M1 Pro
+// BenchmarkLinkedListStack 65.02 ns/op Mac M1 Pro-n
 func BenchmarkLinkedListStack(b *testing.B) {
 	stack := newLinkedListStack()
-	// use b.N for looping
+	// b.N használata ciklushoz
 	for i := 0; i < b.N; i++ {
 		stack.push(777)
 	}

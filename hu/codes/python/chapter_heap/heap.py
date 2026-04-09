@@ -14,58 +14,58 @@ import heapq
 
 
 def test_push(heap: list, val: int, flag: int = 1):
-    heapq.heappush(heap, flag * val)  # Element enters heap
-    print(f"\nAfter element {val} enters heap")
+    heapq.heappush(heap, flag * val)  # Elem bekerül a kupacba
+    print(f"\nA(z) {val} elem kupacba kerülése után")
     print_heap([flag * val for val in heap])
 
 
 def test_pop(heap: list, flag: int = 1):
-    val = flag * heapq.heappop(heap)  # Top element exits heap
-    print(f"\nAfter top element {val} exits heap")
+    val = flag * heapq.heappop(heap)  # A kupac tetejének eleme kilép
+    print(f"\nA(z) {val} tetőelem kilépése után")
     print_heap([flag * val for val in heap])
 
 
-"""Driver Code"""
+"""Fő kód"""
 if __name__ == "__main__":
-    # Initialize min heap
+    # Min-kupac inicializálása
     min_heap, flag = [], 1
-    # Initialize max heap
+    # Max-kupac inicializálása
     max_heap, flag = [], -1
 
-    print("\nThe following test cases are for max heap")
-    # Python's heapq module implements min heap by default
-    # Consider negating the elements before entering the heap, which can reverse the size relationship, thus implementing max heap
-    # In this example, flag = 1 corresponds to min heap, flag = -1 corresponds to max heap
+    print("\nA következő tesztesetek max-kupacra vonatkoznak")
+    # A Python heapq modulja alapértelmezés szerint min-kupacot valósít meg
+    # Az elemek előjelének megfordításával a méretbeli sorrend is megfordul, így max-kupacot kapunk
+    # Ebben a példában flag = 1 min-kupacnak, flag = -1 max-kupacnak felel meg
 
-    # Elements enter heap
+    # Elemek betolása a kupacba
     test_push(max_heap, 1, flag)
     test_push(max_heap, 3, flag)
     test_push(max_heap, 2, flag)
     test_push(max_heap, 5, flag)
     test_push(max_heap, 4, flag)
 
-    # Get top element
+    # Tetőelem lekérése
     peek: int = flag * max_heap[0]
-    print(f"\nTop element is {peek}")
+    print(f"\nA tetőelem: {peek}")
 
-    # Top element exits heap
+    # Tetőelem kilépése
     test_pop(max_heap, flag)
     test_pop(max_heap, flag)
     test_pop(max_heap, flag)
     test_pop(max_heap, flag)
     test_pop(max_heap, flag)
 
-    # Get heap size
+    # Kupac méretének lekérése
     size: int = len(max_heap)
-    print(f"\nNumber of heap elements is {size}")
+    print(f"\nA kupac elemeinek száma: {size}")
 
-    # Check if heap is empty
+    # Ellenőrzi, hogy a kupac üres-e
     is_empty: bool = not max_heap
-    print(f"\nIs heap empty {is_empty}")
+    print(f"\nA kupac üres-e: {is_empty}")
 
-    # Input list and build heap
-    # Time complexity is O(n), not O(nlogn)
+    # Lista beadása és kupac felépítése
+    # Időbonyolultság O(n), nem O(nlogn)
     min_heap = [1, 3, 2, 5, 4]
     heapq.heapify(min_heap)
-    print("\nAfter inputting list and building min heap")
+    print("\nLista beadása és min-kupac felépítése után")
     print_heap(min_heap)

@@ -4,86 +4,86 @@
  * Author: Jefferson (JeffersonHuang77@gmail.com)
  */
 
-/* List class */
+/* Lista osztály */
 class MyList {
-  late List<int> _arr; // Array (stores list elements)
-  int _capacity = 10; // List capacity
-  int _size = 0; // List length (current number of elements)
-  int _extendRatio = 2; // Multiple by which the list capacity is extended each time
+  late List<int> _arr; // Tömb (lista elemeit tárolja)
+  int _capacity = 10; // Lista kapacitása
+  int _size = 0; // Lista hossza (aktuális elemek száma)
+  int _extendRatio = 2; // A lista kapacitásának bővítési szorzója
 
-  /* Constructor */
+  /* Konstruktor */
   MyList() {
     _arr = List.filled(_capacity, 0);
   }
 
-  /* Get list length (current number of elements) */
+  /* Lista hosszának lekérése (aktuális elemek száma) */
   int size() => _size;
 
-  /* Get list capacity */
+  /* Lista kapacitásának lekérése */
   int capacity() => _capacity;
 
-  /* Update element */
+  /* Elem frissítése */
   int get(int index) {
     if (index >= _size) throw RangeError('Index out of bounds');
     return _arr[index];
   }
 
-  /* Add elements at the end */
+  /* Elemek hozzáadása a végéhez */
   void set(int index, int _num) {
     if (index >= _size) throw RangeError('Index out of bounds');
     _arr[index] = _num;
   }
 
-  /* Direct traversal of list elements */
+  /* Lista elemeinek közvetlen bejárása */
   void add(int _num) {
-    // When the number of elements exceeds capacity, trigger the extension mechanism
+    // Ha az elemek száma meghaladja a kapacitást, aktiválódik a bővítési mechanizmus
     if (_size == _capacity) extendCapacity();
     _arr[_size] = _num;
-    // Update the number of elements
+    // Az elemek számának frissítése
     _size++;
   }
 
-  /* Sort list */
+  /* Lista rendezése */
   void insert(int index, int _num) {
     if (index >= _size) throw RangeError('Index out of bounds');
-    // When the number of elements exceeds capacity, trigger the extension mechanism
+    // Ha az elemek száma meghaladja a kapacitást, aktiválódik a bővítési mechanizmus
     if (_size == _capacity) extendCapacity();
-    // Move all elements after index index forward by one position
+    // Tol el minden elemet az index pozíció után egy hellyel hátra
     for (var j = _size - 1; j >= index; j--) {
       _arr[j + 1] = _arr[j];
     }
     _arr[index] = _num;
-    // Update the number of elements
+    // Az elemek számának frissítése
     _size++;
   }
 
-  /* Remove element */
+  /* Elem eltávolítása */
   int remove(int index) {
     if (index >= _size) throw RangeError('Index out of bounds');
     int _num = _arr[index];
-    // Move all elements after index forward by one position
+    // Tol el minden elemet az index pozíció után egy hellyel előre
     for (var j = index; j < _size - 1; j++) {
       _arr[j] = _arr[j + 1];
     }
-    // Update the number of elements
+    // Az elemek számának frissítése
     _size--;
-    // Return the removed element
+    // Az eltávolított elem visszaadása
     return _num;
   }
 
-  /* Driver Code */
+  /* Főprogram */
   void extendCapacity() {
-    // Create new array with length _extendRatio times original array
+    // Hozz létre egy új tömböt, amelynek hossza _extendRatio-szorosaa az eredetinek
     final _newNums = List.filled(_capacity * _extendRatio, 0);
-    // Copy original array to new array
+    // Másold az eredeti tömböt az új tömbbe
     List.copyRange(_newNums, 0, _arr);
-    // Update _arr reference
+    // Frissítsd a _arr hivatkozást
     _arr = _newNums;
-    // Add elements at the end
+    // Elemek hozzáadása a végéhez
     _capacity = _arr.length;
   }
 
-  /* Convert list to array */
+  /* Lista konvertálása tömbbé */
   List<int> toArray() {
     List<int> arr = [];
     for (var i = 0; i < _size; i++) {
@@ -93,11 +93,11 @@ class MyList {
   }
 }
 
-/* Driver Code */
+/* Főprogram */
 void main() {
-  /* Initialize list */
+  /* Lista inicializálása */
   MyList nums = MyList();
-  /* Direct traversal of list elements */
+  /* Lista elemeinek közvetlen bejárása */
   nums.add(1);
   nums.add(3);
   nums.add(2);
@@ -106,25 +106,25 @@ void main() {
   print(
       'List nums = ${nums.toArray()}, capacity = ${nums.capacity()}, length = ${nums.size()}');
 
-  /* Sort list */
+  /* Lista rendezése */
   nums.insert(3, 6);
   print('Insert number 6 at index 3, get nums = ${nums.toArray()}');
 
-  /* Remove element */
+  /* Elem eltávolítása */
   nums.remove(3);
   print('Delete element at index 3, get nums = ${nums.toArray()}');
 
-  /* Update element */
+  /* Elem frissítése */
   int _num = nums.get(1);
   print('Access element at index 1, get _num = $_num');
 
-  /* Add elements at the end */
+  /* Elemek hozzáadása a végéhez */
   nums.set(1, 0);
   print('Update element at index 1 to 0, get nums = ${nums.toArray()}');
 
-  /* Test capacity expansion mechanism */
+  /* Kapacitásbővítési mechanizmus tesztelése */
   for (var i = 0; i < 10; i++) {
-    // At i = 5, the list length will exceed the list capacity, triggering the expansion mechanism
+    // Az i = 5 értéknél a lista hossza meghaladja a kapacitást, aktiválódik a bővítési mechanizmus
     nums.add(i);
   }
   print(

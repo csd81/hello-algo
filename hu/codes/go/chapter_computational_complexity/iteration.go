@@ -6,52 +6,52 @@ package chapter_computational_complexity
 
 import "fmt"
 
-/* for loop */
+/* for ciklus */
 func forLoop(n int) int {
 	res := 0
-	// Sum 1, 2, ..., n-1, n
+	// 1, 2, ..., n-1, n összege
 	for i := 1; i <= n; i++ {
 		res += i
 	}
 	return res
 }
 
-/* while loop */
+/* while ciklus */
 func whileLoop(n int) int {
 	res := 0
-	// Initialize condition variable
+	// Feltételváltozó inicializálása
 	i := 1
-	// Sum 1, 2, ..., n-1, n
+	// 1, 2, ..., n-1, n összege
 	for i <= n {
 		res += i
-		// Update condition variable
+		// Feltételváltozó frissítése
 		i++
 	}
 	return res
 }
 
-/* while loop (two updates) */
+/* while ciklus (két frissítéssel) */
 func whileLoopII(n int) int {
 	res := 0
-	// Initialize condition variable
+	// Feltételváltozó inicializálása
 	i := 1
-	// Sum 1, 4, 10, ...
+	// 1, 4, 10, ... összege
 	for i <= n {
 		res += i
-		// Update condition variable
+		// Feltételváltozó frissítése
 		i++
 		i *= 2
 	}
 	return res
 }
 
-/* Nested for loop */
+/* Egymásba ágyazott for ciklus */
 func nestedForLoop(n int) string {
 	res := ""
-	// Loop i = 1, 2, ..., n-1, n
+	// i = 1, 2, ..., n-1, n ciklus
 	for i := 1; i <= n; i++ {
 		for j := 1; j <= n; j++ {
-			// Loop j = 1, 2, ..., n-1, n
+			// j = 1, 2, ..., n-1, n ciklus
 			res += fmt.Sprintf("(%d, %d), ", i, j)
 		}
 	}

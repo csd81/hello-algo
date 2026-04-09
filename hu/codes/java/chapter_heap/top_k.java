@@ -10,17 +10,17 @@ import utils.*;
 import java.util.*;
 
 public class top_k {
-    /* Find the largest k elements in array based on heap */
+    /* A tömb k legnagyobb elemének megkeresése kupac alapján */
     static Queue<Integer> topKHeap(int[] nums, int k) {
-        // Python's heapq module implements min heap by default
+        // Python heapq modulja alapértelmezés szerint min-kupacot implementál
         Queue<Integer> heap = new PriorityQueue<Integer>();
-        // Enter the first k elements of array into heap
+        // A tömb első k eleme belép a kupacba
         for (int i = 0; i < k; i++) {
             heap.offer(nums[i]);
         }
-        // Starting from the (k+1)th element, maintain heap length as k
+        // A (k+1)-edik elemtől kezdve a kupac méretét k-n tartja
         for (int i = k; i < nums.length; i++) {
-            // If current element is greater than top element, top element exits heap, current element enters heap
+            // Ha az aktuális elem nagyobb mint a kupac tetején lévő elem, a kupac teteje kilép, az aktuális elem belép
             if (nums[i] > heap.peek()) {
                 heap.poll();
                 heap.offer(nums[i]);

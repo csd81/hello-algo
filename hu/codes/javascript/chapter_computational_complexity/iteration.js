@@ -4,48 +4,48 @@
  * Author: Gaofer Chou (gaofer-chou@qq.com)
  */
 
-/* for loop */
+/* for ciklus */
 function forLoop(n) {
     let res = 0;
-    // Sum 1, 2, ..., n-1, n
+    // Összegzés: 1, 2, ..., n-1, n
     for (let i = 1; i <= n; i++) {
         res += i;
     }
     return res;
 }
 
-/* while loop */
+/* while ciklus */
 function whileLoop(n) {
     let res = 0;
-    let i = 1; // Initialize condition variable
-    // Sum 1, 2, ..., n-1, n
+    let i = 1; // Feltételváltozó inicializálása
+    // Összegzés: 1, 2, ..., n-1, n
     while (i <= n) {
         res += i;
-        i++; // Update condition variable
+        i++; // Feltételváltozó frissítése
     }
     return res;
 }
 
-/* while loop (two updates) */
+/* while ciklus (két frissítéssel) */
 function whileLoopII(n) {
     let res = 0;
-    let i = 1; // Initialize condition variable
-    // Sum 1, 4, 10, ...
+    let i = 1; // Feltételváltozó inicializálása
+    // Összegzés: 1, 4, 10, ...
     while (i <= n) {
         res += i;
-        // Update condition variable
+        // Feltételváltozó frissítése
         i++;
         i *= 2;
     }
     return res;
 }
 
-/* Nested for loop */
+/* Egymásba ágyazott for ciklus */
 function nestedForLoop(n) {
     let res = '';
-    // Loop i = 1, 2, ..., n-1, n
+    // i ciklus: 1, 2, ..., n-1, n
     for (let i = 1; i <= n; i++) {
-        // Loop j = 1, 2, ..., n-1, n
+        // j ciklus: 1, 2, ..., n-1, n
         for (let j = 1; j <= n; j++) {
             res += `(${i}, ${j}), `;
         }
@@ -53,7 +53,7 @@ function nestedForLoop(n) {
     return res;
 }
 
-/* Driver Code */
+/* Tesztkód */
 const n = 5;
 let res;
 

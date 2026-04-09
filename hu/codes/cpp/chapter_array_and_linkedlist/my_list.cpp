@@ -6,109 +6,109 @@
 
 #include "../utils/common.hpp"
 
-/* List class */
+/* Lista osztály */
 class MyList {
   private:
-    int *arr;             // Array (stores list elements)
-    int arrCapacity = 10; // List capacity
-    int arrSize = 0;      // List length (current number of elements)
-    int extendRatio = 2;   // Multiple by which the list capacity is extended each time
+    int *arr;             // Tömb (lista elemeit tárolja)
+    int arrCapacity = 10; // Lista kapacitása
+    int arrSize = 0;      // Lista hossza (aktuális elemszám)
+    int extendRatio = 2;   // A lista kapacitásának minden egyes bővítésekor alkalmazott szorzó
 
   public:
-    /* Constructor */
+    /* Konstruktor */
     MyList() {
         arr = new int[arrCapacity];
     }
 
-    /* Destructor */
+    /* Destruktor */
     ~MyList() {
         delete[] arr;
     }
 
-    /* Get list length (current number of elements)*/
+    /* Lista hosszának lekérdezése (aktuális elemszám) */
     int size() {
         return arrSize;
     }
 
-    /* Get list capacity */
+    /* Lista kapacitásának lekérdezése */
     int capacity() {
         return arrCapacity;
     }
 
-    /* Update element */
+    /* Elem frissítése */
     int get(int index) {
-        // If the index is out of bounds, throw an exception, as below
+        // Ha az index határon kívül van, kivételt dob, mint alább
         if (index < 0 || index >= size())
             throw out_of_range("Index out of bounds");
         return arr[index];
     }
 
-    /* Add elements at the end */
+    /* Elemek hozzáadása a végéhez */
     void set(int index, int num) {
         if (index < 0 || index >= size())
             throw out_of_range("Index out of bounds");
         arr[index] = num;
     }
 
-    /* Direct traversal of list elements */
+    /* Lista elemeinek közvetlen bejárása */
     void add(int num) {
-        // When the number of elements exceeds capacity, trigger the extension mechanism
+        // Ha az elemek száma meghaladja a kapacitást, a bővítési mechanizmus lép működésbe
         if (size() == capacity())
             extendCapacity();
         arr[size()] = num;
-        // Update the number of elements
+        // Az elemszám frissítése
         arrSize++;
     }
 
-    /* Sort list */
+    /* Lista rendezése */
     void insert(int index, int num) {
         if (index < 0 || index >= size())
             throw out_of_range("Index out of bounds");
-        // When the number of elements exceeds capacity, trigger the extension mechanism
+        // Ha az elemek száma meghaladja a kapacitást, a bővítési mechanizmus lép működésbe
         if (size() == capacity())
             extendCapacity();
-        // Move all elements after index index forward by one position
+        // Az index pozíció utáni összes elem egy pozícióval előre tolása
         for (int j = size() - 1; j >= index; j--) {
             arr[j + 1] = arr[j];
         }
         arr[index] = num;
-        // Update the number of elements
+        // Az elemszám frissítése
         arrSize++;
     }
 
-    /* Remove element */
+    /* Elem törlése */
     int remove(int index) {
         if (index < 0 || index >= size())
             throw out_of_range("Index out of bounds");
         int num = arr[index];
-        // Create a new array with length _extend_ratio times the original array, and copy the original array to the new array
+        // Új tömb létrehozása _extend_ratio-szorosával az eredeti tömb hosszának, és az eredeti tömb másolása az új tömbbe
         for (int j = index; j < size() - 1; j++) {
             arr[j] = arr[j + 1];
         }
-        // Update the number of elements
+        // Az elemszám frissítése
         arrSize--;
-        // Return the removed element
+        // A törölt elem visszaadása
         return num;
     }
 
-    /* Driver Code */
+    /* Kapacitás bővítése */
     void extendCapacity() {
-        // Create a new array with length extendRatio times the original array
+        // Új tömb létrehozása extendRatio-szorosával az eredeti tömb hosszának
         int newCapacity = capacity() * extendRatio;
         int *tmp = arr;
         arr = new int[newCapacity];
-        // Copy all elements from the original array to the new array
+        // Az eredeti tömb összes elemének másolása az új tömbbe
         for (int i = 0; i < size(); i++) {
             arr[i] = tmp[i];
         }
-        // Free memory
+        // Memória felszabadítása
         delete[] tmp;
         arrCapacity = newCapacity;
     }
 
-    /* Convert list to Vector for printing */
+    /* Lista konvertálása Vectorrá nyomtatáshoz */
     vector<int> toVector() {
-        // Elements enqueue
+        // Elemek hozzáadása
         vector<int> vec(size());
         for (int i = 0; i < size(); i++) {
             vec[i] = arr[i];
@@ -117,11 +117,11 @@ class MyList {
     }
 };
 
-/* Driver Code */
+/* Főprogram */
 int main() {
-    /* Initialize list */
+    /* Lista inicializálása */
     MyList *nums = new MyList();
-    /* Direct traversal of list elements */
+    /* Lista elemeinek közvetlen bejárása */
     nums->add(1);
     nums->add(3);
     nums->add(2);
@@ -132,31 +132,31 @@ int main() {
     printVector(vec);
     cout << "Capacity = " << nums->capacity() << ", length = " << nums->size() << endl;
 
-    /* Sort list */
+    /* Lista rendezése */
     nums->insert(3, 6);
     cout << "Insert number 6 at index 3, resulting in nums = ";
     vec = nums->toVector();
     printVector(vec);
 
-    /* Remove element */
+    /* Elem törlése */
     nums->remove(3);
     cout << "Remove element at index 3, resulting in nums = ";
     vec = nums->toVector();
     printVector(vec);
 
-    /* Update element */
+    /* Elem frissítése */
     int num = nums->get(1);
     cout << "Access element at index 1, get num = " << num << endl;
 
-    /* Add elements at the end */
+    /* Elemek hozzáadása a végéhez */
     nums->set(1, 0);
     cout << "Update element at index 1 to 0, resulting in nums = ";
     vec = nums->toVector();
     printVector(vec);
 
-    /* Test capacity expansion mechanism */
+    /* Kapacitás-bővítési mechanizmus tesztelése */
     for (int i = 0; i < 10; i++) {
-        // At i = 5, the list length will exceed the list capacity, triggering the expansion mechanism
+        // Az i = 5 esetén a lista hossza meghaladja a kapacitást, a bővítési mechanizmus lép működésbe
         nums->add(i);
     }
     cout << "List nums after expansion = ";
@@ -164,7 +164,7 @@ int main() {
     printVector(vec);
     cout << "Capacity = " << nums->capacity() << ", length = " << nums->size() << endl;
 
-    // Free memory
+    // Memória felszabadítása
     delete nums;
 
     return 0;

@@ -4,22 +4,22 @@
  * Author: yuan0221 (yl1452491917@gmail.com)
  */
 
-/* Climbing stairs: Dynamic programming */
+/* Lépcsőmászás: Dinamikus programozás */
 function climbingStairsDP(n) {
     if (n === 1 || n === 2) return n;
-    // Initialize dp table, used to store solutions to subproblems
+    // Inicializáljuk a dp táblát, a részproblémák megoldásainak tárolásához
     const dp = new Array(n + 1).fill(-1);
-    // Initial state: preset the solution to the smallest subproblem
+    // Kezdeti állapot: a legkisebb részprobléma megoldásának előbeállítása
     dp[1] = 1;
     dp[2] = 2;
-    // State transition: gradually solve larger subproblems from smaller ones
+    // Állapotátmenet: a kisebb részproblémákból fokozatosan megoldjuk a nagyobbakat
     for (let i = 3; i <= n; i++) {
         dp[i] = dp[i - 1] + dp[i - 2];
     }
     return dp[n];
 }
 
-/* Climbing stairs: Space-optimized dynamic programming */
+/* Lépcsőmászás: Helytakarékos dinamikus programozás */
 function climbingStairsDPComp(n) {
     if (n === 1 || n === 2) return n;
     let a = 1,
@@ -32,7 +32,7 @@ function climbingStairsDPComp(n) {
     return b;
 }
 
-/* Driver Code */
+/* Tesztkód */
 const n = 9;
 let res = climbingStairsDP(n);
 console.log(`Climbing ${n} stairs has ${res} solutions`);

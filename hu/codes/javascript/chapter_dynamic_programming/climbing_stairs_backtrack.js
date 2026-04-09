@@ -4,31 +4,31 @@
  * Author: yuan0221 (yl1452491917@gmail.com)
  */
 
-/* Backtracking */
+/* Visszalépés */
 function backtrack(choices, state, n, res) {
-    // When climbing to the n-th stair, add 1 to the solution count
+    // Ha felértünk az n-edik lépcsőfokra, a megoldások számát 1-gyel növeljük
     if (state === n) res.set(0, res.get(0) + 1);
-    // Traverse all choices
+    // Bejárjuk az összes választási lehetőséget
     for (const choice of choices) {
-        // Pruning: not allowed to go beyond the n-th stair
+        // Metszés: nem engedünk meg n-nél tovább menni
         if (state + choice > n) continue;
-        // Attempt: make choice, update state
+        // Kísérlet: választás megtétele, állapot frissítése
         backtrack(choices, state + choice, n, res);
-        // Backtrack
+        // Visszalépés
     }
 }
 
-/* Climbing stairs: Backtracking */
+/* Lépcsőmászás: Visszalépés */
 function climbingStairsBacktrack(n) {
-    const choices = [1, 2]; // Can choose to climb up 1 or 2 stairs
-    const state = 0; // Start climbing from the 0-th stair
+    const choices = [1, 2]; // Választhatunk 1 vagy 2 lépcsőfokot
+    const state = 0; // A 0. lépcsőfoktól kezdjük
     const res = new Map();
-    res.set(0, 0); // Use res[0] to record the solution count
+    res.set(0, 0); // res[0] értékével rögzítjük a megoldások számát
     backtrack(choices, state, n, res);
     return res.get(0);
 }
 
-/* Driver Code */
+/* Tesztkód */
 const n = 9;
 const res = climbingStairsBacktrack(n);
 console.log(`Climbing ${n} stairs has ${res} solutions`);

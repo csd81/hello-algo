@@ -12,60 +12,60 @@ from modules import ListNode, TreeNode, print_tree
 
 
 def function() -> int:
-    """Function"""
-    # Perform some operations
+    """Függvény"""
+    # Néhány műveletet végez
     return 0
 
 
 def constant(n: int):
-    """Constant order"""
-    # Constants, variables, objects occupy O(1) space
+    """Konstans rend"""
+    # Konstansok, változók, objektumok O(1) tárhelyet foglalnak
     a = 0
     nums = [0] * 10000
     node = ListNode(0)
-    # Variables in the loop occupy O(1) space
+    # A ciklus változói O(1) tárhelyet foglalnak
     for _ in range(n):
         c = 0
-    # Functions in the loop occupy O(1) space
+    # A ciklus függvényei O(1) tárhelyet foglalnak
     for _ in range(n):
         function()
 
 
 def linear(n: int):
-    """Linear order"""
-    # A list of length n occupies O(n) space
+    """Lineáris rend"""
+    # Egy n hosszúságú lista O(n) tárhelyet foglal
     nums = [0] * n
-    # A hash table of length n occupies O(n) space
+    # Egy n méretű hash tábla O(n) tárhelyet foglal
     hmap = dict[int, str]()
     for i in range(n):
         hmap[i] = str(i)
 
 
 def linear_recur(n: int):
-    """Linear order (recursive implementation)"""
-    print("Recursion n =", n)
+    """Lineáris rend (rekurzív megvalósítás)"""
+    print("Rekurzió n =", n)
     if n == 1:
         return
     linear_recur(n - 1)
 
 
 def quadratic(n: int):
-    """Quadratic order"""
-    # A 2D list occupies O(n^2) space
+    """Négyzetes rend"""
+    # Egy 2D lista O(n^2) tárhelyet foglal
     num_matrix = [[0] * n for _ in range(n)]
 
 
 def quadratic_recur(n: int) -> int:
-    """Quadratic order (recursive implementation)"""
+    """Négyzetes rend (rekurzív megvalósítás)"""
     if n <= 0:
         return 0
-    # Array nums length is n, n-1, ..., 2, 1
+    # A nums tömb hossza: n, n-1, ..., 2, 1
     nums = [0] * n
     return quadratic_recur(n - 1)
 
 
 def build_tree(n: int) -> TreeNode | None:
-    """Exponential order (build full binary tree)"""
+    """Exponenciális rend (teljes bináris fa felépítése)"""
     if n == 0:
         return None
     root = TreeNode(0)
@@ -74,17 +74,17 @@ def build_tree(n: int) -> TreeNode | None:
     return root
 
 
-"""Driver Code"""
+"""Fő kód"""
 if __name__ == "__main__":
     n = 5
-    # Constant order
+    # Konstans rend
     constant(n)
-    # Linear order
+    # Lineáris rend
     linear(n)
     linear_recur(n)
-    # Quadratic order
+    # Négyzetes rend
     quadratic(n)
     quadratic_recur(n)
-    # Exponential order
+    # Exponenciális rend
     root = build_tree(n)
     print_tree(root)

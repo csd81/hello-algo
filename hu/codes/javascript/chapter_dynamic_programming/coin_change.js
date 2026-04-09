@@ -4,26 +4,26 @@
  * Author: Gaofer Chou (gaofer-chou@qq.com)
  */
 
-/* Coin change: Dynamic programming */
+/* Pénzváltás: Dinamikus programozás */
 function coinChangeDP(coins, amt) {
     const n = coins.length;
     const MAX = amt + 1;
-    // Initialize dp table
+    // Inicializáljuk a dp táblát
     const dp = Array.from({ length: n + 1 }, () =>
         Array.from({ length: amt + 1 }, () => 0)
     );
-    // State transition: first row and first column
+    // Állapotátmenet: első sor és első oszlop
     for (let a = 1; a <= amt; a++) {
         dp[0][a] = MAX;
     }
-    // State transition: rest of the rows and columns
+    // Állapotátmenet: többi sor és oszlop
     for (let i = 1; i <= n; i++) {
         for (let a = 1; a <= amt; a++) {
             if (coins[i - 1] > a) {
-                // If exceeds target amount, don't select coin i
+                // Ha meghaladja a célösszeget, nem választjuk az i-edik érmét
                 dp[i][a] = dp[i - 1][a];
             } else {
-                // The smaller value between not selecting and selecting coin i
+                // A kisebb érték az i-edik érme ki nem választása és kiválasztása között
                 dp[i][a] = Math.min(dp[i - 1][a], dp[i][a - coins[i - 1]] + 1);
             }
         }
@@ -31,21 +31,21 @@ function coinChangeDP(coins, amt) {
     return dp[n][amt] !== MAX ? dp[n][amt] : -1;
 }
 
-/* Coin change: Space-optimized dynamic programming */
+/* Pénzváltás: Helytakarékos dinamikus programozás */
 function coinChangeDPComp(coins, amt) {
     const n = coins.length;
     const MAX = amt + 1;
-    // Initialize dp table
+    // Inicializáljuk a dp táblát
     const dp = Array.from({ length: amt + 1 }, () => MAX);
     dp[0] = 0;
-    // State transition
+    // Állapotátmenet
     for (let i = 1; i <= n; i++) {
         for (let a = 1; a <= amt; a++) {
             if (coins[i - 1] > a) {
-                // If exceeds target amount, don't select coin i
+                // Ha meghaladja a célösszeget, nem választjuk az i-edik érmét
                 dp[a] = dp[a];
             } else {
-                // The smaller value between not selecting and selecting coin i
+                // A kisebb érték az i-edik érme ki nem választása és kiválasztása között
                 dp[a] = Math.min(dp[a], dp[a - coins[i - 1]] + 1);
             }
         }
@@ -53,14 +53,14 @@ function coinChangeDPComp(coins, amt) {
     return dp[amt] !== MAX ? dp[amt] : -1;
 }
 
-/* Driver Code */
+/* Tesztkód */
 const coins = [1, 2, 5];
 const amt = 4;
 
-// Dynamic programming
+// Dinamikus programozás
 let res = coinChangeDP(coins, amt);
 console.log(`Minimum coins needed to make target amount is ${res}`);
 
-// Space-optimized dynamic programming
+// Helytakarékos dinamikus programozás
 res = coinChangeDPComp(coins, amt);
 console.log(`Minimum coins needed to make target amount is ${res}`);

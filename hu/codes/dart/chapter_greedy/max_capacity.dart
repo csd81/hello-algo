@@ -6,18 +6,18 @@
 
 import 'dart:math';
 
-/* Max capacity: Greedy algorithm */
+/* Maximális kapacitás: Mohó algoritmus */
 int maxCapacity(List<int> ht) {
-  // Initialize i, j to be at both ends of the array
+  // i, j inicializálása a tömb mindkét végén
   int i = 0, j = ht.length - 1;
-  // Initial max capacity is 0
+  // A kezdeti maximális kapacitás 0
   int res = 0;
-  // Loop for greedy selection until the two boards meet
+  // Ciklus mohó kiválasztáshoz, amíg a két deszka össze nem ér
   while (i < j) {
-    // Update max capacity
+    // Maximális kapacitás frissítése
     int cap = min(ht[i], ht[j]) * (j - i);
     res = max(res, cap);
-    // Move the shorter board inward
+    // A rövidebb deszkát befelé mozgatja
     if (ht[i] < ht[j]) {
       i++;
     } else {
@@ -27,11 +27,11 @@ int maxCapacity(List<int> ht) {
   return res;
 }
 
-/* Driver Code */
+/* Főprogram */
 void main() {
   List<int> ht = [3, 8, 5, 2, 7, 7, 3, 4];
 
-  // Greedy algorithm
+  // Mohó algoritmus
   int res = maxCapacity(ht);
   print("Maximum capacity is $res");
 }

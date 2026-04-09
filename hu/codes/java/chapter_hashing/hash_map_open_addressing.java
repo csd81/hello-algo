@@ -6,108 +6,108 @@
 
 package chapter_hashing;
 
-/* Hash table with open addressing */
+/* Nyílt címzéssel ütközéskezelő hash tábla */
 class HashMapOpenAddressing {
-    private int size; // Number of key-value pairs
-    private int capacity = 4; // Hash table capacity
-    private final double loadThres = 2.0 / 3.0; // Load factor threshold for triggering expansion
-    private final int extendRatio = 2; // Expansion multiplier
-    private Pair[] buckets; // Bucket array
-    private final Pair TOMBSTONE = new Pair(-1, "-1"); // Removal marker
+    private int size; // Kulcs-érték párok száma
+    private int capacity = 4; // Hash tábla kapacitása
+    private final double loadThres = 2.0 / 3.0; // Terhelési tényező küszöbértéke a bővítés kiváltásához
+    private final int extendRatio = 2; // Bővítési szorzó
+    private Pair[] buckets; // Vödör tömb
+    private final Pair TOMBSTONE = new Pair(-1, "-1"); // Törlési jelzés
 
-    /* Constructor */
+    /* Konstruktor */
     public HashMapOpenAddressing() {
         size = 0;
         buckets = new Pair[capacity];
     }
 
-    /* Hash function */
+    /* Hash függvény */
     private int hashFunc(int key) {
         return key % capacity;
     }
 
-    /* Load factor */
+    /* Terhelési tényező */
     private double loadFactor() {
         return (double) size / capacity;
     }
 
-    /* Search for bucket index corresponding to key */
+    /* A kulcshoz tartozó vödör indexének keresése */
     private int findBucket(int key) {
         int index = hashFunc(key);
         int firstTombstone = -1;
-        // Linear probing, break when encountering an empty bucket
+        // Lineáris tapogatás, üres vödörnél kilép
         while (buckets[index] != null) {
-            // If key is encountered, return the corresponding bucket index
+            // Ha megtalálta a kulcsot, visszaadja a megfelelő vödör indexét
             if (buckets[index].key == key) {
-                // If a removal marker was encountered before, move the key-value pair to that index
+                // Ha korábban törlési jelzéssel találkozott, a kulcs-érték párt arra az indexre helyezi
                 if (firstTombstone != -1) {
                     buckets[firstTombstone] = buckets[index];
                     buckets[index] = TOMBSTONE;
-                    return firstTombstone; // Return the moved bucket index
+                    return firstTombstone; // Az áthelyezett vödör indexét adja vissza
                 }
-                return index; // Return bucket index
+                return index; // Vödör indexének visszaadása
             }
-            // Record the first removal marker encountered
+            // Az első törlési jelzés rögzítése
             if (firstTombstone == -1 && buckets[index] == TOMBSTONE) {
                 firstTombstone = index;
             }
-            // Calculate bucket index, wrap around to the head if past the tail
+            // Vödör index kiszámítása, a tömb végén túl az elejére kerül
             index = (index + 1) % capacity;
         }
-        // If key does not exist, return the index for insertion
+        // Ha a kulcs nem létezik, visszaadja a beszúráshoz szükséges indexet
         return firstTombstone == -1 ? index : firstTombstone;
     }
 
-    /* Query operation */
+    /* Lekérdezési művelet */
     public String get(int key) {
-        // Search for bucket index corresponding to key
+        // A kulcshoz tartozó vödör indexének keresése
         int index = findBucket(key);
-        // If key-value pair is found, return corresponding val
+        // Ha megtalálta a kulcs-érték párt, visszaadja a megfelelő értéket
         if (buckets[index] != null && buckets[index] != TOMBSTONE) {
             return buckets[index].val;
         }
-        // If key-value pair does not exist, return null
+        // Ha a kulcs-érték pár nem létezik, null-t ad vissza
         return null;
     }
 
-    /* Add operation */
+    /* Hozzáadási művelet */
     public void put(int key, String val) {
-        // When load factor exceeds threshold, perform expansion
+        // Ha a terhelési tényező meghaladja a küszöbértéket, bővítést hajt végre
         if (loadFactor() > loadThres) {
             extend();
         }
-        // Search for bucket index corresponding to key
+        // A kulcshoz tartozó vödör indexének keresése
         int index = findBucket(key);
-        // If key-value pair is found, overwrite val and return
+        // Ha megtalálta a kulcs-érték párt, felülírja az értéket és visszatér
         if (buckets[index] != null && buckets[index] != TOMBSTONE) {
             buckets[index].val = val;
             return;
         }
-        // If key-value pair does not exist, add the key-value pair
+        // Ha a kulcs-érték pár nem létezik, hozzáadja a kulcs-érték párt
         buckets[index] = new Pair(key, val);
         size++;
     }
 
-    /* Remove operation */
+    /* Törlési művelet */
     public void remove(int key) {
-        // Search for bucket index corresponding to key
+        // A kulcshoz tartozó vödör indexének keresése
         int index = findBucket(key);
-        // If key-value pair is found, overwrite it with removal marker
+        // Ha megtalálta a kulcs-érték párt, törlési jelzéssel felülírja
         if (buckets[index] != null && buckets[index] != TOMBSTONE) {
             buckets[index] = TOMBSTONE;
             size--;
         }
     }
 
-    /* Expand hash table */
+    /* Hash tábla bővítése */
     private void extend() {
-        // Temporarily store the original hash table
+        // Az eredeti hash tábla ideiglenes tárolása
         Pair[] bucketsTmp = buckets;
-        // Initialize expanded new hash table
+        // Bővített új hash tábla inicializálása
         capacity *= extendRatio;
         buckets = new Pair[capacity];
         size = 0;
-        // Move key-value pairs from original hash table to new hash table
+        // Kulcs-érték párok áthelyezése az eredeti hash táblából az újba
         for (Pair pair : bucketsTmp) {
             if (pair != null && pair != TOMBSTONE) {
                 put(pair.key, pair.val);
@@ -115,7 +115,7 @@ class HashMapOpenAddressing {
         }
     }
 
-    /* Print hash table */
+    /* Hash tábla nyomtatása */
     public void print() {
         for (Pair pair : buckets) {
             if (pair == null) {
@@ -131,11 +131,11 @@ class HashMapOpenAddressing {
 
 public class hash_map_open_addressing {
     public static void main(String[] args) {
-        // Initialize hash table
+        // Hash tábla inicializálása
         HashMapOpenAddressing hashmap = new HashMapOpenAddressing();
 
-        // Add operation
-        // Add key-value pair (key, val) to the hash table
+        // Hozzáadási művelet
+        // Kulcs-érték pár (kulcs, érték) hozzáadása a hash táblához
         hashmap.put(12836, "Xiao Ha");
         hashmap.put(15937, "Xiao Luo");
         hashmap.put(16750, "Xiao Suan");
@@ -144,13 +144,13 @@ public class hash_map_open_addressing {
         System.out.println("\nAfter adding is complete, hash table is\nKey -> Value");
         hashmap.print();
 
-        // Query operation
-        // Input key into hash table to get value val
+        // Lekérdezési művelet
+        // Kulcs beírása a hash táblába az érték lekéréséhez
         String name = hashmap.get(13276);
         System.out.println("\nInput student ID 13276, query name " + name);
 
-        // Remove operation
-        // Remove key-value pair (key, val) from hash table
+        // Törlési művelet
+        // Kulcs-érték pár (kulcs, érték) eltávolítása a hash táblából
         hashmap.remove(16750);
         System.out.println("\nAfter removing 16750, hash table is\nKey -> Value");
         hashmap.print();

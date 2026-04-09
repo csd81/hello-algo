@@ -10,46 +10,46 @@ import utils.*;
 import java.util.*;
 
 public class space_complexity {
-    /* Function */
+    /* Függvény */
     static int function() {
-        // Perform some operations
+        // Néhány műveletet végez
         return 0;
     }
 
-    /* Constant order */
+    /* Konstans rend */
     static void constant(int n) {
-        // Constants, variables, objects occupy O(1) space
+        // Konstansok, változók, objektumok O(1) tárhelyet foglalnak
         final int a = 0;
         int b = 0;
         int[] nums = new int[10000];
         ListNode node = new ListNode(0);
-        // Variables in the loop occupy O(1) space
+        // A cikluson belüli változók O(1) tárhelyet foglalnak
         for (int i = 0; i < n; i++) {
             int c = 0;
         }
-        // Functions in the loop occupy O(1) space
+        // A cikluson belüli függvények O(1) tárhelyet foglalnak
         for (int i = 0; i < n; i++) {
             function();
         }
     }
 
-    /* Linear order */
+    /* Lineáris rend */
     static void linear(int n) {
-        // Array of length n uses O(n) space
+        // n hosszúságú tömb O(n) tárhelyet használ
         int[] nums = new int[n];
-        // A list of length n occupies O(n) space
+        // n hosszúságú lista O(n) tárhelyet foglal
         List<ListNode> nodes = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             nodes.add(new ListNode(i));
         }
-        // A hash table of length n occupies O(n) space
+        // n hosszúságú hash tábla O(n) tárhelyet foglal
         Map<Integer, String> map = new HashMap<>();
         for (int i = 0; i < n; i++) {
             map.put(i, String.valueOf(i));
         }
     }
 
-    /* Linear order (recursive implementation) */
+    /* Lineáris rend (rekurzív implementáció) */
     static void linearRecur(int n) {
         System.out.println("Recursion n = " + n);
         if (n == 1)
@@ -57,11 +57,11 @@ public class space_complexity {
         linearRecur(n - 1);
     }
 
-    /* Exponential order */
+    /* Exponenciális rend */
     static void quadratic(int n) {
-        // Matrix uses O(n^2) space
+        // Mátrix O(n^2) tárhelyet használ
         int[][] numMatrix = new int[n][n];
-        // 2D list uses O(n^2) space
+        // 2D lista O(n^2) tárhelyet használ
         List<List<Integer>> numList = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             List<Integer> tmp = new ArrayList<>();
@@ -72,17 +72,17 @@ public class space_complexity {
         }
     }
 
-    /* Quadratic order (recursive implementation) */
+    /* Négyzetes rend (rekurzív implementáció) */
     static int quadraticRecur(int n) {
         if (n <= 0)
             return 0;
-        // Array nums has length n, n-1, ..., 2, 1
+        // A nums tömb hossza n, n-1, ..., 2, 1
         int[] nums = new int[n];
         System.out.println("In recursion n = " + n + ", nums length = " + nums.length);
         return quadraticRecur(n - 1);
     }
 
-    /* Driver Code */
+    /* Főprogram */
     static TreeNode buildTree(int n) {
         if (n == 0)
             return null;
@@ -92,18 +92,18 @@ public class space_complexity {
         return root;
     }
 
-    /* Driver Code */
+    /* Főprogram */
     public static void main(String[] args) {
         int n = 5;
-        // Constant order
+        // Konstans rend
         constant(n);
-        // Linear order
+        // Lineáris rend
         linear(n);
         linearRecur(n);
-        // Exponential order
+        // Exponenciális rend
         quadratic(n);
         quadraticRecur(n);
-        // Exponential order
+        // Exponenciális rend
         TreeNode root = buildTree(n);
         PrintUtil.printTree(root);
     }

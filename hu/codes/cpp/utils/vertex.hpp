@@ -10,14 +10,14 @@
 
 using namespace std;
 
-/* Vertex class */
+/* Csúcs osztály */
 struct Vertex {
     int val;
     Vertex(int x) : val(x) {
     }
 };
 
-/* Input value list vals, return vertex list vets */
+/* vals értéklista bevitele, vets csúcslista visszaadása */
 vector<Vertex *> valsToVets(vector<int> vals) {
     vector<Vertex *> vets;
     for (int val : vals) {
@@ -26,7 +26,7 @@ vector<Vertex *> valsToVets(vector<int> vals) {
     return vets;
 }
 
-/* Input vertex list vets, return value list vals */
+/* vets csúcslista bevitele, vals értéklista visszaadása */
 vector<int> vetsToVals(vector<Vertex *> vets) {
     vector<int> vals;
     for (Vertex *vet : vets) {

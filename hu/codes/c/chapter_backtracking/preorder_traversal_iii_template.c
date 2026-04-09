@@ -6,7 +6,7 @@
 
 #include "../utils/common.h"
 
-// Assume path and result length not exceeding 100
+// Feltételezzük, hogy az útvonal és az eredmény hossza nem haladja meg a 100-at
 #define MAX_SIZE 100
 #define MAX_RES_SIZE 100
 
@@ -14,12 +14,12 @@ TreeNode *path[MAX_SIZE];
 TreeNode *res[MAX_RES_SIZE][MAX_SIZE];
 int pathSize = 0, resSize = 0;
 
-/* Check if the current state is a solution */
+/* Ellenőrzi, hogy az aktuális állapot megoldás-e */
 bool isSolution(void) {
     return pathSize > 0 && path[pathSize - 1]->val == 7;
 }
 
-/* Record solution */
+/* Megoldás rögzítése */
 void recordSolution(void) {
     for (int i = 0; i < pathSize; i++) {
         res[resSize][i] = path[i];
@@ -27,52 +27,52 @@ void recordSolution(void) {
     resSize++;
 }
 
-/* Check if the choice is valid under the current state */
+/* Ellenőrzi, hogy a választás érvényes-e az aktuális állapotban */
 bool isValid(TreeNode *choice) {
     return choice != NULL && choice->val != 3;
 }
 
-/* Update state */
+/* Állapot frissítése */
 void makeChoice(TreeNode *choice) {
     path[pathSize++] = choice;
 }
 
-/* Restore state */
+/* Állapot visszaállítása */
 void undoChoice(void) {
     pathSize--;
 }
 
-/* Backtracking algorithm: Example 3 */
+/* Visszalépéses algoritmus: 3. példa */
 void backtrack(TreeNode *choices[2]) {
-    // Check if it is a solution
+    // Ellenőrzés, hogy megoldás-e
     if (isSolution()) {
-        // Record solution
+        // Megoldás rögzítése
         recordSolution();
     }
-    // Traverse all choices
+    // Az összes lehetőség bejárása
     for (int i = 0; i < 2; i++) {
         TreeNode *choice = choices[i];
-        // Pruning: check if the choice is valid
+        // Vágás: ellenőrzi, hogy a választás érvényes-e
         if (isValid(choice)) {
-            // Attempt: make choice, update state
+            // Kísérlet: választás végrehajtása, állapot frissítése
             makeChoice(choice);
-            // Proceed to the next round of selection
+            // Továbblépés a következő kiválasztási körre
             TreeNode *nextChoices[2] = {choice->left, choice->right};
             backtrack(nextChoices);
-            // Backtrack: undo choice, restore to previous state
+            // Visszalépés: választás visszavonása, visszaállítás az előző állapotba
             undoChoice();
         }
     }
 }
 
-/* Driver Code */
+/* Vezérlő kód */
 int main() {
     int arr[] = {1, 7, 3, 4, 5, 6, 7};
     TreeNode *root = arrayToTree(arr, sizeof(arr) / sizeof(arr[0]));
     printf("\nInitialize binary tree\n");
     printTree(root);
 
-    // Backtracking algorithm
+    // Visszalépéses algoritmus
     TreeNode *choices[2] = {root, NULL};
     backtrack(choices);
 
@@ -87,7 +87,7 @@ int main() {
         free(vals);
     }
 
-    // Free memory
+    // Memória felszabadítása
     freeMemoryTree(root);
     return 0;
 }

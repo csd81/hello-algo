@@ -7,29 +7,29 @@
 const { arrToTree } = require('../modules/TreeNode');
 const { printTree } = require('../modules/PrintUtil');
 
-/* Preorder traversal: Example 2 */
+/* Előrendű bejárás: 2. példa */
 function preOrder(root, path, res) {
     if (root === null) {
         return;
     }
-    // Attempt
+    // Kísérlet
     path.push(root);
     if (root.val === 7) {
-        // Record solution
+        // Megoldás rögzítése
         res.push([...path]);
     }
     preOrder(root.left, path, res);
     preOrder(root.right, path, res);
-    // Backtrack
+    // Visszalépés
     path.pop();
 }
 
-// Driver Code
+// Tesztkód
 const root = arrToTree([1, 7, 3, 4, 5, 6, 7]);
 console.log('\nInitialize binary tree');
 printTree(root);
 
-// Preorder traversal
+// Előrendű bejárás
 const path = [];
 const res = [];
 preOrder(root, path, res);

@@ -9,15 +9,15 @@ package chapter_hashing;
 import java.util.ArrayList;
 import java.util.List;
 
-/* Hash table with separate chaining */
+/* Láncolással ütközéskezelő hash tábla */
 class HashMapChaining {
-    int size; // Number of key-value pairs
-    int capacity; // Hash table capacity
-    double loadThres; // Load factor threshold for triggering expansion
-    int extendRatio; // Expansion multiplier
-    List<List<Pair>> buckets; // Bucket array
+    int size; // Kulcs-érték párok száma
+    int capacity; // Hash tábla kapacitása
+    double loadThres; // Terhelési tényező küszöbértéke a bővítés kiváltásához
+    int extendRatio; // Bővítési szorzó
+    List<List<Pair>> buckets; // Vödör tömb
 
-    /* Constructor */
+    /* Konstruktor */
     public HashMapChaining() {
         size = 0;
         capacity = 4;
@@ -29,56 +29,56 @@ class HashMapChaining {
         }
     }
 
-    /* Hash function */
+    /* Hash függvény */
     int hashFunc(int key) {
         return key % capacity;
     }
 
-    /* Load factor */
+    /* Terhelési tényező */
     double loadFactor() {
         return (double) size / capacity;
     }
 
-    /* Query operation */
+    /* Lekérdezési művelet */
     String get(int key) {
         int index = hashFunc(key);
         List<Pair> bucket = buckets.get(index);
-        // Traverse bucket, if key is found, return corresponding val
+        // Vödör bejárása, ha megtalálta a kulcsot, visszaadja a megfelelő értéket
         for (Pair pair : bucket) {
             if (pair.key == key) {
                 return pair.val;
             }
         }
-        // If key is not found, return null
+        // Ha nem találta meg a kulcsot, null-t ad vissza
         return null;
     }
 
-    /* Add operation */
+    /* Hozzáadási művelet */
     void put(int key, String val) {
-        // When load factor exceeds threshold, perform expansion
+        // Ha a terhelési tényező meghaladja a küszöbértéket, bővítést hajt végre
         if (loadFactor() > loadThres) {
             extend();
         }
         int index = hashFunc(key);
         List<Pair> bucket = buckets.get(index);
-        // Traverse bucket, if specified key is encountered, update corresponding val and return
+        // Vödör bejárása, ha megtalálta a megadott kulcsot, frissíti a megfelelő értéket és visszatér
         for (Pair pair : bucket) {
             if (pair.key == key) {
                 pair.val = val;
                 return;
             }
         }
-        // If key does not exist, append key-value pair to the end
+        // Ha a kulcs nem létezik, a kulcs-érték párt a végéhez fűzi
         Pair pair = new Pair(key, val);
         bucket.add(pair);
         size++;
     }
 
-    /* Remove operation */
+    /* Törlési művelet */
     void remove(int key) {
         int index = hashFunc(key);
         List<Pair> bucket = buckets.get(index);
-        // Traverse bucket and remove key-value pair from it
+        // Vödör bejárása és a kulcs-érték pár eltávolítása belőle
         for (Pair pair : bucket) {
             if (pair.key == key) {
                 bucket.remove(pair);
@@ -88,18 +88,18 @@ class HashMapChaining {
         }
     }
 
-    /* Expand hash table */
+    /* Hash tábla bővítése */
     void extend() {
-        // Temporarily store the original hash table
+        // Az eredeti hash tábla ideiglenes tárolása
         List<List<Pair>> bucketsTmp = buckets;
-        // Initialize expanded new hash table
+        // Bővített új hash tábla inicializálása
         capacity *= extendRatio;
         buckets = new ArrayList<>(capacity);
         for (int i = 0; i < capacity; i++) {
             buckets.add(new ArrayList<>());
         }
         size = 0;
-        // Move key-value pairs from original hash table to new hash table
+        // Kulcs-érték párok áthelyezése az eredeti hash táblából az újba
         for (List<Pair> bucket : bucketsTmp) {
             for (Pair pair : bucket) {
                 put(pair.key, pair.val);
@@ -107,7 +107,7 @@ class HashMapChaining {
         }
     }
 
-    /* Print hash table */
+    /* Hash tábla nyomtatása */
     void print() {
         for (List<Pair> bucket : buckets) {
             List<String> res = new ArrayList<>();
@@ -121,11 +121,11 @@ class HashMapChaining {
 
 public class hash_map_chaining {
     public static void main(String[] args) {
-        /* Initialize hash table */
+        /* Hash tábla inicializálása */
         HashMapChaining map = new HashMapChaining();
 
-        /* Add operation */
-        // Add key-value pair (key, value) to the hash table
+        /* Hozzáadási művelet */
+        // Kulcs-érték pár (kulcs, érték) hozzáadása a hash táblához
         map.put(12836, "Xiao Ha");
         map.put(15937, "Xiao Luo");
         map.put(16750, "Xiao Suan");
@@ -134,13 +134,13 @@ public class hash_map_chaining {
         System.out.println("\nAfter adding is complete, hash table is\nKey -> Value");
         map.print();
 
-        /* Query operation */
-        // Input key into hash table to get value
+        /* Lekérdezési művelet */
+        // Kulcs beírása a hash táblába az érték lekéréséhez
         String name = map.get(13276);
         System.out.println("\nInput student ID 13276, query name " + name);
 
-        /* Remove operation */
-        // Remove key-value pair (key, value) from hash table
+        /* Törlési művelet */
+        // Kulcs-érték pár (kulcs, érték) eltávolítása a hash táblából
         map.remove(12836);
         System.out.println("\nAfter removing 12836, hash table is\nKey -> Value");
         map.print();

@@ -6,15 +6,15 @@ package chapter_stack_and_queue
 
 import "fmt"
 
-/* Double-ended queue based on circular array implementation */
+/* Körkörös tömbön alapuló kétoldalú sor (deque) implementáció */
 type arrayDeque struct {
-	nums        []int // Array for storing double-ended queue elements
-	front       int   // Front pointer, points to the front of the queue element
-	queSize     int   // Double-ended queue length
-	queCapacity int   // Queue capacity (maximum number of elements)
+	nums        []int // Tömb a kétoldalú sor elemek tárolásához
+	front       int   // Elöl mutató, a sor első elemére mutat
+	queSize     int   // Kétoldalú sor hossza
+	queCapacity int   // Sor kapacitása (maximum elemszám)
 }
 
-/* Access front of the queue element */
+/* Sor első elemének elérése */
 func newArrayDeque(queCapacity int) *arrayDeque {
 	return &arrayDeque{
 		nums:        make([]int, queCapacity),
@@ -24,64 +24,64 @@ func newArrayDeque(queCapacity int) *arrayDeque {
 	}
 }
 
-/* Get the length of the double-ended queue */
+/* Kétoldalú sor hosszának lekérése */
 func (q *arrayDeque) size() int {
 	return q.queSize
 }
 
-/* Check if the double-ended queue is empty */
+/* Kétoldalú sor üres-e */
 func (q *arrayDeque) isEmpty() bool {
 	return q.queSize == 0
 }
 
-/* Calculate circular array index */
+/* Körkörös tömb indexének kiszámítása */
 func (q *arrayDeque) index(i int) int {
-	// Use modulo operation to wrap the array head and tail together
-	// When i passes the tail of the array, return to the head
-	// When i passes the head of the array, return to the tail
+	// Moduló művelettel a tömb elejét és végét összekapcsoljuk
+	// Ha i átlépi a tömb végét, visszatér az elejére
+	// Ha i átlépi a tömb elejét, visszatér a végére
 	return (i + q.queCapacity) % q.queCapacity
 }
 
-/* Front of the queue enqueue */
+/* Sor elejére való berakás (enqueue) */
 func (q *arrayDeque) pushFirst(num int) {
 	if q.queSize == q.queCapacity {
 		fmt.Println("Double-ended queue is full")
 		return
 	}
-	// Use modulo operation to wrap front around to the tail after passing the head of the array
-	// Add num to the front of the queue
+	// Moduló művelettel a front-ot a tömb végére tekerjük vissza az eleje átlépésekor
+	// A num elemet a sor elejéhez adjuk
 	q.front = q.index(q.front - 1)
-	// Add num to front of queue
+	// A num elem hozzáadása a sor elejéhez
 	q.nums[q.front] = num
 	q.queSize++
 }
 
-/* Rear of the queue enqueue */
+/* Sor végéhez való hozzáadás (enqueue) */
 func (q *arrayDeque) pushLast(num int) {
 	if q.queSize == q.queCapacity {
 		fmt.Println("Double-ended queue is full")
 		return
 	}
-	// Use modulo operation to wrap rear around to the head after passing the tail of the array
+	// Moduló művelettel a rear-t a tömb elejére tekerjük vissza a végének átlépésekor
 	rear := q.index(q.front + q.queSize)
-	// Front pointer moves one position backward
+	// Az elöl mutató egy pozícióval előre lép
 	q.nums[rear] = num
 	q.queSize++
 }
 
-/* Rear of the queue dequeue */
+/* Sor elejéről való kivétel (dequeue) */
 func (q *arrayDeque) popFirst() any {
 	num := q.peekFirst()
 	if num == nil {
 		return nil
 	}
-	// Move front pointer backward by one position
+	// Az elöl mutatót egy pozícióval előre mozgatjuk
 	q.front = q.index(q.front + 1)
 	q.queSize--
 	return num
 }
 
-/* Access rear of the queue element */
+/* Sor végének elemének elérése */
 func (q *arrayDeque) popLast() any {
 	num := q.peekLast()
 	if num == nil {
@@ -91,7 +91,7 @@ func (q *arrayDeque) popLast() any {
 	return num
 }
 
-/* Return list for printing */
+/* Lista visszaadása kiíráshoz */
 func (q *arrayDeque) peekFirst() any {
 	if q.isEmpty() {
 		return nil
@@ -104,14 +104,14 @@ func (q *arrayDeque) peekLast() any {
 	if q.isEmpty() {
 		return nil
 	}
-	// Initialize double-ended queue
+	// Kétoldalú sor inicializálása
 	last := q.index(q.front + q.queSize - 1)
 	return q.nums[last]
 }
 
-/* Get Slice for printing */
+/* Szelet lekérése kiíráshoz */
 func (q *arrayDeque) toSlice() []int {
-	// Elements enqueue
+	// Elemek sorba állítása
 	res := make([]int, q.queSize)
 	for i, j := 0, q.front; i < q.queSize; i++ {
 		res[i] = q.nums[q.index(j)]

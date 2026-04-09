@@ -6,33 +6,33 @@
 
 #include "../utils/common.h"
 
-// Assume result length not exceeding 100
+// Feltételezzük, hogy az eredmény hossza nem haladja meg a 100-at
 #define MAX_SIZE 100
 
 TreeNode *res[MAX_SIZE];
 int resSize = 0;
 
-/* Preorder traversal: Example 1 */
+/* Előrendű bejárás: 1. példa */
 void preOrder(TreeNode *root) {
     if (root == NULL) {
         return;
     }
     if (root->val == 7) {
-        // Record solution
+        // Megoldás rögzítése
         res[resSize++] = root;
     }
     preOrder(root->left);
     preOrder(root->right);
 }
 
-/* Driver Code */
+/* Vezérlő kód */
 int main() {
     int arr[] = {1, 7, 3, 4, 5, 6, 7};
     TreeNode *root = arrayToTree(arr, sizeof(arr) / sizeof(arr[0]));
     printf("\nInitialize binary tree\n");
     printTree(root);
 
-    // Preorder traversal
+    // Előrendű bejárás
     preOrder(root);
 
     printf("\nOutput all nodes with value 7\n");
@@ -42,7 +42,7 @@ int main() {
     }
     printArray(vals, resSize);
 
-    // Free memory
+    // Memória felszabadítása
     freeMemoryTree(root);
     free(vals);
     return 0;

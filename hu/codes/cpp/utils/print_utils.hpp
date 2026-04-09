@@ -13,7 +13,7 @@
 #include <sstream>
 #include <string>
 
-/* Find an element in a vector */
+/* Elem keresése vektorban */
 template <typename T> int vecFind(const vector<T> &vec, T ele) {
     int j = INT_MAX;
     for (int i = 0; i < vec.size(); i++) {
@@ -24,7 +24,7 @@ template <typename T> int vecFind(const vector<T> &vec, T ele) {
     return j;
 }
 
-/* Concatenate a vector with a delim */
+/* Vektor összefűzése elválasztóval */
 template <typename T> string strJoin(const string &delim, const T &vec) {
     ostringstream s;
     for (const auto &i : vec) {
@@ -36,7 +36,7 @@ template <typename T> string strJoin(const string &delim, const T &vec) {
     return s.str();
 }
 
-/* Repeat a string for n times */
+/* Karakterlánc ismétlése n-szer */
 string strRepeat(string str, int n) {
     ostringstream os;
     for (int i = 0; i < n; i++)
@@ -44,7 +44,7 @@ string strRepeat(string str, int n) {
     return os.str();
 }
 
-/* Print array */
+/* Tömb kiírása */
 template <typename T> void printArray(T *arr, int n) {
     cout << "[";
     for (int i = 0; i < n - 1; i++) {
@@ -56,17 +56,17 @@ template <typename T> void printArray(T *arr, int n) {
         cout << "]" << endl;
 }
 
-/* Get the Vector String object */
+/* Vektor karakterlánc reprezentációjának lekérdezése */
 template <typename T> string getVectorString(vector<T> &list) {
     return "[" + strJoin(", ", list) + "]";
 }
 
-/* Print list */
+/* Lista kiírása */
 template <typename T> void printVector(vector<T> list) {
     cout << getVectorString(list) << '\n';
 }
 
-/* Print matrix */
+/* Mátrix kiírása */
 template <typename T> void printVectorMatrix(vector<vector<T>> &matrix) {
     cout << "[" << '\n';
     for (vector<T> &list : matrix)
@@ -74,7 +74,7 @@ template <typename T> void printVectorMatrix(vector<vector<T>> &matrix) {
     cout << "]" << '\n';
 }
 
-/* Print linked list */
+/* Láncolt lista kiírása */
 void printLinkedList(ListNode *head) {
     vector<int> list;
     while (head != nullptr) {
@@ -104,7 +104,7 @@ void showTrunks(Trunk *p) {
 }
 
 /**
- * 打印二叉树
+ * Bináris fa kiírása
  * This tree printer is borrowed from TECHIE DELIGHT
  * https://www.techiedelight.com/c-program-print-binary-tree/
  */
@@ -139,20 +139,20 @@ void printTree(TreeNode *root, Trunk *prev, bool isRight) {
     printTree(root->left, &trunk, false);
 }
 
-/* Print binary tree */
+/* Bináris fa kiírása */
 void printTree(TreeNode *root) {
     printTree(root, nullptr, false);
 }
 
-/* Print stack */
+/* Verem kiírása */
 template <typename T> void printStack(stack<T> stk) {
-    // Reverse the input stack
+    // Bemeneti verem megfordítása
     stack<T> tmp;
     while (!stk.empty()) {
         tmp.push(stk.top());
         stk.pop();
     }
-    // Generate the string to print
+    // Kiírandó karakterlánc létrehozása
     ostringstream s;
     bool flag = true;
     while (!tmp.empty()) {
@@ -166,9 +166,9 @@ template <typename T> void printStack(stack<T> stk) {
     cout << "[" + s.str() + "]" << '\n';
 }
 
-/* Print queue */
+/* Sor kiírása */
 template <typename T> void printQueue(queue<T> queue) {
-    // Generate the string to print
+    // Kiírandó karakterlánc létrehozása
     ostringstream s;
     bool flag = true;
     while (!queue.empty()) {
@@ -182,9 +182,9 @@ template <typename T> void printQueue(queue<T> queue) {
     cout << "[" + s.str() + "]" << '\n';
 }
 
-/* Print deque */
+/* Kétirányú sor kiírása */
 template <typename T> void printDeque(deque<T> deque) {
-    // Generate the string to print
+    // Kiírandó karakterlánc létrehozása
     ostringstream s;
     bool flag = true;
     while (!deque.empty()) {
@@ -198,15 +198,15 @@ template <typename T> void printDeque(deque<T> deque) {
     cout << "[" + s.str() + "]" << '\n';
 }
 
-/* Print hash table */
-// Define template parameters TKey and TValue to specify key-value pair types
+/* Hash tábla kiírása */
+// TKey és TValue sablon paraméterek meghatározása a kulcs-érték pár típusaihoz
 template <typename TKey, typename TValue> void printHashMap(unordered_map<TKey, TValue> map) {
     for (auto kv : map) {
         cout << kv.first << " -> " << kv.second << '\n';
     }
 }
 
-/* Expose the underlying storage of the priority_queue container */
+/* A priority_queue tároló belső tárolójának elérhetővé tétele */
 template <typename T, typename S, typename C> S &Container(priority_queue<T, S, C> &pq) {
     struct HackedQueue : private priority_queue<T, S, C> {
         static S &Container(priority_queue<T, S, C> &pq) {
@@ -216,12 +216,12 @@ template <typename T, typename S, typename C> S &Container(priority_queue<T, S, 
     return HackedQueue::Container(pq);
 }
 
-/* Print heap (priority queue) */
+/* Kupac kiírása (prioritásos sor) */
 template <typename T, typename S, typename C> void printHeap(priority_queue<T, S, C> &heap) {
     vector<T> vec = Container(heap);
-    cout << "Heap array representation:";
+    cout << "Kupac tömb reprezentációja:";
     printVector(vec);
-    cout << "Heap tree representation:" << endl;
+    cout << "Kupac fa reprezentációja:" << endl;
     TreeNode *root = vectorToTree(vec);
     printTree(root);
     freeMemoryTree(root);

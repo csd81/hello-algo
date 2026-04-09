@@ -6,28 +6,28 @@
 
 #include "../utils/common.h"
 
-/* Climbing stairs with constraint: Dynamic programming */
+/* Korlátozott lépcsőmászás: dinamikus programozás */
 int climbingStairsConstraintDP(int n) {
     if (n == 1 || n == 2) {
         return 1;
     }
-    // Initialize dp table, used to store solutions to subproblems
+    // dp tábla inicializálása, a részproblémák megoldásainak tárolásához
     int **dp = malloc((n + 1) * sizeof(int *));
     for (int i = 0; i <= n; i++) {
         dp[i] = calloc(3, sizeof(int));
     }
-    // Initial state: preset the solution to the smallest subproblem
+    // Kezdőállapot: a legkisebb részprobléma megoldásának előre beállítása
     dp[1][1] = 1;
     dp[1][2] = 0;
     dp[2][1] = 0;
     dp[2][2] = 1;
-    // State transition: gradually solve larger subproblems from smaller ones
+    // Állapotátmenet: fokozatosan oldja meg a nagyobb részproblémákat a kisebbekből
     for (int i = 3; i <= n; i++) {
         dp[i][1] = dp[i - 1][2];
         dp[i][2] = dp[i - 2][1] + dp[i - 2][2];
     }
     int res = dp[n][1] + dp[n][2];
-    // Free memory
+    // Memória felszabadítása
     for (int i = 0; i <= n; i++) {
         free(dp[i]);
     }
@@ -35,7 +35,7 @@ int climbingStairsConstraintDP(int n) {
     return res;
 }
 
-/* Driver Code */
+/* Vezérlő kód */
 int main() {
     int n = 9;
 

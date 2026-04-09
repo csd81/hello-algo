@@ -4,54 +4,54 @@
  * Author: Gaofer Chou (gaofer-chou@qq.com)
  */
 
-/* Recursion */
+/* Rekurzió */
 function recur(n) {
-    // Termination condition
+    // Leállási feltétel
     if (n === 1) return 1;
-    // Recurse: recursive call
+    // Rekurzió: rekurzív hívás
     const res = recur(n - 1);
-    // Return: return result
+    // Visszatérés: eredmény visszaadása
     return n + res;
 }
 
-/* Simulate recursion using iteration */
+/* Rekurzió szimulálása iterációval */
 function forLoopRecur(n) {
-    // Use an explicit stack to simulate the system call stack
+    // Explicit vermet használunk a rendszer hívási verme szimulálásához
     const stack = [];
     let res = 0;
-    // Recurse: recursive call
+    // Rekurzió: rekurzív hívás
     for (let i = n; i > 0; i--) {
-        // Simulate "recurse" with "push"
+        // "Rekurzió" szimulálása "push"-sal
         stack.push(i);
     }
-    // Return: return result
+    // Visszatérés: eredmény visszaadása
     while (stack.length) {
-        // Simulate "return" with "pop"
+        // "Visszatérés" szimulálása "pop"-pal
         res += stack.pop();
     }
     // res = 1+2+3+...+n
     return res;
 }
 
-/* Tail recursion */
+/* Farok rekurzió */
 function tailRecur(n, res) {
-    // Termination condition
+    // Leállási feltétel
     if (n === 0) return res;
-    // Tail recursive call
+    // Farok rekurzív hívás
     return tailRecur(n - 1, res + n);
 }
 
-/* Fibonacci sequence: recursion */
+/* Fibonacci-sorozat: rekurzió */
 function fib(n) {
-    // Termination condition f(1) = 0, f(2) = 1
+    // Leállási feltétel f(1) = 0, f(2) = 1
     if (n === 1 || n === 2) return n - 1;
-    // Recursive call f(n) = f(n-1) + f(n-2)
+    // Rekurzív hívás f(n) = f(n-1) + f(n-2)
     const res = fib(n - 1) + fib(n - 2);
-    // Return result f(n)
+    // Eredmény visszaadása f(n)
     return res;
 }
 
-/* Driver Code */
+/* Tesztkód */
 const n = 5;
 let res;
 

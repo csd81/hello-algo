@@ -7,26 +7,26 @@
 import '../utils/print_util.dart';
 import '../utils/tree_node.dart';
 
-/* Preorder traversal: Example 1 */
+/* Előrendű bejárás: 1. példa */
 void preOrder(TreeNode? root, List<TreeNode> res) {
   if (root == null) {
     return;
   }
   if (root.val == 7) {
-    // Record solution
+    // Megoldás rögzítése
     res.add(root);
   }
   preOrder(root.left, res);
   preOrder(root.right, res);
 }
 
-/* Driver Code */
+/* Főprogram */
 void main() {
   TreeNode? root = listToTree([1, 7, 3, 4, 5, 6, 7]);
   print("\nInitialize binary tree");
   printTree(root);
 
-  // Preorder traversal
+  // Előrendű bejárás
   List<TreeNode> res = [];
   preOrder(root, res);
 

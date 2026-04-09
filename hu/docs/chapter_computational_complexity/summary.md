@@ -4,52 +4,52 @@
 
 **Algoritmus hatékonysági értékelése**
 
-- Time efficiency and space efficiency are the two primary evaluation metrics for measuring algorithm performance.
-- We can evaluate algorithm efficiency through actual testing, but it is difficult to eliminate the influence of the testing environment, and it consumes substantial computational resources.
-- Complexity analysis can eliminate the drawbacks of actual testing, with results applicable to all running platforms, and it can reveal algorithm efficiency under different data scales.
+- Az időhatékonyság és a térhatékonyság az algoritmus teljesítményének mérésére szolgáló két elsődleges értékelési mérőszám.
+- Az algoritmus hatékonyságát tényleges teszteléssel értékelhetjük, de nehéz kiküszöbölni a tesztkörnyezet hatását, és ez jelentős számítási erőforrásokat fogyaszt.
+- A bonyolultságelemzés kiküszöbölheti a tényleges tesztelés hátrányait, az eredmények minden futtatási platformra alkalmazhatók, és képes feltárni az algoritmus hatékonyságát különböző adatméretekben.
 
-**Time Complexity**
+**Időbonyolultság**
 
-- Time complexity is used to measure the trend of algorithm runtime as data volume increases. It can effectively evaluate algorithm efficiency, but may fail in certain situations, such as when the input data volume is small or when time complexities are identical, making it impossible to precisely compare algorithm efficiency.
-- Worst-case time complexity is represented using Big $O$ notation, corresponding to the asymptotic upper bound of a function, reflecting the growth level of the number of operations $T(n)$ as $n$ approaches positive infinity.
-- Deriving time complexity involves two steps: first, counting the number of operations, then determining the asymptotic upper bound.
-- Common time complexities arranged from low to high include $O(1)$, $O(\log n)$, $O(n)$, $O(n \log n)$, $O(n^2)$, $O(2^n)$, and $O(n!)$.
-- The time complexity of some algorithms is not fixed, but rather depends on the distribution of input data. Time complexity is divided into worst-case, best-case, and average-case time complexity. Best-case time complexity is rarely used because input data generally needs to satisfy strict conditions to achieve the best case.
-- Average time complexity reflects the algorithm's runtime efficiency under random data input, and is closest to the algorithm's performance in practical applications. Calculating average time complexity requires statistical analysis of input data distribution and the combined mathematical expectation.
+- Az időbonyolultságot az algoritmus futási ideje növekedési trendjének mérésére használják az adatmennyiség növekedésével. Hatékonyan értékeli az algoritmus hatékonyságát, de bizonyos helyzetekben meghibásodhat, például ha a bemeneti adatmennyiség kicsi, vagy ha az időbonyolultságok azonosak, ami lehetetlenné teszi az algoritmus hatékonyságának pontos összehasonlítását.
+- A legrosszabb esetű időbonyolultságot Nagy $O$ jelöléssel ábrázolják, amely egy függvény aszimptotikus felső korlátjának felel meg, tükrözve az $n$ pozitív végtelenhez közeledésekor a műveletek száma $T(n)$ növekedési szintjét.
+- Az időbonyolultság levezetése két lépésből áll: először megszámolja a műveletek számát, majd meghatározza az aszimptotikus felső korlátot.
+- A gyakori időbonyolultságok alacsonyból magasba rendezve a következők: $O(1)$, $O(\log n)$, $O(n)$, $O(n \log n)$, $O(n^2)$, $O(2^n)$ és $O(n!)$.
+- Egyes algoritmusok időbonyolultsága nem rögzített, hanem a bemeneti adatok eloszlásától függ. Az időbonyolultságot legrosszabb esetű, legjobb esetű és átlagos esetű időbonyolultságra osztják. A legjobb esetű időbonyolultságot ritkán használják, mivel a bemeneti adatoknak általában szigorú feltételeket kell teljesíteniük a legjobb eset eléréséhez.
+- Az átlagos időbonyolultság tükrözi az algoritmus futási idő hatékonyságát véletlenszerű adatbemenet esetén, és ez a legközelebb áll az algoritmus teljesítményéhez a gyakorlati alkalmazásokban. Az átlagos időbonyolultság kiszámításához statisztikai elemzés szükséges a bemeneti adatok eloszlásáról és a kombinált matematikai várható értékről.
 
-**Space Complexity**
+**Térbonyolultság**
 
-- Space complexity serves a similar purpose to time complexity, used to measure the trend of algorithm memory usage as data volume increases.
-- The memory space related to algorithm execution can be divided into input space, temporary space, and output space. Typically, input space is not included in space complexity calculations. Temporary space can be divided into temporary data, stack frame space, and instruction space, where stack frame space usually affects space complexity only in recursive functions.
-- We typically only focus on worst-case space complexity, which is the space complexity of an algorithm under worst-case input data and worst-case runtime.
-- Common space complexities arranged from low to high include $O(1)$, $O(\log n)$, $O(n)$, $O(n^2)$, and $O(2^n)$.
+- A térbonyolultság az időbonyolultsághoz hasonló célt szolgál, az algoritmus memóriahasználata növekedési trendjének mérésére az adatmennyiség növekedésével.
+- Az algoritmus végrehajtásához kapcsolódó memóriaterület bemeneti térre, ideiglenes térre és kimeneti térre osztható. Általában a bemeneti tér nem szerepel a térbonyolultság számításában. Az ideiglenes tér ideiglenes adatokra, veremkeret-térre és utasítástérre osztható, ahol a veremkeret-tér általában csak a rekurzív függvényeknél befolyásolja a térbonyolultságot.
+- Általában csak a legrosszabb esetű térbonyolultságra koncentrálunk, ami egy algoritmus térbonyolultsága a legrosszabb esetű bemeneti adatok és a legrosszabb esetű futási idő esetén.
+- A gyakori térbonyolultságok alacsonyból magasba rendezve a következők: $O(1)$, $O(\log n)$, $O(n)$, $O(n^2)$ és $O(2^n)$.
 
-### Q & A
+### Kérdések és válaszok
 
-**Q**: Is the space complexity of tail recursion $O(1)$?
+**K**: A farokrekurzió térbonyolultsága $O(1)$?
 
-Theoretically, the space complexity of tail recursive functions can be optimized to $O(1)$. However, most programming languages (such as Java, Python, C++, Go, C#, etc.) do not support automatic tail recursion optimization, so the space complexity is generally considered to be $O(n)$.
+Elméletileg a farokrekurzív függvények térbonyolultsága optimalizálható $O(1)$-re. Azonban a legtöbb programozási nyelv (például Java, Python, C++, Go, C# stb.) nem támogatja az automatikus farokrekurzió optimalizálást, ezért a térbonyolultságot általában $O(n)$-nek tekintik.
 
-**Q**: What is the difference between the terms function and method?
+**K**: Mi a különbség a függvény és a metódus kifejezések között?
 
-A <u>function</u> can be executed independently, with all parameters passed explicitly. A <u>method</u> is associated with an object, is implicitly passed to the object that invokes it, and can operate on data contained in class instances.
+Egy <u>függvény</u> önállóan futtatható, az összes paraméter explicit módon átadható. Egy <u>metódus</u> egy objektumhoz van társítva, implicit módon átadódik az azt meghívó objektumnak, és képes művelni az osztálypéldányokban tárolt adatokat.
 
-The following examples use several common programming languages for illustration.
+Az alábbi példák néhány általánosan használt programozási nyelvet illusztrálnak.
 
-- C is a procedural programming language without object-oriented concepts, so it only has functions. However, we can simulate object-oriented programming by creating structures (struct), and functions associated with structures are equivalent to methods in other programming languages.
-- Java and C# are object-oriented programming languages where code blocks (methods) are typically part of a class. Static methods behave like functions because they are bound to the class and cannot access specific instance variables.
-- C++ and Python support both procedural programming (functions) and object-oriented programming (methods).
+- A C egy procedurális programozási nyelv, objektumorientált fogalmak nélkül, ezért csak függvényei vannak. Azonban struktúrák (struct) létrehozásával szimulálhatjuk az objektumorientált programozást, és a struktúrákhoz kapcsolódó függvények egyenértékűek a metódusokkal más programozási nyelveken.
+- A Java és a C# objektumorientált programozási nyelvek, ahol a kódblokkok (metódusok) általában egy osztály részei. A statikus metódusok függvényként viselkednek, mivel az osztályhoz vannak kötve és nem férnek hozzá specifikus példányváltozókhoz.
+- A C++ és a Python egyaránt támogatja a procedurális programozást (függvények) és az objektumorientált programozást (metódusok).
 
-**Q**: Does the diagram for "common space complexity types" reflect the absolute size of occupied space?
+**K**: A "gyakori térbonyolultság típusok" ábrája a foglalt tér abszolút méretét tükrözi?
 
-No, the diagram shows space complexity, which reflects growth trends rather than the absolute size of occupied space.
+Nem, az ábra a térbonyolultságot mutatja, amely a növekedési trendeket tükrözi, nem a foglalt tér abszolút méretét.
 
-Assuming $n = 8$, you might find that the values of each curve do not correspond to the functions. This is because each curve contains a constant term used to compress the value range into a visually comfortable range.
+Feltéve, hogy $n = 8$, előfordulhat, hogy az egyes görbék értékei nem felelnek meg a függvényeknek. Ez azért van, mert minden görbe egy konstans tagot tartalmaz, amellyel az értéktartomány vizuálisan kényelmes tartományba szűkül.
 
-In practice, because we generally do not know what the "constant term" complexity of each method is, we usually cannot select the optimal solution for $n = 8$ based on complexity alone. But for $n = 8^5$, the choice is straightforward, as the growth trend already dominates.
+A gyakorlatban, mivel általában nem tudjuk, hogy az egyes módszerek "konstans tag" bonyolultsága mi, általában nem tudjuk kiválasztani az optimális megoldást $n = 8$ esetén csak a bonyolultság alapján. De $n = 8^5$ esetén a választás egyértelmű, mivel a növekedési trend már domináns.
 
-**Q**: Are there situations where algorithms are designed to sacrifice time (or space) based on actual use cases?
+**K**: Vannak olyan helyzetek, amikor az algoritmusokat tényleges felhasználási esetük alapján az idő (vagy tér) feláldozásával tervezik?
 
-In practical applications, most situations choose to sacrifice space for time. For example, with database indexes, we typically choose to build B+ trees or hash indexes, occupying substantial memory space in exchange for efficient queries of $O(\log n)$ or even $O(1)$.
+A gyakorlati alkalmazásokban a legtöbb helyzetben a tér feláldozása az időért választják. Például adatbázis-indexeknél általában B+ fák vagy hash indexek létrehozását választják, amelyek jelentős memóriaterületet foglalnak el a hatékony, $O(\log n)$ vagy akár $O(1)$ lekérdezésekért cserébe.
 
-In scenarios where space resources are precious, time may be sacrificed for space. For example, in embedded development, device memory is precious, and engineers may forgo using hash tables and choose to use array sequential search to save memory usage, at the cost of slower searches.
+Olyan forgatókönyvekben, ahol a tér erőforrások értékesek, az idő feláldozható a térért. Például beágyazott fejlesztésben, ahol az eszközmemória értékes, a mérnökök lemondhatnak a hash táblák használatáról, és helyette tömbök szekvenciális keresését választhatják a memóriahasználat megtakarítása érdekében, a lassabb keresések árán.

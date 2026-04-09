@@ -4,43 +4,43 @@
  * Author: liuyuxin (gvenusleo@gmail.com)
  */
 
-/* Backtracking algorithm: Permutations I */
+/* Visszalépéses algoritmus: Permutációk I */
 void backtrack(
   List<int> state,
   List<int> choices,
   List<bool> selected,
   List<List<int>> res,
 ) {
-  // When the state length equals the number of elements, record the solution
+  // Ha az állapot hossza egyenlő az elemek számával, jegyezze fel a megoldást
   if (state.length == choices.length) {
     res.add(List.from(state));
     return;
   }
-  // Traverse all choices
+  // Összes választási lehetőség bejárása
   for (int i = 0; i < choices.length; i++) {
     int choice = choices[i];
-    // Pruning: do not allow repeated selection of elements
+    // Metszés: ne engedélyezd az elemek ismételt kiválasztását
     if (!selected[i]) {
-      // Attempt: make choice, update state
+      // Kísérlet: válaszd ki, frissítsd az állapotot
       selected[i] = true;
       state.add(choice);
-      // Proceed to the next round of selection
+      // Lépj a következő kiválasztási körre
       backtrack(state, choices, selected, res);
-      // Backtrack: undo choice, restore to previous state
+      // Visszalépés: vonja vissza a választást, állítsa vissza az előző állapotot
       selected[i] = false;
       state.removeLast();
     }
   }
 }
 
-/* Permutations I */
+/* Permutációk I */
 List<List<int>> permutationsI(List<int> nums) {
   List<List<int>> res = [];
   backtrack([], nums, List.filled(nums.length, false), res);
   return res;
 }
 
-/* Driver Code */
+/* Főprogram */
 void main() {
   List<int> nums = [1, 2, 3];
 

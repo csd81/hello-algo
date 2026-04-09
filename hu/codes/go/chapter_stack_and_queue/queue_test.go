@@ -13,11 +13,11 @@ import (
 )
 
 func TestQueue(t *testing.T) {
-	/* Access front of the queue element */
-	// In Go, use list as queue
+	/* Sor első elemének elérése */
+	// Go-ban list-et használunk sorként
 	queue := list.New()
 
-	/* Elements enqueue */
+	/* Elemek sorba állítása (enqueue) */
 	queue.PushBack(1)
 	queue.PushBack(3)
 	queue.PushBack(2)
@@ -26,35 +26,35 @@ func TestQueue(t *testing.T) {
 	fmt.Print("Queue queue = ")
 	PrintList(queue)
 
-	/* Return list for printing */
+	/* Lista visszaadása kiíráshoz */
 	peek := queue.Front()
 	fmt.Println("Front element peek =", peek.Value)
 
-	/* Element dequeue */
+	/* Elem kivétele a sorból (dequeue) */
 	pop := queue.Front()
 	queue.Remove(pop)
 	fmt.Print("Dequeue element pop = ", pop.Value, ", after dequeue, queue = ")
 	PrintList(queue)
 
-	/* Get the length of the queue */
+	/* Sor hosszának lekérése */
 	size := queue.Len()
 	fmt.Println("Queue length size =", size)
 
-	/* Check if the queue is empty */
+	/* Sor üres-e */
 	isEmpty := queue.Len() == 0
 	fmt.Println("Is queue empty =", isEmpty)
 }
 
 func TestArrayQueue(t *testing.T) {
 
-	// Initialize queue using queue's common interface
+	// Sor inicializálása a sor általános interfészén keresztül
 	capacity := 10
 	queue := newArrayQueue(capacity)
 	if queue.pop() != nil {
 		t.Errorf("want:%v,got:%v", nil, queue.pop())
 	}
 
-	// Elements enqueue
+	// Elemek sorba állítása (enqueue)
 	queue.push(1)
 	queue.push(3)
 	queue.push(2)
@@ -63,24 +63,24 @@ func TestArrayQueue(t *testing.T) {
 	fmt.Print("Queue queue = ")
 	PrintSlice(queue.toSlice())
 
-	// Return list for printing
+	// Lista visszaadása kiíráshoz
 	peek := queue.peek()
 	fmt.Println("Front element peek =", peek)
 
-	// Element dequeue
+	// Elem kivétele a sorból (dequeue)
 	pop := queue.pop()
 	fmt.Print("Dequeue element pop = ", pop, ", after dequeue, queue = ")
 	PrintSlice(queue.toSlice())
 
-	// Get queue length
+	// Sor hosszának lekérése
 	size := queue.size()
 	fmt.Println("Queue length size =", size)
 
-	// Check if empty
+	// Üres-e
 	isEmpty := queue.isEmpty()
 	fmt.Println("Is queue empty =", isEmpty)
 
-	/* Test circular array */
+	/* Körkörös tömb tesztelése */
 	for i := 0; i < 10; i++ {
 		queue.push(i)
 		queue.pop()
@@ -90,10 +90,10 @@ func TestArrayQueue(t *testing.T) {
 }
 
 func TestLinkedListQueue(t *testing.T) {
-	// Initialize queue
+	// Sor inicializálása
 	queue := newLinkedListQueue()
 
-	// Elements enqueue
+	// Elemek sorba állítása (enqueue)
 	queue.push(1)
 	queue.push(3)
 	queue.push(2)
@@ -102,29 +102,29 @@ func TestLinkedListQueue(t *testing.T) {
 	fmt.Print("Queue queue = ")
 	PrintList(queue.toList())
 
-	// Return list for printing
+	// Lista visszaadása kiíráshoz
 	peek := queue.peek()
 	fmt.Println("Front element peek =", peek)
 
-	// Element dequeue
+	// Elem kivétele a sorból (dequeue)
 	pop := queue.pop()
 	fmt.Print("Dequeue element pop = ", pop, ", after dequeue, queue = ")
 	PrintList(queue.toList())
 
-	// Get queue length
+	// Sor hosszának lekérése
 	size := queue.size()
 	fmt.Println("Queue length size =", size)
 
-	// Check if empty
+	// Üres-e
 	isEmpty := queue.isEmpty()
 	fmt.Println("Is queue empty =", isEmpty)
 }
 
-// BenchmarkArrayQueue 8 ns/op in Mac M1 Pro
+// BenchmarkArrayQueue 8 ns/op Mac M1 Pro-n
 func BenchmarkArrayQueue(b *testing.B) {
 	capacity := 1000
 	queue := newArrayQueue(capacity)
-	// use b.N for looping
+	// b.N használata ciklushoz
 	for i := 0; i < b.N; i++ {
 		queue.push(777)
 	}
@@ -133,10 +133,10 @@ func BenchmarkArrayQueue(b *testing.B) {
 	}
 }
 
-// BenchmarkLinkedQueue 62.66 ns/op in Mac M1 Pro
+// BenchmarkLinkedQueue 62.66 ns/op Mac M1 Pro-n
 func BenchmarkLinkedQueue(b *testing.B) {
 	queue := newLinkedListQueue()
-	// use b.N for looping
+	// b.N használata ciklushoz
 	for i := 0; i < b.N; i++ {
 		queue.push(777)
 	}

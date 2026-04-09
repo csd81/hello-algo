@@ -6,19 +6,19 @@
 
 #include "../utils/common.hpp"
 
-/* Climbing stairs with constraint: Dynamic programming */
+/* Lépcsőmászás korláttal: Dinamikus programozás */
 int climbingStairsConstraintDP(int n) {
     if (n == 1 || n == 2) {
         return 1;
     }
-    // Initialize dp table, used to store solutions to subproblems
+    // dp tábla inicializálása, a részfeladatok megoldásainak tárolásához
     vector<vector<int>> dp(n + 1, vector<int>(3, 0));
-    // Initial state: preset the solution to the smallest subproblem
+    // Kezdeti állapot: a legkisebb részfeladat megoldásának előre beállítása
     dp[1][1] = 1;
     dp[1][2] = 0;
     dp[2][1] = 0;
     dp[2][2] = 1;
-    // State transition: gradually solve larger subproblems from smaller ones
+    // Állapotátmenet: kisebb részfeladatoktól fokozatosan a nagyobbak felé haladva
     for (int i = 3; i <= n; i++) {
         dp[i][1] = dp[i - 1][2];
         dp[i][2] = dp[i - 2][1] + dp[i - 2][2];

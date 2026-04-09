@@ -13,30 +13,30 @@ from collections import deque
 
 
 def level_order(root: TreeNode | None) -> list[int]:
-    """Level-order traversal"""
-    # Initialize queue, add root node
+    """Szintenkénti bejárás"""
+    # Sor inicializálása, gyökércsomópont hozzáadása
     queue: deque[TreeNode] = deque()
     queue.append(root)
-    # Initialize a list to save the traversal sequence
+    # Lista inicializálása a bejárási sorrend mentéséhez
     res = []
     while queue:
-        node: TreeNode = queue.popleft()  # Dequeue
-        res.append(node.val)  # Save node value
+        node: TreeNode = queue.popleft()  # Kivétel a sorból
+        res.append(node.val)  # Csomópont értékének mentése
         if node.left is not None:
-            queue.append(node.left)  # Left child node enqueue
+            queue.append(node.left)  # Bal gyermekcsomópont sorba állítása
         if node.right is not None:
-            queue.append(node.right)  # Right child node enqueue
+            queue.append(node.right)  # Jobb gyermekcsomópont sorba állítása
     return res
 
 
-"""Driver Code"""
+"""Fő kód"""
 if __name__ == "__main__":
-    # Initialize binary tree
-    # Here we use a function to generate a binary tree directly from an array
+    # Bináris fa inicializálása
+    # Tömbből közvetlenül bináris fát generáló függvény használata
     root: TreeNode = list_to_tree(arr=[1, 2, 3, 4, 5, 6, 7])
-    print("\nInitialize binary tree\n")
+    print("\nBináris fa inicializálása\n")
     print_tree(root)
 
-    # Level-order traversal
+    # Szintenkénti bejárás
     res: list[int] = level_order(root)
-    print("\nLevel-order traversal node print sequence = ", res)
+    print("\nSzintenkénti bejárás csomópont kiírási sorrendje = ", res)

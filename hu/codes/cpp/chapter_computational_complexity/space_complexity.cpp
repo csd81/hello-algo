@@ -6,46 +6,46 @@
 
 #include "../utils/common.hpp"
 
-/* Function */
+/* Függvény */
 int func() {
-    // Perform some operations
+    // Néhány művelet végrehajtása
     return 0;
 }
 
-/* Constant order */
+/* Konstans rend */
 void constant(int n) {
-    // Constants, variables, objects occupy O(1) space
+    // Konstansok, változók, objektumok O(1) helyet foglalnak
     const int a = 0;
     int b = 0;
     vector<int> nums(10000);
     ListNode node(0);
-    // Variables in the loop occupy O(1) space
+    // A ciklus változói O(1) helyet foglalnak
     for (int i = 0; i < n; i++) {
         int c = 0;
     }
-    // Functions in the loop occupy O(1) space
+    // A ciklusban meghívott függvények O(1) helyet foglalnak
     for (int i = 0; i < n; i++) {
         func();
     }
 }
 
-/* Linear order */
+/* Lineáris rend */
 void linear(int n) {
-    // Array of length n uses O(n) space
+    // n hosszúságú tömb O(n) helyet foglal
     vector<int> nums(n);
-    // A list of length n occupies O(n) space
+    // n hosszúságú lista O(n) helyet foglal
     vector<ListNode> nodes;
     for (int i = 0; i < n; i++) {
         nodes.push_back(ListNode(i));
     }
-    // A hash table of length n occupies O(n) space
+    // n hosszúságú hash tábla O(n) helyet foglal
     unordered_map<int, string> map;
     for (int i = 0; i < n; i++) {
         map[i] = to_string(i);
     }
 }
 
-/* Linear order (recursive implementation) */
+/* Lineáris rend (rekurzív implementáció) */
 void linearRecur(int n) {
     cout << "Recursion n = " << n << endl;
     if (n == 1)
@@ -53,9 +53,9 @@ void linearRecur(int n) {
     linearRecur(n - 1);
 }
 
-/* Exponential order */
+/* Négyzetes rend */
 void quadratic(int n) {
-    // 2D list uses O(n^2) space
+    // 2D lista O(n^2) helyet foglal
     vector<vector<int>> numMatrix;
     for (int i = 0; i < n; i++) {
         vector<int> tmp;
@@ -66,7 +66,7 @@ void quadratic(int n) {
     }
 }
 
-/* Quadratic order (recursive implementation) */
+/* Négyzetes rend (rekurzív implementáció) */
 int quadraticRecur(int n) {
     if (n <= 0)
         return 0;
@@ -75,7 +75,7 @@ int quadraticRecur(int n) {
     return quadraticRecur(n - 1);
 }
 
-/* Driver Code */
+/* Fa felépítése (exponenciális rend) */
 TreeNode *buildTree(int n) {
     if (n == 0)
         return nullptr;
@@ -85,22 +85,22 @@ TreeNode *buildTree(int n) {
     return root;
 }
 
-/* Driver Code */
+/* Főprogram */
 int main() {
     int n = 5;
-    // Constant order
+    // Konstans rend
     constant(n);
-    // Linear order
+    // Lineáris rend
     linear(n);
     linearRecur(n);
-    // Exponential order
+    // Négyzetes rend
     quadratic(n);
     quadraticRecur(n);
-    // Exponential order
+    // Exponenciális rend
     TreeNode *root = buildTree(n);
     printTree(root);
 
-    // Free memory
+    // Memória felszabadítása
     freeMemoryTree(root);
 
     return 0;

@@ -12,105 +12,105 @@ from modules import Vertex, print_matrix
 
 
 class GraphAdjMat:
-    """Undirected graph class based on adjacency matrix"""
+    """Szomszédsági mátrixon alapuló irányítatlan gráf osztály"""
 
     def __init__(self, vertices: list[int], edges: list[list[int]]):
-        """Constructor"""
-        # Vertex list, where the element represents the "vertex value" and the index represents the "vertex index"
+        """Konstruktor"""
+        # Csúcslista, ahol az elem a "csúcs értékét", az index a "csúcs indexét" jelöli
         self.vertices: list[int] = []
-        # Adjacency matrix, where the row and column indices correspond to the "vertex index"
+        # Szomszédsági mátrix, ahol a sor- és oszlopindexek a "csúcs indexének" felelnek meg
         self.adj_mat: list[list[int]] = []
-        # Add vertices
+        # Csúcsok hozzáadása
         for val in vertices:
             self.add_vertex(val)
-        # Add edges
-        # Note that the edges elements represent vertex indices, i.e., corresponding to the vertices element indices
+        # Élek hozzáadása
+        # Megjegyzés: az edges elemei csúcsindexeket jelölnek, azaz a vertices elemek indexeinek felelnek meg
         for e in edges:
             self.add_edge(e[0], e[1])
 
     def size(self) -> int:
-        """Get the number of vertices"""
+        """A csúcsok számának lekérése"""
         return len(self.vertices)
 
     def add_vertex(self, val: int):
-        """Add vertex"""
+        """Csúcs hozzáadása"""
         n = self.size()
-        # Add the value of the new vertex to the vertex list
+        # Az új csúcs értékét a csúcslistához adja
         self.vertices.append(val)
-        # Add a row to the adjacency matrix
+        # Egy sort ad a szomszédsági mátrixhoz
         new_row = [0] * n
         self.adj_mat.append(new_row)
-        # Add a column to the adjacency matrix
+        # Egy oszlopot ad a szomszédsági mátrixhoz
         for row in self.adj_mat:
             row.append(0)
 
     def remove_vertex(self, index: int):
-        """Remove vertex"""
+        """Csúcs eltávolítása"""
         if index >= self.size():
             raise IndexError()
-        # Remove the vertex at index from the vertex list
+        # Az index-edik csomópontot eltávolítja a csúcslistából
         self.vertices.pop(index)
-        # Remove the row at index from the adjacency matrix
+        # Az index-edik sort eltávolítja a szomszédsági mátrixból
         self.adj_mat.pop(index)
-        # Remove the column at index from the adjacency matrix
+        # Az index-edik oszlopot eltávolítja a szomszédsági mátrixból
         for row in self.adj_mat:
             row.pop(index)
 
     def add_edge(self, i: int, j: int):
-        """Add edge"""
-        # Parameters i, j correspond to the vertices element indices
-        # Handle index out of bounds and equality
+        """Él hozzáadása"""
+        # Az i, j paraméterek a vertices elemek indexeinek felelnek meg
+        # Az index határon kívüliségének és egyenlőségének kezelése
         if i < 0 or j < 0 or i >= self.size() or j >= self.size() or i == j:
             raise IndexError()
-        # In an undirected graph, the adjacency matrix is symmetric about the main diagonal, i.e., (i, j) == (j, i)
+        # Irányítatlan gráfban a szomszédsági mátrix szimmetrikus a főátlóra, azaz (i, j) == (j, i)
         self.adj_mat[i][j] = 1
         self.adj_mat[j][i] = 1
 
     def remove_edge(self, i: int, j: int):
-        """Remove edge"""
-        # Parameters i, j correspond to the vertices element indices
-        # Handle index out of bounds and equality
+        """Él eltávolítása"""
+        # Az i, j paraméterek a vertices elemek indexeinek felelnek meg
+        # Az index határon kívüliségének és egyenlőségének kezelése
         if i < 0 or j < 0 or i >= self.size() or j >= self.size() or i == j:
             raise IndexError()
         self.adj_mat[i][j] = 0
         self.adj_mat[j][i] = 0
 
     def print(self):
-        """Print adjacency matrix"""
-        print("Vertex list =", self.vertices)
-        print("Adjacency matrix =")
+        """Szomszédsági mátrix kiírása"""
+        print("Csúcslista =", self.vertices)
+        print("Szomszédsági mátrix =")
         print_matrix(self.adj_mat)
 
 
-"""Driver Code"""
+"""Fő kód"""
 if __name__ == "__main__":
-    # Initialize undirected graph
-    # Note that the edges elements represent vertex indices, i.e., corresponding to the vertices element indices
+    # Irányítatlan gráf inicializálása
+    # Megjegyzés: az edges elemei csúcsindexeket jelölnek, azaz a vertices elemek indexeinek felelnek meg
     vertices = [1, 3, 2, 5, 4]
     edges = [[0, 1], [0, 3], [1, 2], [2, 3], [2, 4], [3, 4]]
     graph = GraphAdjMat(vertices, edges)
-    print("\nAfter initialization, the graph is")
+    print("\nInicializálás után a gráf:")
     graph.print()
 
-    # Add edge
-    # Vertices 1, 2 have indices 0, 2 respectively
+    # Él hozzáadása
+    # Az 1-es és 2-es csúcsok indexe 0 és 2
     graph.add_edge(0, 2)
-    print("\nAfter adding edge 1-2, the graph is")
+    print("\nAz 1-2 él hozzáadása után a gráf:")
     graph.print()
 
-    # Remove edge
-    # Vertices 1, 3 have indices 0, 1 respectively
+    # Él eltávolítása
+    # Az 1-es és 3-as csúcsok indexe 0 és 1
     graph.remove_edge(0, 1)
-    print("\nAfter removing edge 1-3, the graph is")
+    print("\nAz 1-3 él eltávolítása után a gráf:")
     graph.print()
 
-    # Add vertex
+    # Csúcs hozzáadása
     graph.add_vertex(6)
-    print("\nAfter adding vertex 6, the graph is")
+    print("\nA 6-os csúcs hozzáadása után a gráf:")
     graph.print()
 
-    # Remove vertex
-    # Vertex 3 has index 1
+    # Csúcs eltávolítása
+    # A 3-as csúcs indexe 1
     graph.remove_vertex(1)
-    print("\nAfter removing vertex 3, the graph is")
+    print("\nA 3-as csúcs eltávolítása után a gráf:")
     graph.print()

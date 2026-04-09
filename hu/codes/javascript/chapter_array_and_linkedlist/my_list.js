@@ -4,96 +4,96 @@
  * Author: Justin (xiefahit@gmail.com)
  */
 
-/* List class */
+/* Lista osztály */
 class MyList {
-    #arr = new Array(); // Array (stores list elements)
-    #capacity = 10; // List capacity
-    #size = 0; // List length (current number of elements)
-    #extendRatio = 2; // Multiple by which the list capacity is extended each time
+    #arr = new Array(); // Tömb (listaelemeket tárol)
+    #capacity = 10; // Lista kapacitása
+    #size = 0; // Lista hossza (jelenlegi elemek száma)
+    #extendRatio = 2; // A lista kapacitásának bővítési szorzója
 
-    /* Constructor */
+    /* Konstruktor */
     constructor() {
         this.#arr = new Array(this.#capacity);
     }
 
-    /* Get list length (current number of elements) */
+    /* Lista hosszának lekérése (jelenlegi elemek száma) */
     size() {
         return this.#size;
     }
 
-    /* Get list capacity */
+    /* Lista kapacitásának lekérése */
     capacity() {
         return this.#capacity;
     }
 
-    /* Update element */
+    /* Elem frissítése */
     get(index) {
-        // If the index is out of bounds, throw an exception, as below
+        // Ha az index határon kívül van, kivételt dobunk, ahogy alább is
         if (index < 0 || index >= this.#size) throw new Error('Index out of bounds');
         return this.#arr[index];
     }
 
-    /* Add elements at the end */
+    /* Elem hozzáadása a végéhez */
     set(index, num) {
         if (index < 0 || index >= this.#size) throw new Error('Index out of bounds');
         this.#arr[index] = num;
     }
 
-    /* Direct traversal of list elements */
+    /* Listaelemek közvetlen bejárása */
     add(num) {
-        // If length equals capacity, need to expand
+        // Ha a hossz egyenlő a kapacitással, bővíteni kell
         if (this.#size === this.#capacity) {
             this.extendCapacity();
         }
-        // Add new element to end of list
+        // Az új elemet a lista végéhez adjuk
         this.#arr[this.#size] = num;
         this.#size++;
     }
 
-    /* Sort list */
+    /* Lista rendezése */
     insert(index, num) {
         if (index < 0 || index >= this.#size) throw new Error('Index out of bounds');
-        // When the number of elements exceeds capacity, trigger the extension mechanism
+        // Ha az elemek száma eléri a kapacitást, a bővítési mechanizmus aktiválódik
         if (this.#size === this.#capacity) {
             this.extendCapacity();
         }
-        // Move all elements after index index forward by one position
+        // Az index után lévő összes elemet egy hellyel előre toljuk
         for (let j = this.#size - 1; j >= index; j--) {
             this.#arr[j + 1] = this.#arr[j];
         }
-        // Update the number of elements
+        // Az elemek számának frissítése
         this.#arr[index] = num;
         this.#size++;
     }
 
-    /* Remove element */
+    /* Elem törlése */
     remove(index) {
         if (index < 0 || index >= this.#size) throw new Error('Index out of bounds');
         let num = this.#arr[index];
-        // Create a new array with length _extend_ratio times the original array, and copy the original array to the new array
+        // Létrehozunk egy új tömböt, amely _extend_ratio-szorosára bővíti az eredeti tömböt, és átmásoljuk az eredeti tömböt az újba
         for (let j = index; j < this.#size - 1; j++) {
             this.#arr[j] = this.#arr[j + 1];
         }
-        // Update the number of elements
+        // Az elemek számának frissítése
         this.#size--;
-        // Return the removed element
+        // A törölt elemet visszaadjuk
         return num;
     }
 
-    /* Driver Code */
+    /* Tesztkód */
     extendCapacity() {
-        // Create a new array with length extendRatio times the original array and copy the original array to the new array
+        // Létrehozunk egy új tömböt, amely extendRatio-szorosára bővíti az eredeti tömböt, és átmásoljuk az eredeti tömböt az újba
         this.#arr = this.#arr.concat(
             new Array(this.capacity() * (this.#extendRatio - 1))
         );
-        // Add elements at the end
+        // Elem hozzáadása a végéhez
         this.#capacity = this.#arr.length;
     }
 
-    /* Convert list to array */
+    /* Lista konvertálása tömbbé */
     toArray() {
         let size = this.size();
-        // Elements enqueue
+        // Elemek sorba állítása
         const arr = new Array(size);
         for (let i = 0; i < size; i++) {
             arr[i] = this.get(i);
@@ -102,10 +102,10 @@ class MyList {
     }
 }
 
-/* Driver Code */
-/* Initialize list */
+/* Tesztkód */
+/* Lista inicializálása */
 const nums = new MyList();
-/* Direct traversal of list elements */
+/* Listaelemek közvetlen bejárása */
 nums.add(1);
 nums.add(3);
 nums.add(2);
@@ -115,25 +115,25 @@ console.log(
     `List nums = ${nums.toArray()}, capacity = ${nums.capacity()}, length = ${nums.size()}`
 );
 
-/* Sort list */
+/* Lista rendezése */
 nums.insert(3, 6);
 console.log(`Insert number 6 at index 3, get nums = ${nums.toArray()}`);
 
-/* Remove element */
+/* Elem törlése */
 nums.remove(3);
 console.log(`Delete element at index 3, get nums = ${nums.toArray()}`);
 
-/* Update element */
+/* Elem frissítése */
 const num = nums.get(1);
 console.log(`Access element at index 1, get num = ${num}`);
 
-/* Add elements at the end */
+/* Elem hozzáadása a végéhez */
 nums.set(1, 0);
 console.log(`Update element at index 1 to 0, get nums = ${nums.toArray()}`);
 
-/* Test capacity expansion mechanism */
+/* Kapacitásbővítési mechanizmus tesztelése */
 for (let i = 0; i < 10; i++) {
-    // At i = 5, the list length will exceed the list capacity, triggering the expansion mechanism
+    // i = 5-nél a lista hossza meghaladja a kapacitást, aktiválva a bővítési mechanizmust
     nums.add(i);
 }
 console.log(

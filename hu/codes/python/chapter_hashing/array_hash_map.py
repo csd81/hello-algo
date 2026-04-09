@@ -6,7 +6,7 @@ Author: msk397 (machangxinq@gmail.com)
 
 
 class Pair:
-    """Key-value pair"""
+    """Kulcs-érték pár"""
 
     def __init__(self, key: int, val: str):
         self.key = key
@@ -14,20 +14,20 @@ class Pair:
 
 
 class ArrayHashMap:
-    """Hash table based on array implementation"""
+    """Tömbön alapuló hash tábla implementáció"""
 
     def __init__(self):
-        """Constructor"""
-        # Initialize array with 100 buckets
+        """Konstruktor"""
+        # Tömb inicializálása 100 vödörrel
         self.buckets: list[Pair | None] = [None] * 100
 
     def hash_func(self, key: int) -> int:
-        """Hash function"""
+        """Hash függvény"""
         index = key % 100
         return index
 
     def get(self, key: int) -> str | None:
-        """Query operation"""
+        """Lekérdezési művelet"""
         index: int = self.hash_func(key)
         pair: Pair = self.buckets[index]
         if pair is None:
@@ -35,19 +35,19 @@ class ArrayHashMap:
         return pair.val
 
     def put(self, key: int, val: str):
-        """Add and update operation"""
+        """Hozzáadás és frissítés"""
         pair = Pair(key, val)
         index: int = self.hash_func(key)
         self.buckets[index] = pair
 
     def remove(self, key: int):
-        """Remove operation"""
+        """Törlési művelet"""
         index: int = self.hash_func(key)
-        # Set to None to represent removal
+        # None-ra állítja a törlés jelölésére
         self.buckets[index] = None
 
     def entry_set(self) -> list[Pair]:
-        """Get all key-value pairs"""
+        """Az összes kulcs-érték pár lekérése"""
         result: list[Pair] = []
         for pair in self.buckets:
             if pair is not None:
@@ -55,7 +55,7 @@ class ArrayHashMap:
         return result
 
     def key_set(self) -> list[int]:
-        """Get all keys"""
+        """Az összes kulcs lekérése"""
         result = []
         for pair in self.buckets:
             if pair is not None:
@@ -63,7 +63,7 @@ class ArrayHashMap:
         return result
 
     def value_set(self) -> list[str]:
-        """Get all values"""
+        """Az összes érték lekérése"""
         result = []
         for pair in self.buckets:
             if pair is not None:
@@ -71,47 +71,47 @@ class ArrayHashMap:
         return result
 
     def print(self):
-        """Print hash table"""
+        """Hash tábla kiírása"""
         for pair in self.buckets:
             if pair is not None:
                 print(pair.key, "->", pair.val)
 
 
-"""Driver Code"""
+"""Fő kód"""
 if __name__ == "__main__":
-    # Initialize hash table
+    # Hash tábla inicializálása
     hmap = ArrayHashMap()
 
-    # Add operation
-    # Add key-value pair (key, value) to the hash table
+    # Hozzáadás
+    # Kulcs-érték pár (kulcs, érték) hozzáadása a hash táblához
     hmap.put(12836, "Xiao Ha")
     hmap.put(15937, "Xiao Luo")
     hmap.put(16750, "Xiao Suan")
     hmap.put(13276, "Xiao Fa")
     hmap.put(10583, "Xiao Ya")
-    print("\nAfter adding, the hash table is\nKey -> Value")
+    print("\nHozzáadás után a hash tábla:\nKulcs -> Érték")
     hmap.print()
 
-    # Query operation
-    # Input key into the hash table to get value
+    # Lekérdezés
+    # Kulcs beírása a hash táblába az érték lekérdezéséhez
     name = hmap.get(15937)
-    print("\nInput student ID 15937, found name " + name)
+    print("\nA 15937-es diákigazolvány alapján a név: " + name)
 
-    # Remove operation
-    # Remove key-value pair (key, value) from the hash table
+    # Törlés
+    # Kulcs-érték pár (kulcs, érték) törlése a hash táblából
     hmap.remove(10583)
-    print("\nAfter removing 10583, the hash table is\nKey -> Value")
+    print("\nA 10583-as törlése után a hash tábla:\nKulcs -> Érték")
     hmap.print()
 
-    # Traverse hash table
-    print("\nTraverse key-value pairs Key->Value")
+    # Hash tábla bejárása
+    print("\nKulcs-érték párok bejárása Kulcs->Érték")
     for pair in hmap.entry_set():
         print(pair.key, "->", pair.val)
 
-    print("\nTraverse keys only Key")
+    print("\nCsak kulcsok bejárása")
     for key in hmap.key_set():
         print(key)
 
-    print("\nTraverse values only Value")
+    print("\nCsak értékek bejárása")
     for val in hmap.value_set():
         print(val)

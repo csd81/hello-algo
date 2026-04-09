@@ -6,39 +6,39 @@
 
 #include "../utils/common.hpp"
 
-/* Binary search: problem f(i, j) */
+/* Bináris keresés: f(i, j) feladat */
 int dfs(vector<int> &nums, int target, int i, int j) {
-    // If the interval is empty, it means there is no target element, return -1
+    // Ha az intervallum üres, nincs target elem, -1-et adunk vissza
     if (i > j) {
         return -1;
     }
-    // Calculate the midpoint index m
+    // A középpont indexének kiszámítása
     int m = (i + j) / 2;
     if (nums[m] < target) {
-        // Recursion subproblem f(m+1, j)
+        // f(m+1, j) részfeladat rekurzív megoldása
         return dfs(nums, target, m + 1, j);
     } else if (nums[m] > target) {
-        // Recursion subproblem f(i, m-1)
+        // f(i, m-1) részfeladat rekurzív megoldása
         return dfs(nums, target, i, m - 1);
     } else {
-        // Found the target element, return its index
+        // Megtaláltuk a target elemet, visszaadjuk az indexét
         return m;
     }
 }
 
-/* Binary search */
+/* Bináris keresés */
 int binarySearch(vector<int> &nums, int target) {
     int n = nums.size();
-    // Solve the problem f(0, n-1)
+    // f(0, n-1) feladat megoldása
     return dfs(nums, target, 0, n - 1);
 }
 
-/* Driver Code */
+/* Főprogram */
 int main() {
     int target = 6;
     vector<int> nums = {1, 3, 6, 8, 12, 15, 23, 26, 31, 35};
 
-    // Binary search (closed interval on both sides)
+    // Bináris keresés (mindkét oldalon zárt intervallum)
     int index = binarySearch(nums, target);
     cout << "Index of target element 6 = " << index << endl;
 

@@ -12,117 +12,117 @@ from modules import TreeNode, print_tree
 
 
 class AVLTree:
-    """AVL tree"""
+    """AVL fa"""
 
     def __init__(self):
-        """Constructor"""
+        """Konstruktor"""
         self._root = None
 
     def get_root(self) -> TreeNode | None:
-        """Get binary tree root node"""
+        """A bináris fa gyökércsomópontjának lekérése"""
         return self._root
 
     def height(self, node: TreeNode | None) -> int:
-        """Get node height"""
-        # Empty node height is -1, leaf node height is 0
+        """Csomópont magasságának lekérése"""
+        # Az üres csomópont magassága -1, a levélcsomóponté 0
         if node is not None:
             return node.height
         return -1
 
     def update_height(self, node: TreeNode | None):
-        """Update node height"""
-        # Node height equals the height of the tallest subtree + 1
+        """Csomópont magasságának frissítése"""
+        # A csomópont magassága = a legmagasabb részfa magassága + 1
         node.height = max([self.height(node.left), self.height(node.right)]) + 1
 
     def balance_factor(self, node: TreeNode | None) -> int:
-        """Get balance factor"""
-        # Empty node balance factor is 0
+        """Egyensúlyi tényező lekérése"""
+        # Az üres csomópont egyensúlyi tényezője 0
         if node is None:
             return 0
-        # Node balance factor = left subtree height - right subtree height
+        # Csomópont egyensúlyi tényezője = bal részfa magassága - jobb részfa magassága
         return self.height(node.left) - self.height(node.right)
 
     def right_rotate(self, node: TreeNode | None) -> TreeNode | None:
-        """Right rotation operation"""
+        """Jobbra forgatás"""
         child = node.left
         grand_child = child.right
-        # Using child as pivot, rotate node to the right
+        # A child-ot forgáspontként használva a node-ot jobbra forgatja
         child.right = node
         node.left = grand_child
-        # Update node height
+        # Csomópont magasságának frissítése
         self.update_height(node)
         self.update_height(child)
-        # Return root node of subtree after rotation
+        # A forgatás utáni részfa gyökércsomópontját adja vissza
         return child
 
     def left_rotate(self, node: TreeNode | None) -> TreeNode | None:
-        """Left rotation operation"""
+        """Balra forgatás"""
         child = node.right
         grand_child = child.left
-        # Using child as pivot, rotate node to the left
+        # A child-ot forgáspontként használva a node-ot balra forgatja
         child.left = node
         node.right = grand_child
-        # Update node height
+        # Csomópont magasságának frissítése
         self.update_height(node)
         self.update_height(child)
-        # Return root node of subtree after rotation
+        # A forgatás utáni részfa gyökércsomópontját adja vissza
         return child
 
     def rotate(self, node: TreeNode | None) -> TreeNode | None:
-        """Perform rotation operation to restore balance to this subtree"""
-        # Get balance factor of node
+        """Forgatás végrehajtása a részfa egyensúlyának helyreállításához"""
+        # Csomópont egyensúlyi tényezőjének lekérése
         balance_factor = self.balance_factor(node)
-        # Left-leaning tree
+        # Bal oldali túlsúly
         if balance_factor > 1:
             if self.balance_factor(node.left) >= 0:
-                # Right rotation
+                # Jobbra forgatás
                 return self.right_rotate(node)
             else:
-                # First left rotation then right rotation
+                # Előbb balra, majd jobbra forgatás
                 node.left = self.left_rotate(node.left)
                 return self.right_rotate(node)
-        # Right-leaning tree
+        # Jobb oldali túlsúly
         elif balance_factor < -1:
             if self.balance_factor(node.right) <= 0:
-                # Left rotation
+                # Balra forgatás
                 return self.left_rotate(node)
             else:
-                # First right rotation then left rotation
+                # Előbb jobbra, majd balra forgatás
                 node.right = self.right_rotate(node.right)
                 return self.left_rotate(node)
-        # Balanced tree, no rotation needed, return directly
+        # Kiegyensúlyozott fa, nincs szükség forgatásra, közvetlenül visszaadja
         return node
 
     def insert(self, val):
-        """Insert node"""
+        """Csomópont beszúrása"""
         self._root = self.insert_helper(self._root, val)
 
     def insert_helper(self, node: TreeNode | None, val: int) -> TreeNode:
-        """Recursively insert node (helper method)"""
+        """Rekurzív csomópont-beszúrás (segédmetódus)"""
         if node is None:
             return TreeNode(val)
-        # 1. Find insertion position and insert node
+        # 1. Beszúrási pozíció keresése és csomópont beszúrása
         if val < node.val:
             node.left = self.insert_helper(node.left, val)
         elif val > node.val:
             node.right = self.insert_helper(node.right, val)
         else:
-            # Duplicate node not inserted, return directly
+            # Duplikált csomópont nem kerül be, közvetlenül visszaadja
             return node
-        # Update node height
+        # Csomópont magasságának frissítése
         self.update_height(node)
-        # 2. Perform rotation operation to restore balance to this subtree
+        # 2. Forgatás végrehajtása a részfa egyensúlyának helyreállításához
         return self.rotate(node)
 
     def remove(self, val: int):
-        """Delete node"""
+        """Csomópont törlése"""
         self._root = self.remove_helper(self._root, val)
 
     def remove_helper(self, node: TreeNode | None, val: int) -> TreeNode | None:
-        """Recursively delete node (helper method)"""
+        """Rekurzív csomópont-törlés (segédmetódus)"""
         if node is None:
             return None
-        # 1. Find node and delete
+        # 1. Csomópont keresése és törlése
         if val < node.val:
             node.left = self.remove_helper(node.left, val)
         elif val > node.val:
@@ -130,71 +130,71 @@ class AVLTree:
         else:
             if node.left is None or node.right is None:
                 child = node.left or node.right
-                # Number of child nodes = 0, delete node directly and return
+                # Gyermekek száma = 0, a csomópontot közvetlenül törli és None-t ad vissza
                 if child is None:
                     return None
-                # Number of child nodes = 1, delete node directly
+                # Gyermekek száma = 1, a csomópontot közvetlenül törli
                 else:
                     node = child
             else:
-                # Number of child nodes = 2, delete the next node in inorder traversal and replace current node with it
+                # Gyermekek száma = 2, a közrendű bejárásban következő csomópontot törli, majd az aktuálist azzal helyettesíti
                 temp = node.right
                 while temp.left is not None:
                     temp = temp.left
                 node.right = self.remove_helper(node.right, temp.val)
                 node.val = temp.val
-        # Update node height
+        # Csomópont magasságának frissítése
         self.update_height(node)
-        # 2. Perform rotation operation to restore balance to this subtree
+        # 2. Forgatás végrehajtása a részfa egyensúlyának helyreállításához
         return self.rotate(node)
 
     def search(self, val: int) -> TreeNode | None:
-        """Search node"""
+        """Csomópont keresése"""
         cur = self._root
-        # Loop search, exit after passing leaf node
+        # Ciklusos keresés, a levélcsomópont után kilép
         while cur is not None:
-            # Target node is in cur's right subtree
+            # A célcsomópont a cur jobb részfájában van
             if cur.val < val:
                 cur = cur.right
-            # Target node is in cur's left subtree
+            # A célcsomópont a cur bal részfájában van
             elif cur.val > val:
                 cur = cur.left
-            # Found target node, exit loop
+            # Megtalálta a célcsomópontot, kilép a ciklusból
             else:
                 break
-        # Return target node
+        # A célcsomópontot adja vissza
         return cur
 
 
-"""Driver Code"""
+"""Fő kód"""
 if __name__ == "__main__":
 
     def test_insert(tree: AVLTree, val: int):
         tree.insert(val)
-        print("\nAfter inserting node {}, AVL tree is".format(val))
+        print("\A(z) {} csomópont beszúrása után az AVL fa:".format(val))
         print_tree(tree.get_root())
 
     def test_remove(tree: AVLTree, val: int):
         tree.remove(val)
-        print("\nAfter deleting node {}, AVL tree is".format(val))
+        print("\nA(z) {} csomópont törlése után az AVL fa:".format(val))
         print_tree(tree.get_root())
 
-    # Initialize empty AVL tree
+    # Üres AVL fa inicializálása
     avl_tree = AVLTree()
 
-    # Insert nodes
-    # Please pay attention to how the AVL tree maintains balance after inserting nodes
+    # Csomópontok beszúrása
+    # Figyelje meg, hogyan tartja egyensúlyban az AVL fa magát csomópontok beszúrása után
     for val in [1, 2, 3, 4, 5, 8, 7, 9, 10, 6]:
         test_insert(avl_tree, val)
 
-    # Insert duplicate node
+    # Duplikált csomópont beszúrása
     test_insert(avl_tree, 7)
 
-    # Delete nodes
-    # Please pay attention to how the AVL tree maintains balance after deleting nodes
-    test_remove(avl_tree, 8)  # Delete node with degree 0
-    test_remove(avl_tree, 5)  # Delete node with degree 1
-    test_remove(avl_tree, 4)  # Delete node with degree 2
+    # Csomópontok törlése
+    # Figyelje meg, hogyan tartja egyensúlyban az AVL fa magát csomópontok törlése után
+    test_remove(avl_tree, 8)  # 0 fokú csomópont törlése
+    test_remove(avl_tree, 5)  # 1 fokú csomópont törlése
+    test_remove(avl_tree, 4)  # 2 fokú csomópont törlése
 
     result_node = avl_tree.search(7)
-    print("\nFound node object is {}, node value = {}".format(result_node, result_node.val))
+    print("\nA talált csomópont objektum: {}, csomópont értéke = {}".format(result_node, result_node.val))

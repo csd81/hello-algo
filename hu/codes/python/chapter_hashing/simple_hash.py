@@ -6,7 +6,7 @@ Author: krahets (krahets@163.com)
 
 
 def add_hash(key: str) -> int:
-    """Additive hash"""
+    """Additív hash"""
     hash = 0
     modulus = 1000000007
     for c in key:
@@ -15,7 +15,7 @@ def add_hash(key: str) -> int:
 
 
 def mul_hash(key: str) -> int:
-    """Multiplicative hash"""
+    """Multiplikatív hash"""
     hash = 0
     modulus = 1000000007
     for c in key:
@@ -33,7 +33,7 @@ def xor_hash(key: str) -> int:
 
 
 def rot_hash(key: str) -> int:
-    """Rotational hash"""
+    """Rotációs hash"""
     hash = 0
     modulus = 1000000007
     for c in key:
@@ -41,18 +41,18 @@ def rot_hash(key: str) -> int:
     return hash % modulus
 
 
-"""Driver Code"""
+"""Fő kód"""
 if __name__ == "__main__":
     key = "Hello algo"
 
     hash = add_hash(key)
-    print(f"Additive hash value is {hash}")
+    print(f"Az additív hash értéke: {hash}")
 
     hash = mul_hash(key)
-    print(f"Multiplicative hash value is {hash}")
+    print(f"A multiplikatív hash értéke: {hash}")
 
     hash = xor_hash(key)
-    print(f"XOR hash value is {hash}")
+    print(f"Az XOR hash értéke: {hash}")
 
     hash = rot_hash(key)
-    print(f"Rotational hash value is {hash}")
+    print(f"A rotációs hash értéke: {hash}")

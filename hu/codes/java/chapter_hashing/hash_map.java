@@ -11,11 +11,11 @@ import utils.*;
 
 public class hash_map {
     public static void main(String[] args) {
-        /* Initialize hash table */
+        /* Hash tábla inicializálása */
         Map<Integer, String> map = new HashMap<>();
 
-        /* Add operation */
-        // Add key-value pair (key, value) to the hash table
+        /* Hozzáadási művelet */
+        // Kulcs-érték pár (kulcs, érték) hozzáadása a hash táblához
         map.put(12836, "Xiao Ha");
         map.put(15937, "Xiao Luo");
         map.put(16750, "Xiao Suan");
@@ -24,18 +24,18 @@ public class hash_map {
         System.out.println("\nAfter adding is complete, hash table is\nKey -> Value");
         PrintUtil.printHashMap(map);
 
-        /* Query operation */
-        // Input key into hash table to get value
+        /* Lekérdezési művelet */
+        // Kulcs beírása a hash táblába az érték lekéréséhez
         String name = map.get(15937);
         System.out.println("\nInput student ID 15937, query name " + name);
 
-        /* Remove operation */
-        // Remove key-value pair (key, value) from hash table
+        /* Törlési művelet */
+        // Kulcs-érték pár (kulcs, érték) eltávolítása a hash táblából
         map.remove(10583);
         System.out.println("\nAfter removing 10583, hash table is\nKey -> Value");
         PrintUtil.printHashMap(map);
 
-        /* Traverse hash table */
+        /* Hash tábla bejárása */
         System.out.println("\nTraverse key-value pairs Key->Value");
         for (Map.Entry<Integer, String> kv : map.entrySet()) {
             System.out.println(kv.getKey() + " -> " + kv.getValue());

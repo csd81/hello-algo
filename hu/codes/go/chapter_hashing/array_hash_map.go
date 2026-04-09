@@ -6,31 +6,31 @@ package chapter_hashing
 
 import "fmt"
 
-/* Key-value pair */
+/* Kulcs-érték pár */
 type pair struct {
 	key int
 	val string
 }
 
-/* Hash table based on array implementation */
+/* Tömbön alapuló hash tábla implementáció */
 type arrayHashMap struct {
 	buckets []*pair
 }
 
-/* Initialize hash table */
+/* Hash tábla inicializálása */
 func newArrayHashMap() *arrayHashMap {
-	// Initialize array with 100 buckets
+	// Tömb inicializálása 100 vödörrel
 	buckets := make([]*pair, 100)
 	return &arrayHashMap{buckets: buckets}
 }
 
-/* Hash function */
+/* Hash függvény */
 func (a *arrayHashMap) hashFunc(key int) int {
 	index := key % 100
 	return index
 }
 
-/* Query operation */
+/* Lekérdezési művelet */
 func (a *arrayHashMap) get(key int) string {
 	index := a.hashFunc(key)
 	pair := a.buckets[index]
@@ -40,21 +40,21 @@ func (a *arrayHashMap) get(key int) string {
 	return pair.val
 }
 
-/* Add operation */
+/* Hozzáadási művelet */
 func (a *arrayHashMap) put(key int, val string) {
 	pair := &pair{key: key, val: val}
 	index := a.hashFunc(key)
 	a.buckets[index] = pair
 }
 
-/* Remove operation */
+/* Törlési művelet */
 func (a *arrayHashMap) remove(key int) {
 	index := a.hashFunc(key)
-	// Set to nil to delete
+	// nil-re állítva törli
 	a.buckets[index] = nil
 }
 
-/* Get all key pairs */
+/* Összes kulcs-pár lekérése */
 func (a *arrayHashMap) pairSet() []*pair {
 	var pairs []*pair
 	for _, pair := range a.buckets {
@@ -65,7 +65,7 @@ func (a *arrayHashMap) pairSet() []*pair {
 	return pairs
 }
 
-/* Get all keys */
+/* Összes kulcs lekérése */
 func (a *arrayHashMap) keySet() []int {
 	var keys []int
 	for _, pair := range a.buckets {
@@ -76,7 +76,7 @@ func (a *arrayHashMap) keySet() []int {
 	return keys
 }
 
-/* Get all values */
+/* Összes érték lekérése */
 func (a *arrayHashMap) valueSet() []string {
 	var values []string
 	for _, pair := range a.buckets {
@@ -87,7 +87,7 @@ func (a *arrayHashMap) valueSet() []string {
 	return values
 }
 
-/* Print hash table */
+/* Hash tábla kiírása */
 func (a *arrayHashMap) print() {
 	for _, pair := range a.buckets {
 		if pair != nil {

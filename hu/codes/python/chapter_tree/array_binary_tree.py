@@ -12,108 +12,108 @@ from modules import TreeNode, list_to_tree, print_tree
 
 
 class ArrayBinaryTree:
-    """Binary tree class represented by array"""
+    """Tömbbel reprezentált bináris fa osztály"""
 
     def __init__(self, arr: list[int | None]):
-        """Constructor"""
+        """Konstruktor"""
         self._tree = list(arr)
 
     def size(self):
-        """List capacity"""
+        """Lista kapacitása"""
         return len(self._tree)
 
     def val(self, i: int) -> int | None:
-        """Get value of node at index i"""
-        # If index is out of bounds, return None, representing empty position
+        """Az i indexű csomópont értékének lekérése"""
+        # Ha az index határon kívül van, None-t ad vissza, üres pozíciót jelölve
         if i < 0 or i >= self.size():
             return None
         return self._tree[i]
 
     def left(self, i: int) -> int | None:
-        """Get index of left child node of node at index i"""
+        """Az i indexű csomópont bal gyermekének indexe"""
         return 2 * i + 1
 
     def right(self, i: int) -> int | None:
-        """Get index of right child node of node at index i"""
+        """Az i indexű csomópont jobb gyermekének indexe"""
         return 2 * i + 2
 
     def parent(self, i: int) -> int | None:
-        """Get index of parent node of node at index i"""
+        """Az i indexű csomópont szülőjének indexe"""
         return (i - 1) // 2
 
     def level_order(self) -> list[int]:
-        """Level-order traversal"""
+        """Szintenkénti bejárás"""
         self.res = []
-        # Traverse array directly
+        # A tömböt közvetlenül bejárja
         for i in range(self.size()):
             if self.val(i) is not None:
                 self.res.append(self.val(i))
         return self.res
 
     def dfs(self, i: int, order: str):
-        """Depth-first traversal"""
+        """Mélységi bejárás"""
         if self.val(i) is None:
             return
-        # Preorder traversal
+        # Előrendű bejárás
         if order == "pre":
             self.res.append(self.val(i))
         self.dfs(self.left(i), order)
-        # Inorder traversal
+        # Közrendű bejárás
         if order == "in":
             self.res.append(self.val(i))
         self.dfs(self.right(i), order)
-        # Postorder traversal
+        # Utórendű bejárás
         if order == "post":
             self.res.append(self.val(i))
 
     def pre_order(self) -> list[int]:
-        """Preorder traversal"""
+        """Előrendű bejárás"""
         self.res = []
         self.dfs(0, order="pre")
         return self.res
 
     def in_order(self) -> list[int]:
-        """Inorder traversal"""
+        """Közrendű bejárás"""
         self.res = []
         self.dfs(0, order="in")
         return self.res
 
     def post_order(self) -> list[int]:
-        """Postorder traversal"""
+        """Utórendű bejárás"""
         self.res = []
         self.dfs(0, order="post")
         return self.res
 
 
-"""Driver Code"""
+"""Fő kód"""
 if __name__ == "__main__":
-    # Initialize binary tree
-    # Here we use a function to generate a binary tree directly from an array
+    # Bináris fa inicializálása
+    # Tömbből közvetlenül bináris fát generáló függvény használata
     arr = [1, 2, 3, 4, None, 6, 7, 8, 9, None, None, 12, None, None, 15]
     root = list_to_tree(arr)
-    print("\nInitialize binary tree\n")
-    print("Array representation of binary tree:")
+    print("\nBináris fa inicializálása\n")
+    print("A bináris fa tömb reprezentációja:")
     print(arr)
-    print("Linked list representation of binary tree:")
+    print("A bináris fa láncolt lista reprezentációja:")
     print_tree(root)
 
-    # Binary tree class represented by array
+    # Tömbön alapuló bináris fa osztály
     abt = ArrayBinaryTree(arr)
 
-    # Access nodes
+    # Csomópontok elérése
     i = 1
     l, r, p = abt.left(i), abt.right(i), abt.parent(i)
-    print(f"\nCurrent node's index is {i}, value is {abt.val(i)}")
-    print(f"Its left child node's index is {l}, value is {abt.val(l)}")
-    print(f"Its right child node's index is {r}, value is {abt.val(r)}")
-    print(f"Its parent node's index is {p}, value is {abt.val(p)}")
+    print(f"\nAz aktuális csomópont indexe: {i}, értéke: {abt.val(i)}")
+    print(f"A bal gyermek indexe: {l}, értéke: {abt.val(l)}")
+    print(f"A jobb gyermek indexe: {r}, értéke: {abt.val(r)}")
+    print(f"A szülő indexe: {p}, értéke: {abt.val(p)}")
 
-    # Traverse tree
+    # Fa bejárása
     res = abt.level_order()
-    print("\nLevel-order traversal is:", res)
+    print("\nSzintenkénti bejárás:", res)
     res = abt.pre_order()
-    print("Preorder traversal is:", res)
+    print("Előrendű bejárás:", res)
     res = abt.in_order()
-    print("Inorder traversal is:", res)
+    print("Közrendű bejárás:", res)
     res = abt.post_order()
-    print("Postorder traversal is:", res)
+    print("Utórendű bejárás:", res)

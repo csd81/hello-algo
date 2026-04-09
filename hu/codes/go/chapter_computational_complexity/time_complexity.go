@@ -4,7 +4,7 @@
 
 package chapter_computational_complexity
 
-/* Constant order */
+/* Konstans rend */
 func constant(n int) int {
 	count := 0
 	size := 100000
@@ -14,7 +14,7 @@ func constant(n int) int {
 	return count
 }
 
-/* Linear order */
+/* Lineáris rend */
 func linear(n int) int {
 	count := 0
 	for i := 0; i < n; i++ {
@@ -23,20 +23,20 @@ func linear(n int) int {
 	return count
 }
 
-/* Linear order (traversing array) */
+/* Lineáris rend (tömb bejárása) */
 func arrayTraversal(nums []int) int {
 	count := 0
-	// Number of iterations is proportional to the array length
+	// Az iterációk száma arányos a tömb hosszával
 	for range nums {
 		count++
 	}
 	return count
 }
 
-/* Exponential order */
+/* Exponenciális rend */
 func quadratic(n int) int {
 	count := 0
-	// Number of iterations is quadratically related to the data size n
+	// Az iterációk száma négyzetesen függ az n adatmérettől
 	for i := 0; i < n; i++ {
 		for j := 0; j < n; j++ {
 			count++
@@ -45,29 +45,29 @@ func quadratic(n int) int {
 	return count
 }
 
-/* Quadratic order (bubble sort) */
+/* Négyzetes rend (buborékrendezés) */
 func bubbleSort(nums []int) int {
-	count := 0 // Counter
-	// Outer loop: unsorted range is [0, i]
+	count := 0 // Számláló
+	// Külső ciklus: a rendezetlen tartomány [0, i]
 	for i := len(nums) - 1; i > 0; i-- {
-		// Inner loop: swap the largest element in the unsorted range [0, i] to the rightmost end of that range
+		// Belső ciklus: a [0, i] rendezetlen tartomány legnagyobb elemét csere a jobb szélre
 		for j := 0; j < i; j++ {
 			if nums[j] > nums[j+1] {
-				// Swap nums[j] and nums[j + 1]
+				// nums[j] és nums[j + 1] cseréje
 				tmp := nums[j]
 				nums[j] = nums[j+1]
 				nums[j+1] = tmp
-				count += 3 // Element swap includes 3 unit operations
+				count += 3 // Az elemcsere 3 elemi műveletet tartalmaz
 			}
 		}
 	}
 	return count
 }
 
-/* Exponential order (loop implementation) */
+/* Exponenciális rend (ciklus implementáció) */
 func exponential(n int) int {
 	count, base := 0, 1
-	// Cells divide into two every round, forming sequence 1, 2, 4, 8, ..., 2^(n-1)
+	// A sejtek minden körben kettéoszlanak, így az 1, 2, 4, 8, ..., 2^(n-1) sorozat jön létre
 	for i := 0; i < n; i++ {
 		for j := 0; j < base; j++ {
 			count++
@@ -78,7 +78,7 @@ func exponential(n int) int {
 	return count
 }
 
-/* Exponential order (recursive implementation) */
+/* Exponenciális rend (rekurzív implementáció) */
 func expRecur(n int) int {
 	if n == 1 {
 		return 1
@@ -86,7 +86,7 @@ func expRecur(n int) int {
 	return expRecur(n-1) + expRecur(n-1) + 1
 }
 
-/* Logarithmic order (loop implementation) */
+/* Logaritmikus rend (ciklus implementáció) */
 func logarithmic(n int) int {
 	count := 0
 	for n > 1 {
@@ -96,7 +96,7 @@ func logarithmic(n int) int {
 	return count
 }
 
-/* Logarithmic order (recursive implementation) */
+/* Logaritmikus rend (rekurzív implementáció) */
 func logRecur(n int) int {
 	if n <= 1 {
 		return 0
@@ -104,7 +104,7 @@ func logRecur(n int) int {
 	return logRecur(n/2) + 1
 }
 
-/* Linearithmic order */
+/* Lineáris-logaritmikus rend */
 func linearLogRecur(n int) int {
 	if n <= 1 {
 		return 1
@@ -116,13 +116,13 @@ func linearLogRecur(n int) int {
 	return count
 }
 
-/* Factorial order (recursive implementation) */
+/* Faktoriális rend (rekurzív implementáció) */
 func factorialRecur(n int) int {
 	if n == 0 {
 		return 1
 	}
 	count := 0
-	// Split from 1 into n
+	// 1-től n-re osztás
 	for i := 0; i < n; i++ {
 		count += factorialRecur(n - 1)
 	}

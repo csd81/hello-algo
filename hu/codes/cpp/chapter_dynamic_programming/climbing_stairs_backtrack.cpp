@@ -7,27 +7,27 @@
 
 #include "../utils/common.hpp"
 
-/* Backtracking */
+/* Visszalépés */
 void backtrack(vector<int> &choices, int state, int n, vector<int> &res) {
-    // When climbing to the n-th stair, add 1 to the solution count
+    // Ha elértük az n-edik lépcsőt, a megoldások számát 1-gyel növeljük
     if (state == n)
         res[0]++;
-    // Traverse all choices
+    // Az összes lehetőség bejárása
     for (auto &choice : choices) {
-        // Pruning: not allowed to go beyond the n-th stair
+        // Vágás: nem szabad túllépni az n-edik lépcsőt
         if (state + choice > n)
             continue;
-        // Attempt: make choice, update state
+        // Próbálkozás: lehetőség kiválasztása, állapot frissítése
         backtrack(choices, state + choice, n, res);
-        // Backtrack
+        // Visszalépés
     }
 }
 
-/* Climbing stairs: Backtracking */
+/* Lépcsőmászás: Visszalépés */
 int climbingStairsBacktrack(int n) {
-    vector<int> choices = {1, 2}; // Can choose to climb up 1 or 2 stairs
-    int state = 0;                // Start climbing from the 0-th stair
-    vector<int> res = {0};        // Use res[0] to record the solution count
+    vector<int> choices = {1, 2}; // 1 vagy 2 lépcsőt lehet felmenni egyszerre
+    int state = 0;                // A 0. lépcsőről indulunk
+    vector<int> res = {0};        // res[0]-t használjuk a megoldások számának rögzítéséhez
     backtrack(choices, state, n, res);
     return res[0];
 }

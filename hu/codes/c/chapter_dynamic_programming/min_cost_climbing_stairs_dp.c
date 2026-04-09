@@ -6,32 +6,32 @@
 
 #include "../utils/common.h"
 
-/* Find minimum value */
+/* Minimum érték meghatározása */
 int myMin(int a, int b) {
     return a < b ? a : b;
 }
 
-/* Minimum cost climbing stairs: Dynamic programming */
+/* Minimális költségű lépcsőmászás: dinamikus programozás */
 int minCostClimbingStairsDP(int cost[], int costSize) {
     int n = costSize - 1;
     if (n == 1 || n == 2)
         return cost[n];
-    // Initialize dp table, used to store solutions to subproblems
+    // dp tábla inicializálása, a részproblémák megoldásainak tárolásához
     int *dp = calloc(n + 1, sizeof(int));
-    // Initial state: preset the solution to the smallest subproblem
+    // Kezdőállapot: a legkisebb részprobléma megoldásának előre beállítása
     dp[1] = cost[1];
     dp[2] = cost[2];
-    // State transition: gradually solve larger subproblems from smaller ones
+    // Állapotátmenet: fokozatosan oldja meg a nagyobb részproblémákat a kisebbekből
     for (int i = 3; i <= n; i++) {
         dp[i] = myMin(dp[i - 1], dp[i - 2]) + cost[i];
     }
     int res = dp[n];
-    // Free memory
+    // Memória felszabadítása
     free(dp);
     return res;
 }
 
-/* Minimum cost climbing stairs: Space-optimized dynamic programming */
+/* Minimális költségű lépcsőmászás: helytakarékos dinamikus programozás */
 int minCostClimbingStairsDPComp(int cost[], int costSize) {
     int n = costSize - 1;
     if (n == 1 || n == 2)
@@ -45,7 +45,7 @@ int minCostClimbingStairsDPComp(int cost[], int costSize) {
     return b;
 }
 
-/* Driver Code */
+/* Vezérlő kód */
 int main() {
     int cost[] = {0, 1, 10, 1, 1, 1, 10, 1, 1, 10, 1};
     int costSize = sizeof(cost) / sizeof(cost[0]);

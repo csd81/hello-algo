@@ -4,33 +4,33 @@
  * Author: liuyuxin (gvenusleo@gmail.com)
  */
 
-/* Backtracking */
+/* Visszalépés */
 void backtrack(List<int> choices, int state, int n, List<int> res) {
-  // When climbing to the n-th stair, add 1 to the solution count
+  // Ha felért az n-ik lépcsőre, adjon hozzá 1-et a megoldások számához
   if (state == n) {
     res[0]++;
   }
-  // Traverse all choices
+  // Összes választási lehetőség bejárása
   for (int choice in choices) {
-    // Pruning: not allowed to go beyond the n-th stair
+    // Metszés: nem szabad túllépni az n-ik lépcsőn
     if (state + choice > n) continue;
-    // Attempt: make choice, update state
+    // Kísérlet: válassz, frissítsd az állapotot
     backtrack(choices, state + choice, n, res);
-    // Backtrack
+    // Visszalépés
   }
 }
 
-/* Climbing stairs: Backtracking */
+/* Lépcsőmászás: Visszalépés */
 int climbingStairsBacktrack(int n) {
-  List<int> choices = [1, 2]; // Can choose to climb up 1 or 2 stairs
-  int state = 0; // Start climbing from the 0-th stair
+  List<int> choices = [1, 2]; // Választhat 1 vagy 2 lépcsőt felmászani
+  int state = 0; // A 0. lépcsőről kezd mászni
   List<int> res = [];
-  res.add(0); // Use res[0] to record the solution count
+  res.add(0); // res[0] a megoldások számát tárolja
   backtrack(choices, state, n, res);
   return res[0];
 }
 
-/* Driver Code */
+/* Főprogram */
 void main() {
   int n = 9;
 

@@ -4,7 +4,7 @@
  * Author: liuyuxin (gvenusleo@gmail.com)
  */
 
-/* Backtracking algorithm: N queens */
+/* Visszalépéses algoritmus: N királynő */
 void backtrack(
   int row,
   int n,
@@ -14,7 +14,7 @@ void backtrack(
   List<bool> diags1,
   List<bool> diags2,
 ) {
-  // When all rows are placed, record the solution
+  // Ha minden sor el van helyezve, jegyezze fel a megoldást
   if (row == n) {
     List<List<String>> copyState = [];
     for (List<String> sRow in state) {
@@ -23,21 +23,21 @@ void backtrack(
     res.add(copyState);
     return;
   }
-  // Traverse all columns
+  // Összes oszlop bejárása
   for (int col = 0; col < n; col++) {
-    // Calculate the main diagonal and anti-diagonal corresponding to this cell
+    // Számítsd ki az ehhez a cellához tartozó főátlót és mellékátlót
     int diag1 = row - col + n - 1;
     int diag2 = row + col;
-    // Pruning: do not allow queens to exist in the column, main diagonal, and anti-diagonal of this cell
+    // Metszés: ne engedélyezd királynő elhelyezését az oszlopban, főátlón és mellékátlón
     if (!cols[col] && !diags1[diag1] && !diags2[diag2]) {
-      // Attempt: place the queen in this cell
+      // Kísérlet: helyezd el a királynőt ebbe a cellába
       state[row][col] = "Q";
       cols[col] = true;
       diags1[diag1] = true;
       diags2[diag2] = true;
-      // Place the next row
+      // Következő sor elhelyezése
       backtrack(row + 1, n, state, res, cols, diags1, diags2);
-      // Backtrack: restore this cell to an empty cell
+      // Visszalépés: állítsd vissza ezt a cellát üres cellává
       state[row][col] = "#";
       cols[col] = false;
       diags1[diag1] = false;
@@ -46,13 +46,13 @@ void backtrack(
   }
 }
 
-/* Solve N queens */
+/* N királynő megoldása */
 List<List<List<String>>> nQueens(int n) {
-  // Initialize an n*n chessboard, where 'Q' represents a queen and '#' represents an empty cell
+  // Inicializálj egy n*n sakktáblát, ahol 'Q' a királynőt, '#' az üres cellát jelöli
   List<List<String>> state = List.generate(n, (index) => List.filled(n, "#"));
-  List<bool> cols = List.filled(n, false); // Record whether there is a queen in the column
-  List<bool> diags1 = List.filled(2 * n - 1, false); // Record whether there is a queen on the main diagonal
-  List<bool> diags2 = List.filled(2 * n - 1, false); // Record whether there is a queen on the anti-diagonal
+  List<bool> cols = List.filled(n, false); // Nyilvántartja, hogy van-e királynő az oszlopban
+  List<bool> diags1 = List.filled(2 * n - 1, false); // Nyilvántartja, hogy van-e királynő a főátlón
+  List<bool> diags2 = List.filled(2 * n - 1, false); // Nyilvántartja, hogy van-e királynő a mellékátlón
   List<List<List<String>>> res = [];
 
   backtrack(0, n, state, res, cols, diags1, diags2);
@@ -60,7 +60,7 @@ List<List<List<String>>> nQueens(int n) {
   return res;
 }
 
-/* Driver Code */
+/* Főprogram */
 void main() {
   int n = 4;
   List<List<List<String>>> res = nQueens(n);

@@ -6,9 +6,9 @@
 
 #include "../utils/common.h"
 
-/* Search */
+/* Keresés */
 int dfs(int i) {
-    // Known dp[1] and dp[2], return them
+    // Ismert dp[1] és dp[2] értékek, visszaadja azokat
     if (i == 1 || i == 2)
         return i;
     // dp[i] = dp[i-1] + dp[i-2]
@@ -16,12 +16,12 @@ int dfs(int i) {
     return count;
 }
 
-/* Climbing stairs: Search */
+/* Lépcsőmászás: keresés */
 int climbingStairsDFS(int n) {
     return dfs(n);
 }
 
-/* Driver Code */
+/* Vezérlő kód */
 int main() {
     int n = 9;
 

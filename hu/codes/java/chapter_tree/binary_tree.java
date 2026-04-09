@@ -10,14 +10,14 @@ import utils.*;
 
 public class binary_tree {
     public static void main(String[] args) {
-        /* Initialize binary tree */
-        // Initialize nodes
+        /* Bináris fa inicializálása */
+        // Csomópontok inicializálása
         TreeNode n1 = new TreeNode(1);
         TreeNode n2 = new TreeNode(2);
         TreeNode n3 = new TreeNode(3);
         TreeNode n4 = new TreeNode(4);
         TreeNode n5 = new TreeNode(5);
-        // Build references (pointers) between nodes
+        // Hivatkozások (mutatók) felépítése a csomópontok között
         n1.left = n2;
         n1.right = n3;
         n2.left = n4;
@@ -25,14 +25,14 @@ public class binary_tree {
         System.out.println("\nInitialize binary tree\n");
         PrintUtil.printTree(n1);
 
-        /* Insert node P between n1 -> n2 */
+        /* P csomópont beszúrása n1 -> n2 közé */
         TreeNode P = new TreeNode(0);
-        // Delete node
+        // Csomópont törlése
         n1.left = P;
         P.left = n2;
         System.out.println("\nAfter inserting node P\n");
         PrintUtil.printTree(n1);
-        // Remove node P
+        // P csomópont eltávolítása
         n1.left = n2;
         System.out.println("\nAfter removing node P\n");
         PrintUtil.printTree(n1);

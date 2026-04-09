@@ -10,32 +10,32 @@ import utils.*;
 import java.util.*;
 
 public class binary_tree_bfs {
-    /* Level-order traversal */
+    /* Szintenkénti bejárás */
     static List<Integer> levelOrder(TreeNode root) {
-        // Initialize queue, add root node
+        // Sor inicializálása, gyökércsomópont hozzáadása
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
-        // Initialize a list to save the traversal sequence
+        // Lista inicializálása a bejárási sorrend mentéséhez
         List<Integer> list = new ArrayList<>();
         while (!queue.isEmpty()) {
-            TreeNode node = queue.poll(); // Dequeue
-            list.add(node.val);           // Save node value
+            TreeNode node = queue.poll(); // Kivétel a sorból
+            list.add(node.val);           // Csomópont értékének mentése
             if (node.left != null)
-                queue.offer(node.left);   // Left child node enqueue
+                queue.offer(node.left);   // Bal gyermekcsomópont sorba rakása
             if (node.right != null)
-                queue.offer(node.right);  // Right child node enqueue
+                queue.offer(node.right);  // Jobb gyermekcsomópont sorba rakása
         }
         return list;
     }
 
     public static void main(String[] args) {
-        /* Initialize binary tree */
-        // Here we use a function to generate a binary tree directly from an array
+        /* Bináris fa inicializálása */
+        // Egy függvényt használunk a bináris fa közvetlen tömbből való létrehozásához
         TreeNode root = TreeNode.listToTree(Arrays.asList(1, 2, 3, 4, 5, 6, 7));
         System.out.println("\nInitialize binary tree\n");
         PrintUtil.printTree(root);
 
-        /* Level-order traversal */
+        /* Szintenkénti bejárás */
         List<Integer> list = levelOrder(root);
         System.out.println("\nLevel-order traversal node print sequence = " + list);
     }

@@ -12,15 +12,15 @@ import (
 
 func TestSpaceComplexity(t *testing.T) {
 	n := 5
-	// Constant order
+	// Konstans rend
 	spaceConstant(n)
-	// Linear order
+	// Lineáris rend
 	spaceLinear(n)
 	spaceLinearRecur(n)
-	// Exponential order
+	// Exponenciális rend
 	spaceQuadratic(n)
 	spaceQuadraticRecur(n)
-	// Exponential order
+	// Exponenciális rend
 	root := buildTree(n)
 	PrintTree(root)
 }

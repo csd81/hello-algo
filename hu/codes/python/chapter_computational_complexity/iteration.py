@@ -6,60 +6,60 @@ Author: krahets (krahets@163.com)
 
 
 def for_loop(n: int) -> int:
-    """for loop"""
+    """for ciklus"""
     res = 0
-    # Sum 1, 2, ..., n-1, n
+    # Összegzés: 1, 2, ..., n-1, n
     for i in range(1, n + 1):
         res += i
     return res
 
 
 def while_loop(n: int) -> int:
-    """while loop"""
+    """while ciklus"""
     res = 0
-    i = 1  # Initialize condition variable
-    # Sum 1, 2, ..., n-1, n
+    i = 1  # Feltételváltozó inicializálása
+    # Összegzés: 1, 2, ..., n-1, n
     while i <= n:
         res += i
-        i += 1  # Update condition variable
+        i += 1  # Feltételváltozó frissítése
     return res
 
 
 def while_loop_ii(n: int) -> int:
-    """while loop (two updates)"""
+    """while ciklus (kétszeres frissítés)"""
     res = 0
-    i = 1  # Initialize condition variable
-    # Sum 1, 4, 10, ...
+    i = 1  # Feltételváltozó inicializálása
+    # Összegzés: 1, 4, 10, ...
     while i <= n:
         res += i
-        # Update condition variable
+        # Feltételváltozó frissítése
         i += 1
         i *= 2
     return res
 
 
 def nested_for_loop(n: int) -> str:
-    """Nested for loop"""
+    """Egymásba ágyazott for ciklus"""
     res = ""
-    # Loop i = 1, 2, ..., n-1, n
+    # i = 1, 2, ..., n-1, n ciklus
     for i in range(1, n + 1):
-        # Loop j = 1, 2, ..., n-1, n
+        # j = 1, 2, ..., n-1, n ciklus
         for j in range(1, n + 1):
             res += f"({i}, {j}), "
     return res
 
 
-"""Driver Code"""
+"""Fő kód"""
 if __name__ == "__main__":
     n = 5
     res = for_loop(n)
-    print(f"\nSum result of for loop res = {res}")
+    print(f"\nA for ciklus összegzési eredménye res = {res}")
 
     res = while_loop(n)
-    print(f"\nSum result of while loop res = {res}")
+    print(f"\nA while ciklus összegzési eredménye res = {res}")
 
     res = while_loop_ii(n)
-    print(f"\nSum result of while loop (two updates) res = {res}")
+    print(f"\nA while ciklus (kétszeres frissítés) összegzési eredménye res = {res}")
 
     res = nested_for_loop(n)
-    print(f"\nTraversal result of nested for loop {res}")
+    print(f"\nAz egymásba ágyazott for ciklus bejárási eredménye {res}")

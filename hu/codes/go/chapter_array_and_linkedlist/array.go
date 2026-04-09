@@ -8,65 +8,65 @@ import (
 	"math/rand"
 )
 
-/* Random access to element */
+/* Véletlenszerű hozzáférés egy elemhez */
 func randomAccess(nums []int) (randomNum int) {
-	// Randomly select a number in the interval [0, nums.length)
+	// Véletlenszerűen válassz egy számot a [0, nums.length) intervallumból
 	randomIndex := rand.Intn(len(nums))
-	// Retrieve and return the random element
+	// Kérj le és adj vissza egy véletlen elemet
 	randomNum = nums[randomIndex]
 	return
 }
 
-/* Extend array length */
+/* Tömb hosszának bővítése */
 func extend(nums []int, enlarge int) []int {
-	// Initialize an array with extended length
+	// Inicializálj egy tömböt a bővített hosszal
 	res := make([]int, len(nums)+enlarge)
-	// Copy all elements from the original array to the new array
+	// Másold át az összes elemet az eredeti tömbből az új tömbbe
 	for i, num := range nums {
 		res[i] = num
 	}
-	// Return the extended new array
+	// Adj vissza a bővített új tömböt
 	return res
 }
 
-/* Insert element num at index index in the array */
+/* Az index pozícióba szúrd be a num elemet a tömbben */
 func insert(nums []int, num int, index int) {
-	// Move all elements at and after index index backward by one position
+	// Toljuk hátra egy pozícióval az összes elemet az index pozíciótól kezdve
 	for i := len(nums) - 1; i > index; i-- {
 		nums[i] = nums[i-1]
 	}
-	// Assign num to the element at index index
+	// Rendelj num értéket az index pozícióbeli elemhez
 	nums[index] = num
 }
 
-/* Remove the element at index index */
+/* Töröld az index pozícióbeli elemet */
 func remove(nums []int, index int) {
-	// Move all elements after index index forward by one position
+	// Toljuk előre egy pozícióval az összes elemet az index pozíció után
 	for i := index; i < len(nums)-1; i++ {
 		nums[i] = nums[i+1]
 	}
 }
 
-/* Traverse array */
+/* Tömb bejárása */
 func traverse(nums []int) {
 	count := 0
-	// Traverse array by index
+	// Tömb bejárása index alapján
 	for i := 0; i < len(nums); i++ {
 		count += nums[i]
 	}
 	count = 0
-	// Direct traversal of array elements
+	// Tömbelemek közvetlen bejárása
 	for _, num := range nums {
 		count += num
 	}
-	// Traverse simultaneously data index and elements
+	// Index és elemek egyidejű bejárása
 	for i, num := range nums {
 		count += nums[i]
 		count += num
 	}
 }
 
-/* Find the specified element in the array */
+/* A megadott elem keresése a tömbben */
 func find(nums []int, target int) (index int) {
 	index = -1
 	for i := 0; i < len(nums); i++ {

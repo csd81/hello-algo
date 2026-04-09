@@ -7,7 +7,7 @@
 import '../utils/print_util.dart';
 import '../utils/tree_node.dart';
 
-/* Build binary tree: divide and conquer */
+/* Bináris fa felépítése: oszd meg és uralkodj */
 TreeNode? dfs(
   List<int> preorder,
   Map<int, int> inorderMap,
@@ -15,25 +15,25 @@ TreeNode? dfs(
   int l,
   int r,
 ) {
-  // Terminate when the subtree interval is empty
+  // Leáll, ha a részfa intervalluma üres
   if (r - l < 0) {
     return null;
   }
-  // Initialize the root node
+  // Gyökércsomópont inicializálása
   TreeNode? root = TreeNode(preorder[i]);
-  // Query m to divide the left and right subtrees
+  // m lekérdezése a bal és jobb részfák elválasztásához
   int m = inorderMap[preorder[i]]!;
-  // Subproblem: build the left subtree
+  // Részfeladat: bal részfa felépítése
   root.left = dfs(preorder, inorderMap, i + 1, l, m - 1);
-  // Subproblem: build the right subtree
+  // Részfeladat: jobb részfa felépítése
   root.right = dfs(preorder, inorderMap, i + 1 + m - l, m + 1, r);
-  // Return the root node
+  // Gyökércsomópont visszaadása
   return root;
 }
 
-/* Build binary tree */
+/* Bináris fa felépítése */
 TreeNode? buildTree(List<int> preorder, List<int> inorder) {
-  // Initialize hash map, storing the mapping from inorder elements to indices
+  // Hash tábla inicializálása, az inorder elemek indexre való leképezésének tárolásához
   Map<int, int> inorderMap = {};
   for (int i = 0; i < inorder.length; i++) {
     inorderMap[inorder[i]] = i;
@@ -42,7 +42,7 @@ TreeNode? buildTree(List<int> preorder, List<int> inorder) {
   return root;
 }
 
-/* Driver Code */
+/* Főprogram */
 void main() {
   List<int> preorder = [3, 9, 2, 1, 7];
   List<int> inorder = [9, 3, 1, 2, 7];

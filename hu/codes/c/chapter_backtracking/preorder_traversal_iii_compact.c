@@ -6,7 +6,7 @@
 
 #include "../utils/common.h"
 
-// Assume path and result length not exceeding 100
+// Feltételezzük, hogy az útvonal és az eredmény hossza nem haladja meg a 100-at
 #define MAX_SIZE 100
 #define MAX_RES_SIZE 100
 
@@ -14,16 +14,16 @@ TreeNode *path[MAX_SIZE];
 TreeNode *res[MAX_RES_SIZE][MAX_SIZE];
 int pathSize = 0, resSize = 0;
 
-/* Preorder traversal: Example 3 */
+/* Előrendű bejárás: 3. példa */
 void preOrder(TreeNode *root) {
-    // Pruning
+    // Vágás
     if (root == NULL || root->val == 3) {
         return;
     }
-    // Attempt
+    // Kísérlet
     path[pathSize++] = root;
     if (root->val == 7) {
-        // Record solution
+        // Megoldás rögzítése
         for (int i = 0; i < pathSize; i++) {
             res[resSize][i] = path[i];
         }
@@ -31,18 +31,18 @@ void preOrder(TreeNode *root) {
     }
     preOrder(root->left);
     preOrder(root->right);
-    // Backtrack
+    // Visszalépés
     pathSize--;
 }
 
-/* Driver Code */
+/* Vezérlő kód */
 int main() {
     int arr[] = {1, 7, 3, 4, 5, 6, 7};
     TreeNode *root = arrayToTree(arr, sizeof(arr) / sizeof(arr[0]));
     printf("\nInitialize binary tree\n");
     printTree(root);
 
-    // Preorder traversal
+    // Előrendű bejárás
     preOrder(root);
 
     printf("\nOutput all paths from root to node 7, excluding nodes with value 3\n");
@@ -56,7 +56,7 @@ int main() {
         free(vals);
     }
 
-    // Free memory
+    // Memória felszabadítása
     freeMemoryTree(root);
     return 0;
 }

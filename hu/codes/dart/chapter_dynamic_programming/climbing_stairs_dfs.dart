@@ -4,21 +4,21 @@
  * Author: liuyuxin (gvenusleo@gmail.com)
  */
 
-/* Search */
+/* Keresés */
 int dfs(int i) {
-  // Known dp[1] and dp[2], return them
+  // Ismert dp[1] és dp[2], adja vissza azokat
   if (i == 1 || i == 2) return i;
   // dp[i] = dp[i-1] + dp[i-2]
   int count = dfs(i - 1) + dfs(i - 2);
   return count;
 }
 
-/* Climbing stairs: Search */
+/* Lépcsőmászás: Keresés */
 int climbingStairsDFS(int n) {
   return dfs(n);
 }
 
-/* Driver Code */
+/* Főprogram */
 void main() {
   int n = 9;
 

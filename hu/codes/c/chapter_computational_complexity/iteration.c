@@ -6,50 +6,50 @@
 
 #include "../utils/common.h"
 
-/* for loop */
+/* for ciklus */
 int forLoop(int n) {
     int res = 0;
-    // Sum 1, 2, ..., n-1, n
+    // Összegzés: 1, 2, ..., n-1, n
     for (int i = 1; i <= n; i++) {
         res += i;
     }
     return res;
 }
 
-/* while loop */
+/* while ciklus */
 int whileLoop(int n) {
     int res = 0;
-    int i = 1; // Initialize condition variable
-    // Sum 1, 2, ..., n-1, n
+    int i = 1; // Feltételváltozó inicializálása
+    // Összegzés: 1, 2, ..., n-1, n
     while (i <= n) {
         res += i;
-        i++; // Update condition variable
+        i++; // Feltételváltozó frissítése
     }
     return res;
 }
 
-/* while loop (two updates) */
+/* while ciklus (két frissítéssel) */
 int whileLoopII(int n) {
     int res = 0;
-    int i = 1; // Initialize condition variable
-    // Sum 1, 4, 10, ...
+    int i = 1; // Feltételváltozó inicializálása
+    // Összegzés: 1, 4, 10, ...
     while (i <= n) {
         res += i;
-        // Update condition variable
+        // Feltételváltozó frissítése
         i++;
         i *= 2;
     }
     return res;
 }
 
-/* Nested for loop */
+/* Egymásba ágyazott for ciklus */
 char *nestedForLoop(int n) {
-    // n * n is the number of points, "(i, j), " string max length is 6+10*2, plus extra space for null character \0
+    // n * n a pontok száma, az "(i, j), " karakterlánc max hossza 6+10*2, plusz hely a null karakter \0-nak
     int size = n * n * 26 + 1;
     char *res = malloc(size * sizeof(char));
-    // Loop i = 1, 2, ..., n-1, n
+    // i = 1, 2, ..., n-1, n ciklus
     for (int i = 1; i <= n; i++) {
-        // Loop j = 1, 2, ..., n-1, n
+        // j = 1, 2, ..., n-1, n ciklus
         for (int j = 1; j <= n; j++) {
             char tmp[26];
             snprintf(tmp, sizeof(tmp), "(%d, %d), ", i, j);
@@ -59,7 +59,7 @@ char *nestedForLoop(int n) {
     return res;
 }
 
-/* Driver Code */
+/* Vezérlő kód */
 int main() {
     int n = 5;
     int res;

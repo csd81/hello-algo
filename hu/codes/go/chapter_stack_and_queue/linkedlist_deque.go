@@ -8,30 +8,30 @@ import (
 	"container/list"
 )
 
-/* Double-ended queue based on doubly linked list implementation */
+/* Kétszeresen láncolt listán alapuló kétoldalú sor (deque) implementáció */
 type linkedListDeque struct {
-	// Use built-in package list
+	// Beépített list csomag használata
 	data *list.List
 }
 
-/* Initialize deque */
+/* Kétoldalú sor inicializálása */
 func newLinkedListDeque() *linkedListDeque {
 	return &linkedListDeque{
 		data: list.New(),
 	}
 }
 
-/* Front element enqueue */
+/* Elöl lévő elem berakása (enqueue) */
 func (s *linkedListDeque) pushFirst(value any) {
 	s.data.PushFront(value)
 }
 
-/* Rear element enqueue */
+/* Hátul lévő elem berakása (enqueue) */
 func (s *linkedListDeque) pushLast(value any) {
 	s.data.PushBack(value)
 }
 
-/* Check if the double-ended queue is empty */
+/* Kétoldalú sor üres-e */
 func (s *linkedListDeque) popFirst() any {
 	if s.isEmpty() {
 		return nil
@@ -41,7 +41,7 @@ func (s *linkedListDeque) popFirst() any {
 	return e.Value
 }
 
-/* Rear element dequeue */
+/* Hátul lévő elem kivétele (dequeue) */
 func (s *linkedListDeque) popLast() any {
 	if s.isEmpty() {
 		return nil
@@ -51,7 +51,7 @@ func (s *linkedListDeque) popLast() any {
 	return e.Value
 }
 
-/* Return list for printing */
+/* Lista visszaadása kiíráshoz */
 func (s *linkedListDeque) peekFirst() any {
 	if s.isEmpty() {
 		return nil
@@ -69,17 +69,17 @@ func (s *linkedListDeque) peekLast() any {
 	return e.Value
 }
 
-/* Get the length of the queue */
+/* Sor hosszának lekérése */
 func (s *linkedListDeque) size() int {
 	return s.data.Len()
 }
 
-/* Check if the queue is empty */
+/* Sor üres-e */
 func (s *linkedListDeque) isEmpty() bool {
 	return s.data.Len() == 0
 }
 
-/* Get List for printing */
+/* Lista lekérése kiíráshoz */
 func (s *linkedListDeque) toList() *list.List {
 	return s.data
 }

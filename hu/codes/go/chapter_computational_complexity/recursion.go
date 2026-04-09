@@ -6,31 +6,31 @@ package chapter_computational_complexity
 
 import "container/list"
 
-/* Recursion */
+/* Rekurzió */
 func recur(n int) int {
-	// Termination condition
+	// Leállási feltétel
 	if n == 1 {
 		return 1
 	}
-	// Recurse: recursive call
+	// Rekurzív hívás
 	res := recur(n - 1)
-	// Return: return result
+	// Visszatérés: eredmény visszaadása
 	return n + res
 }
 
-/* Simulate recursion using iteration */
+/* Rekurzió szimulálása iterációval */
 func forLoopRecur(n int) int {
-	// Use an explicit stack to simulate the system call stack
+	// Explicit verem használata a rendszer hívási verem szimulálásához
 	stack := list.New()
 	res := 0
-	// Recurse: recursive call
+	// Rekurzív hívás
 	for i := n; i > 0; i-- {
-		// Simulate "recurse" with "push"
+		// "Rekurzió" szimulálása "push"-sal
 		stack.PushBack(i)
 	}
-	// Return: return result
+	// Visszatérés: eredmény visszaadása
 	for stack.Len() != 0 {
-		// Simulate "return" with "pop"
+		// "Visszatérés" szimulálása "pop"-pal
 		res += stack.Back().Value.(int)
 		stack.Remove(stack.Back())
 	}
@@ -38,24 +38,24 @@ func forLoopRecur(n int) int {
 	return res
 }
 
-/* Tail recursion */
+/* Farok-rekurzió */
 func tailRecur(n int, res int) int {
-	// Termination condition
+	// Leállási feltétel
 	if n == 0 {
 		return res
 	}
-	// Tail recursive call
+	// Farok-rekurzív hívás
 	return tailRecur(n-1, res+n)
 }
 
-/* Fibonacci sequence: recursion */
+/* Fibonacci-sorozat: rekurzió */
 func fib(n int) int {
-	// Termination condition f(1) = 0, f(2) = 1
+	// Leállási feltétel: f(1) = 0, f(2) = 1
 	if n == 1 || n == 2 {
 		return n - 1
 	}
-	// Recursive call f(n) = f(n-1) + f(n-2)
+	// Rekurzív hívás: f(n) = f(n-1) + f(n-2)
 	res := fib(n-1) + fib(n-2)
-	// Return result f(n)
+	// Eredmény visszaadása: f(n)
 	return res
 }

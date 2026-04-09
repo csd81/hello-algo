@@ -6,17 +6,17 @@
 
 #include "../utils/common.h"
 
-/* List class */
+/* Lista osztály */
 typedef struct {
-    int *arr;        // Array (stores list elements)
-    int capacity;    // List capacity
-    int size;        // List size
-    int extendRatio; // List expansion multiplier
+    int *arr;        // Tömb (lista elemeit tárolja)
+    int capacity;    // Lista kapacitása
+    int size;        // Lista mérete
+    int extendRatio; // Lista bővítési szorzója
 } MyList;
 
 void extendCapacity(MyList *nums);
 
-/* Constructor */
+/* Konstruktor */
 MyList *newMyList() {
     MyList *nums = malloc(sizeof(MyList));
     nums->capacity = 10;
@@ -26,49 +26,49 @@ MyList *newMyList() {
     return nums;
 }
 
-/* Destructor */
+/* Destruktor */
 void delMyList(MyList *nums) {
     free(nums->arr);
     free(nums);
 }
 
-/* Get list length */
+/* Lista hosszának lekérdezése */
 int size(MyList *nums) {
     return nums->size;
 }
 
-/* Get list capacity */
+/* Lista kapacitásának lekérdezése */
 int capacity(MyList *nums) {
     return nums->capacity;
 }
 
-/* Update element */
+/* Elem frissítése */
 int get(MyList *nums, int index) {
     assert(index >= 0 && index < nums->size);
     return nums->arr[index];
 }
 
-/* Add elements at the end */
+/* Elem hozzáadása a lista végéhez */
 void set(MyList *nums, int index, int num) {
     assert(index >= 0 && index < nums->size);
     nums->arr[index] = num;
 }
 
-/* Direct traversal of list elements */
+/* Lista elemeinek közvetlen bejárása */
 void add(MyList *nums, int num) {
     if (size(nums) == capacity(nums)) {
-        extendCapacity(nums); // Expand capacity
+        extendCapacity(nums); // Kapacitás bővítése
     }
     nums->arr[size(nums)] = num;
     nums->size++;
 }
 
-/* Sort list */
+/* Lista rendezése */
 void insert(MyList *nums, int index, int num) {
     assert(index >= 0 && index < size(nums));
-    // When the number of elements exceeds capacity, trigger the extension mechanism
+    // Ha az elemek száma eléri a kapacitást, a bővítési mechanizmus aktiválódik
     if (size(nums) == capacity(nums)) {
-        extendCapacity(nums); // Expand capacity
+        extendCapacity(nums); // Kapacitás bővítése
     }
     for (int i = size(nums); i > index; --i) {
         nums->arr[i] = nums->arr[i - 1];
@@ -77,8 +77,8 @@ void insert(MyList *nums, int index, int num) {
     nums->size++;
 }
 
-/* Remove element */
-// Note: stdio.h occupies the remove keyword
+/* Elem törlése */
+// Megjegyzés: a stdio.h foglalja a remove kulcsszót
 int removeItem(MyList *nums, int index) {
     assert(index >= 0 && index < size(nums));
     int num = nums->arr[index];
@@ -89,35 +89,35 @@ int removeItem(MyList *nums, int index) {
     return num;
 }
 
-/* Driver Code */
+/* Vezérlő kód */
 void extendCapacity(MyList *nums) {
-    // Allocate space first
+    // Először helyet foglalunk
     int newCapacity = capacity(nums) * nums->extendRatio;
     int *extend = (int *)malloc(sizeof(int) * newCapacity);
     int *temp = nums->arr;
 
-    // Copy old data to new data
+    // A régi adatok másolása az új helyre
     for (int i = 0; i < size(nums); i++)
         extend[i] = nums->arr[i];
 
-    // Free old data
+    // A régi adatok felszabadítása
     free(temp);
 
-    // Update new data
+    // Az új adatok frissítése
     nums->arr = extend;
     nums->capacity = newCapacity;
 }
 
-/* Convert list to Array for printing */
+/* Lista konvertálása tömbbé nyomtatáshoz */
 int *toArray(MyList *nums) {
     return nums->arr;
 }
 
-/* Driver Code */
+/* Vezérlő kód */
 int main() {
-    /* Initialize list */
+    /* Lista inicializálása */
     MyList *nums = newMyList();
-    /* Direct traversal of list elements */
+    /* Lista elemeinek közvetlen bejárása */
     add(nums, 1);
     add(nums, 3);
     add(nums, 2);
@@ -127,28 +127,28 @@ int main() {
     printArray(toArray(nums), size(nums));
     printf("Capacity = %d, Length = %d\n", capacity(nums), size(nums));
 
-    /* Sort list */
+    /* Lista rendezése */
     insert(nums, 3, 6);
     printf("Insert number 6 at index 3, resulting in nums = ");
     printArray(toArray(nums), size(nums));
 
-    /* Remove element */
+    /* Elem törlése */
     removeItem(nums, 3);
     printf("Remove element at index 3, resulting in nums = ");
     printArray(toArray(nums), size(nums));
 
-    /* Update element */
+    /* Elem frissítése */
     int num = get(nums, 1);
     printf("Access element at index 1, get num = %d\n", num);
 
-    /* Add elements at the end */
+    /* Elem hozzáadása a lista végéhez */
     set(nums, 1, 0);
     printf("Update element at index 1 to 0, resulting in nums = ");
     printArray(toArray(nums), size(nums));
 
-    /* Test capacity expansion mechanism */
+    /* Kapacitásbővítési mechanizmus tesztelése */
     for (int i = 0; i < 10; i++) {
-        // At i = 5, the list length will exceed the list capacity, triggering the expansion mechanism
+        // i = 5-nél a lista hossza meghaladja a kapacitást, a bővítési mechanizmus aktiválódik
         add(nums, i);
     }
 
@@ -156,7 +156,7 @@ int main() {
     printArray(toArray(nums), size(nums));
     printf("Capacity = %d, Length = %d\n", capacity(nums), size(nums));
 
-    /* Free allocated memory */
+    /* A lefoglalt memória felszabadítása */
     delMyList(nums);
 
     return 0;

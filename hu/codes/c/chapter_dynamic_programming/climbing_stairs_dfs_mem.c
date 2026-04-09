@@ -6,24 +6,24 @@
 
 #include "../utils/common.h"
 
-/* Memoization search */
+/* Memorizálásos keresés */
 int dfs(int i, int *mem) {
-    // Known dp[1] and dp[2], return them
+    // Ismert dp[1] és dp[2] értékek, visszaadja azokat
     if (i == 1 || i == 2)
         return i;
-    // If record dp[i] exists, return it directly
+    // Ha dp[i] rekord létezik, közvetlenül visszaadja azt
     if (mem[i] != -1)
         return mem[i];
     // dp[i] = dp[i-1] + dp[i-2]
     int count = dfs(i - 1, mem) + dfs(i - 2, mem);
-    // Record dp[i]
+    // dp[i] rögzítése
     mem[i] = count;
     return count;
 }
 
-/* Climbing stairs: Memoization search */
+/* Lépcsőmászás: memorizálásos keresés */
 int climbingStairsDFSMem(int n) {
-    // mem[i] records the total number of solutions to climb to the i-th stair, -1 means no record
+    // mem[i] tárolja az i-edik lépcsőfokra való feljutás összes megoldásának számát, -1 azt jelenti, hogy nincs rekord
     int *mem = (int *)malloc((n + 1) * sizeof(int));
     for (int i = 0; i <= n; i++) {
         mem[i] = -1;
@@ -33,7 +33,7 @@ int climbingStairsDFSMem(int n) {
     return result;
 }
 
-/* Driver Code */
+/* Vezérlő kód */
 int main() {
     int n = 9;
 

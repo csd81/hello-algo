@@ -4,25 +4,25 @@
  * Author: Gaofer Chou (gaofer-chou@qq.com)
  */
 
-/* Coin change II: Dynamic programming */
+/* Pénzváltás II: Dinamikus programozás */
 function coinChangeIIDP(coins, amt) {
     const n = coins.length;
-    // Initialize dp table
+    // Inicializáljuk a dp táblát
     const dp = Array.from({ length: n + 1 }, () =>
         Array.from({ length: amt + 1 }, () => 0)
     );
-    // Initialize first column
+    // Az első oszlop inicializálása
     for (let i = 0; i <= n; i++) {
         dp[i][0] = 1;
     }
-    // State transition
+    // Állapotátmenet
     for (let i = 1; i <= n; i++) {
         for (let a = 1; a <= amt; a++) {
             if (coins[i - 1] > a) {
-                // If exceeds target amount, don't select coin i
+                // Ha meghaladja a célösszeget, nem választjuk az i-edik érmét
                 dp[i][a] = dp[i - 1][a];
             } else {
-                // Sum of the two options: not selecting and selecting coin i
+                // A két lehetőség összege: az i-edik érme ki nem választása és kiválasztása
                 dp[i][a] = dp[i - 1][a] + dp[i][a - coins[i - 1]];
             }
         }
@@ -30,20 +30,20 @@ function coinChangeIIDP(coins, amt) {
     return dp[n][amt];
 }
 
-/* Coin change II: Space-optimized dynamic programming */
+/* Pénzváltás II: Helytakarékos dinamikus programozás */
 function coinChangeIIDPComp(coins, amt) {
     const n = coins.length;
-    // Initialize dp table
+    // Inicializáljuk a dp táblát
     const dp = Array.from({ length: amt + 1 }, () => 0);
     dp[0] = 1;
-    // State transition
+    // Állapotátmenet
     for (let i = 1; i <= n; i++) {
         for (let a = 1; a <= amt; a++) {
             if (coins[i - 1] > a) {
-                // If exceeds target amount, don't select coin i
+                // Ha meghaladja a célösszeget, nem választjuk az i-edik érmét
                 dp[a] = dp[a];
             } else {
-                // Sum of the two options: not selecting and selecting coin i
+                // A két lehetőség összege: az i-edik érme ki nem választása és kiválasztása
                 dp[a] = dp[a] + dp[a - coins[i - 1]];
             }
         }
@@ -51,14 +51,14 @@ function coinChangeIIDPComp(coins, amt) {
     return dp[amt];
 }
 
-/* Driver Code */
+/* Tesztkód */
 const coins = [1, 2, 5];
 const amt = 5;
 
-// Dynamic programming
+// Dinamikus programozás
 let res = coinChangeIIDP(coins, amt);
 console.log(`Number of coin combinations to make target amount is ${res}`);
 
-// Space-optimized dynamic programming
+// Helytakarékos dinamikus programozás
 res = coinChangeIIDPComp(coins, amt);
 console.log(`Number of coin combinations to make target amount is ${res}`);

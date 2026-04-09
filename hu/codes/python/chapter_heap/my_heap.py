@@ -12,126 +12,126 @@ from modules import print_heap
 
 
 class MaxHeap:
-    """Max heap"""
+    """Max-kupac"""
 
     def __init__(self, nums: list[int]):
-        """Constructor, build heap based on input list"""
-        # Add list elements to heap as is
+        """Konstruktor, kupac felépítése a bemeneti lista alapján"""
+        # Lista elemeit változtatás nélkül a kupacba adja
         self.max_heap = nums
-        # Heapify all nodes except leaf nodes
+        # Az összes csomópontra kupacosítást végez, kivéve a levélcsomópontokat
         for i in range(self.parent(self.size() - 1), -1, -1):
             self.sift_down(i)
 
     def left(self, i: int) -> int:
-        """Get index of left child node"""
+        """A bal gyermekcsomópont indexének lekérése"""
         return 2 * i + 1
 
     def right(self, i: int) -> int:
-        """Get index of right child node"""
+        """A jobb gyermekcsomópont indexének lekérése"""
         return 2 * i + 2
 
     def parent(self, i: int) -> int:
-        """Get index of parent node"""
-        return (i - 1) // 2  # Floor division
+        """A szülőcsomópont indexének lekérése"""
+        return (i - 1) // 2  # Egészrész-osztás
 
     def swap(self, i: int, j: int):
-        """Swap elements"""
+        """Elemek felcserélése"""
         self.max_heap[i], self.max_heap[j] = self.max_heap[j], self.max_heap[i]
 
     def size(self) -> int:
-        """Get heap size"""
+        """Kupac méretének lekérése"""
         return len(self.max_heap)
 
     def is_empty(self) -> bool:
-        """Check if heap is empty"""
+        """Ellenőrzi, hogy a kupac üres-e"""
         return self.size() == 0
 
     def peek(self) -> int:
-        """Access top element"""
+        """Tetőelem elérése"""
         return self.max_heap[0]
 
     def push(self, val: int):
-        """Element enters heap"""
-        # Add node
+        """Elem betolása a kupacba"""
+        # Csomópont hozzáadása
         self.max_heap.append(val)
-        # Heapify from bottom to top
+        # Alulról felfelé kupacosítás
         self.sift_up(self.size() - 1)
 
     def sift_up(self, i: int):
-        """Starting from node i, heapify from bottom to top"""
+        """Az i csomóponttól kezdve alulról felfelé kupacosítás"""
         while True:
-            # Get parent node of node i
+            # Az i csomópont szülőjének lekérése
             p = self.parent(i)
-            # When "crossing root node" or "node needs no repair", end heapify
+            # Ha "átlépi a gyökércsomópontot" vagy "a csomópontnak nincs szüksége javításra", kupacosítás vége
             if p < 0 or self.max_heap[i] <= self.max_heap[p]:
                 break
-            # Swap two nodes
+            # Két csomópont felcserélése
             self.swap(i, p)
-            # Loop upward heapify
+            # Felfelé haladó kupacosítás folytatása
             i = p
 
     def pop(self) -> int:
-        """Element exits heap"""
-        # Handle empty case
+        """Elem kiemelése a kupacból"""
+        # Üres eset kezelése
         if self.is_empty():
-            raise IndexError("Heap is empty")
-        # Swap root node with rightmost leaf node (swap first element with last element)
+            raise IndexError("A kupac üres")
+        # A gyökércsomópontot a jobb szélső levéllel cseréli fel (az első elemet az utolsóval)
         self.swap(0, self.size() - 1)
-        # Delete node
+        # Csomópont törlése
         val = self.max_heap.pop()
-        # Heapify from top to bottom
+        # Felülről lefelé kupacosítás
         self.sift_down(0)
-        # Return top element
+        # Tetőelemet adja vissza
         return val
 
     def sift_down(self, i: int):
-        """Starting from node i, heapify from top to bottom"""
+        """Az i csomóponttól kezdve felülről lefelé kupacosítás"""
         while True:
-            # Find node with largest value among i, l, r, denoted as ma
+            # Az i, l, r közül a legnagyobb értékű csomópontot keresi, ma-ként jelöli
             l, r, ma = self.left(i), self.right(i), i
             if l < self.size() and self.max_heap[l] > self.max_heap[ma]:
                 ma = l
             if r < self.size() and self.max_heap[r] > self.max_heap[ma]:
                 ma = r
-            # If node i is largest or indices l, r are out of bounds, no need to continue heapify, break
+            # Ha az i csomópont a legnagyobb, vagy az l, r indexek határon kívül vannak, nincs szükség további kupacosításra
             if ma == i:
                 break
-            # Swap two nodes
+            # Két csomópont felcserélése
             self.swap(i, ma)
-            # Loop downward heapify
+            # Lefelé haladó kupacosítás folytatása
             i = ma
 
     def print(self):
-        """Print heap (binary tree)"""
+        """Kupac kiírása (bináris fa)"""
         print_heap(self.max_heap)
 
 
-"""Driver Code"""
+"""Fő kód"""
 if __name__ == "__main__":
-    # Initialize max heap
+    # Max-kupac inicializálása
     max_heap = MaxHeap([9, 8, 6, 6, 7, 5, 2, 1, 4, 3, 6, 2])
-    print("\nAfter inputting list and building heap")
+    print("\nLista beadása és kupac felépítése után")
     max_heap.print()
 
-    # Get top element
+    # Tetőelem lekérése
     peek = max_heap.peek()
-    print(f"\nTop element is {peek}")
+    print(f"\nA tetőelem: {peek}")
 
-    # Element enters heap
+    # Elem betolása a kupacba
     val = 7
     max_heap.push(val)
-    print(f"\nAfter element {val} enters heap")
+    print(f"\nA(z) {val} elem kupacba kerülése után")
     max_heap.print()
 
-    # Top element exits heap
+    # Tetőelem kiemelése
     peek = max_heap.pop()
-    print(f"\nAfter top element {peek} exits heap")
+    print(f"\nA(z) {peek} tetőelem kilépése után")
     max_heap.print()
 
-    # Get heap size
+    # Kupac méretének lekérése
     size = max_heap.size()
-    print(f"\nNumber of heap elements is {size}")
+    print(f"\nA kupac elemeinek száma: {size}")
 
-    # Check if heap is empty
+    # Ellenőrzi, hogy a kupac üres-e
     is_empty = max_heap.is_empty()
-    print(f"\nIs heap empty {is_empty}")
+    print(f"\nA kupac üres-e: {is_empty}")

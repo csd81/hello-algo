@@ -6,15 +6,15 @@
 
 #include "../utils/common.h"
 
-/* Generate an array with elements { 1, 2, ..., n }, order shuffled */
+/* { 1, 2, ..., n } elemeket tartalmazó, véletlenszerűen kevert tömb generálása */
 int *randomNumbers(int n) {
-    // Allocate heap memory (create 1D variable-length array: n elements of type int)
+    // Halommemória foglalása (1D változó hosszú tömb létrehozása: n db int típusú elem)
     int *nums = (int *)malloc(n * sizeof(int));
-    // Generate array nums = { 1, 2, 3, ..., n }
+    // nums = { 1, 2, 3, ..., n } tömb generálása
     for (int i = 0; i < n; i++) {
         nums[i] = i + 1;
     }
-    // Randomly shuffle array elements
+    // Tömbelemek véletlenszerű megkeverése
     for (int i = n - 1; i > 0; i--) {
         int j = rand() % (i + 1);
         int temp = nums[i];
@@ -24,20 +24,20 @@ int *randomNumbers(int n) {
     return nums;
 }
 
-/* Find the index of number 1 in array nums */
+/* Az 1-es szám indexének keresése a nums tömbben */
 int findOne(int *nums, int n) {
     for (int i = 0; i < n; i++) {
-        // When element 1 is at the head of the array, best time complexity O(1) is achieved
-        // When element 1 is at the tail of the array, worst time complexity O(n) is achieved
+        // Ha az 1-es elem a tömb elején van, a legjobb időbonyolultság O(1) teljesül
+        // Ha az 1-es elem a tömb végén van, a legrosszabb időbonyolultság O(n) teljesül
         if (nums[i] == 1)
             return i;
     }
     return -1;
 }
 
-/* Driver Code */
+/* Vezérlő kód */
 int main(int argc, char *argv[]) {
-    // Initialize random seed
+    // Véletlenszám generátor inicializálása
     srand((unsigned int)time(NULL));
     for (int i = 0; i < 10; i++) {
         int n = 100;
@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
         printf("\nArray [ 1, 2, ..., n ] after shuffling = ");
         printArray(nums, n);
         printf("Index of number 1 is %d\n", index);
-        // Free heap memory
+        // Halommemória felszabadítása
         if (nums != NULL) {
             free(nums);
             nums = NULL;

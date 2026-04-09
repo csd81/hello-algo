@@ -6,15 +6,15 @@
 
 const { Vertex } = require('../modules/Vertex');
 
-/* Undirected graph class based on adjacency list */
+/* Szomszédsági listán alapuló irányítatlan gráf osztály */
 class GraphAdjList {
-    // Adjacency list, key: vertex, value: all adjacent vertices of that vertex
+    // Szomszédsági lista, kulcs: csúcs, érték: az adott csúcs összes szomszédos csúcsa
     adjList;
 
-    /* Constructor */
+    /* Konstruktor */
     constructor(edges) {
         this.adjList = new Map();
-        // Add all vertices and edges
+        // Hozzáadjuk az összes csúcsot és élt
         for (const edge of edges) {
             this.addVertex(edge[0]);
             this.addVertex(edge[1]);
@@ -22,12 +22,12 @@ class GraphAdjList {
         }
     }
 
-    /* Get the number of vertices */
+    /* A csúcsok számának lekérése */
     size() {
         return this.adjList.size;
     }
 
-    /* Add edge */
+    /* Él hozzáadása */
     addEdge(vet1, vet2) {
         if (
             !this.adjList.has(vet1) ||
@@ -36,12 +36,12 @@ class GraphAdjList {
         ) {
             throw new Error('Illegal Argument Exception');
         }
-        // Add edge vet1 - vet2
+        // Hozzáadjuk a vet1 - vet2 élt
         this.adjList.get(vet1).push(vet2);
         this.adjList.get(vet2).push(vet1);
     }
 
-    /* Remove edge */
+    /* Él eltávolítása */
     removeEdge(vet1, vet2) {
         if (
             !this.adjList.has(vet1) ||
@@ -51,26 +51,26 @@ class GraphAdjList {
         ) {
             throw new Error('Illegal Argument Exception');
         }
-        // Remove edge vet1 - vet2
+        // Eltávolítjuk a vet1 - vet2 élt
         this.adjList.get(vet1).splice(this.adjList.get(vet1).indexOf(vet2), 1);
         this.adjList.get(vet2).splice(this.adjList.get(vet2).indexOf(vet1), 1);
     }
 
-    /* Add vertex */
+    /* Csúcs hozzáadása */
     addVertex(vet) {
         if (this.adjList.has(vet)) return;
-        // Add a new linked list in the adjacency list
+        // Új láncolt listát adunk a szomszédsági listához
         this.adjList.set(vet, []);
     }
 
-    /* Remove vertex */
+    /* Csúcs eltávolítása */
     removeVertex(vet) {
         if (!this.adjList.has(vet)) {
             throw new Error('Illegal Argument Exception');
         }
-        // Remove the linked list corresponding to vertex vet in the adjacency list
+        // Eltávolítjuk a vet csúcshoz tartozó láncolt listát a szomszédsági listából
         this.adjList.delete(vet);
-        // Traverse the linked lists of other vertices and remove all edges containing vet
+        // Bejárjuk a többi csúcs láncolt listáját és eltávolítjuk az összes vet-et tartalmazó élt
         for (const set of this.adjList.values()) {
             const index = set.indexOf(vet);
             if (index > -1) {
@@ -79,7 +79,7 @@ class GraphAdjList {
         }
     }
 
-    /* Print adjacency list */
+    /* Szomszédsági lista kiírása */
     print() {
         console.log('Adjacency list =');
         for (const [key, value] of this.adjList) {
@@ -93,8 +93,8 @@ class GraphAdjList {
 }
 
 if (require.main === module) {
-    /* Driver Code */
-    /* Add edge */
+    /* Tesztkód */
+    /* Él hozzáadása */
     const v0 = new Vertex(1),
         v1 = new Vertex(3),
         v2 = new Vertex(2),
@@ -112,26 +112,26 @@ if (require.main === module) {
     console.log('\nAfter initialization, graph is');
     graph.print();
 
-    /* Add edge */
-    // Vertices 1, 2 are v0, v2
+    /* Él hozzáadása */
+    // Az 1, 2 csúcs v0, v2
     graph.addEdge(v0, v2);
     console.log('\nAfter adding edge 1-2, graph is');
     graph.print();
 
-    /* Remove edge */
-    // Vertices 1, 3 are v0, v1
+    /* Él eltávolítása */
+    // Az 1, 3 csúcs v0, v1
     graph.removeEdge(v0, v1);
     console.log('\nAfter removing edge 1-3, graph is');
     graph.print();
 
-    /* Add vertex */
+    /* Csúcs hozzáadása */
     const v5 = new Vertex(6);
     graph.addVertex(v5);
     console.log('\nAfter adding vertex 6, graph is');
     graph.print();
 
-    /* Remove vertex */
-    // Vertex 3 is v1
+    /* Csúcs eltávolítása */
+    // A 3-as csúcs v1
     graph.removeVertex(v1);
     console.log('\nAfter removing vertex 3, graph is');
     graph.print();

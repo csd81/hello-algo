@@ -6,12 +6,12 @@
 
 #include "../utils/common.h"
 
-// Assume at most 1000 permutations
+// Legfeljebb 1000 permutációt feltételezünk
 #define MAX_SIZE 1000
 
-/* Backtracking algorithm: Permutations I */
+/* Visszalépéses algoritmus: Permutációk I */
 void backtrack(int *state, int stateSize, int *choices, int choicesSize, bool *selected, int **res, int *resSize) {
-    // When the state length equals the number of elements, record the solution
+    // Ha az állapot hossza egyenlő az elemek számával, rögzítse a megoldást
     if (stateSize == choicesSize) {
         res[*resSize] = (int *)malloc(choicesSize * sizeof(int));
         for (int i = 0; i < choicesSize; i++) {
@@ -20,23 +20,23 @@ void backtrack(int *state, int stateSize, int *choices, int choicesSize, bool *s
         (*resSize)++;
         return;
     }
-    // Traverse all choices
+    // Az összes lehetőség bejárása
     for (int i = 0; i < choicesSize; i++) {
         int choice = choices[i];
-        // Pruning: do not allow repeated selection of elements
+        // Vágás: ne engedjük meg az elemek ismételt kiválasztását
         if (!selected[i]) {
-            // Attempt: make choice, update state
+            // Kísérlet: választás végrehajtása, állapot frissítése
             selected[i] = true;
             state[stateSize] = choice;
-            // Proceed to the next round of selection
+            // Továbblépés a következő kiválasztási körre
             backtrack(state, stateSize + 1, choices, choicesSize, selected, res, resSize);
-            // Backtrack: undo choice, restore to previous state
+            // Visszalépés: választás visszavonása, visszaállítás az előző állapotba
             selected[i] = false;
         }
     }
 }
 
-/* Permutations I */
+/* Permutációk I */
 int **permutationsI(int *nums, int numsSize, int *returnSize) {
     int *state = (int *)malloc(numsSize * sizeof(int));
     bool *selected = (bool *)malloc(numsSize * sizeof(bool));
@@ -54,7 +54,7 @@ int **permutationsI(int *nums, int numsSize, int *returnSize) {
     return res;
 }
 
-/* Driver Code */
+/* Vezérlő kód */
 int main() {
     int nums[] = {1, 2, 3};
     int numsSize = sizeof(nums) / sizeof(nums[0]);
@@ -69,7 +69,7 @@ int main() {
         printArray(res[i], numsSize);
     }
 
-    // Free memory
+    // Memória felszabadítása
     for (int i = 0; i < returnSize; i++) {
         free(res[i]);
     }

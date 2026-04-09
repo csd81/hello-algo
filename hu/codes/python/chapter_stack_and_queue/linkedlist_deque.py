@@ -6,107 +6,107 @@ Author: krahets (krahets@163.com)
 
 
 class ListNode:
-    """Doubly linked list node"""
+    """Kétirányú láncolt lista csomópontja"""
 
     def __init__(self, val: int):
-        """Constructor"""
+        """Konstruktor"""
         self.val: int = val
-        self.next: ListNode | None = None  # Successor node reference
-        self.prev: ListNode | None = None  # Predecessor node reference
+        self.next: ListNode | None = None  # Következő csomópontra mutató referencia
+        self.prev: ListNode | None = None  # Előző csomópontra mutató referencia
 
 
 class LinkedListDeque:
-    """Double-ended queue based on doubly linked list implementation"""
+    """Kétirányú láncolt listán alapuló kétirányú sor implementáció"""
 
     def __init__(self):
-        """Constructor"""
-        self._front: ListNode | None = None  # Head node front
-        self._rear: ListNode | None = None  # Tail node rear
-        self._size: int = 0  # Length of the double-ended queue
+        """Konstruktor"""
+        self._front: ListNode | None = None  # Fejcsomópont (sor eleje)
+        self._rear: ListNode | None = None  # Farokcsomópont (sor vége)
+        self._size: int = 0  # A kétirányú sor hossza
 
     def size(self) -> int:
-        """Get the length of the double-ended queue"""
+        """A kétirányú sor hosszának lekérése"""
         return self._size
 
     def is_empty(self) -> bool:
-        """Check if the double-ended queue is empty"""
+        """Ellenőrzi, hogy a kétirányú sor üres-e"""
         return self._size == 0
 
     def push(self, num: int, is_front: bool):
-        """Enqueue operation"""
+        """Sorba állás művelet"""
         node = ListNode(num)
-        # If the linked list is empty, make both front and rear point to node
+        # Ha a láncolt lista üres, mind a front, mind a rear a csomópontra mutat
         if self.is_empty():
             self._front = self._rear = node
-        # Front of the queue enqueue operation
+        # Sor elejéhez való sorba állás
         elif is_front:
-            # Add node to the head of the linked list
+            # Csomópont hozzáadása a láncolt lista elejéhez
             self._front.prev = node
             node.next = self._front
-            self._front = node  # Update head node
-        # Rear of the queue enqueue operation
+            self._front = node  # Fejcsomópont frissítése
+        # Sor végéhez való sorba állás
         else:
-            # Add node to the tail of the linked list
+            # Csomópont hozzáadása a láncolt lista végéhez
             self._rear.next = node
             node.prev = self._rear
-            self._rear = node  # Update tail node
-        self._size += 1  # Update queue length
+            self._rear = node  # Farokcsomópont frissítése
+        self._size += 1  # Sor hosszának frissítése
 
     def push_first(self, num: int):
-        """Front of the queue enqueue"""
+        """Sor elejére való sorba állás"""
         self.push(num, True)
 
     def push_last(self, num: int):
-        """Rear of the queue enqueue"""
+        """Sor végére való sorba állás"""
         self.push(num, False)
 
     def pop(self, is_front: bool) -> int:
-        """Dequeue operation"""
+        """Sorból kivétel művelet"""
         if self.is_empty():
-            raise IndexError("Double-ended queue is empty")
-        # Front of the queue dequeue operation
+            raise IndexError("A kétirányú sor üres")
+        # Sor elejéről való kivétel
         if is_front:
-            val: int = self._front.val  # Temporarily store head node value
-            # Delete head node
+            val: int = self._front.val  # Fejcsomópont értékének ideiglenes tárolása
+            # Fejcsomópont törlése
             fnext: ListNode | None = self._front.next
             if fnext is not None:
                 fnext.prev = None
                 self._front.next = None
-            self._front = fnext  # Update head node
-        # Rear of the queue dequeue operation
+            self._front = fnext  # Fejcsomópont frissítése
+        # Sor végéről való kivétel
         else:
-            val: int = self._rear.val  # Temporarily store tail node value
-            # Delete tail node
+            val: int = self._rear.val  # Farokcsomópont értékének ideiglenes tárolása
+            # Farokcsomópont törlése
             rprev: ListNode | None = self._rear.prev
             if rprev is not None:
                 rprev.next = None
                 self._rear.prev = None
-            self._rear = rprev  # Update tail node
-        self._size -= 1  # Update queue length
+            self._rear = rprev  # Farokcsomópont frissítése
+        self._size -= 1  # Sor hosszának frissítése
         return val
 
     def pop_first(self) -> int:
-        """Front of the queue dequeue"""
+        """Sor elejéről való kivétel"""
         return self.pop(True)
 
     def pop_last(self) -> int:
-        """Rear of the queue dequeue"""
+        """Sor végéről való kivétel"""
         return self.pop(False)
 
     def peek_first(self) -> int:
-        """Access front of the queue element"""
+        """A sor elejének eleme"""
         if self.is_empty():
-            raise IndexError("Double-ended queue is empty")
+            raise IndexError("A kétirányú sor üres")
         return self._front.val
 
     def peek_last(self) -> int:
-        """Access rear of the queue element"""
+        """A sor végének eleme"""
         if self.is_empty():
-            raise IndexError("Double-ended queue is empty")
+            raise IndexError("A kétirányú sor üres")
         return self._rear.val
 
     def to_array(self) -> list[int]:
-        """Return array for printing"""
+        """Tömb visszaadása nyomtatáshoz"""
         node = self._front
         res = [0] * self.size()
         for i in range(self.size()):
@@ -115,37 +115,37 @@ class LinkedListDeque:
         return res
 
 
-"""Driver Code"""
+"""Fő kód"""
 if __name__ == "__main__":
-    # Initialize double-ended queue
+    # Kétirányú sor inicializálása
     deque = LinkedListDeque()
     deque.push_last(3)
     deque.push_last(2)
     deque.push_last(5)
-    print("double-ended queue deque =", deque.to_array())
+    print("kétirányú sor deque =", deque.to_array())
 
-    # Access elements
+    # Elemek elérése
     peek_first: int = deque.peek_first()
-    print("Front of the queue element peek_first =", peek_first)
+    print("Sor eleje peek_first =", peek_first)
     peek_last: int = deque.peek_last()
-    print("Rear of the queue element peek_last =", peek_last)
+    print("Sor vége peek_last =", peek_last)
 
-    # Elements enqueue
+    # Elemek sorba állítása
     deque.push_last(4)
-    print("Element 4 rear enqueue after deque =", deque.to_array())
+    print("A 4-es elem sor végéhez adása után deque =", deque.to_array())
     deque.push_first(1)
-    print("Element 1 front enqueue after deque =", deque.to_array())
+    print("Az 1-es elem sor elejéhez adása után deque =", deque.to_array())
 
-    # Elements dequeue
+    # Elemek kivétele
     pop_last: int = deque.pop_last()
-    print("Rear dequeued element =", pop_last, ", rear dequeue after deque =", deque.to_array())
+    print("Sor végéről kivett elem =", pop_last, ", sor végéről kivétel után deque =", deque.to_array())
     pop_first: int = deque.pop_first()
-    print("Front dequeued element =", pop_first, ", front dequeue after deque =", deque.to_array())
+    print("Sor elejéről kivett elem =", pop_first, ", sor elejéről kivétel után deque =", deque.to_array())
 
-    # Get the length of the double-ended queue
+    # A kétirányú sor hosszának lekérése
     size: int = deque.size()
-    print("Length of the double-ended queue size =", size)
+    print("Kétirányú sor hossza size =", size)
 
-    # Check if the double-ended queue is empty
+    # Ellenőrzi, hogy a kétirányú sor üres-e
     is_empty: bool = deque.is_empty()
-    print("Is the double-ended queue empty =", is_empty)
+    print("A kétirányú sor üres-e =", is_empty)

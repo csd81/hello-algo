@@ -12,54 +12,54 @@ from modules import TreeNode, list_to_tree, print_tree
 
 
 def pre_order(root: TreeNode | None):
-    """Preorder traversal"""
+    """Előrendű bejárás"""
     if root is None:
         return
-    # Visit priority: root node -> left subtree -> right subtree
+    # Látogatási sorrend: gyökércsomópont -> bal részfa -> jobb részfa
     res.append(root.val)
     pre_order(root=root.left)
     pre_order(root=root.right)
 
 
 def in_order(root: TreeNode | None):
-    """Inorder traversal"""
+    """Közrendű bejárás"""
     if root is None:
         return
-    # Visit priority: left subtree -> root node -> right subtree
+    # Látogatási sorrend: bal részfa -> gyökércsomópont -> jobb részfa
     in_order(root=root.left)
     res.append(root.val)
     in_order(root=root.right)
 
 
 def post_order(root: TreeNode | None):
-    """Postorder traversal"""
+    """Utórendű bejárás"""
     if root is None:
         return
-    # Visit priority: left subtree -> right subtree -> root node
+    # Látogatási sorrend: bal részfa -> jobb részfa -> gyökércsomópont
     post_order(root=root.left)
     post_order(root=root.right)
     res.append(root.val)
 
 
-"""Driver Code"""
+"""Fő kód"""
 if __name__ == "__main__":
-    # Initialize binary tree
-    # Here we use a function to generate a binary tree directly from an array
+    # Bináris fa inicializálása
+    # Tömbből közvetlenül bináris fát generáló függvény használata
     root = list_to_tree(arr=[1, 2, 3, 4, 5, 6, 7])
-    print("\nInitialize binary tree\n")
+    print("\nBináris fa inicializálása\n")
     print_tree(root)
 
-    # Preorder traversal
+    # Előrendű bejárás
     res = []
     pre_order(root)
-    print("\nPreorder traversal node print sequence = ", res)
+    print("\nElőrendű bejárás csomópont kiírási sorrendje = ", res)
 
-    # Inorder traversal
+    # Közrendű bejárás
     res.clear()
     in_order(root)
-    print("\nInorder traversal node print sequence = ", res)
+    print("\nKözrendű bejárás csomópont kiírási sorrendje = ", res)
 
-    # Postorder traversal
+    # Utórendű bejárás
     res.clear()
     post_order(root)
-    print("\nPostorder traversal node print sequence = ", res)
+    print("\nUtórendű bejárás csomópont kiírási sorrendje = ", res)

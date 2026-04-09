@@ -7,25 +7,25 @@
 const { printTree } = require('../modules/PrintUtil');
 const { TreeNode } = require('../modules/TreeNode');
 
-/* Build binary tree: divide and conquer */
+/* Bináris fa felépítése: oszd meg és uralkodj */
 function dfs(preorder, inorderMap, i, l, r) {
-    // Terminate when the subtree interval is empty
+    // Ha a részfa intervalluma üres, leállunk
     if (r - l < 0) return null;
-    // Initialize the root node
+    // A gyökércsomópont inicializálása
     const root = new TreeNode(preorder[i]);
-    // Query m to divide the left and right subtrees
+    // m lekérdezése a bal és jobb részfák szétválasztásához
     const m = inorderMap.get(preorder[i]);
-    // Subproblem: build the left subtree
+    // Részprobléma: bal részfa felépítése
     root.left = dfs(preorder, inorderMap, i + 1, l, m - 1);
-    // Subproblem: build the right subtree
+    // Részprobléma: jobb részfa felépítése
     root.right = dfs(preorder, inorderMap, i + 1 + m - l, m + 1, r);
-    // Return the root node
+    // A gyökércsomópontot visszaadjuk
     return root;
 }
 
-/* Build binary tree */
+/* Bináris fa felépítése */
 function buildTree(preorder, inorder) {
-    // Initialize hash map, storing the mapping from inorder elements to indices
+    // Hash tábla inicializálása, az inorder elemek és indexek leképezésének tárolása
     let inorderMap = new Map();
     for (let i = 0; i < inorder.length; i++) {
         inorderMap.set(inorder[i], i);
@@ -34,7 +34,7 @@ function buildTree(preorder, inorder) {
     return root;
 }
 
-/* Driver Code */
+/* Tesztkód */
 const preorder = [3, 9, 2, 1, 7];
 const inorder = [9, 3, 1, 2, 7];
 console.log('Preorder traversal = ' + JSON.stringify(preorder));

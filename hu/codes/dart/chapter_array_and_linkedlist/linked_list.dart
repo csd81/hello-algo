@@ -7,14 +7,14 @@
 import '../utils/list_node.dart';
 import '../utils/print_util.dart';
 
-/* Insert node P after node n0 in the linked list */
+/* P csomópont beillesztése az n0 csomópont után a láncolt listában */
 void insert(ListNode n0, ListNode P) {
   ListNode? n1 = n0.next;
   P.next = n1;
   n0.next = P;
 }
 
-/* Remove the first node after node n0 in the linked list */
+/* Az n0 csomópont utáni első csomópont eltávolítása a láncolt listából */
 void remove(ListNode n0) {
   if (n0.next == null) return;
   // n0 -> P -> n1
@@ -23,7 +23,7 @@ void remove(ListNode n0) {
   n0.next = n1;
 }
 
-/* Access the node at index index in the linked list */
+/* Az index indexű csomópont elérése a láncolt listában */
 ListNode? access(ListNode? head, int index) {
   for (var i = 0; i < index; i++) {
     if (head == null) return null;
@@ -32,7 +32,7 @@ ListNode? access(ListNode? head, int index) {
   return head;
 }
 
-/* Find the first node with value target in the linked list */
+/* Az első target értékű csomópont megkeresése a láncolt listában */
 int find(ListNode? head, int target) {
   int index = 0;
   while (head != null) {
@@ -45,16 +45,16 @@ int find(ListNode? head, int target) {
   return -1;
 }
 
-/* Driver Code */
+/* Főprogram */
 void main() {
-  // Initialize linked list
-  // Initialize each node
+  // Láncolt lista inicializálása
+  // Minden csomópont inicializálása
   ListNode n0 = ListNode(1);
   ListNode n1 = ListNode(3);
   ListNode n2 = ListNode(2);
   ListNode n3 = ListNode(5);
   ListNode n4 = ListNode(4);
-  // Build references between nodes
+  // Csomópontok közötti hivatkozások felépítése
   n0.next = n1;
   n1.next = n2;
   n2.next = n3;
@@ -63,21 +63,21 @@ void main() {
   print('Initialized linked list is');
   printLinkedList(n0);
 
-  /* Insert node */
+  /* Csomópont beillesztése */
   insert(n0, ListNode(0));
   print('Linked list after inserting node is');
   printLinkedList(n0);
 
-  /* Remove node */
+  /* Csomópont eltávolítása */
   remove(n0);
   print('Linked list after removing node is');
   printLinkedList(n0);
 
-  /* Access node */
+  /* Csomópont elérése */
   ListNode? node = access(n0, 3);
   print('Value of node at index 3 in linked list = ${node!.val}');
 
-  /* Search node */
+  /* Csomópont keresése */
   int index = find(n0, 2);
   print('Index of node with value 2 in linked list = $index');
 }

@@ -6,76 +6,76 @@
 
 import '../utils/print_util.dart';
 
-/* Undirected graph class based on adjacency matrix */
+/* Szomszédsági mátrixon alapuló irányítatlan gráf osztály */
 class GraphAdjMat {
-  List<int> vertices = []; // Vertex elements, elements represent "vertex values", indices represent "vertex indices"
-  List<List<int>> adjMat = []; // Adjacency matrix, where the row and column indices correspond to the "vertex index"
+  List<int> vertices = []; // Csúcselemek, az elemek a "csúcsértékeket", az indexek a "csúcsindexeket" jelölik
+  List<List<int>> adjMat = []; // Szomszédsági mátrix, ahol a sor- és oszlopindexek a "csúcsindexeknek" felelnek meg
 
-  /* Constructor */
+  /* Konstruktor */
   GraphAdjMat(List<int> vertices, List<List<int>> edges) {
     this.vertices = [];
     this.adjMat = [];
-    // Add vertex
+    // Csúcs hozzáadása
     for (int val in vertices) {
       addVertex(val);
     }
-    // Add edge
-    // Note that the edges elements represent vertex indices, i.e., corresponding to the vertices element indices
+    // Él hozzáadása
+    // Megjegyzés: az élek elemei csúcsindexeket jelölnek, azaz a vertices elemek indexeinek felelnek meg
     for (List<int> e in edges) {
       addEdge(e[0], e[1]);
     }
   }
 
-  /* Get the number of vertices */
+  /* Csúcsok számának lekérése */
   int size() {
     return vertices.length;
   }
 
-  /* Add vertex */
+  /* Csúcs hozzáadása */
   void addVertex(int val) {
     int n = size();
-    // Add the value of the new vertex to the vertex list
+    // Az új csúcs értékének hozzáadása a csúcslistához
     vertices.add(val);
-    // Add a row to the adjacency matrix
+    // Sor hozzáadása a szomszédsági mátrixhoz
     List<int> newRow = List.filled(n, 0, growable: true);
     adjMat.add(newRow);
-    // Add a column to the adjacency matrix
+    // Oszlop hozzáadása a szomszédsági mátrixhoz
     for (List<int> row in adjMat) {
       row.add(0);
     }
   }
 
-  /* Remove vertex */
+  /* Csúcs eltávolítása */
   void removeVertex(int index) {
     if (index >= size()) {
       throw IndexError;
     }
-    // Remove the vertex at index from the vertex list
+    // Az index pozíciójú csúcs eltávolítása a csúcslistából
     vertices.removeAt(index);
-    // Remove the row at index from the adjacency matrix
+    // Az index pozíciójú sor eltávolítása a szomszédsági mátrixból
     adjMat.removeAt(index);
-    // Remove the column at index from the adjacency matrix
+    // Az index pozíciójú oszlop eltávolítása a szomszédsági mátrixból
     for (List<int> row in adjMat) {
       row.removeAt(index);
     }
   }
 
-  /* Add edge */
-  // Parameters i, j correspond to the vertices element indices
+  /* Él hozzáadása */
+  // Az i, j paraméterek a vertices elemek indexeinek felelnek meg
   void addEdge(int i, int j) {
-    // Handle index out of bounds and equality
+    // Indexhatáron kívüli és egyenlőségi esetek kezelése
     if (i < 0 || j < 0 || i >= size() || j >= size() || i == j) {
       throw IndexError;
     }
-    // In an undirected graph, the adjacency matrix is symmetric about the main diagonal, i.e., (i, j) == (j, i)
+    // Irányítatlan gráfban a szomszédsági mátrix szimmetrikus a főátlóra, azaz (i, j) == (j, i)
     adjMat[i][j] = 1;
     adjMat[j][i] = 1;
   }
 
-  /* Remove edge */
-  // Parameters i, j correspond to the vertices element indices
+  /* Él eltávolítása */
+  // Az i, j paraméterek a vertices elemek indexeinek felelnek meg
   void removeEdge(int i, int j) {
-    // Handle index out of bounds and equality
+    // Indexhatáron kívüli és egyenlőségi esetek kezelése
     if (i < 0 || j < 0 || i >= size() || j >= size() || i == j) {
       throw IndexError;
     }
@@ -83,7 +83,7 @@ class GraphAdjMat {
     adjMat[j][i] = 0;
   }
 
-  /* Print adjacency matrix */
+  /* Szomszédsági mátrix kiírása */
   void printAdjMat() {
     print("Vertex list = $vertices");
     print("Adjacency matrix = ");
@@ -91,10 +91,10 @@ class GraphAdjMat {
   }
 }
 
-/* Driver Code */
+/* Főprogram */
 void main() {
-  /* Add edge */
-  // Note that the edges elements represent vertex indices, i.e., corresponding to the vertices element indices
+  /* Él hozzáadása */
+  // Megjegyzés: az élek elemei csúcsindexeket jelölnek, azaz a vertices elemek indexeinek felelnek meg
   List<int> vertices = [1, 3, 2, 5, 4];
   List<List<int>> edges = [
     [0, 1],
@@ -108,25 +108,25 @@ void main() {
   print("\nAfter initialization, graph is");
   graph.printAdjMat();
 
-  /* Add edge */
-  // Add vertex
+  /* Él hozzáadása */
+  // Csúcs hozzáadása
   graph.addEdge(0, 2);
   print("\nAfter adding edge 1-2, graph is");
   graph.printAdjMat();
 
-  /* Remove edge */
-  // Vertices 1, 3 have indices 0, 1 respectively
+  /* Él eltávolítása */
+  // Az 1-es, 3-as csúcsok indexei rendre 0, 1
   graph.removeEdge(0, 1);
   print("\nAfter removing edge 1-3, graph is");
   graph.printAdjMat();
 
-  /* Add vertex */
+  /* Csúcs hozzáadása */
   graph.addVertex(6);
   print("\nAfter adding vertex 6, graph is");
   graph.printAdjMat();
 
-  /* Remove vertex */
-  // Vertex 3 has index 1
+  /* Csúcs eltávolítása */
+  // A 3-as csúcs indexe 1
   graph.removeVertex(1);
   print("\nAfter removing vertex 3, graph is");
   graph.printAdjMat();

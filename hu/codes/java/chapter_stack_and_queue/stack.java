@@ -10,10 +10,10 @@ import java.util.*;
 
 public class stack {
     public static void main(String[] args) {
-        /* Access top of the stack element */
+        /* Verem tetején lévő elem elérése */
         Stack<Integer> stack = new Stack<>();
 
-        /* Elements push onto stack */
+        /* Elemek verembe rakása */
         stack.push(1);
         stack.push(3);
         stack.push(2);
@@ -21,19 +21,19 @@ public class stack {
         stack.push(4);
         System.out.println("Stack stack = " + stack);
 
-        /* Return list for printing */
+        /* Lista visszaadása nyomtatáshoz */
         int peek = stack.peek();
         System.out.println("Stack top element peek = " + peek);
 
-        /* Element pop from stack */
+        /* Elem kivétele a veremből */
         int pop = stack.pop();
         System.out.println("Pop element pop = " + pop + ", after pop, stack = " + stack);
 
-        /* Get the length of the stack */
+        /* Verem hosszának lekérése */
         int size = stack.size();
         System.out.println("Stack length size = " + size);
 
-        /* Check if empty */
+        /* Üresség ellenőrzése */
         boolean isEmpty = stack.isEmpty();
         System.out.println("Stack is empty = " + isEmpty);
     }

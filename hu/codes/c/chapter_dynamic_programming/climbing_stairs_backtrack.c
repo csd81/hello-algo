@@ -6,29 +6,29 @@
 
 #include "../utils/common.h"
 
-/* Backtracking */
+/* Visszalépés */
 void backtrack(int *choices, int state, int n, int *res, int len) {
-    // When climbing to the n-th stair, add 1 to the solution count
+    // Ha elértük az n-edik lépcsőfokot, növeljük a megoldások számát 1-gyel
     if (state == n)
         res[0]++;
-    // Traverse all choices
+    // Az összes lehetőség bejárása
     for (int i = 0; i < len; i++) {
         int choice = choices[i];
-        // Pruning: not allowed to go beyond the n-th stair
+        // Vágás: nem szabad az n-edik lépcsőfokot meghaladni
         if (state + choice > n)
             continue;
-        // Attempt: make choice, update state
+        // Kísérlet: választás végrehajtása, állapot frissítése
         backtrack(choices, state + choice, n, res, len);
-        // Backtrack
+        // Visszalépés
     }
 }
 
-/* Climbing stairs: Backtracking */
+/* Lépcsőmászás: visszalépés */
 int climbingStairsBacktrack(int n) {
-    int choices[2] = {1, 2}; // Can choose to climb up 1 or 2 stairs
-    int state = 0;           // Start climbing from the 0-th stair
+    int choices[2] = {1, 2}; // Egyszerre 1 vagy 2 lépcsőfokot lehet mászni
+    int state = 0;           // Indulás a 0. lépcsőfokról
     int *res = (int *)malloc(sizeof(int));
-    *res = 0; // Use res[0] to record the solution count
+    *res = 0; // res[0] tárolja a megoldások számát
     int len = sizeof(choices) / sizeof(int);
     backtrack(choices, state, n, res, len);
     int result = *res;
@@ -36,7 +36,7 @@ int climbingStairsBacktrack(int n) {
     return result;
 }
 
-/* Driver Code */
+/* Vezérlő kód */
 int main() {
     int n = 9;
 

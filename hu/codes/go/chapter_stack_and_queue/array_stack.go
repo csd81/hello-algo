@@ -4,43 +4,43 @@
 
 package chapter_stack_and_queue
 
-/* Stack based on array implementation */
+/* Tömbön alapuló verem implementáció */
 type arrayStack struct {
-	data []int // Data
+	data []int // Adatok
 }
 
-/* Access top of the stack element */
+/* Verem csúcselemének elérése */
 func newArrayStack() *arrayStack {
 	return &arrayStack{
-		// Set stack length to 0, capacity to 16
+		// Verem hosszát 0-ra, kapacitását 16-ra állítja
 		data: make([]int, 0, 16),
 	}
 }
 
-/* Stack length */
+/* Verem hossza */
 func (s *arrayStack) size() int {
 	return len(s.data)
 }
 
-/* Is stack empty */
+/* Verem üres-e */
 func (s *arrayStack) isEmpty() bool {
 	return s.size() == 0
 }
 
-/* Push */
+/* Push (push) */
 func (s *arrayStack) push(v int) {
-	// Slice will automatically expand
+	// A szelet automatikusan bővül
 	s.data = append(s.data, v)
 }
 
-/* Pop */
+/* Pop (pop) */
 func (s *arrayStack) pop() any {
 	val := s.peek()
 	s.data = s.data[:len(s.data)-1]
 	return val
 }
 
-/* Get stack top element */
+/* Verem csúcselemének lekérése */
 func (s *arrayStack) peek() any {
 	if s.isEmpty() {
 		return nil
@@ -49,7 +49,7 @@ func (s *arrayStack) peek() any {
 	return val
 }
 
-/* Get Slice for printing */
+/* Szelet lekérése kiíráshoz */
 func (s *arrayStack) toSlice() []int {
 	return s.data
 }

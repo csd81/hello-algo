@@ -4,23 +4,23 @@
  * Author: liuyuxin (gvenusleo@gmail.com)
  */
 
-/* Coin change II: Dynamic programming */
+/* Érmecserélés II: Dinamikus programozás */
 int coinChangeIIDP(List<int> coins, int amt) {
   int n = coins.length;
-  // Initialize dp table
+  // dp tábla inicializálása
   List<List<int>> dp = List.generate(n + 1, (index) => List.filled(amt + 1, 0));
-  // Initialize first column
+  // Első oszlop inicializálása
   for (int i = 0; i <= n; i++) {
     dp[i][0] = 1;
   }
-  // State transition
+  // Állapotátmenet
   for (int i = 1; i <= n; i++) {
     for (int a = 1; a <= amt; a++) {
       if (coins[i - 1] > a) {
-        // If exceeds target amount, don't select coin i
+        // Ha meghaladja a célösszeget, ne válaszd ki az i érmét
         dp[i][a] = dp[i - 1][a];
       } else {
-        // Sum of the two options: not selecting and selecting coin i
+        // A két lehetőség összege: nem választja ki vagy kiválasztja az i érmét
         dp[i][a] = dp[i - 1][a] + dp[i][a - coins[i - 1]];
       }
     }
@@ -28,20 +28,20 @@ int coinChangeIIDP(List<int> coins, int amt) {
   return dp[n][amt];
 }
 
-/* Coin change II: Space-optimized dynamic programming */
+/* Érmecserélés II: Tárhelyoptimalizált dinamikus programozás */
 int coinChangeIIDPComp(List<int> coins, int amt) {
   int n = coins.length;
-  // Initialize dp table
+  // dp tábla inicializálása
   List<int> dp = List.filled(amt + 1, 0);
   dp[0] = 1;
-  // State transition
+  // Állapotátmenet
   for (int i = 1; i <= n; i++) {
     for (int a = 1; a <= amt; a++) {
       if (coins[i - 1] > a) {
-        // If exceeds target amount, don't select coin i
+        // Ha meghaladja a célösszeget, ne válaszd ki az i érmét
         dp[a] = dp[a];
       } else {
-        // Sum of the two options: not selecting and selecting coin i
+        // A két lehetőség összege: nem választja ki vagy kiválasztja az i érmét
         dp[a] = dp[a] + dp[a - coins[i - 1]];
       }
     }
@@ -49,16 +49,16 @@ int coinChangeIIDPComp(List<int> coins, int amt) {
   return dp[amt];
 }
 
-/* Driver Code */
+/* Főprogram */
 void main() {
   List<int> coins = [1, 2, 5];
   int amt = 5;
 
-  // Dynamic programming
+  // Dinamikus programozás
   int res = coinChangeIIDP(coins, amt);
   print("Number of coin combinations to make target amount is $res");
 
-  // Space-optimized dynamic programming
+  // Tárhelyoptimalizált dinamikus programozás
   res = coinChangeIIDPComp(coins, amt);
   print("Number of coin combinations to make target amount is $res");
 }

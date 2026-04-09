@@ -6,57 +6,57 @@
 
 #include "../utils/common.h"
 
-/* Recursion */
+/* Rekurzió */
 int recur(int n) {
-    // Termination condition
+    // Leállási feltétel
     if (n == 1)
         return 1;
-    // Recurse: recursive call
+    // Rekurzív hívás
     int res = recur(n - 1);
-    // Return: return result
+    // Visszatérés: az eredmény visszaadása
     return n + res;
 }
 
-/* Simulate recursion using iteration */
+/* Rekurzió szimulálása iterációval */
 int forLoopRecur(int n) {
-    int stack[1000]; // Use a large array to simulate stack
-    int top = -1;    // Stack top index
+    int stack[1000]; // Nagy tömb használata a verem szimulálásához
+    int top = -1;    // Verem tetejének indexe
     int res = 0;
-    // Recurse: recursive call
+    // Rekurzív hívás szimulálása
     for (int i = n; i > 0; i--) {
-        // Simulate "recurse" with "push"
+        // "Rekurzió" szimulálása "push" művelettel
         stack[1 + top++] = i;
     }
-    // Return: return result
+    // Visszatérés szimulálása
     while (top >= 0) {
-        // Simulate "return" with "pop"
+        // "Visszatérés" szimulálása "pop" művelettel
         res += stack[top--];
     }
     // res = 1+2+3+...+n
     return res;
 }
 
-/* Tail recursion */
+/* Farokrekurzió */
 int tailRecur(int n, int res) {
-    // Termination condition
+    // Leállási feltétel
     if (n == 0)
         return res;
-    // Tail recursive call
+    // Farokrekurzív hívás
     return tailRecur(n - 1, res + n);
 }
 
-/* Fibonacci sequence: recursion */
+/* Fibonacci-sorozat: rekurzió */
 int fib(int n) {
-    // Termination condition f(1) = 0, f(2) = 1
+    // Leállási feltétel f(1) = 0, f(2) = 1
     if (n == 1 || n == 2)
         return n - 1;
-    // Recursive call f(n) = f(n-1) + f(n-2)
+    // Rekurzív hívás f(n) = f(n-1) + f(n-2)
     int res = fib(n - 1) + fib(n - 2);
-    // Return result f(n)
+    // f(n) eredmény visszaadása
     return res;
 }
 
-/* Driver Code */
+/* Vezérlő kód */
 int main() {
     int n = 5;
     int res;

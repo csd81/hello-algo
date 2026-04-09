@@ -6,31 +6,31 @@
 
 #include "../utils/common.hpp"
 
-/* Backtracking algorithm: Permutations I */
+/* Visszalépéses algoritmus: I. permutáció */
 void backtrack(vector<int> &state, const vector<int> &choices, vector<bool> &selected, vector<vector<int>> &res) {
-    // When the state length equals the number of elements, record the solution
+    // Ha az állapot hossza megegyezik az elemek számával, rögzítjük a megoldást
     if (state.size() == choices.size()) {
         res.push_back(state);
         return;
     }
-    // Traverse all choices
+    // Az összes lehetőség bejárása
     for (int i = 0; i < choices.size(); i++) {
         int choice = choices[i];
-        // Pruning: do not allow repeated selection of elements
+        // Vágás: elemek ismételt kiválasztása nem engedélyezett
         if (!selected[i]) {
-            // Attempt: make choice, update state
+            // Próbálkozás: lehetőség kiválasztása, állapot frissítése
             selected[i] = true;
             state.push_back(choice);
-            // Proceed to the next round of selection
+            // Következő kiválasztási kör végrehajtása
             backtrack(state, choices, selected, res);
-            // Backtrack: undo choice, restore to previous state
+            // Visszalépés: lehetőség visszavonása, előző állapot visszaállítása
             selected[i] = false;
             state.pop_back();
         }
     }
 }
 
-/* Permutations I */
+/* I. permutáció */
 vector<vector<int>> permutationsI(vector<int> nums) {
     vector<int> state;
     vector<bool> selected(nums.size(), false);

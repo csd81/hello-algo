@@ -7,7 +7,7 @@
 package chapter_hashing;
 
 public class simple_hash {
-    /* Additive hash */
+    /* Additív hash */
     static int addHash(String key) {
         long hash = 0;
         final int MODULUS = 1000000007;
@@ -17,7 +17,7 @@ public class simple_hash {
         return (int) hash;
     }
 
-    /* Multiplicative hash */
+    /* Multiplikatív hash */
     static int mulHash(String key) {
         long hash = 0;
         final int MODULUS = 1000000007;
@@ -37,7 +37,7 @@ public class simple_hash {
         return hash & MODULUS;
     }
 
-    /* Rotational hash */
+    /* Forgatásos hash */
     static int rotHash(String key) {
         long hash = 0;
         final int MODULUS = 1000000007;

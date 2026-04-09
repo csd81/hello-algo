@@ -4,39 +4,39 @@
  * Author: liuyuxin (gvenusleo@gmail.com)
  */
 
-/* Move a disk */
+/* Korong mozgatása */
 void move(List<int> src, List<int> tar) {
-  // Take out a disk from the top of src
+  // Vedd ki a korongot az src tetejéről
   int pan = src.removeLast();
-  // Place the disk on top of tar
+  // Helyezd a korongot a tar tetejére
   tar.add(pan);
 }
 
-/* Solve the Tower of Hanoi problem f(i) */
+/* Hanoi torony f(i) feladatának megoldása */
 void dfs(int i, List<int> src, List<int> buf, List<int> tar) {
-  // If there is only one disk left in src, move it directly to tar
+  // Ha csak egy korong maradt az src-ben, közvetlenül mozgasd tar-ba
   if (i == 1) {
     move(src, tar);
     return;
   }
-  // Subproblem f(i-1): move the top i-1 disks from src to buf using tar
+  // f(i-1) részfeladat: mozgasd a felső i-1 korongot src-ből buf-ba tar segítségével
   dfs(i - 1, src, tar, buf);
-  // Subproblem f(1): move the remaining disk from src to tar
+  // f(1) részfeladat: mozgasd a maradék korongot src-ből tar-ba
   move(src, tar);
-  // Subproblem f(i-1): move the top i-1 disks from buf to tar using src
+  // f(i-1) részfeladat: mozgasd a felső i-1 korongot buf-ból tar-ba src segítségével
   dfs(i - 1, buf, src, tar);
 }
 
-/* Solve the Tower of Hanoi problem */
+/* Hanoi torony feladatának megoldása */
 void solveHanota(List<int> A, List<int> B, List<int> C) {
   int n = A.length;
-  // Move the top n disks from A to C using B
+  // A felső n korongot A-ból C-be mozgatja B segítségével
   dfs(n, A, B, C);
 }
 
-/* Driver Code */
+/* Főprogram */
 void main() {
-  // The tail of the list is the top of the rod
+  // A lista vége a rúd teteje
   List<int> A = [5, 4, 3, 2, 1];
   List<int> B = [];
   List<int> C = [];

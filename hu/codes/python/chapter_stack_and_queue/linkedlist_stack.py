@@ -12,43 +12,43 @@ from modules import ListNode
 
 
 class LinkedListStack:
-    """Stack based on linked list implementation"""
+    """Láncolt listán alapuló verem implementáció"""
 
     def __init__(self):
-        """Constructor"""
+        """Konstruktor"""
         self._peek: ListNode | None = None
         self._size: int = 0
 
     def size(self) -> int:
-        """Get the length of the stack"""
+        """A verem hosszának lekérése"""
         return self._size
 
     def is_empty(self) -> bool:
-        """Check if the stack is empty"""
+        """Ellenőrzi, hogy a verem üres-e"""
         return self._size == 0
 
     def push(self, val: int):
-        """Push"""
+        """Push (elem betolása)"""
         node = ListNode(val)
         node.next = self._peek
         self._peek = node
         self._size += 1
 
     def pop(self) -> int:
-        """Pop"""
+        """Pop (elem kivétele)"""
         num = self.peek()
         self._peek = self._peek.next
         self._size -= 1
         return num
 
     def peek(self) -> int:
-        """Access top of the stack element"""
+        """A verem tetején lévő elem elérése"""
         if self.is_empty():
-            raise IndexError("Stack is empty")
+            raise IndexError("A verem üres")
         return self._peek.val
 
     def to_list(self) -> list[int]:
-        """Convert to list for printing"""
+        """Lista visszaadása nyomtatáshoz"""
         arr = []
         node = self._peek
         while node:
@@ -58,32 +58,32 @@ class LinkedListStack:
         return arr
 
 
-"""Driver Code"""
+"""Fő kód"""
 if __name__ == "__main__":
-    # Initialize stack
+    # Verem inicializálása
     stack = LinkedListStack()
 
-    # Elements push onto stack
+    # Elemek betolása a verembe
     stack.push(1)
     stack.push(3)
     stack.push(2)
     stack.push(5)
     stack.push(4)
-    print("stack =", stack.to_list())
+    print("verem =", stack.to_list())
 
-    # Access top of the stack element
+    # A verem tetején lévő elem elérése
     peek: int = stack.peek()
-    print("Top of the stack element peek =", peek)
+    print("Verem teteje elem peek =", peek)
 
-    # Element pop from stack
+    # Elem kivétele a veremből
     pop: int = stack.pop()
-    print("Popped element pop =", pop)
-    print("After pop stack =", stack.to_list())
+    print("Kivett elem pop =", pop)
+    print("Pop után verem =", stack.to_list())
 
-    # Get the length of the stack
+    # A verem hosszának lekérése
     size: int = stack.size()
-    print("Length of the stack size =", size)
+    print("Verem hossza size =", size)
 
-    # Check if it is empty
+    # Ellenőrzi, hogy üres-e
     is_empty: bool = stack.is_empty()
-    print("Is the stack empty =", is_empty)
+    print("A verem üres-e =", is_empty)

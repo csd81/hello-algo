@@ -6,100 +6,100 @@
 
 #include "../utils/common.h"
 
-/* Find maximum value */
+/* Maximum érték meghatározása */
 int myMax(int a, int b) {
     return a > b ? a : b;
 }
 
-/* 0-1 knapsack: Brute-force search */
+/* 0-1 hátizsák: nyers erő keresés */
 int knapsackDFS(int wgt[], int val[], int i, int c) {
-    // If all items have been selected or knapsack has no remaining capacity, return value 0
+    // Ha minden tárgyat kiválasztottak, vagy a hátizsákban nincs szabad kapacitás, visszaad 0-t
     if (i == 0 || c == 0) {
         return 0;
     }
-    // If exceeds knapsack capacity, can only choose not to put it in
+    // Ha meghaladja a hátizsák kapacitását, csak a mellőzés lehetséges
     if (wgt[i - 1] > c) {
         return knapsackDFS(wgt, val, i - 1, c);
     }
-    // Calculate the maximum value of not putting in and putting in item i
+    // Az i-edik tárgy be nem rakásának és berakásának maximális értékét számítja ki
     int no = knapsackDFS(wgt, val, i - 1, c);
     int yes = knapsackDFS(wgt, val, i - 1, c - wgt[i - 1]) + val[i - 1];
-    // Return the larger value of the two options
+    // A két lehetőség közül a nagyobb értéket adja vissza
     return myMax(no, yes);
 }
 
-/* 0-1 knapsack: Memoization search */
+/* 0-1 hátizsák: memorizálásos keresés */
 int knapsackDFSMem(int wgt[], int val[], int memCols, int **mem, int i, int c) {
-    // If all items have been selected or knapsack has no remaining capacity, return value 0
+    // Ha minden tárgyat kiválasztottak, vagy a hátizsákban nincs szabad kapacitás, visszaad 0-t
     if (i == 0 || c == 0) {
         return 0;
     }
-    // If there's a record, return it directly
+    // Ha létezik rekord, közvetlenül visszaadja
     if (mem[i][c] != -1) {
         return mem[i][c];
     }
-    // If exceeds knapsack capacity, can only choose not to put it in
+    // Ha meghaladja a hátizsák kapacitását, csak a mellőzés lehetséges
     if (wgt[i - 1] > c) {
         return knapsackDFSMem(wgt, val, memCols, mem, i - 1, c);
     }
-    // Calculate the maximum value of not putting in and putting in item i
+    // Az i-edik tárgy be nem rakásának és berakásának maximális értékét számítja ki
     int no = knapsackDFSMem(wgt, val, memCols, mem, i - 1, c);
     int yes = knapsackDFSMem(wgt, val, memCols, mem, i - 1, c - wgt[i - 1]) + val[i - 1];
-    // Record and return the larger value of the two options
+    // A két lehetőség közül a nagyobb értéket rögzíti és visszaadja
     mem[i][c] = myMax(no, yes);
     return mem[i][c];
 }
 
-/* 0-1 knapsack: Dynamic programming */
+/* 0-1 hátizsák: dinamikus programozás */
 int knapsackDP(int wgt[], int val[], int cap, int wgtSize) {
     int n = wgtSize;
-    // Initialize dp table
+    // dp tábla inicializálása
     int **dp = malloc((n + 1) * sizeof(int *));
     for (int i = 0; i <= n; i++) {
         dp[i] = calloc(cap + 1, sizeof(int));
     }
-    // State transition
+    // Állapotátmenet
     for (int i = 1; i <= n; i++) {
         for (int c = 1; c <= cap; c++) {
             if (wgt[i - 1] > c) {
-                // If exceeds knapsack capacity, don't select item i
+                // Ha meghaladja a hátizsák kapacitását, ne válassza az i-edik tárgyat
                 dp[i][c] = dp[i - 1][c];
             } else {
-                // The larger value between not selecting and selecting item i
+                // A nagyobb érték: az i-edik tárgy nem kiválasztása és kiválasztása között
                 dp[i][c] = myMax(dp[i - 1][c], dp[i - 1][c - wgt[i - 1]] + val[i - 1]);
             }
         }
     }
     int res = dp[n][cap];
-    // Free memory
+    // Memória felszabadítása
     for (int i = 0; i <= n; i++) {
         free(dp[i]);
     }
     return res;
 }
 
-/* 0-1 knapsack: Space-optimized dynamic programming */
+/* 0-1 hátizsák: helytakarékos dinamikus programozás */
 int knapsackDPComp(int wgt[], int val[], int cap, int wgtSize) {
     int n = wgtSize;
-    // Initialize dp table
+    // dp tábla inicializálása
     int *dp = calloc(cap + 1, sizeof(int));
-    // State transition
+    // Állapotátmenet
     for (int i = 1; i <= n; i++) {
-        // Traverse in reverse order
+        // Fordított sorrendű bejárás
         for (int c = cap; c >= 1; c--) {
             if (wgt[i - 1] <= c) {
-                // The larger value between not selecting and selecting item i
+                // A nagyobb érték: az i-edik tárgy nem kiválasztása és kiválasztása között
                 dp[c] = myMax(dp[c], dp[c - wgt[i - 1]] + val[i - 1]);
             }
         }
     }
     int res = dp[cap];
-    // Free memory
+    // Memória felszabadítása
     free(dp);
     return res;
 }
 
-/* Driver Code */
+/* Vezérlő kód */
 int main() {
     int wgt[] = {10, 20, 30, 40, 50};
     int val[] = {50, 120, 150, 210, 240};
@@ -107,11 +107,11 @@ int main() {
     int n = sizeof(wgt) / sizeof(wgt[0]);
     int wgtSize = n;
 
-    // Brute-force search
+    // Nyers erő keresés
     int res = knapsackDFS(wgt, val, n, cap);
     printf("Maximum item value not exceeding knapsack capacity is %d\n", res);
 
-    // Memoization search
+    // Memorizálásos keresés
     int **mem = malloc((n + 1) * sizeof(int *));
     for (int i = 0; i <= n; i++) {
         mem[i] = malloc((cap + 1) * sizeof(int));
@@ -119,17 +119,17 @@ int main() {
     }
     res = knapsackDFSMem(wgt, val, cap + 1, mem, n, cap);
     printf("Maximum item value not exceeding knapsack capacity is %d\n", res);
-    // Free memory
+    // Memória felszabadítása
     for (int i = 0; i <= n; i++) {
         free(mem[i]);
     }
     free(mem);
 
-    // Dynamic programming
+    // Dinamikus programozás
     res = knapsackDP(wgt, val, cap, wgtSize);
     printf("Maximum item value not exceeding knapsack capacity is %d\n", res);
 
-    // Space-optimized dynamic programming
+    // Helytakarékos dinamikus programozás
     res = knapsackDPComp(wgt, val, cap, wgtSize);
     printf("Maximum item value not exceeding knapsack capacity is %d\n", res);
 

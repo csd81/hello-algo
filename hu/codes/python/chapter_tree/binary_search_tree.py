@@ -12,53 +12,53 @@ from modules import TreeNode, print_tree
 
 
 class BinarySearchTree:
-    """Binary search tree"""
+    """Bináris keresőfa"""
 
     def __init__(self):
-        """Constructor"""
-        # Initialize empty tree
+        """Konstruktor"""
+        # Üres fa inicializálása
         self._root = None
 
     def get_root(self) -> TreeNode | None:
-        """Get binary tree root node"""
+        """A bináris fa gyökércsomópontjának lekérése"""
         return self._root
 
     def search(self, num: int) -> TreeNode | None:
-        """Search node"""
+        """Csomópont keresése"""
         cur = self._root
-        # Loop search, exit after passing leaf node
+        # Ciklusos keresés, a levélcsomópont után kilép
         while cur is not None:
-            # Target node is in cur's right subtree
+            # A célcsomópont a cur jobb részfájában van
             if cur.val < num:
                 cur = cur.right
-            # Target node is in cur's left subtree
+            # A célcsomópont a cur bal részfájában van
             elif cur.val > num:
                 cur = cur.left
-            # Found target node, exit loop
+            # Megtalálta a célcsomópontot, kilép a ciklusból
             else:
                 break
         return cur
 
     def insert(self, num: int):
-        """Insert node"""
-        # If tree is empty, initialize root node
+        """Csomópont beszúrása"""
+        # Ha a fa üres, a gyökércsomópontot inicializálja
         if self._root is None:
             self._root = TreeNode(num)
             return
-        # Loop search, exit after passing leaf node
+        # Ciklusos keresés, a levélcsomópont után kilép
         cur, pre = self._root, None
         while cur is not None:
-            # Found duplicate node, return directly
+            # Duplikált csomópont találva, közvetlenül visszatér
             if cur.val == num:
                 return
             pre = cur
-            # Insertion position is in cur's right subtree
+            # A beszúrási pozíció a cur jobb részfájában van
             if cur.val < num:
                 cur = cur.right
-            # Insertion position is in cur's left subtree
+            # A beszúrási pozíció a cur bal részfájában van
             else:
                 cur = cur.left
-        # Insert node
+        # Csomópont beszúrása
         node = TreeNode(num)
         if pre.val < num:
             pre.right = node
@@ -66,81 +66,81 @@ class BinarySearchTree:
             pre.left = node
 
     def remove(self, num: int):
-        """Delete node"""
-        # If tree is empty, return directly
+        """Csomópont törlése"""
+        # Ha a fa üres, közvetlenül visszatér
         if self._root is None:
             return
-        # Loop search, exit after passing leaf node
+        # Ciklusos keresés, a levélcsomópont után kilép
         cur, pre = self._root, None
         while cur is not None:
-            # Found node to delete, exit loop
+            # Megtalálta a törlendő csomópontot, kilép a ciklusból
             if cur.val == num:
                 break
             pre = cur
-            # Node to delete is in cur's right subtree
+            # A törlendő csomópont a cur jobb részfájában van
             if cur.val < num:
                 cur = cur.right
-            # Node to delete is in cur's left subtree
+            # A törlendő csomópont a cur bal részfájában van
             else:
                 cur = cur.left
-        # If no node to delete, return directly
+        # Ha nincs törlendő csomópont, közvetlenül visszatér
         if cur is None:
             return
 
-        # Number of child nodes = 0 or 1
+        # Gyermekek száma = 0 vagy 1
         if cur.left is None or cur.right is None:
-            # When number of child nodes = 0 / 1, child = null / that child node
+            # Ha gyermekek száma = 0 / 1, child = null / az egyetlen gyermek
             child = cur.left or cur.right
-            # Delete node cur
+            # cur csomópont törlése
             if cur != self._root:
                 if pre.left == cur:
                     pre.left = child
                 else:
                     pre.right = child
             else:
-                # If deleted node is root node, reassign root node
+                # Ha a törölt csomópont a gyökér, a gyökércsomópontot újra hozzárendeli
                 self._root = child
-        # Number of child nodes = 2
+        # Gyermekek száma = 2
         else:
-            # Get next node of cur in inorder traversal
+            # A cur közrendű bejárásban következő csomópontjának lekérése
             tmp: TreeNode = cur.right
             while tmp.left is not None:
                 tmp = tmp.left
-            # Recursively delete node tmp
+            # tmp csomópont rekurzív törlése
             self.remove(tmp.val)
-            # Replace cur with tmp
+            # cur felváltása tmp-vel
             cur.val = tmp.val
 
 
-"""Driver Code"""
+"""Fő kód"""
 if __name__ == "__main__":
-    # Initialize binary search tree
+    # Bináris keresőfa inicializálása
     bst = BinarySearchTree()
     nums = [8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, 9, 11, 13, 15]
-    # Please note that different insertion orders will generate different binary trees, this sequence can generate a perfect binary tree
+    # Megjegyzés: a különböző beszúrási sorrendek különböző bináris fákat generálnak; ez a sorrend tökéletes bináris fát eredményez
     for num in nums:
         bst.insert(num)
-    print("\nInitialized binary tree is\n")
+    print("\nAz inicializált bináris fa:\n")
     print_tree(bst.get_root())
 
-    # Search node
+    # Csomópont keresése
     node = bst.search(7)
-    print("\nFound node object is: {}, node value = {}".format(node, node.val))
+    print("\nA talált csomópont objektum: {}, csomópont értéke = {}".format(node, node.val))
 
-    # Insert node
+    # Csomópont beszúrása
     bst.insert(16)
-    print("\nAfter inserting node 16, binary tree is\n")
+    print("\nA 16-os csomópont beszúrása után a bináris fa:\n")
     print_tree(bst.get_root())
 
-    # Delete node
+    # Csomópont törlése
     bst.remove(1)
-    print("\nAfter deleting node 1, binary tree is\n")
+    print("\nAz 1-es csomópont törlése után a bináris fa:\n")
     print_tree(bst.get_root())
 
     bst.remove(2)
-    print("\nAfter deleting node 2, binary tree is\n")
+    print("\nA 2-es csomópont törlése után a bináris fa:\n")
     print_tree(bst.get_root())
 
     bst.remove(4)
-    print("\nAfter deleting node 4, binary tree is\n")
+    print("\nA 4-es csomópont törlése után a bináris fa:\n")
     print_tree(bst.get_root())

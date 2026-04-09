@@ -10,59 +10,59 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class array {
-    /* Random access to element */
+    /* Véletlenszerű hozzáférés elemhez */
     static int randomAccess(int[] nums) {
-        // Randomly select a number in the interval [0, nums.length)
+        // Véletlenszerűen kiválaszt egy számot a [0, nums.length) intervallumból
         int randomIndex = ThreadLocalRandom.current().nextInt(0, nums.length);
-        // Retrieve and return the random element
+        // Lekéri és visszaadja a véletlen elemet
         int randomNum = nums[randomIndex];
         return randomNum;
     }
 
-    /* Extend array length */
+    /* Tömb hosszának bővítése */
     static int[] extend(int[] nums, int enlarge) {
-        // Initialize an array with extended length
+        // Inicializál egy bővített hosszú tömböt
         int[] res = new int[nums.length + enlarge];
-        // Copy all elements from the original array to the new array
+        // Az eredeti tömb összes elemét átmásolja az új tömbbe
         for (int i = 0; i < nums.length; i++) {
             res[i] = nums[i];
         }
-        // Return the extended new array
+        // Visszaadja a bővített új tömböt
         return res;
     }
 
-    /* Insert element num at index index in the array */
+    /* num elem beszúrása az index pozícióba */
     static void insert(int[] nums, int num, int index) {
-        // Move all elements at and after index index backward by one position
+        // Az index pozíciótól kezdve minden elemet eggyel hátrébb lép
         for (int i = nums.length - 1; i > index; i--) {
             nums[i] = nums[i - 1];
         }
-        // Assign num to the element at index index
+        // num-ot az index pozícióba rendeli
         nums[index] = num;
     }
 
-    /* Remove the element at index index */
+    /* Az index pozícióban lévő elem törlése */
     static void remove(int[] nums, int index) {
-        // Move all elements after index index forward by one position
+        // Az index utáni összes elemet eggyel előrébb lép
         for (int i = index; i < nums.length - 1; i++) {
             nums[i] = nums[i + 1];
         }
     }
 
-    /* Traverse array */
+    /* Tömb bejárása */
     static void traverse(int[] nums) {
         int count = 0;
-        // Traverse array by index
+        // Tömb bejárása index szerint
         for (int i = 0; i < nums.length; i++) {
             count += nums[i];
         }
-        // Direct traversal of array elements
+        // Tömb elemeinek közvetlen bejárása
         for (int num : nums) {
             count += num;
         }
     }
 
-    /* Find the specified element in the array */
+    /* A megadott elem megkeresése a tömbben */
     static int find(int[] nums, int target) {
         for (int i = 0; i < nums.length; i++) {
             if (nums[i] == target)
@@ -71,34 +71,34 @@ public class array {
         return -1;
     }
 
-    /* Driver Code */
+    /* Főprogram */
     public static void main(String[] args) {
-        /* Initialize array */
+        /* Tömb inicializálása */
         int[] arr = new int[5];
         System.out.println("Array arr = " + Arrays.toString(arr));
         int[] nums = { 1, 3, 2, 5, 4 };
         System.out.println("Array nums = " + Arrays.toString(nums));
 
-        /* Insert element */
+        /* Elem beszúrása */
         int randomNum = randomAccess(nums);
         System.out.println("Get random element in nums " + randomNum);
 
-        /* Traverse array */
+        /* Tömb bejárása */
         nums = extend(nums, 3);
         System.out.println("Extend array length to 8, resulting in nums = " + Arrays.toString(nums));
 
-        /* Insert element */
+        /* Elem beszúrása */
         insert(nums, 6, 3);
         System.out.println("Insert number 6 at index 3, resulting in nums = " + Arrays.toString(nums));
 
-        /* Remove element */
+        /* Elem törlése */
         remove(nums, 2);
         System.out.println("Remove element at index 2, resulting in nums = " + Arrays.toString(nums));
 
-        /* Traverse array */
+        /* Tömb bejárása */
         traverse(nums);
 
-        /* Find element */
+        /* Elem keresése */
         int index = find(nums, 3);
         System.out.println("Find element 3 in nums, get index = " + index);
     }

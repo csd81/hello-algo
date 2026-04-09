@@ -6,41 +6,41 @@
 
 #include "../utils/common.hpp"
 
-/* Backtracking algorithm: Subset sum II */
+/* Visszalépéses algoritmus: II. részösszeg */
 void backtrack(vector<int> &state, int target, vector<int> &choices, int start, vector<vector<int>> &res) {
-    // When the subset sum equals target, record the solution
+    // Ha a részösszeg egyenlő a targettel, rögzítjük a megoldást
     if (target == 0) {
         res.push_back(state);
         return;
     }
-    // Traverse all choices
-    // Pruning 2: start traversing from start to avoid generating duplicate subsets
-    // Pruning 3: start traversing from start to avoid repeatedly selecting the same element
+    // Az összes lehetőség bejárása
+    // 2. vágás: start-tól kezdve bejárva elkerüljük a duplikált részhalmazok generálását
+    // 3. vágás: start-tól kezdve bejárva elkerüljük ugyanazon elem ismételt kiválasztását
     for (int i = start; i < choices.size(); i++) {
-        // Pruning 1: if the subset sum exceeds target, end the loop directly
-        // This is because the array is sorted, and later elements are larger, so the subset sum will definitely exceed target
+        // 1. vágás: ha a részösszeg meghaladja a targetet, közvetlenül befejezzük a ciklust
+        // Ez azért van, mert a tömb rendezett, és a későbbi elemek nagyobbak, tehát a részösszeg biztosan meghaladja a targetet
         if (target - choices[i] < 0) {
             break;
         }
-        // Pruning 4: if this element equals the left element, it means this search branch is duplicate, skip it directly
+        // 4. vágás: ha ez az elem egyenlő a bal oldali elemmel, ez a keresési ág duplikált, közvetlenül kihagyjuk
         if (i > start && choices[i] == choices[i - 1]) {
             continue;
         }
-        // Attempt: make choice, update target, start
+        // Próbálkozás: lehetőség kiválasztása, target és start frissítése
         state.push_back(choices[i]);
-        // Proceed to the next round of selection
+        // Következő kiválasztási kör végrehajtása
         backtrack(state, target - choices[i], choices, i + 1, res);
-        // Backtrack: undo choice, restore to previous state
+        // Visszalépés: lehetőség visszavonása, előző állapot visszaállítása
         state.pop_back();
     }
 }
 
-/* Solve subset sum II */
+/* II. részösszeg megoldása */
 vector<vector<int>> subsetSumII(vector<int> &nums, int target) {
-    vector<int> state;              // State (subset)
-    sort(nums.begin(), nums.end()); // Sort nums
-    int start = 0;                  // Start point for traversal
-    vector<vector<int>> res;        // Result list (subset list)
+    vector<int> state;              // Állapot (részhalmaz)
+    sort(nums.begin(), nums.end()); // nums rendezése
+    int start = 0;                  // Bejárás kezdőpontja
+    vector<vector<int>> res;        // Eredménylista (részhalmazlista)
     backtrack(state, target, nums, start, res);
     return res;
 }

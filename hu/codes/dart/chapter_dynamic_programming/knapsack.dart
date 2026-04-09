@@ -6,24 +6,24 @@
 
 import 'dart:math';
 
-/* 0-1 knapsack: Brute-force search */
+/* 0-1 hátizsák: Nyers erő keresés */
 int knapsackDFS(List<int> wgt, List<int> val, int i, int c) {
-  // If all items have been selected or knapsack has no remaining capacity, return value 0
+  // Ha az összes tárgy ki lett választva, vagy a hátizsák teli van, adjon vissza 0-t
   if (i == 0 || c == 0) {
     return 0;
   }
-  // If exceeds knapsack capacity, can only choose not to put it in
+  // Ha meghaladja a hátizsák kapacitását, csak a "nem beletenni" opció választható
   if (wgt[i - 1] > c) {
     return knapsackDFS(wgt, val, i - 1, c);
   }
-  // Calculate the maximum value of not putting in and putting in item i
+  // Számítsd ki az i tárgy berakásának és ki nem rakásának maximális értékét
   int no = knapsackDFS(wgt, val, i - 1, c);
   int yes = knapsackDFS(wgt, val, i - 1, c - wgt[i - 1]) + val[i - 1];
-  // Return the larger value of the two options
+  // A két lehetőség nagyobb értékének visszaadása
   return max(no, yes);
 }
 
-/* 0-1 knapsack: Memoization search */
+/* 0-1 hátizsák: Memoizált keresés */
 int knapsackDFSMem(
   List<int> wgt,
   List<int> val,
@@ -31,39 +31,39 @@ int knapsackDFSMem(
   int i,
   int c,
 ) {
-  // If all items have been selected or knapsack has no remaining capacity, return value 0
+  // Ha az összes tárgy ki lett választva, vagy a hátizsák teli van, adjon vissza 0-t
   if (i == 0 || c == 0) {
     return 0;
   }
-  // If there's a record, return it directly
+  // Ha van bejegyzés, közvetlenül adja vissza
   if (mem[i][c] != -1) {
     return mem[i][c];
   }
-  // If exceeds knapsack capacity, can only choose not to put it in
+  // Ha meghaladja a hátizsák kapacitását, csak a "nem beletenni" opció választható
   if (wgt[i - 1] > c) {
     return knapsackDFSMem(wgt, val, mem, i - 1, c);
   }
-  // Calculate the maximum value of not putting in and putting in item i
+  // Számítsd ki az i tárgy berakásának és ki nem rakásának maximális értékét
   int no = knapsackDFSMem(wgt, val, mem, i - 1, c);
   int yes = knapsackDFSMem(wgt, val, mem, i - 1, c - wgt[i - 1]) + val[i - 1];
-  // Record and return the larger value of the two options
+  // A két lehetőség nagyobb értékének rögzítése és visszaadása
   mem[i][c] = max(no, yes);
   return mem[i][c];
 }
 
-/* 0-1 knapsack: Dynamic programming */
+/* 0-1 hátizsák: Dinamikus programozás */
 int knapsackDP(List<int> wgt, List<int> val, int cap) {
   int n = wgt.length;
-  // Initialize dp table
+  // dp tábla inicializálása
   List<List<int>> dp = List.generate(n + 1, (index) => List.filled(cap + 1, 0));
-  // State transition
+  // Állapotátmenet
   for (int i = 1; i <= n; i++) {
     for (int c = 1; c <= cap; c++) {
       if (wgt[i - 1] > c) {
-        // If exceeds knapsack capacity, don't select item i
+        // Ha meghaladja a hátizsák kapacitását, ne válaszd ki az i tárgyat
         dp[i][c] = dp[i - 1][c];
       } else {
-        // The larger value between not selecting and selecting item i
+        // A nagyobb érték: nem választja ki vagy kiválasztja az i tárgyat
         dp[i][c] = max(dp[i - 1][c], dp[i - 1][c - wgt[i - 1]] + val[i - 1]);
       }
     }
@@ -71,17 +71,17 @@ int knapsackDP(List<int> wgt, List<int> val, int cap) {
   return dp[n][cap];
 }
 
-/* 0-1 knapsack: Space-optimized dynamic programming */
+/* 0-1 hátizsák: Tárhelyoptimalizált dinamikus programozás */
 int knapsackDPComp(List<int> wgt, List<int> val, int cap) {
   int n = wgt.length;
-  // Initialize dp table
+  // dp tábla inicializálása
   List<int> dp = List.filled(cap + 1, 0);
-  // State transition
+  // Állapotátmenet
   for (int i = 1; i <= n; i++) {
-    // Traverse in reverse order
+    // Fordított sorrendű bejárás
     for (int c = cap; c >= 1; c--) {
       if (wgt[i - 1] <= c) {
-        // The larger value between not selecting and selecting item i
+        // A nagyobb érték: nem választja ki vagy kiválasztja az i tárgyat
         dp[c] = max(dp[c], dp[c - wgt[i - 1]] + val[i - 1]);
       }
     }
@@ -89,28 +89,28 @@ int knapsackDPComp(List<int> wgt, List<int> val, int cap) {
   return dp[cap];
 }
 
-/* Driver Code */
+/* Főprogram */
 void main() {
   List<int> wgt = [10, 20, 30, 40, 50];
   List<int> val = [50, 120, 150, 210, 240];
   int cap = 50;
   int n = wgt.length;
 
-  // Brute-force search
+  // Nyers erő keresés
   int res = knapsackDFS(wgt, val, n, cap);
   print("Maximum item value not exceeding knapsack capacity is $res");
 
-  // Memoization search
+  // Memoizált keresés
   List<List<int>> mem =
       List.generate(n + 1, (index) => List.filled(cap + 1, -1));
   res = knapsackDFSMem(wgt, val, mem, n, cap);
   print("Maximum item value not exceeding knapsack capacity is $res");
 
-  // Dynamic programming
+  // Dinamikus programozás
   res = knapsackDP(wgt, val, cap);
   print("Maximum item value not exceeding knapsack capacity is $res");
 
-  // Space-optimized dynamic programming
+  // Tárhelyoptimalizált dinamikus programozás
   res = knapsackDPComp(wgt, val, cap);
   print("Maximum item value not exceeding knapsack capacity is $res");
 }

@@ -8,103 +8,103 @@ package chapter_stack_and_queue;
 
 import java.util.*;
 
-/* Double-ended queue based on circular array implementation */
+/* Körkörös tömb alapú kétirányú sor implementáció */
 class ArrayDeque {
-    private int[] nums; // Array for storing double-ended queue elements
-    private int front; // Front pointer, points to the front of the queue element
-    private int queSize; // Double-ended queue length
+    private int[] nums; // Tömb a kétirányú sor elemeinak tárolásához
+    private int front; // Elő-mutató, a sor első elemére mutat
+    private int queSize; // Kétirányú sor hossza
 
-    /* Constructor */
+    /* Konstruktor */
     public ArrayDeque(int capacity) {
         this.nums = new int[capacity];
         front = queSize = 0;
     }
 
-    /* Get the capacity of the double-ended queue */
+    /* Kétirányú sor kapacitásának lekérése */
     public int capacity() {
         return nums.length;
     }
 
-    /* Get the length of the double-ended queue */
+    /* Kétirányú sor hosszának lekérése */
     public int size() {
         return queSize;
     }
 
-    /* Check if the double-ended queue is empty */
+    /* Kétirányú sor üresség ellenőrzése */
     public boolean isEmpty() {
         return queSize == 0;
     }
 
-    /* Calculate circular array index */
+    /* Körkörös tömb indexének kiszámítása */
     private int index(int i) {
-        // Use modulo operation to wrap the array head and tail together
-        // When i passes the tail of the array, return to the head
-        // When i passes the head of the array, return to the tail
+        // Moduló műveletet használva a tömb eleje és vége összekapcsolódik
+        // Ha i meghaladja a tömb végét, az elejére kerül
+        // Ha i meghaladja a tömb elejét, a végére kerül
         return (i + capacity()) % capacity();
     }
 
-    /* Front of the queue enqueue */
+    /* Sor elejére való besorolás */
     public void pushFirst(int num) {
         if (queSize == capacity()) {
             System.out.println("Double-ended queue is full");
             return;
         }
-        // Use modulo operation to wrap front around to the tail after passing the head of the array
-        // Add num to the front of the queue
+        // Moduló műveletet használva front a tömb elején túl a végére kerül
+        // num hozzáadása a sor elejéhez
         front = index(front - 1);
-        // Add num to front of queue
+        // num hozzáadása a sor elejéhez
         nums[front] = num;
         queSize++;
     }
 
-    /* Rear of the queue enqueue */
+    /* Sor végére való besorolás */
     public void pushLast(int num) {
         if (queSize == capacity()) {
             System.out.println("Double-ended queue is full");
             return;
         }
-        // Use modulo operation to wrap rear around to the head after passing the tail of the array
+        // Moduló műveletet használva rear a tömb végén túl az elejére kerül
         int rear = index(front + queSize);
-        // Front pointer moves one position backward
+        // Elő-mutató egy pozícióval hátra lép
         nums[rear] = num;
         queSize++;
     }
 
-    /* Rear of the queue dequeue */
+    /* Sor végéről való kisorolás */
     public int popFirst() {
         int num = peekFirst();
-        // Move front pointer backward by one position
+        // Elő-mutató egy pozícióval hátra lép
         front = index(front + 1);
         queSize--;
         return num;
     }
 
-    /* Access rear of the queue element */
+    /* Sor végén lévő elem elérése */
     public int popLast() {
         int num = peekLast();
         queSize--;
         return num;
     }
 
-    /* Return list for printing */
+    /* Lista visszaadása nyomtatáshoz */
     public int peekFirst() {
         if (isEmpty())
             throw new IndexOutOfBoundsException();
         return nums[front];
     }
 
-    /* Driver Code */
+    /* Főprogram */
     public int peekLast() {
         if (isEmpty())
             throw new IndexOutOfBoundsException();
-        // Initialize double-ended queue
+        // Kétirányú sor inicializálása
         int last = index(front + queSize - 1);
         return nums[last];
     }
 
-    /* Return array for printing */
+    /* Tömb visszaadása nyomtatáshoz */
     public int[] toArray() {
-        // Elements enqueue
+        // Elemek sorba rakása
         int[] res = new int[queSize];
         for (int i = 0, j = front; i < queSize; i++, j++) {
             res[i] = nums[index(j)];
@@ -115,36 +115,36 @@ class ArrayDeque {
 
 public class array_deque {
     public static void main(String[] args) {
-        /* Get the length of the double-ended queue */
+        /* Kétirányú sor hosszának lekérése */
         ArrayDeque deque = new ArrayDeque(10);
         deque.pushLast(3);
         deque.pushLast(2);
         deque.pushLast(5);
         System.out.println("Double-ended queue deque = " + Arrays.toString(deque.toArray()));
 
-        /* Update element */
+        /* Elem frissítése */
         int peekFirst = deque.peekFirst();
         System.out.println("Front element peekFirst = " + peekFirst);
         int peekLast = deque.peekLast();
         System.out.println("Rear element peekLast = " + peekLast);
 
-        /* Elements enqueue */
+        /* Elemek sorba rakása */
         deque.pushLast(4);
         System.out.println("After element 4 enqueues at rear, deque = " + Arrays.toString(deque.toArray()));
         deque.pushFirst(1);
         System.out.println("After element 1 enqueues at front, deque = " + Arrays.toString(deque.toArray()));
 
-        /* Element dequeue */
+        /* Elem kivétele */
         int popLast = deque.popLast();
         System.out.println("Rear dequeue element = " + popLast + ", after rear dequeue, deque = " + Arrays.toString(deque.toArray()));
         int popFirst = deque.popFirst();
         System.out.println("Front dequeue element = " + popFirst + ", after front dequeue, deque = " + Arrays.toString(deque.toArray()));
 
-        /* Get the length of the double-ended queue */
+        /* Kétirányú sor hosszának lekérése */
         int size = deque.size();
         System.out.println("Double-ended queue length size = " + size);
 
-        /* Check if the double-ended queue is empty */
+        /* Kétirányú sor üresség ellenőrzése */
         boolean isEmpty = deque.isEmpty();
         System.out.println("Double-ended queue is empty = " + isEmpty);
     }

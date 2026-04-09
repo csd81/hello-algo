@@ -9,30 +9,30 @@
 vector<TreeNode *> path;
 vector<vector<TreeNode *>> res;
 
-/* Preorder traversal: Example 2 */
+/* Preorder bejárás: 2. példa */
 void preOrder(TreeNode *root) {
     if (root == nullptr) {
         return;
     }
-    // Attempt
+    // Próbálkozás
     path.push_back(root);
     if (root->val == 7) {
-        // Record solution
+        // Megoldás rögzítése
         res.push_back(path);
     }
     preOrder(root->left);
     preOrder(root->right);
-    // Backtrack
+    // Visszalépés
     path.pop_back();
 }
 
-/* Driver Code */
+/* Főprogram */
 int main() {
     TreeNode *root = vectorToTree(vector<int>{1, 7, 3, 4, 5, 6, 7});
     cout << "\nInitialize binary tree" << endl;
     printTree(root);
 
-    // Preorder traversal
+    // Preorder bejárás
     preOrder(root);
 
     cout << "\nOutput all paths from root node to node 7" << endl;

@@ -6,134 +6,134 @@
 
 #include "../utils/common.h"
 
-/* Find minimum value */
+/* Minimum érték meghatározása */
 int myMin(int a, int b) {
     return a < b ? a : b;
 }
 
-/* Edit distance: Brute-force search */
-int editDistanceDFS(char *s, char *t, int i, int j) {    
-    // If both s and t are empty, return 0
+/* Szerkesztési távolság: nyers erő keresés */
+int editDistanceDFS(char *s, char *t, int i, int j) {
+    // Ha s és t is üres, visszaad 0-t
     if (i == 0 && j == 0)
         return 0;
-    // If s is empty, return length of t
+    // Ha s üres, visszaadja t hosszát
     if (i == 0)
         return j;
-    // If t is empty, return length of s
+    // Ha t üres, visszaadja s hosszát
     if (j == 0)
         return i;
-    // If two characters are equal, skip both characters
+    // Ha a két karakter egyenlő, kihagyja mindkét karaktert
     if (s[i - 1] == t[j - 1])
         return editDistanceDFS(s, t, i - 1, j - 1);
-    // Minimum edit steps = minimum edit steps of insert, delete, replace + 1
+    // Minimális szerkesztési lépések = beillesztés, törlés, csere minimális szerkesztési lépései + 1
     int insert = editDistanceDFS(s, t, i, j - 1);
     int del = editDistanceDFS(s, t, i - 1, j);
     int replace = editDistanceDFS(s, t, i - 1, j - 1);
-    // Return minimum edit steps
+    // Minimális szerkesztési lépések visszaadása
     return myMin(myMin(insert, del), replace) + 1;
 }
 
-/* Edit distance: Memoization search */
+/* Szerkesztési távolság: memorizálásos keresés */
 int editDistanceDFSMem(char *s, char *t, int memCols, int **mem, int i, int j) {
-    // If both s and t are empty, return 0
+    // Ha s és t is üres, visszaad 0-t
     if (i == 0 && j == 0)
         return 0;
-    // If s is empty, return length of t
+    // Ha s üres, visszaadja t hosszát
     if (i == 0)
         return j;
-    // If t is empty, return length of s
+    // Ha t üres, visszaadja s hosszát
     if (j == 0)
         return i;
-    // If there's a record, return it directly
+    // Ha létezik rekord, közvetlenül visszaadja
     if (mem[i][j] != -1)
         return mem[i][j];
-    // If two characters are equal, skip both characters
+    // Ha a két karakter egyenlő, kihagyja mindkét karaktert
     if (s[i - 1] == t[j - 1])
         return editDistanceDFSMem(s, t, memCols, mem, i - 1, j - 1);
-    // Minimum edit steps = minimum edit steps of insert, delete, replace + 1
+    // Minimális szerkesztési lépések = beillesztés, törlés, csere minimális szerkesztési lépései + 1
     int insert = editDistanceDFSMem(s, t, memCols, mem, i, j - 1);
     int del = editDistanceDFSMem(s, t, memCols, mem, i - 1, j);
     int replace = editDistanceDFSMem(s, t, memCols, mem, i - 1, j - 1);
-    // Record and return minimum edit steps
+    // A minimális szerkesztési lépések rögzítése és visszaadása
     mem[i][j] = myMin(myMin(insert, del), replace) + 1;
     return mem[i][j];
 }
 
-/* Edit distance: Dynamic programming */
+/* Szerkesztési távolság: dinamikus programozás */
 int editDistanceDP(char *s, char *t, int n, int m) {
     int **dp = malloc((n + 1) * sizeof(int *));
     for (int i = 0; i <= n; i++) {
         dp[i] = calloc(m + 1, sizeof(int));
     }
-    // State transition: first row and first column
+    // Állapotátmenet: első sor és első oszlop
     for (int i = 1; i <= n; i++) {
         dp[i][0] = i;
     }
     for (int j = 1; j <= m; j++) {
         dp[0][j] = j;
     }
-    // State transition: rest of the rows and columns
+    // Állapotátmenet: többi sor és oszlop
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= m; j++) {
             if (s[i - 1] == t[j - 1]) {
-                // If two characters are equal, skip both characters
+                // Ha a két karakter egyenlő, kihagyja mindkét karaktert
                 dp[i][j] = dp[i - 1][j - 1];
             } else {
-                // Minimum edit steps = minimum edit steps of insert, delete, replace + 1
+                // Minimális szerkesztési lépések = beillesztés, törlés, csere minimális szerkesztési lépései + 1
                 dp[i][j] = myMin(myMin(dp[i][j - 1], dp[i - 1][j]), dp[i - 1][j - 1]) + 1;
             }
         }
     }
     int res = dp[n][m];
-    // Free memory
+    // Memória felszabadítása
     for (int i = 0; i <= n; i++) {
         free(dp[i]);
     }
     return res;
 }
 
-/* Edit distance: Space-optimized dynamic programming */
+/* Szerkesztési távolság: helytakarékos dinamikus programozás */
 int editDistanceDPComp(char *s, char *t, int n, int m) {
     int *dp = calloc(m + 1, sizeof(int));
-    // State transition: first row
+    // Állapotátmenet: első sor
     for (int j = 1; j <= m; j++) {
         dp[j] = j;
     }
-    // State transition: rest of the rows
+    // Állapotátmenet: többi sor
     for (int i = 1; i <= n; i++) {
-        // State transition: first column
-        int leftup = dp[0]; // Temporarily store dp[i-1, j-1]
+        // Állapotátmenet: első oszlop
+        int leftup = dp[0]; // Ideiglenes tárolás dp[i-1, j-1] értékéhez
         dp[0] = i;
-        // State transition: rest of the columns
+        // Állapotátmenet: többi oszlop
         for (int j = 1; j <= m; j++) {
             int temp = dp[j];
             if (s[i - 1] == t[j - 1]) {
-                // If two characters are equal, skip both characters
+                // Ha a két karakter egyenlő, kihagyja mindkét karaktert
                 dp[j] = leftup;
             } else {
-                // Minimum edit steps = minimum edit steps of insert, delete, replace + 1
+                // Minimális szerkesztési lépések = beillesztés, törlés, csere minimális szerkesztési lépései + 1
                 dp[j] = myMin(myMin(dp[j - 1], dp[j]), leftup) + 1;
             }
-            leftup = temp; // Update for next round's dp[i-1, j-1]
+            leftup = temp; // Frissítés a következő kör dp[i-1, j-1] értékéhez
         }
     }
     int res = dp[m];
-    // Free memory
+    // Memória felszabadítása
     free(dp);
     return res;
 }
 
-/* Driver Code */
+/* Vezérlő kód */
 int main() {
     char *s = "bag";
     char *t = "pack";
     int n = strlen(s), m = strlen(t);
 
-    // Brute-force search
+    // Nyers erő keresés
     int res = editDistanceDFS(s, t, n, m);
     printf("Changing %s to %s requires a minimum of %d edits\n", s, t, res);
 
-    // Memoization search
+    // Memorizálásos keresés
     int **mem = malloc((n + 1) * sizeof(int *));
     for (int i = 0; i <= n; i++) {
         mem[i] = malloc((m + 1) * sizeof(int));
@@ -141,17 +141,17 @@ int main() {
     }
     res = editDistanceDFSMem(s, t, m + 1, mem, n, m);
     printf("Changing %s to %s requires a minimum of %d edits\n", s, t, res);
-    // Free memory
+    // Memória felszabadítása
     for (int i = 0; i <= n; i++) {
         free(mem[i]);
     }
     free(mem);
 
-    // Dynamic programming
+    // Dinamikus programozás
     res = editDistanceDP(s, t, n, m);
     printf("Changing %s to %s requires a minimum of %d edits\n", s, t, res);
 
-    // Space-optimized dynamic programming
+    // Helytakarékos dinamikus programozás
     res = editDistanceDPComp(s, t, n, m);
     printf("Changing %s to %s requires a minimum of %d edits\n", s, t, res);
 

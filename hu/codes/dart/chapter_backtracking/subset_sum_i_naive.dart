@@ -4,7 +4,7 @@
  * Author: liuyuxin (gvenusleo@gmail.com)
  */
 
-/* Backtracking algorithm: Subset sum I */
+/* Visszalépéses algoritmus: Részhalmazösszeg I */
 void backtrack(
   List<int> state,
   int target,
@@ -12,36 +12,36 @@ void backtrack(
   List<int> choices,
   List<List<int>> res,
 ) {
-  // When the subset sum equals target, record the solution
+  // Ha a részhalmaz összege egyenlő a céllal, rögzítsd a megoldást
   if (total == target) {
     res.add(List.from(state));
     return;
   }
-  // Traverse all choices
+  // Összes választási lehetőség bejárása
   for (int i = 0; i < choices.length; i++) {
-    // Pruning: if the subset sum exceeds target, skip this choice
+    // Metszés: ha a részhalmaz összege meghaladja a célt, hagyd ki ezt a választást
     if (total + choices[i] > target) {
       continue;
     }
-    // Attempt: make choice, update element sum total
+    // Kísérlet: válassz, frissítsd az elemek total összegét
     state.add(choices[i]);
-    // Proceed to the next round of selection
+    // Lépj a következő kiválasztási körre
     backtrack(state, target, total + choices[i], choices, res);
-    // Backtrack: undo choice, restore to previous state
+    // Visszalépés: vonja vissza a választást, állítsa vissza az előző állapotot
     state.removeLast();
   }
 }
 
-/* Solve subset sum I (including duplicate subsets) */
+/* Részhalmazösszeg I megoldása (ismétlődő részhalmazokat tartalmaz) */
 List<List<int>> subsetSumINaive(List<int> nums, int target) {
-  List<int> state = []; // State (subset)
-  int total = 0; // Sum of elements
-  List<List<int>> res = []; // Result list (subset list)
+  List<int> state = []; // Állapot (részhalmaz)
+  int total = 0; // Elemek összege
+  List<List<int>> res = []; // Eredménylista (részhalmazok listája)
   backtrack(state, target, total, nums, res);
   return res;
 }
 
-/* Driver Code */
+/* Főprogram */
 void main() {
   List<int> nums = [3, 4, 5];
   int target = 9;

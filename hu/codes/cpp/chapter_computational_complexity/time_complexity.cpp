@@ -6,7 +6,7 @@
 
 #include "../utils/common.hpp"
 
-/* Constant order */
+/* Konstans rend */
 int constant(int n) {
     int count = 0;
     int size = 100000;
@@ -15,7 +15,7 @@ int constant(int n) {
     return count;
 }
 
-/* Linear order */
+/* Lineáris rend */
 int linear(int n) {
     int count = 0;
     for (int i = 0; i < n; i++)
@@ -23,20 +23,20 @@ int linear(int n) {
     return count;
 }
 
-/* Linear order (traversing array) */
+/* Lineáris rend (tömb bejárása) */
 int arrayTraversal(vector<int> &nums) {
     int count = 0;
-    // Number of iterations is proportional to the array length
+    // Az iterációk száma arányos a tömb hosszával
     for (int num : nums) {
         count++;
     }
     return count;
 }
 
-/* Exponential order */
+/* Négyzetes rend */
 int quadratic(int n) {
     int count = 0;
-    // Number of iterations is quadratically related to the data size n
+    // Az iterációk száma négyzetesen függ az n adatmérettől
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             count++;
@@ -45,29 +45,29 @@ int quadratic(int n) {
     return count;
 }
 
-/* Quadratic order (bubble sort) */
+/* Négyzetes rend (buborékrendezés) */
 int bubbleSort(vector<int> &nums) {
-    int count = 0; // Counter
-    // Outer loop: unsorted range is [0, i]
+    int count = 0; // Számláló
+    // Külső ciklus: a rendezetlen tartomány [0, i]
     for (int i = nums.size() - 1; i > 0; i--) {
-        // Inner loop: swap the largest element in the unsorted range [0, i] to the rightmost end of that range
+        // Belső ciklus: a [0, i] rendezetlen tartomány legnagyobb elemének a jobb szélére cserélése
         for (int j = 0; j < i; j++) {
             if (nums[j] > nums[j + 1]) {
-                // Swap nums[j] and nums[j + 1]
+                // nums[j] és nums[j + 1] felcserélése
                 int tmp = nums[j];
                 nums[j] = nums[j + 1];
                 nums[j + 1] = tmp;
-                count += 3; // Element swap includes 3 unit operations
+                count += 3; // Elemcsere 3 egységnyi műveletet tartalmaz
             }
         }
     }
     return count;
 }
 
-/* Exponential order (loop implementation) */
+/* Exponenciális rend (ciklus implementáció) */
 int exponential(int n) {
     int count = 0, base = 1;
-    // Cells divide into two every round, forming sequence 1, 2, 4, 8, ..., 2^(n-1)
+    // A sejtek minden körben kettéosztódnak, 1, 2, 4, 8, ..., 2^(n-1) sorozatot alkotva
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < base; j++) {
             count++;
@@ -78,14 +78,14 @@ int exponential(int n) {
     return count;
 }
 
-/* Exponential order (recursive implementation) */
+/* Exponenciális rend (rekurzív implementáció) */
 int expRecur(int n) {
     if (n == 1)
         return 1;
     return expRecur(n - 1) + expRecur(n - 1) + 1;
 }
 
-/* Logarithmic order (loop implementation) */
+/* Logaritmikus rend (ciklus implementáció) */
 int logarithmic(int n) {
     int count = 0;
     while (n > 1) {
@@ -95,14 +95,14 @@ int logarithmic(int n) {
     return count;
 }
 
-/* Logarithmic order (recursive implementation) */
+/* Logaritmikus rend (rekurzív implementáció) */
 int logRecur(int n) {
     if (n <= 1)
         return 0;
     return logRecur(n / 2) + 1;
 }
 
-/* Linearithmic order */
+/* Lineáris-logaritmikus rend */
 int linearLogRecur(int n) {
     if (n <= 1)
         return 1;
@@ -113,21 +113,21 @@ int linearLogRecur(int n) {
     return count;
 }
 
-/* Factorial order (recursive implementation) */
+/* Faktoriális rend (rekurzív implementáció) */
 int factorialRecur(int n) {
     if (n == 0)
         return 1;
     int count = 0;
-    // Split from 1 into n
+    // 1-ről n-re osztódik szét
     for (int i = 0; i < n; i++) {
         count += factorialRecur(n - 1);
     }
     return count;
 }
 
-/* Driver Code */
+/* Főprogram */
 int main() {
-    // You can modify n to run and observe the trend of the number of operations for various complexities
+    // Az n módosításával futtatható és megfigyelhető a műveletek számának trendje különböző bonyolultságok esetén
     int n = 8;
     cout << "Input data size n = " << n << endl;
 

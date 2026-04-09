@@ -12,14 +12,14 @@ from modules import ListNode, print_linked_list
 
 
 def insert(n0: ListNode, P: ListNode):
-    """Insert node P after node n0 in the linked list"""
+    """P csomópontot az n0 csomópont után szúrja be a láncolt listába"""
     n1 = n0.next
     P.next = n1
     n0.next = P
 
 
 def remove(n0: ListNode):
-    """Remove the first node after node n0 in the linked list"""
+    """Az n0 csomópont utáni első csomópontot törli a láncolt listából"""
     if not n0.next:
         return
     # n0 -> P -> n1
@@ -29,7 +29,7 @@ def remove(n0: ListNode):
 
 
 def access(head: ListNode, index: int) -> ListNode | None:
-    """Access the node at index index in the linked list"""
+    """A láncolt lista index pozíciójában lévő csomópontot adja vissza"""
     for _ in range(index):
         if not head:
             return None
@@ -38,7 +38,7 @@ def access(head: ListNode, index: int) -> ListNode | None:
 
 
 def find(head: ListNode, target: int) -> int:
-    """Find the first node with value target in the linked list"""
+    """Megkeresi a target értékű első csomópont indexét a láncolt listában"""
     index = 0
     while head:
         if head.val == target:
@@ -48,38 +48,38 @@ def find(head: ListNode, target: int) -> int:
     return -1
 
 
-"""Driver Code"""
+"""Fő kód"""
 if __name__ == "__main__":
-    # Initialize linked list
-    # Initialize each node
+    # Láncolt lista inicializálása
+    # Minden csomópont inicializálása
     n0 = ListNode(1)
     n1 = ListNode(3)
     n2 = ListNode(2)
     n3 = ListNode(5)
     n4 = ListNode(4)
-    # Build references between nodes
+    # Csomópontok közötti referenciák felépítése
     n0.next = n1
     n1.next = n2
     n2.next = n3
     n3.next = n4
-    print("The initialized linked list is")
+    print("Az inicializált láncolt lista:")
     print_linked_list(n0)
 
-    # Insert node
+    # Csomópont beszúrása
     p = ListNode(0)
     insert(n0, p)
-    print("The linked list after inserting a node is")
+    print("Csomópont beszúrása utáni láncolt lista:")
     print_linked_list(n0)
 
-    # Remove node
+    # Csomópont törlése
     remove(n0)
-    print("The linked list after removing a node is")
+    print("Csomópont törlése utáni láncolt lista:")
     print_linked_list(n0)
 
-    # Access node
+    # Csomópont elérése
     node: ListNode = access(n0, 3)
-    print("The value of the node at index 3 in the linked list = {}".format(node.val))
+    print("A 3-as indexű csomópont értéke a láncolt listában = {}".format(node.val))
 
-    # Find node
+    # Csomópont keresése
     index: int = find(n0, 2)
-    print("The index of the node with value 2 in the linked list = {}".format(index))
+    print("A 2-es értékű csomópont indexe a láncolt listában = {}".format(index))

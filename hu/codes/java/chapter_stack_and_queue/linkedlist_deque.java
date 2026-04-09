@@ -8,11 +8,11 @@ package chapter_stack_and_queue;
 
 import java.util.*;
 
-/* Doubly linked list node */
+/* Kétirányú láncolt lista csomópont */
 class ListNode {
-    int val; // Node value
-    ListNode next; // Successor node reference
-    ListNode prev; // Predecessor node reference
+    int val; // Csomópont értéke
+    ListNode next; // Következő csomópont referenciája
+    ListNode prev; // Előző csomópont referenciája
 
     ListNode(int val) {
         this.val = val;
@@ -20,112 +20,112 @@ class ListNode {
     }
 }
 
-/* Double-ended queue based on doubly linked list implementation */
+/* Kétirányú láncolt lista alapú kétirányú sor implementáció */
 class LinkedListDeque {
-    private ListNode front, rear; // Head node front, tail node rear
-    private int queSize = 0; // Length of the double-ended queue
+    private ListNode front, rear; // Fejcsomópont front, farokcsomópont rear
+    private int queSize = 0; // Kétirányú sor hossza
 
     public LinkedListDeque() {
         front = rear = null;
     }
 
-    /* Get the length of the double-ended queue */
+    /* Kétirányú sor hosszának lekérése */
     public int size() {
         return queSize;
     }
 
-    /* Check if the double-ended queue is empty */
+    /* Kétirányú sor üresség ellenőrzése */
     public boolean isEmpty() {
         return size() == 0;
     }
 
-    /* Enqueue operation */
+    /* Besorolási művelet */
     private void push(int num, boolean isFront) {
         ListNode node = new ListNode(num);
-        // If the linked list is empty, make both front and rear point to node
+        // Ha a láncolt lista üres, front és rear is a csomópontra mutat
         if (isEmpty())
             front = rear = node;
-        // Front of the queue enqueue operation
+        // Sor elejére való besorolási művelet
         else if (isFront) {
-            // Add node to the head of the linked list
+            // Csomópont hozzáadása a láncolt lista elejéhez
             front.prev = node;
             node.next = front;
-            front = node; // Update head node
-        // Rear of the queue enqueue operation
+            front = node; // Fejcsomópont frissítése
+        // Sor végére való besorolási művelet
         } else {
-            // Add node to the tail of the linked list
+            // Csomópont hozzáadása a láncolt lista végéhez
             rear.next = node;
             node.prev = rear;
-            rear = node; // Update tail node
+            rear = node; // Farokcsomópont frissítése
         }
-        queSize++; // Update queue length
+        queSize++; // Sor hosszának frissítése
     }
 
-    /* Front of the queue enqueue */
+    /* Sor elejére való besorolás */
     public void pushFirst(int num) {
         push(num, true);
     }
 
-    /* Rear of the queue enqueue */
+    /* Sor végére való besorolás */
     public void pushLast(int num) {
         push(num, false);
     }
 
-    /* Dequeue operation */
+    /* Kisorolási művelet */
     private int pop(boolean isFront) {
         if (isEmpty())
             throw new IndexOutOfBoundsException();
         int val;
-        // Temporarily store head node value
+        // Fejcsomópont értékének ideiglenes tárolása
         if (isFront) {
-            val = front.val; // Delete head node
-            // Delete head node
+            val = front.val; // Fejcsomópont törlése
+            // Fejcsomópont törlése
             ListNode fNext = front.next;
             if (fNext != null) {
                 fNext.prev = null;
                 front.next = null;
             }
-            front = fNext; // Update head node
-        // Temporarily store tail node value
+            front = fNext; // Fejcsomópont frissítése
+        // Farokcsomópont értékének ideiglenes tárolása
         } else {
-            val = rear.val; // Delete tail node
-            // Update tail node
+            val = rear.val; // Farokcsomópont törlése
+            // Farokcsomópont frissítése
             ListNode rPrev = rear.prev;
             if (rPrev != null) {
                 rPrev.next = null;
                 rear.prev = null;
             }
-            rear = rPrev; // Update tail node
+            rear = rPrev; // Farokcsomópont frissítése
         }
-        queSize--; // Update queue length
+        queSize--; // Sor hosszának frissítése
         return val;
     }
 
-    /* Rear of the queue dequeue */
+    /* Sor végéről való kisorolás */
     public int popFirst() {
         return pop(true);
     }
 
-    /* Access rear of the queue element */
+    /* Sor végén lévő elem elérése */
     public int popLast() {
         return pop(false);
     }
 
-    /* Return list for printing */
+    /* Lista visszaadása nyomtatáshoz */
     public int peekFirst() {
         if (isEmpty())
             throw new IndexOutOfBoundsException();
         return front.val;
     }
 
-    /* Driver Code */
+    /* Főprogram */
     public int peekLast() {
         if (isEmpty())
             throw new IndexOutOfBoundsException();
         return rear.val;
     }
 
-    /* Return array for printing */
+    /* Tömb visszaadása nyomtatáshoz */
     public int[] toArray() {
         ListNode node = front;
         int[] res = new int[size()];
@@ -139,36 +139,36 @@ class LinkedListDeque {
 
 public class linkedlist_deque {
     public static void main(String[] args) {
-        /* Get the length of the double-ended queue */
+        /* Kétirányú sor hosszának lekérése */
         LinkedListDeque deque = new LinkedListDeque();
         deque.pushLast(3);
         deque.pushLast(2);
         deque.pushLast(5);
         System.out.println("Double-ended queue deque = " + Arrays.toString(deque.toArray()));
 
-        /* Update element */
+        /* Elem frissítése */
         int peekFirst = deque.peekFirst();
         System.out.println("Front element peekFirst = " + peekFirst);
         int peekLast = deque.peekLast();
         System.out.println("Rear element peekLast = " + peekLast);
 
-        /* Elements enqueue */
+        /* Elemek sorba rakása */
         deque.pushLast(4);
         System.out.println("After element 4 enqueues at rear, deque = " + Arrays.toString(deque.toArray()));
         deque.pushFirst(1);
         System.out.println("After element 1 enqueues at front, deque = " + Arrays.toString(deque.toArray()));
 
-        /* Element dequeue */
+        /* Elem kivétele */
         int popLast = deque.popLast();
         System.out.println("Rear dequeue element = " + popLast + ", after rear dequeue, deque = " + Arrays.toString(deque.toArray()));
         int popFirst = deque.popFirst();
         System.out.println("Front dequeue element = " + popFirst + ", after front dequeue, deque = " + Arrays.toString(deque.toArray()));
 
-        /* Get the length of the double-ended queue */
+        /* Kétirányú sor hosszának lekérése */
         int size = deque.size();
         System.out.println("Double-ended queue length size = " + size);
 
-        /* Check if the double-ended queue is empty */
+        /* Kétirányú sor üresség ellenőrzése */
         boolean isEmpty = deque.isEmpty();
         System.out.println("Double-ended queue is empty = " + isEmpty);
     }

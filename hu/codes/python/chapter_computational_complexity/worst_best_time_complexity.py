@@ -8,29 +8,29 @@ import random
 
 
 def random_numbers(n: int) -> list[int]:
-    """Generate an array with elements: 1, 2, ..., n, shuffled in order"""
-    # Generate array nums =: 1, 2, 3, ..., n
+    """Véletlenszerűen kevert, 1, 2, ..., n elemeket tartalmazó tömb generálása"""
+    # nums = 1, 2, 3, ..., n tömb generálása
     nums = [i for i in range(1, n + 1)]
-    # Randomly shuffle array elements
+    # A tömb elemeit véletlenszerűen megkeveri
     random.shuffle(nums)
     return nums
 
 
 def find_one(nums: list[int]) -> int:
-    """Find the index of number 1 in array nums"""
+    """Az 1-es szám indexének megkeresése a nums tömbben"""
     for i in range(len(nums)):
-        # When element 1 is at the head of the array, best time complexity O(1) is achieved
-        # When element 1 is at the tail of the array, worst time complexity O(n) is achieved
+        # Ha az 1-es elem a tömb elején van, legjobb esetű időbonyolultság O(1) érhető el
+        # Ha az 1-es elem a tömb végén van, legrosszabb esetű időbonyolultság O(n) érhető el
         if nums[i] == 1:
             return i
     return -1
 
 
-"""Driver Code"""
+"""Fő kód"""
 if __name__ == "__main__":
     for i in range(10):
         n = 100
         nums: list[int] = random_numbers(n)
         index: int = find_one(nums)
-        print("\nArray [ 1, 2, ..., n ] after being shuffled =", nums)
-        print("The index of number 1 is", index)
+        print("\nA megkevert [ 1, 2, ..., n ] tömb =", nums)
+        print("Az 1-es szám indexe:", index)

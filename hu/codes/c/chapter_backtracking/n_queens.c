@@ -8,10 +8,10 @@
 
 #define MAX_SIZE 100
 
-/* Backtracking algorithm: N queens */
+/* Visszalépéses algoritmus: N királynő */
 void backtrack(int row, int n, char state[MAX_SIZE][MAX_SIZE], char ***res, int *resSize, bool cols[MAX_SIZE],
                bool diags1[2 * MAX_SIZE - 1], bool diags2[2 * MAX_SIZE - 1]) {
-    // When all rows are placed, record the solution
+    // Ha minden sor el van helyezve, rögzítse a megoldást
     if (row == n) {
         res[*resSize] = (char **)malloc(sizeof(char *) * n);
         for (int i = 0; i < n; ++i) {
@@ -21,38 +21,38 @@ void backtrack(int row, int n, char state[MAX_SIZE][MAX_SIZE], char ***res, int 
         (*resSize)++;
         return;
     }
-    // Traverse all columns
+    // Az összes oszlop bejárása
     for (int col = 0; col < n; col++) {
-        // Calculate the main diagonal and anti-diagonal corresponding to this cell
+        // A cellához tartozó főátló és mellékátló kiszámítása
         int diag1 = row - col + n - 1;
         int diag2 = row + col;
-        // Pruning: do not allow queens to exist in the column, main diagonal, and anti-diagonal of this cell
+        // Vágás: ne engedjük meg, hogy a cella oszlopában, főátlójában és mellékátlójában királyné legyen
         if (!cols[col] && !diags1[diag1] && !diags2[diag2]) {
-            // Attempt: place the queen in this cell
+            // Kísérlet: királynő elhelyezése ebbe a cellába
             state[row][col] = 'Q';
             cols[col] = diags1[diag1] = diags2[diag2] = true;
-            // Place the next row
+            // A következő sor elhelyezése
             backtrack(row + 1, n, state, res, resSize, cols, diags1, diags2);
-            // Backtrack: restore this cell to an empty cell
+            // Visszalépés: a cella visszaállítása üres cellává
             state[row][col] = '#';
             cols[col] = diags1[diag1] = diags2[diag2] = false;
         }
     }
 }
 
-/* Solve N queens */
+/* N királynő megoldása */
 char ***nQueens(int n, int *returnSize) {
     char state[MAX_SIZE][MAX_SIZE];
-    // Initialize an n*n chessboard, where 'Q' represents a queen and '#' represents an empty cell
+    // n*n-es sakktábla inicializálása, ahol 'Q' a királynőt, '#' az üres cellát jelöli
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
             state[i][j] = '#';
         }
         state[i][n] = '\0';
     }
-    bool cols[MAX_SIZE] = {false};           // Record whether there is a queen in the column
-    bool diags1[2 * MAX_SIZE - 1] = {false}; // Record whether there is a queen on the main diagonal
-    bool diags2[2 * MAX_SIZE - 1] = {false}; // Record whether there is a queen on the anti-diagonal
+    bool cols[MAX_SIZE] = {false};           // Jelzi, hogy van-e királynő az oszlopban
+    bool diags1[2 * MAX_SIZE - 1] = {false}; // Jelzi, hogy van-e királynő a főátlón
+    bool diags2[2 * MAX_SIZE - 1] = {false}; // Jelzi, hogy van-e királynő a mellékátlón
 
     char ***res = (char ***)malloc(sizeof(char **) * MAX_SIZE);
     *returnSize = 0;
@@ -60,7 +60,7 @@ char ***nQueens(int n, int *returnSize) {
     return res;
 }
 
-/* Driver Code */
+/* Vezérlő kód */
 int main() {
     int n = 4;
     int returnSize;
@@ -82,7 +82,7 @@ int main() {
         printf("---------------------\n");
     }
 
-    // Free memory
+    // Memória felszabadítása
     for (int i = 0; i < returnSize; ++i) {
         for (int j = 0; j < n; ++j) {
             free(res[i][j]);

@@ -9,37 +9,37 @@ import 'dart:collection';
 import '../utils/vertex.dart';
 import 'graph_adjacency_list.dart';
 
-/* Breadth-first traversal */
+/* Szélességi elsőbejárás */
 List<Vertex> graphBFS(GraphAdjList graph, Vertex startVet) {
-  // Use adjacency list to represent the graph, in order to obtain all adjacent vertices of a specified vertex
-  // Vertex traversal sequence
+  // Szomszédsági lista segítségével képviseli a gráfot, hogy megkapja az összes szomszédos csúcsot
+  // Csúcsbejárási sorrend
   List<Vertex> res = [];
-  // Hash set for recording vertices that have been visited
+  // Hash halmaz a meglátogatott csúcsok nyilvántartásához
   Set<Vertex> visited = {};
   visited.add(startVet);
-  // Queue used to implement BFS
+  // BFS megvalósításához használt sor
   Queue<Vertex> que = Queue();
   que.add(startVet);
-  // Starting from vertex vet, loop until all vertices are visited
+  // A vet csúcstól indulva ciklusban fut, amíg az összes csúcsot meg nem látogatta
   while (que.isNotEmpty) {
-    Vertex vet = que.removeFirst(); // Dequeue the front vertex
-    res.add(vet); // Record visited vertex
-    // Traverse all adjacent vertices of this vertex
+    Vertex vet = que.removeFirst(); // Az első csúcs kivételezése a sorból
+    res.add(vet); // A meglátogatott csúcs rögzítése
+    // Az adott csúcs összes szomszédos csúcsának bejárása
     for (Vertex adjVet in graph.adjList[vet]!) {
       if (visited.contains(adjVet)) {
-        continue; // Skip vertices that have been visited
+        continue; // Már meglátogatott csúcsok kihagyása
       }
-      que.add(adjVet); // Only enqueue unvisited vertices
-      visited.add(adjVet); // Mark this vertex as visited
+      que.add(adjVet); // Csak a meg nem látogatott csúcsokat teszi a sorba
+      visited.add(adjVet); // Ezt a csúcsot meglátogatottnak jelöli
     }
   }
-  // Return vertex traversal sequence
+  // Csúcsbejárási sorrend visszaadása
   return res;
 }
 
-/* Dirver Code */
+/* Főprogram */
 void main() {
-  /* Add edge */
+  /* Él hozzáadása */
   List<Vertex> v = Vertex.valsToVets([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
   List<List<Vertex>> edges = [
     [v[0], v[1]],
@@ -59,7 +59,7 @@ void main() {
   print("\nAfter initialization, graph is");
   graph.printAdjList();
 
-  /* Breadth-first traversal */
+  /* Szélességi elsőbejárás */
   List<Vertex> res = graphBFS(graph, v[0]);
   print("\nBreadth-first traversal (BFS) vertex sequence is");
   print(Vertex.vetsToVals(res));

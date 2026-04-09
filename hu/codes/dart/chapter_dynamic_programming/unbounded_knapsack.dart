@@ -6,19 +6,19 @@
 
 import 'dart:math';
 
-/* Unbounded knapsack: Dynamic programming */
+/* Korlátlan hátizsák: Dinamikus programozás */
 int unboundedKnapsackDP(List<int> wgt, List<int> val, int cap) {
   int n = wgt.length;
-  // Initialize dp table
+  // dp tábla inicializálása
   List<List<int>> dp = List.generate(n + 1, (index) => List.filled(cap + 1, 0));
-  // State transition
+  // Állapotátmenet
   for (int i = 1; i <= n; i++) {
     for (int c = 1; c <= cap; c++) {
       if (wgt[i - 1] > c) {
-        // If exceeds knapsack capacity, don't select item i
+        // Ha meghaladja a hátizsák kapacitását, ne válaszd ki az i tárgyat
         dp[i][c] = dp[i - 1][c];
       } else {
-        // The larger value between not selecting and selecting item i
+        // A nagyobb érték: nem választja ki vagy kiválasztja az i tárgyat
         dp[i][c] = max(dp[i - 1][c], dp[i][c - wgt[i - 1]] + val[i - 1]);
       }
     }
@@ -26,19 +26,19 @@ int unboundedKnapsackDP(List<int> wgt, List<int> val, int cap) {
   return dp[n][cap];
 }
 
-/* Unbounded knapsack: Space-optimized dynamic programming */
+/* Korlátlan hátizsák: Tárhelyoptimalizált dinamikus programozás */
 int unboundedKnapsackDPComp(List<int> wgt, List<int> val, int cap) {
   int n = wgt.length;
-  // Initialize dp table
+  // dp tábla inicializálása
   List<int> dp = List.filled(cap + 1, 0);
-  // State transition
+  // Állapotátmenet
   for (int i = 1; i <= n; i++) {
     for (int c = 1; c <= cap; c++) {
       if (wgt[i - 1] > c) {
-        // If exceeds knapsack capacity, don't select item i
+        // Ha meghaladja a hátizsák kapacitását, ne válaszd ki az i tárgyat
         dp[c] = dp[c];
       } else {
-        // The larger value between not selecting and selecting item i
+        // A nagyobb érték: nem választja ki vagy kiválasztja az i tárgyat
         dp[c] = max(dp[c], dp[c - wgt[i - 1]] + val[i - 1]);
       }
     }
@@ -46,17 +46,17 @@ int unboundedKnapsackDPComp(List<int> wgt, List<int> val, int cap) {
   return dp[cap];
 }
 
-/* Driver Code */
+/* Főprogram */
 void main() {
   List<int> wgt = [1, 2, 3];
   List<int> val = [5, 11, 15];
   int cap = 4;
 
-  // Dynamic programming
+  // Dinamikus programozás
   int res = unboundedKnapsackDP(wgt, val, cap);
   print("Maximum item value not exceeding knapsack capacity is $res");
 
-  // Space-optimized dynamic programming
+  // Tárhelyoptimalizált dinamikus programozás
   int resComp = unboundedKnapsackDPComp(wgt, val, cap);
   print("Maximum item value not exceeding knapsack capacity is $resComp");
 }

@@ -4,22 +4,22 @@
  * Author: liuyuxin (gvenusleo@gmail.com)
  */
 
-/* Climbing stairs: Dynamic programming */
+/* Lépcsőmászás: Dinamikus programozás */
 int climbingStairsDP(int n) {
   if (n == 1 || n == 2) return n;
-  // Initialize dp table, used to store solutions to subproblems
+  // dp tábla inicializálása a részfeladatok megoldásainak tárolásához
   List<int> dp = List.filled(n + 1, 0);
-  // Initial state: preset the solution to the smallest subproblem
+  // Kezdőállapot: a legkisebb részfeladat megoldásának előre beállítása
   dp[1] = 1;
   dp[2] = 2;
-  // State transition: gradually solve larger subproblems from smaller ones
+  // Állapotátmenet: fokozatosan oldja meg a nagyobb részfeladatokat a kisebbekből
   for (int i = 3; i <= n; i++) {
     dp[i] = dp[i - 1] + dp[i - 2];
   }
   return dp[n];
 }
 
-/* Climbing stairs: Space-optimized dynamic programming */
+/* Lépcsőmászás: Tárhelyoptimalizált dinamikus programozás */
 int climbingStairsDPComp(int n) {
   if (n == 1 || n == 2) return n;
   int a = 1, b = 2;
@@ -31,7 +31,7 @@ int climbingStairsDPComp(int n) {
   return b;
 }
 
-/* Driver Code */
+/* Főprogram */
 void main() {
   int n = 9;
 

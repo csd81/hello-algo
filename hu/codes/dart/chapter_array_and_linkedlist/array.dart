@@ -8,63 +8,63 @@
 
 import 'dart:math';
 
-/* Random access to element */
+/* Véletlenszerű hozzáférés az elemhez */
 int randomAccess(List<int> nums) {
-  // Randomly select a number in the interval [0, nums.length)
+  // Véletlenszerűen válassz egy számot a [0, nums.length) intervallumból
   int randomIndex = Random().nextInt(nums.length);
-  // Retrieve and return the random element
+  // Kérd le és add vissza a véletlen elemet
   int randomNum = nums[randomIndex];
   return randomNum;
 }
 
-/* Extend array length */
+/* Tömb hosszának növelése */
 List<int> extend(List<int> nums, int enlarge) {
-  // Initialize an array with extended length
+  // Inicializálj egy bővített hosszú tömböt
   List<int> res = List.filled(nums.length + enlarge, 0);
-  // Copy all elements from the original array to the new array
+  // Másold át az összes elemet az eredeti tömbből az új tömbbe
   for (var i = 0; i < nums.length; i++) {
     res[i] = nums[i];
   }
-  // Return the extended new array
+  // Adj vissza az új, bővített tömböt
   return res;
 }
 
-/* Insert element _num at array index index */
+/* Helyezd be a _num elemet a tömb index indexére */
 void insert(List<int> nums, int _num, int index) {
-  // Move all elements at and after index index backward by one position
+  // Tol el minden elemet az index pozíciótól egy hellyel hátra
   for (var i = nums.length - 1; i > index; i--) {
     nums[i] = nums[i - 1];
   }
-  // Assign _num to element at index
+  // Rendeld hozzá a _num értéket az index pozícióhoz
   nums[index] = _num;
 }
 
-/* Remove the element at index index */
+/* Távolítsd el az elemet az index indexen */
 void remove(List<int> nums, int index) {
-  // Move all elements after index index forward by one position
+  // Tol el minden elemet az index pozíció után egy hellyel előre
   for (var i = index; i < nums.length - 1; i++) {
     nums[i] = nums[i + 1];
   }
 }
 
-/* Traverse array elements */
+/* Tömb elemeinek bejárása */
 void traverse(List<int> nums) {
   int count = 0;
-  // Traverse array by index
+  // Tömb bejárása index szerint
   for (var i = 0; i < nums.length; i++) {
     count += nums[i];
   }
-  // Direct traversal of array elements
+  // Tömb elemeinek közvetlen bejárása
   for (int _num in nums) {
     count += _num;
   }
-  // Traverse array using forEach method
+  // Tömb bejárása forEach metódussal
   nums.forEach((_num) {
     count += _num;
   });
 }
 
-/* Find the specified element in the array */
+/* A megadott elem megkeresése a tömbben */
 int find(List<int> nums, int target) {
   for (var i = 0; i < nums.length; i++) {
     if (nums[i] == target) return i;
@@ -72,34 +72,34 @@ int find(List<int> nums, int target) {
   return -1;
 }
 
-/* Driver Code */
+/* Főprogram */
 void main() {
-  /* Initialize array */
+  /* Tömb inicializálása */
   var arr = List.filled(5, 0);
   print('Array arr = $arr');
   List<int> nums = [1, 3, 2, 5, 4];
   print('Array nums = $nums');
 
-  /* Insert element */
+  /* Elem beillesztése */
   int randomNum = randomAccess(nums);
   print('Get random element $randomNum from nums');
 
-  /* Traverse array */
+  /* Tömb bejárása */
   nums = extend(nums, 3);
   print('Extend array length to 8, get nums = $nums');
 
-  /* Insert element */
+  /* Elem beillesztése */
   insert(nums, 6, 3);
   print("Insert number 6 at index 3, get nums = $nums");
 
-  /* Remove element */
+  /* Elem eltávolítása */
   remove(nums, 2);
   print("Delete element at index 2, get nums = $nums");
 
-  /* Traverse array */
+  /* Tömb bejárása */
   traverse(nums);
 
-  /* Find element */
+  /* Elem keresése */
   int index = find(nums, 3);
   print("Find element 3 in nums, index = $index");
 }

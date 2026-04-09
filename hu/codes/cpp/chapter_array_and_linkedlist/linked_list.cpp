@@ -6,14 +6,14 @@
 
 #include "../utils/common.hpp"
 
-/* Insert node P after node n0 in the linked list */
+/* P csomópont beszúrása az n0 csomópont után a láncolt listában */
 void insert(ListNode *n0, ListNode *P) {
     ListNode *n1 = n0->next;
     P->next = n1;
     n0->next = P;
 }
 
-/* Remove the first node after node n0 in the linked list */
+/* Az n0 csomópont utáni első csomópont törlése a láncolt listából */
 void remove(ListNode *n0) {
     if (n0->next == nullptr)
         return;
@@ -21,11 +21,11 @@ void remove(ListNode *n0) {
     ListNode *P = n0->next;
     ListNode *n1 = P->next;
     n0->next = n1;
-    // Free memory
+    // Memória felszabadítása
     delete P;
 }
 
-/* Access the node at index index in the linked list */
+/* A láncolt lista index indexén lévő csomópont elérése */
 ListNode *access(ListNode *head, int index) {
     for (int i = 0; i < index; i++) {
         if (head == nullptr)
@@ -35,7 +35,7 @@ ListNode *access(ListNode *head, int index) {
     return head;
 }
 
-/* Find the first node with value target in the linked list */
+/* A target értékű első csomópont keresése a láncolt listában */
 int find(ListNode *head, int target) {
     int index = 0;
     while (head != nullptr) {
@@ -47,16 +47,16 @@ int find(ListNode *head, int target) {
     return -1;
 }
 
-/* Driver Code */
+/* Főprogram */
 int main() {
-    /* Initialize linked list */
-    // Initialize each node
+    /* Láncolt lista inicializálása */
+    // Minden csomópont inicializálása
     ListNode *n0 = new ListNode(1);
     ListNode *n1 = new ListNode(3);
     ListNode *n2 = new ListNode(2);
     ListNode *n3 = new ListNode(5);
     ListNode *n4 = new ListNode(4);
-    // Build references between nodes
+    // Csomópontok közötti hivatkozások felépítése
     n0->next = n1;
     n1->next = n2;
     n2->next = n3;
@@ -64,25 +64,25 @@ int main() {
     cout << "Initialized linked list is" << endl;
     printLinkedList(n0);
 
-    /* Insert node */
+    /* Csomópont beszúrása */
     insert(n0, new ListNode(0));
     cout << "Linked list after inserting node is" << endl;
     printLinkedList(n0);
 
-    /* Remove node */
+    /* Csomópont törlése */
     remove(n0);
     cout << "Linked list after removing node is" << endl;
     printLinkedList(n0);
 
-    /* Access node */
+    /* Csomópont elérése */
     ListNode *node = access(n0, 3);
     cout << "Value of node at index 3 in linked list = " << node->val << endl;
 
-    /* Search node */
+    /* Csomópont keresése */
     int index = find(n0, 2);
     cout << "Index of node with value 2 in linked list = " << index << endl;
 
-    // Free memory
+    // Memória felszabadítása
     freeMemoryLinkedList(n0);
 
     return 0;

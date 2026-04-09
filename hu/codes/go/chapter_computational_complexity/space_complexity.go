@@ -11,36 +11,36 @@ import (
 	. "github.com/krahets/hello-algo/pkg"
 )
 
-/* Struct */
+/* Struktúra */
 type node struct {
 	val  int
 	next *node
 }
 
-/* Create node struct */
+/* Csomópont-struktúra létrehozása */
 func newNode(val int) *node {
 	return &node{val: val}
 }
 
-/* Function */
+/* Függvény */
 func function() int {
-	// Perform some operations...
+	// Végrehajt néhány műveletet...
 	return 0
 }
 
-/* Constant order */
+/* Konstans rend */
 func spaceConstant(n int) {
-	// Constants, variables, objects occupy O(1) space
+	// Konstansok, változók, objektumok O(1) helyet foglalnak
 	const a = 0
 	b := 0
 	nums := make([]int, 10000)
 	node := newNode(0)
-	// Variables in the loop occupy O(1) space
+	// A ciklusban lévő változók O(1) helyet foglalnak
 	var c int
 	for i := 0; i < n; i++ {
 		c = 0
 	}
-	// Functions in the loop occupy O(1) space
+	// A ciklusban lévő függvények O(1) helyet foglalnak
 	for i := 0; i < n; i++ {
 		function()
 	}
@@ -50,23 +50,23 @@ func spaceConstant(n int) {
 	node.val = 0
 }
 
-/* Linear order */
+/* Lineáris rend */
 func spaceLinear(n int) {
-	// Array of length n uses O(n) space
+	// n hosszúságú tömb O(n) helyet használ
 	_ = make([]int, n)
-	// A list of length n occupies O(n) space
+	// n hosszúságú lista O(n) helyet foglal
 	var nodes []*node
 	for i := 0; i < n; i++ {
 		nodes = append(nodes, newNode(i))
 	}
-	// A hash table of length n occupies O(n) space
+	// n hosszúságú hash tábla O(n) helyet foglal
 	m := make(map[int]string, n)
 	for i := 0; i < n; i++ {
 		m[i] = strconv.Itoa(i)
 	}
 }
 
-/* Linear order (recursive implementation) */
+/* Lineáris rend (rekurzív implementáció) */
 func spaceLinearRecur(n int) {
 	fmt.Println("Recursion n =", n)
 	if n == 1 {
@@ -75,16 +75,16 @@ func spaceLinearRecur(n int) {
 	spaceLinearRecur(n - 1)
 }
 
-/* Exponential order */
+/* Exponenciális rend */
 func spaceQuadratic(n int) {
-	// Matrix uses O(n^2) space
+	// A mátrix O(n^2) helyet használ
 	numMatrix := make([][]int, n)
 	for i := 0; i < n; i++ {
 		numMatrix[i] = make([]int, n)
 	}
 }
 
-/* Quadratic order (recursive implementation) */
+/* Négyzetes rend (rekurzív implementáció) */
 func spaceQuadraticRecur(n int) int {
 	if n <= 0 {
 		return 0

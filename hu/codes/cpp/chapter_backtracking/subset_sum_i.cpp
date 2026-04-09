@@ -6,36 +6,36 @@
 
 #include "../utils/common.hpp"
 
-/* Backtracking algorithm: Subset sum I */
+/* Visszalépéses algoritmus: I. részösszeg */
 void backtrack(vector<int> &state, int target, vector<int> &choices, int start, vector<vector<int>> &res) {
-    // When the subset sum equals target, record the solution
+    // Ha a részösszeg egyenlő a targettel, rögzítjük a megoldást
     if (target == 0) {
         res.push_back(state);
         return;
     }
-    // Traverse all choices
-    // Pruning 2: start traversing from start to avoid generating duplicate subsets
+    // Az összes lehetőség bejárása
+    // 2. vágás: start-tól kezdve bejárva elkerüljük a duplikált részhalmazok generálását
     for (int i = start; i < choices.size(); i++) {
-        // Pruning 1: if the subset sum exceeds target, end the loop directly
-        // This is because the array is sorted, and later elements are larger, so the subset sum will definitely exceed target
+        // 1. vágás: ha a részösszeg meghaladja a targetet, közvetlenül befejezzük a ciklust
+        // Ez azért van, mert a tömb rendezett, és a későbbi elemek nagyobbak, tehát a részösszeg biztosan meghaladja a targetet
         if (target - choices[i] < 0) {
             break;
         }
-        // Attempt: make choice, update target, start
+        // Próbálkozás: lehetőség kiválasztása, target és start frissítése
         state.push_back(choices[i]);
-        // Proceed to the next round of selection
+        // Következő kiválasztási kör végrehajtása
         backtrack(state, target - choices[i], choices, i, res);
-        // Backtrack: undo choice, restore to previous state
+        // Visszalépés: lehetőség visszavonása, előző állapot visszaállítása
         state.pop_back();
     }
 }
 
-/* Solve subset sum I */
+/* I. részösszeg megoldása */
 vector<vector<int>> subsetSumI(vector<int> &nums, int target) {
-    vector<int> state;              // State (subset)
-    sort(nums.begin(), nums.end()); // Sort nums
-    int start = 0;                  // Start point for traversal
-    vector<vector<int>> res;        // Result list (subset list)
+    vector<int> state;              // Állapot (részhalmaz)
+    sort(nums.begin(), nums.end()); // nums rendezése
+    int start = 0;                  // Bejárás kezdőpontja
+    vector<vector<int>> res;        // Eredménylista (részhalmazlista)
     backtrack(state, target, nums, start, res);
     return res;
 }

@@ -8,14 +8,14 @@ import (
 	. "github.com/krahets/hello-algo/pkg"
 )
 
-/* Insert node P after node n0 in the linked list */
+/* Szúrd be a P csomópontot az n0 csomópont után a láncolt listában */
 func insertNode(n0 *ListNode, P *ListNode) {
 	n1 := n0.Next
 	P.Next = n1
 	n0.Next = P
 }
 
-/* Remove the first node after node n0 in the linked list */
+/* Távolítsd el az n0 csomópont utáni első csomópontot a láncolt listából */
 func removeItem(n0 *ListNode) {
 	if n0.Next == nil {
 		return
@@ -26,7 +26,7 @@ func removeItem(n0 *ListNode) {
 	n0.Next = n1
 }
 
-/* Access the node at index index in the linked list */
+/* Hozzáférés az index pozícióbeli csomóponthoz a láncolt listában */
 func access(head *ListNode, index int) *ListNode {
 	for i := 0; i < index; i++ {
 		if head == nil {
@@ -37,7 +37,7 @@ func access(head *ListNode, index int) *ListNode {
 	return head
 }
 
-/* Find the first node with value target in the linked list */
+/* Keresd meg a target értékű első csomópontot a láncolt listában */
 func findNode(head *ListNode, target int) int {
 	index := 0
 	for head != nil {

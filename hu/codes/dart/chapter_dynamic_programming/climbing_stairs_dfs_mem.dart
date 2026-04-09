@@ -4,27 +4,27 @@
  * Author: liuyuxin (gvenusleo@gmail.com)
  */
 
-/* Memoization search */
+/* Memoizált keresés */
 int dfs(int i, List<int> mem) {
-  // Known dp[1] and dp[2], return them
+  // Ismert dp[1] és dp[2], adja vissza azokat
   if (i == 1 || i == 2) return i;
-  // If record dp[i] exists, return it directly
+  // Ha dp[i] bejegyzés létezik, közvetlenül adja vissza
   if (mem[i] != -1) return mem[i];
   // dp[i] = dp[i-1] + dp[i-2]
   int count = dfs(i - 1, mem) + dfs(i - 2, mem);
-  // Record dp[i]
+  // dp[i] rögzítése
   mem[i] = count;
   return count;
 }
 
-/* Climbing stairs: Memoization search */
+/* Lépcsőmászás: Memoizált keresés */
 int climbingStairsDFSMem(int n) {
-  // mem[i] records the total number of solutions to climb to the i-th stair, -1 means no record
+  // mem[i] az i-ik lépcsőre való feljutás összes megoldásának számát tárolja, -1 azt jelenti, hogy nincs bejegyzés
   List<int> mem = List.filled(n + 1, -1);
   return dfs(n, mem);
 }
 
-/* Driver Code */
+/* Főprogram */
 void main() {
   int n = 9;
 

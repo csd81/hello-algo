@@ -14,26 +14,26 @@ import heapq
 
 
 def top_k_heap(nums: list[int], k: int) -> list[int]:
-    """Find the largest k elements in array based on heap"""
-    # Initialize min heap
+    """A tömb k legnagyobb elemének megkeresése kupac alapján"""
+    # Min-kupac inicializálása
     heap = []
-    # Enter the first k elements of array into heap
+    # A tömb első k elemét beteszi a kupacba
     for i in range(k):
         heapq.heappush(heap, nums[i])
-    # Starting from the (k+1)th element, maintain heap length as k
+    # A (k+1)-edik elemtől kezdve a kupac méretét k-n tartja
     for i in range(k, len(nums)):
-        # If current element is greater than top element, top element exits heap, current element enters heap
+        # Ha az aktuális elem nagyobb a tetőelemnél, a tetőelem kilép, az aktuális elem belép
         if nums[i] > heap[0]:
             heapq.heappop(heap)
             heapq.heappush(heap, nums[i])
     return heap
 
 
-"""Driver Code"""
+"""Fő kód"""
 if __name__ == "__main__":
     nums = [1, 7, 6, 3, 2]
     k = 3
 
     res = top_k_heap(nums, k)
-    print(f"The largest {k} elements are")
+    print(f"A(z) {k} legnagyobb elem:")
     print_heap(res)

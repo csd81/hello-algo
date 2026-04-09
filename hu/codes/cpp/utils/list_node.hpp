@@ -11,7 +11,7 @@
 
 using namespace std;
 
-/* Linked list node */
+/* Láncolt lista csomópontja */
 struct ListNode {
     int val;
     ListNode *next;
@@ -19,7 +19,7 @@ struct ListNode {
     }
 };
 
-/* Deserialize a list into a linked list */
+/* Lista deszerializálása láncolt listává */
 ListNode *vecToLinkedList(vector<int> list) {
     ListNode *dum = new ListNode(0);
     ListNode *head = dum;
@@ -30,9 +30,9 @@ ListNode *vecToLinkedList(vector<int> list) {
     return dum->next;
 }
 
-/* Free memory allocated to linked list */
+/* Láncolt listához foglalt memória felszabadítása */
 void freeMemoryLinkedList(ListNode *cur) {
-    // Free memory
+    // Memória felszabadítása
     ListNode *pre;
     while (cur != nullptr) {
         pre = cur;

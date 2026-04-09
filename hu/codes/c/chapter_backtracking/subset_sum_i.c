@@ -9,18 +9,18 @@
 #define MAX_SIZE 100
 #define MAX_RES_SIZE 100
 
-// State (subset)
+// Állapot (részhalmaz)
 int state[MAX_SIZE];
 int stateSize = 0;
 
-// Result list (subset list)
+// Eredménylista (részhalmaz lista)
 int res[MAX_RES_SIZE][MAX_SIZE];
 int resColSizes[MAX_RES_SIZE];
 int resSize = 0;
 
-/* Backtracking algorithm: Subset sum I */
+/* Visszalépéses algoritmus: Részhalmazok összege I */
 void backtrack(int target, int *choices, int choicesSize, int start) {
-    // When the subset sum equals target, record the solution
+    // Ha a részhalmazok összege egyenlő a céllal, rögzítse a megoldást
     if (target == 0) {
         for (int i = 0; i < stateSize; ++i) {
             res[resSize][i] = state[i];
@@ -28,37 +28,37 @@ void backtrack(int target, int *choices, int choicesSize, int start) {
         resColSizes[resSize++] = stateSize;
         return;
     }
-    // Traverse all choices
-    // Pruning 2: start traversing from start to avoid generating duplicate subsets
+    // Az összes lehetőség bejárása
+    // 2. vágás: a start-tól kezdve bejárva elkerüljük a duplikált részhalmazok generálását
     for (int i = start; i < choicesSize; i++) {
-        // Pruning 1: if the subset sum exceeds target, end the loop directly
-        // This is because the array is sorted, and later elements are larger, so the subset sum will definitely exceed target
+        // 1. vágás: ha a részhalmazok összege meghaladja a célt, a ciklus azonnal véget ér
+        // Ez azért lehetséges, mert a tömb rendezett, és a későbbi elemek nagyobbak, így a részhalmazok összege biztosan meghaladja a célt
         if (target - choices[i] < 0) {
             break;
         }
-        // Attempt: make choice, update target, start
+        // Kísérlet: választás végrehajtása, cél és start frissítése
         state[stateSize] = choices[i];
         stateSize++;
-        // Proceed to the next round of selection
+        // Továbblépés a következő kiválasztási körre
         backtrack(target - choices[i], choices, choicesSize, i);
-        // Backtrack: undo choice, restore to previous state
+        // Visszalépés: választás visszavonása, visszaállítás az előző állapotba
         stateSize--;
     }
 }
 
-/* Comparison function */
+/* Összehasonlító függvény */
 int cmp(const void *a, const void *b) {
     return (*(int *)a - *(int *)b);
 }
 
-/* Solve subset sum I */
+/* Részhalmazok összege I megoldása */
 void subsetSumI(int *nums, int numsSize, int target) {
-    qsort(nums, numsSize, sizeof(int), cmp); // Sort nums
-    int start = 0;                           // Start point for traversal
+    qsort(nums, numsSize, sizeof(int), cmp); // nums rendezése
+    int start = 0;                           // Bejárás kezdőpontja
     backtrack(target, nums, numsSize, start);
 }
 
-/* Driver Code */
+/* Vezérlő kód */
 int main() {
     int nums[] = {3, 4, 5};
     int numsSize = sizeof(nums) / sizeof(nums[0]);

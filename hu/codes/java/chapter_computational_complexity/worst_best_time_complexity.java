@@ -9,14 +9,14 @@ package chapter_computational_complexity;
 import java.util.*;
 
 public class worst_best_time_complexity {
-    /* Generate an array with elements { 1, 2, ..., n }, order shuffled */
+    /* Tömb generálása { 1, 2, ..., n } elemekkel, véletlenszerű sorrendben */
     static int[] randomNumbers(int n) {
         Integer[] nums = new Integer[n];
-        // Generate array nums = { 1, 2, 3, ..., n }
+        // nums = { 1, 2, 3, ..., n } tömb generálása
         for (int i = 0; i < n; i++) {
             nums[i] = i + 1;
         }
-        // Randomly shuffle array elements
+        // Tömbelemek véletlenszerű összekeverése
         Collections.shuffle(Arrays.asList(nums));
         // Integer[] -> int[]
         int[] res = new int[n];
@@ -26,18 +26,18 @@ public class worst_best_time_complexity {
         return res;
     }
 
-    /* Find the index of number 1 in array nums */
+    /* Az 1-es szám indexének megkeresése a nums tömbben */
     static int findOne(int[] nums) {
         for (int i = 0; i < nums.length; i++) {
-            // When element 1 is at the head of the array, best time complexity O(1) is achieved
-            // When element 1 is at the tail of the array, worst time complexity O(n) is achieved
+            // Ha az 1-es elem a tömb elején van, legjobb eset időbonyolultsága O(1)
+            // Ha az 1-es elem a tömb végén van, legrosszabb eset időbonyolultsága O(n)
             if (nums[i] == 1)
                 return i;
         }
         return -1;
     }
 
-    /* Driver Code */
+    /* Főprogram */
     public static void main(String[] args) {
         for (int i = 0; i < 10; i++) {
             int n = 100;

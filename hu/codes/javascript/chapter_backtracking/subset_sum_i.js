@@ -4,41 +4,41 @@
  * Author: yuan0221 (yl1452491917@gmail.com)
  */
 
-/* Backtracking algorithm: Subset sum I */
+/* Visszalépéses algoritmus: Részhalmazösszeg I */
 function backtrack(state, target, choices, start, res) {
-    // When the subset sum equals target, record the solution
+    // Ha a részhalmazösszeg egyenlő target-tel, rögzítjük a megoldást
     if (target === 0) {
         res.push([...state]);
         return;
     }
-    // Traverse all choices
-    // Pruning 2: start traversing from start to avoid generating duplicate subsets
+    // Bejárjuk az összes választási lehetőséget
+    // 2. metszés: start-tól kezdve járjuk be az ismétlődő részhalmazok elkerülése érdekében
     for (let i = start; i < choices.length; i++) {
-        // Pruning 1: if the subset sum exceeds target, end the loop directly
-        // This is because the array is sorted, and later elements are larger, so the subset sum will definitely exceed target
+        // 1. metszés: ha a részhalmazösszeg meghaladja a target-et, a ciklust közvetlenül befejezzük
+        // Mivel a tömb rendezett, a későbbi elemek nagyobbak, így a részhalmazösszeg biztosan meghaladja a target-et
         if (target - choices[i] < 0) {
             break;
         }
-        // Attempt: make choice, update target, start
+        // Kísérlet: választás megtétele, target és start frissítése
         state.push(choices[i]);
-        // Proceed to the next round of selection
+        // Folytatjuk a következő kiválasztási körrel
         backtrack(state, target - choices[i], choices, i, res);
-        // Backtrack: undo choice, restore to previous state
+        // Visszalépés: a választás visszavonása, visszaállítás az előző állapotra
         state.pop();
     }
 }
 
-/* Solve subset sum I */
+/* Részhalmazösszeg I megoldása */
 function subsetSumI(nums, target) {
-    const state = []; // State (subset)
-    nums.sort((a, b) => a - b); // Sort nums
-    const start = 0; // Start point for traversal
-    const res = []; // Result list (subset list)
+    const state = []; // Állapot (részhalmaz)
+    nums.sort((a, b) => a - b); // nums rendezése
+    const start = 0; // Bejárás kezdőpontja
+    const res = []; // Eredménylista (részhalmazlista)
     backtrack(state, target, nums, start, res);
     return res;
 }
 
-/* Driver Code */
+/* Tesztkód */
 const nums = [3, 4, 5];
 const target = 9;
 const res = subsetSumI(nums, target);

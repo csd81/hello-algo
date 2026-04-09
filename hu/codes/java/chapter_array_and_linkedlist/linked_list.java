@@ -9,14 +9,14 @@ package chapter_array_and_linkedlist;
 import utils.*;
 
 public class linked_list {
-    /* Insert node P after node n0 in the linked list */
+    /* P csomópont beszúrása n0 csomópont után a láncolt listában */
     static void insert(ListNode n0, ListNode P) {
         ListNode n1 = n0.next;
         P.next = n1;
         n0.next = P;
     }
 
-    /* Remove the first node after node n0 in the linked list */
+    /* Az n0 csomópont utáni első csomópont törlése a láncolt listából */
     static void remove(ListNode n0) {
         if (n0.next == null)
             return;
@@ -26,7 +26,7 @@ public class linked_list {
         n0.next = n1;
     }
 
-    /* Access the node at index index in the linked list */
+    /* A láncolt lista index pozíciójú csomópontjának elérése */
     static ListNode access(ListNode head, int index) {
         for (int i = 0; i < index; i++) {
             if (head == null)
@@ -36,7 +36,7 @@ public class linked_list {
         return head;
     }
 
-    /* Find the first node with value target in the linked list */
+    /* A target értékű első csomópont megkeresése a láncolt listában */
     static int find(ListNode head, int target) {
         int index = 0;
         while (head != null) {
@@ -48,16 +48,16 @@ public class linked_list {
         return -1;
     }
 
-    /* Driver Code */
+    /* Főprogram */
     public static void main(String[] args) {
-        /* Initialize linked list */
-        // Initialize each node
+        /* Láncolt lista inicializálása */
+        // Minden csomópont inicializálása
         ListNode n0 = new ListNode(1);
         ListNode n1 = new ListNode(3);
         ListNode n2 = new ListNode(2);
         ListNode n3 = new ListNode(5);
         ListNode n4 = new ListNode(4);
-        // Build references between nodes
+        // Hivatkozások felépítése a csomópontok között
         n0.next = n1;
         n1.next = n2;
         n2.next = n3;
@@ -65,21 +65,21 @@ public class linked_list {
         System.out.println("Initialized linked list is");
         PrintUtil.printLinkedList(n0);
 
-        /* Insert node */
+        /* Csomópont beszúrása */
         insert(n0, new ListNode(0));
         System.out.println("Linked list after inserting node is");
         PrintUtil.printLinkedList(n0);
 
-        /* Remove node */
+        /* Csomópont törlése */
         remove(n0);
         System.out.println("Linked list after removing node is");
         PrintUtil.printLinkedList(n0);
 
-        /* Access node */
+        /* Csomópont elérése */
         ListNode node = access(n0, 3);
         System.out.println("Value of node at index 3 in linked list = " + node.val);
 
-        /* Search node */
+        /* Csomópont keresése */
         int index = find(n0, 2);
         System.out.println("Index of node with value 2 in linked list = " + index);
     }

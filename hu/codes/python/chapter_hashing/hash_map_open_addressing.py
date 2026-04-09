@@ -12,96 +12,96 @@ from chapter_hashing.array_hash_map import Pair
 
 
 class HashMapOpenAddressing:
-    """Hash table with open addressing"""
+    """Nyílt címzéssel ütközéskezelő hash tábla"""
 
     def __init__(self):
-        """Constructor"""
-        self.size = 0  # Number of key-value pairs
-        self.capacity = 4  # Hash table capacity
-        self.load_thres = 2.0 / 3.0  # Load factor threshold for triggering expansion
-        self.extend_ratio = 2  # Expansion multiplier
-        self.buckets: list[Pair | None] = [None] * self.capacity  # Bucket array
-        self.TOMBSTONE = Pair(-1, "-1")  # Removal marker
+        """Konstruktor"""
+        self.size = 0  # Kulcs-érték párok száma
+        self.capacity = 4  # Hash tábla kapacitása
+        self.load_thres = 2.0 / 3.0  # Bővítést kiváltó terhelési tényező küszöbértéke
+        self.extend_ratio = 2  # Bővítési szorzó
+        self.buckets: list[Pair | None] = [None] * self.capacity  # Vödör tömb
+        self.TOMBSTONE = Pair(-1, "-1")  # Törlésjelző
 
     def hash_func(self, key: int) -> int:
-        """Hash function"""
+        """Hash függvény"""
         return key % self.capacity
 
     def load_factor(self) -> float:
-        """Load factor"""
+        """Terhelési tényező"""
         return self.size / self.capacity
 
     def find_bucket(self, key: int) -> int:
-        """Search for bucket index corresponding to key"""
+        """A kulcshoz tartozó vödör indexének keresése"""
         index = self.hash_func(key)
         first_tombstone = -1
-        # Linear probing, break when encountering an empty bucket
+        # Lineáris próba, üres vödörnél megáll
         while self.buckets[index] is not None:
-            # If key is encountered, return the corresponding bucket index
+            # Ha megtalálja a kulcsot, visszaadja a megfelelő vödör indexét
             if self.buckets[index].key == key:
-                # If a removal marker was encountered before, move the key-value pair to that index
+                # Ha korábban törlésjelzőt talált, a kulcs-érték párt arra az indexre helyezi
                 if first_tombstone != -1:
                     self.buckets[first_tombstone] = self.buckets[index]
                     self.buckets[index] = self.TOMBSTONE
-                    return first_tombstone  # Return the moved bucket index
-                return index  # Return bucket index
-            # Record the first removal marker encountered
+                    return first_tombstone  # Az áthelyezett vödör indexét adja vissza
+                return index  # Vödör indexét adja vissza
+            # Az első törlésjelző rögzítése
             if first_tombstone == -1 and self.buckets[index] is self.TOMBSTONE:
                 first_tombstone = index
-            # Calculate bucket index, wrap around to the head if past the tail
+            # Vödör indexének kiszámítása, körbe fordul ha túlmegy a végén
             index = (index + 1) % self.capacity
-        # If key does not exist, return the index for insertion
+        # Ha a kulcs nem létezik, a beszúrási indexet adja vissza
         return index if first_tombstone == -1 else first_tombstone
 
     def get(self, key: int) -> str:
-        """Query operation"""
-        # Search for bucket index corresponding to key
+        """Lekérdezési művelet"""
+        # A kulcshoz tartozó vödör indexének keresése
         index = self.find_bucket(key)
-        # If key-value pair is found, return corresponding val
+        # Ha megtalálja a kulcs-érték párt, visszaadja a megfelelő értéket
         if self.buckets[index] not in [None, self.TOMBSTONE]:
             return self.buckets[index].val
-        # If key-value pair does not exist, return None
+        # Ha a kulcs-érték pár nem létezik, None-t ad vissza
         return None
 
     def put(self, key: int, val: str):
-        """Add operation"""
-        # When load factor exceeds threshold, perform expansion
+        """Hozzáadási művelet"""
+        # Ha a terhelési tényező meghaladja a küszöböt, bővítést végez
         if self.load_factor() > self.load_thres:
             self.extend()
-        # Search for bucket index corresponding to key
+        # A kulcshoz tartozó vödör indexének keresése
         index = self.find_bucket(key)
-        # If key-value pair is found, overwrite val and return
+        # Ha megtalálja a kulcs-érték párt, felülírja az értéket és visszatér
         if self.buckets[index] not in [None, self.TOMBSTONE]:
             self.buckets[index].val = val
             return
-        # If key-value pair does not exist, add the key-value pair
+        # Ha a kulcs-érték pár nem létezik, hozzáadja
         self.buckets[index] = Pair(key, val)
         self.size += 1
 
     def remove(self, key: int):
-        """Remove operation"""
-        # Search for bucket index corresponding to key
+        """Törlési művelet"""
+        # A kulcshoz tartozó vödör indexének keresése
         index = self.find_bucket(key)
-        # If key-value pair is found, overwrite it with removal marker
+        # Ha megtalálja a kulcs-érték párt, törlésjelzővel helyettesíti
         if self.buckets[index] not in [None, self.TOMBSTONE]:
             self.buckets[index] = self.TOMBSTONE
             self.size -= 1
 
     def extend(self):
-        """Expand hash table"""
-        # Temporarily store the original hash table
+        """Hash tábla bővítése"""
+        # Az eredeti hash tábla ideiglenes tárolása
         buckets_tmp = self.buckets
-        # Initialize expanded new hash table
+        # A bővített új hash tábla inicializálása
         self.capacity *= self.extend_ratio
         self.buckets = [None] * self.capacity
         self.size = 0
-        # Move key-value pairs from original hash table to new hash table
+        # Kulcs-érték párok áthelyezése az eredeti hash táblából az újba
         for pair in buckets_tmp:
             if pair not in [None, self.TOMBSTONE]:
                 self.put(pair.key, pair.val)
 
     def print(self):
-        """Print hash table"""
+        """Hash tábla kiírása"""
         for pair in self.buckets:
             if pair is None:
                 print("None")
@@ -111,28 +111,28 @@ class HashMapOpenAddressing:
                 print(pair.key, "->", pair.val)
 
 
-"""Driver Code"""
+"""Fő kód"""
 if __name__ == "__main__":
-    # Initialize hash table
+    # Hash tábla inicializálása
     hashmap = HashMapOpenAddressing()
 
-    # Add operation
-    # Add key-value pair (key, val) to the hash table
+    # Hozzáadás
+    # Kulcs-érték pár (kulcs, érték) hozzáadása a hash táblához
     hashmap.put(12836, "Xiao Ha")
     hashmap.put(15937, "Xiao Luo")
     hashmap.put(16750, "Xiao Suan")
     hashmap.put(13276, "Xiao Fa")
     hashmap.put(10583, "Xiao Ya")
-    print("\nAfter adding, the hash table is\nKey -> Value")
+    print("\nHozzáadás után a hash tábla:\nKulcs -> Érték")
     hashmap.print()
 
-    # Query operation
-    # Input key into the hash table to get val
+    # Lekérdezés
+    # Kulcs beírása a hash táblába az érték lekérdezéséhez
     name = hashmap.get(13276)
-    print("\nInput student ID 13276, found name " + name)
+    print("\nA 13276-os diákigazolvány alapján a név: " + name)
 
-    # Remove operation
-    # Remove key-value pair (key, val) from the hash table
+    # Törlés
+    # Kulcs-érték pár (kulcs, érték) törlése a hash táblából
     hashmap.remove(16750)
-    print("\nAfter removing 16750, the hash table is\nKey -> Value")
+    print("\nA 16750-es törlése után a hash tábla:\nKulcs -> Érték")
     hashmap.print()

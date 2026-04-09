@@ -4,53 +4,53 @@ Created Time: 2022-11-25
 Author: krahets (krahets@163.com)
 """
 
-"""Driver Code"""
+"""Fő kód"""
 if __name__ == "__main__":
-    # Initialize list
+    # Lista inicializálása
     nums: list[int] = [1, 3, 2, 5, 4]
-    print("\nList nums =", nums)
+    print("\nLista nums =", nums)
 
-    # Access element
+    # Elem elérése
     x: int = nums[1]
-    print("\nAccess the element at index 1, get x =", x)
+    print("\nAz 1-es indexű elem elérése, x =", x)
 
-    # Update element
+    # Elem frissítése
     nums[1] = 0
-    print("\nUpdate the element at index 1 to 0, get nums =", nums)
+    print("\nAz 1-es indexű elem 0-ra frissítése után nums =", nums)
 
-    # Clear list
+    # Lista törlése
     nums.clear()
-    print("\nAfter clearing the list nums =", nums)
+    print("\nA lista törlése után nums =", nums)
 
-    # Add elements at the end
+    # Elemek hozzáadása a véghez
     nums.append(1)
     nums.append(3)
     nums.append(2)
     nums.append(5)
     nums.append(4)
-    print("\nAfter adding elements nums =", nums)
+    print("\nElemek hozzáadása után nums =", nums)
 
-    # Insert element in the middle
+    # Elem beszúrása a közepére
     nums.insert(3, 6)
-    print("\nInsert number 6 at index 3, get nums =", nums)
+    print("\nA 6-os szám 3-as indexre szúrása után nums =", nums)
 
-    # Remove element
+    # Elem törlése
     nums.pop(3)
-    print("\nRemove the element at index 3, get nums =", nums)
+    print("\nA 3-as indexű elem törlése után nums =", nums)
 
-    # Traverse list by index
+    # Lista bejárása index szerint
     count = 0
     for i in range(len(nums)):
         count += nums[i]
-    # Direct traversal of list elements
+    # Lista elemeinek közvetlen bejárása
     for num in nums:
         count += num
 
-    # Concatenate two lists
+    # Két lista összefűzése
     nums1 = [6, 8, 7, 10, 9]
     nums += nums1
-    print("\nConcatenate list nums1 to nums, get nums =", nums)
+    print("\nA nums1 lista hozzáfűzése a nums-hoz, nums =", nums)
 
-    # Sort list
+    # Lista rendezése
     nums.sort()
-    print("\nAfter sorting the list nums =", nums)
+    print("\nA lista rendezése után nums =", nums)

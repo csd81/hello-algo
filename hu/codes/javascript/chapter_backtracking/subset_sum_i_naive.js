@@ -4,38 +4,38 @@
  * Author: yuan0221 (yl1452491917@gmail.com)
  */
 
-/* Backtracking algorithm: Subset sum I */
+/* Visszalépéses algoritmus: Részhalmazösszeg I */
 function backtrack(state, target, total, choices, res) {
-    // When the subset sum equals target, record the solution
+    // Ha a részhalmazösszeg egyenlő target-tel, rögzítjük a megoldást
     if (total === target) {
         res.push([...state]);
         return;
     }
-    // Traverse all choices
+    // Bejárjuk az összes választási lehetőséget
     for (let i = 0; i < choices.length; i++) {
-        // Pruning: if the subset sum exceeds target, skip this choice
+        // Metszés: ha a részhalmazösszeg meghaladja a target-et, kihagyjuk ezt a választást
         if (total + choices[i] > target) {
             continue;
         }
-        // Attempt: make choice, update element sum total
+        // Kísérlet: választás megtétele, az elemösszeg total frissítése
         state.push(choices[i]);
-        // Proceed to the next round of selection
+        // Folytatjuk a következő kiválasztási körrel
         backtrack(state, target, total + choices[i], choices, res);
-        // Backtrack: undo choice, restore to previous state
+        // Visszalépés: a választás visszavonása, visszaállítás az előző állapotra
         state.pop();
     }
 }
 
-/* Solve subset sum I (including duplicate subsets) */
+/* Részhalmazösszeg I megoldása (ismétlődő részhalmazokat tartalmaz) */
 function subsetSumINaive(nums, target) {
-    const state = []; // State (subset)
-    const total = 0; // Subset sum
-    const res = []; // Result list (subset list)
+    const state = []; // Állapot (részhalmaz)
+    const total = 0; // Részhalmazösszeg
+    const res = []; // Eredménylista (részhalmazlista)
     backtrack(state, target, total, nums, res);
     return res;
 }
 
-/* Driver Code */
+/* Tesztkód */
 const nums = [3, 4, 5];
 const target = 9;
 const res = subsetSumINaive(nums, target);

@@ -7,14 +7,14 @@
 const { printLinkedList } = require('../modules/PrintUtil');
 const { ListNode } = require('../modules/ListNode');
 
-/* Insert node P after node n0 in the linked list */
+/* P csomópont beszúrása az n0 csomópont után a láncolt listában */
 function insert(n0, P) {
     const n1 = n0.next;
     P.next = n1;
     n0.next = P;
 }
 
-/* Remove the first node after node n0 in the linked list */
+/* Az n0 utáni első csomópont eltávolítása a láncolt listából */
 function remove(n0) {
     if (!n0.next) return;
     // n0 -> P -> n1
@@ -23,7 +23,7 @@ function remove(n0) {
     n0.next = n1;
 }
 
-/* Access the node at index index in the linked list */
+/* Az index pozíciójú csomópont elérése a láncolt listában */
 function access(head, index) {
     for (let i = 0; i < index; i++) {
         if (!head) {
@@ -34,7 +34,7 @@ function access(head, index) {
     return head;
 }
 
-/* Find the first node with value target in the linked list */
+/* Az első target értékű csomópont keresése a láncolt listában */
 function find(head, target) {
     let index = 0;
     while (head !== null) {
@@ -47,15 +47,15 @@ function find(head, target) {
     return -1;
 }
 
-/* Driver Code */
-/* Initialize linked list */
-// Initialize each node
+/* Tesztkód */
+/* Láncolt lista inicializálása */
+// Minden csomópont inicializálása
 const n0 = new ListNode(1);
 const n1 = new ListNode(3);
 const n2 = new ListNode(2);
 const n3 = new ListNode(5);
 const n4 = new ListNode(4);
-// Build references between nodes
+// Csomópontok közötti hivatkozások felépítése
 n0.next = n1;
 n1.next = n2;
 n2.next = n3;
@@ -63,20 +63,20 @@ n3.next = n4;
 console.log('Initialized linked list is');
 printLinkedList(n0);
 
-/* Insert node */
+/* Csomópont beszúrása */
 insert(n0, new ListNode(0));
 console.log('Linked list after inserting node is');
 printLinkedList(n0);
 
-/* Remove node */
+/* Csomópont eltávolítása */
 remove(n0);
 console.log('Linked list after removing node is');
 printLinkedList(n0);
 
-/* Access node */
+/* Csomópont elérése */
 const node = access(n0, 3);
 console.log('Value of node at index 3 in linked list = ' + node.val);
 
-/* Search node */
+/* Csomópont keresése */
 const index = find(n0, 2);
 console.log('Index of node with value 2 in linked list = ' + index);

@@ -6,33 +6,33 @@
 
 #include "../utils/common.hpp"
 
-/* Backtracking algorithm: Subset sum I */
+/* Visszalépéses algoritmus: I. részösszeg */
 void backtrack(vector<int> &state, int target, int total, vector<int> &choices, vector<vector<int>> &res) {
-    // When the subset sum equals target, record the solution
+    // Ha a részösszeg egyenlő a targettel, rögzítjük a megoldást
     if (total == target) {
         res.push_back(state);
         return;
     }
-    // Traverse all choices
+    // Az összes lehetőség bejárása
     for (size_t i = 0; i < choices.size(); i++) {
-        // Pruning: if the subset sum exceeds target, skip this choice
+        // Vágás: ha a részösszeg meghaladja a targetet, kihagyjuk ezt a lehetőséget
         if (total + choices[i] > target) {
             continue;
         }
-        // Attempt: make choice, update element sum total
+        // Próbálkozás: lehetőség kiválasztása, total elemösszeg frissítése
         state.push_back(choices[i]);
-        // Proceed to the next round of selection
+        // Következő kiválasztási kör végrehajtása
         backtrack(state, target, total + choices[i], choices, res);
-        // Backtrack: undo choice, restore to previous state
+        // Visszalépés: lehetőség visszavonása, előző állapot visszaállítása
         state.pop_back();
     }
 }
 
-/* Solve subset sum I (including duplicate subsets) */
+/* I. részösszeg megoldása (duplikált részhalmazokkal együtt) */
 vector<vector<int>> subsetSumINaive(vector<int> &nums, int target) {
-    vector<int> state;       // State (subset)
-    int total = 0;           // Subset sum
-    vector<vector<int>> res; // Result list (subset list)
+    vector<int> state;       // Állapot (részhalmaz)
+    int total = 0;           // Részösszeg
+    vector<vector<int>> res; // Eredménylista (részhalmazlista)
     backtrack(state, target, total, nums, res);
     return res;
 }

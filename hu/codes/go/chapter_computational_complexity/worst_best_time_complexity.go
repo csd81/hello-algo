@@ -8,25 +8,25 @@ import (
 	"math/rand"
 )
 
-/* Generate an array with elements { 1, 2, ..., n }, order shuffled */
+/* { 1, 2, ..., n } elemekből álló tömb generálása véletlenszerű sorrendben */
 func randomNumbers(n int) []int {
 	nums := make([]int, n)
-	// Generate array nums = { 1, 2, 3, ..., n }
+	// nums = { 1, 2, 3, ..., n } tömb generálása
 	for i := 0; i < n; i++ {
 		nums[i] = i + 1
 	}
-	// Randomly shuffle array elements
+	// Tömbelemek véletlenszerű összekeverése
 	rand.Shuffle(len(nums), func(i, j int) {
 		nums[i], nums[j] = nums[j], nums[i]
 	})
 	return nums
 }
 
-/* Find the index of number 1 in array nums */
+/* Az 1-es szám indexének keresése a nums tömbben */
 func findOne(nums []int) int {
 	for i := 0; i < len(nums); i++ {
-		// When element 1 is at the head of the array, best time complexity O(1) is achieved
-		// When element 1 is at the tail of the array, worst time complexity O(n) is achieved
+		// Ha az 1-es elem a tömb elején van, a legjobb időbonyolultság O(1) érhető el
+		// Ha az 1-es elem a tömb végén van, a legrosszabb időbonyolultság O(n) érhető el
 		if nums[i] == 1 {
 			return i
 		}

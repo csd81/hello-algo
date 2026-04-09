@@ -6,34 +6,34 @@ Author: Peng Chen (pengchzn@gmail.com)
 
 from collections import deque
 
-"""Driver Code"""
+"""Fő kód"""
 if __name__ == "__main__":
-    # Initialize queue
-    # In Python, we generally use the double-ended queue class deque as a queue
-    # Although queue.Queue() is a proper queue class, it is not very convenient to use
+    # Sor inicializálása
+    # Pythonban általában a kétirányú sor (deque) osztályt használjuk sorként
+    # Bár a queue.Queue() egy megfelelő sor osztály, nem túl kényelmes használni
     que: deque[int] = deque()
 
-    # Elements enqueue
+    # Elemek sorba állítása
     que.append(1)
     que.append(3)
     que.append(2)
     que.append(5)
     que.append(4)
-    print("queue que =", que)
+    print("sor que =", que)
 
-    # Access front of the queue element
+    # A sor elején lévő elem elérése
     front: int = que[0]
-    print("Front of the queue element front =", front)
+    print("Sor eleje front =", front)
 
-    # Element dequeue
+    # Elem kivétele a sorból
     pop: int = que.popleft()
-    print("Dequeued element pop =", pop)
-    print("After dequeue que =", que)
+    print("Kivett elem pop =", pop)
+    print("Kivétel után que =", que)
 
-    # Get the length of the queue
+    # A sor hosszának lekérése
     size: int = len(que)
-    print("Length of the queue size =", size)
+    print("Sor hossza size =", size)
 
-    # Check if the queue is empty
+    # Ellenőrzi, hogy a sor üres-e
     is_empty: bool = len(que) == 0
-    print("Is the queue empty =", is_empty)
+    print("A sor üres-e =", is_empty)

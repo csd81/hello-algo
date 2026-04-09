@@ -4,38 +4,38 @@
  * Author: yuan0221 (yl1452491917@gmail.com)
  */
 
-/* Move a disk */
+/* Egy korong mozgatása */
 function move(src, tar) {
-    // Take out a disk from the top of src
+    // Kiveszünk egy korongot az src tetejéről
     const pan = src.pop();
-    // Place the disk on top of tar
+    // A korongot a tar tetejére helyezzük
     tar.push(pan);
 }
 
-/* Solve the Tower of Hanoi problem f(i) */
+/* A Hanoi-torony f(i) feladatának megoldása */
 function dfs(i, src, buf, tar) {
-    // If there is only one disk left in src, move it directly to tar
+    // Ha csak egy korong maradt az src-n, közvetlenül a tar-ra mozgatjuk
     if (i === 1) {
         move(src, tar);
         return;
     }
-    // Subproblem f(i-1): move the top i-1 disks from src to buf using tar
+    // Részprobléma f(i-1): a felső i-1 korongot a src-ről a buf-ra mozgatjuk a tar segítségével
     dfs(i - 1, src, tar, buf);
-    // Subproblem f(1): move the remaining disk from src to tar
+    // Részprobléma f(1): a maradék korongot a src-ről a tar-ra mozgatjuk
     move(src, tar);
-    // Subproblem f(i-1): move the top i-1 disks from buf to tar using src
+    // Részprobléma f(i-1): a felső i-1 korongot a buf-ról a tar-ra mozgatjuk a src segítségével
     dfs(i - 1, buf, src, tar);
 }
 
-/* Solve the Tower of Hanoi problem */
+/* A Hanoi-torony feladatának megoldása */
 function solveHanota(A, B, C) {
     const n = A.length;
-    // Move the top n disks from A to C using B
+    // A felső n korongot A-ról C-re mozgatjuk B segítségével
     dfs(n, A, B, C);
 }
 
-/* Driver Code */
-// The tail of the list is the top of the rod
+/* Tesztkód */
+// A lista vége a rúd teteje
 const A = [5, 4, 3, 2, 1];
 const B = [];
 const C = [];

@@ -9,57 +9,57 @@ package chapter_computational_complexity;
 import java.util.Stack;
 
 public class recursion {
-    /* Recursion */
+    /* Rekurzió */
     static int recur(int n) {
-        // Termination condition
+        // Leállási feltétel
         if (n == 1)
             return 1;
-        // Recurse: recursive call
+        // Rekurzió: rekurzív hívás
         int res = recur(n - 1);
-        // Return: return result
+        // Visszatérés: eredmény visszaadása
         return n + res;
     }
 
-    /* Simulate recursion using iteration */
+    /* Rekurzió szimulálása iterációval */
     static int forLoopRecur(int n) {
-        // Use an explicit stack to simulate the system call stack
+        // Explicit verem használata a rendszerhívási verem szimulálásához
         Stack<Integer> stack = new Stack<>();
         int res = 0;
-        // Recurse: recursive call
+        // Rekurzió: rekurzív hívás
         for (int i = n; i > 0; i--) {
-            // Simulate "recurse" with "push"
+            // "Rekurzió" szimulálása "push"-sal
             stack.push(i);
         }
-        // Return: return result
+        // Visszatérés: eredmény visszaadása
         while (!stack.isEmpty()) {
-            // Simulate "return" with "pop"
+            // "Visszatérés" szimulálása "pop"-pal
             res += stack.pop();
         }
         // res = 1+2+3+...+n
         return res;
     }
 
-    /* Tail recursion */
+    /* Farok-rekurzió */
     static int tailRecur(int n, int res) {
-        // Termination condition
+        // Leállási feltétel
         if (n == 0)
             return res;
-        // Tail recursive call
+        // Farok-rekurzív hívás
         return tailRecur(n - 1, res + n);
     }
 
-    /* Fibonacci sequence: recursion */
+    /* Fibonacci-sorozat: rekurzió */
     static int fib(int n) {
-        // Termination condition f(1) = 0, f(2) = 1
+        // Leállási feltétel f(1) = 0, f(2) = 1
         if (n == 1 || n == 2)
             return n - 1;
-        // Recursive call f(n) = f(n-1) + f(n-2)
+        // Rekurzív hívás f(n) = f(n-1) + f(n-2)
         int res = fib(n - 1) + fib(n - 2);
-        // Return result f(n)
+        // f(n) eredmény visszaadása
         return res;
     }
 
-    /* Driver Code */
+    /* Főprogram */
     public static void main(String[] args) {
         int n = 5;
         int res;

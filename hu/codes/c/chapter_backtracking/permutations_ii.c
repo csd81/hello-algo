@@ -6,12 +6,12 @@
 
 #include "../utils/common.h"
 
-// Assume at most 1000 permutations, max element value 1000
+// Legfeljebb 1000 permutációt, maximum 1000-es elemértéket feltételezünk
 #define MAX_SIZE 1000
 
-/* Backtracking algorithm: Permutations II */
+/* Visszalépéses algoritmus: Permutációk II */
 void backtrack(int *state, int stateSize, int *choices, int choicesSize, bool *selected, int **res, int *resSize) {
-    // When the state length equals the number of elements, record the solution
+    // Ha az állapot hossza egyenlő az elemek számával, rögzítse a megoldást
     if (stateSize == choicesSize) {
         res[*resSize] = (int *)malloc(choicesSize * sizeof(int));
         for (int i = 0; i < choicesSize; i++) {
@@ -20,25 +20,25 @@ void backtrack(int *state, int stateSize, int *choices, int choicesSize, bool *s
         (*resSize)++;
         return;
     }
-    // Traverse all choices
+    // Az összes lehetőség bejárása
     bool duplicated[MAX_SIZE] = {false};
     for (int i = 0; i < choicesSize; i++) {
         int choice = choices[i];
-        // Pruning: do not allow repeated selection of elements and do not allow repeated selection of equal elements
+        // Vágás: ne engedjük meg az elemek ismételt kiválasztását és az egyenlő elemek ismételt kiválasztását sem
         if (!selected[i] && !duplicated[choice]) {
-            // Attempt: make choice, update state
-            duplicated[choice] = true; // Record the selected element value
+            // Kísérlet: választás végrehajtása, állapot frissítése
+            duplicated[choice] = true; // A kiválasztott elemérték rögzítése
             selected[i] = true;
             state[stateSize] = choice;
-            // Proceed to the next round of selection
+            // Továbblépés a következő kiválasztási körre
             backtrack(state, stateSize + 1, choices, choicesSize, selected, res, resSize);
-            // Backtrack: undo choice, restore to previous state
+            // Visszalépés: választás visszavonása, visszaállítás az előző állapotba
             selected[i] = false;
         }
     }
 }
 
-/* Permutations II */
+/* Permutációk II */
 int **permutationsII(int *nums, int numsSize, int *returnSize) {
     int *state = (int *)malloc(numsSize * sizeof(int));
     bool *selected = (bool *)malloc(numsSize * sizeof(bool));
@@ -56,7 +56,7 @@ int **permutationsII(int *nums, int numsSize, int *returnSize) {
     return res;
 }
 
-/* Driver Code */
+/* Vezérlő kód */
 int main() {
     int nums[] = {1, 1, 2};
     int numsSize = sizeof(nums) / sizeof(nums[0]);
@@ -71,7 +71,7 @@ int main() {
         printArray(res[i], numsSize);
     }
 
-    // Free memory
+    // Memória felszabadítása
     for (int i = 0; i < returnSize; i++) {
         free(res[i]);
     }

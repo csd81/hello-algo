@@ -11,57 +11,57 @@ import '../utils/list_node.dart';
 import '../utils/print_util.dart';
 import '../utils/tree_node.dart';
 
-/* Function */
+/* Függvény */
 int function() {
-  // Perform some operations
+  // Valamilyen műveletek végrehajtása
   return 0;
 }
 
-/* Constant order */
+/* Konstans rend */
 void constant(int n) {
-  // Constants, variables, objects occupy O(1) space
+  // Konstansok, változók, objektumok O(1) tárhelyet foglalnak
   final int a = 0;
   int b = 0;
   List<int> nums = List.filled(10000, 0);
   ListNode node = ListNode(0);
-  // Variables in the loop occupy O(1) space
+  // A ciklusban lévő változók O(1) tárhelyet foglalnak
   for (var i = 0; i < n; i++) {
     int c = 0;
   }
-  // Functions in the loop occupy O(1) space
+  // A ciklusban lévő függvények O(1) tárhelyet foglalnak
   for (var i = 0; i < n; i++) {
     function();
   }
 }
 
-/* Linear order */
+/* Lineáris rend */
 void linear(int n) {
-  // Array of length n uses O(n) space
+  // n hosszúságú tömb O(n) tárhelyet használ
   List<int> nums = List.filled(n, 0);
-  // A list of length n occupies O(n) space
+  // n hosszúságú lista O(n) tárhelyet foglal
   List<ListNode> nodes = [];
   for (var i = 0; i < n; i++) {
     nodes.add(ListNode(i));
   }
-  // A hash table of length n occupies O(n) space
+  // n hosszúságú hash tábla O(n) tárhelyet foglal
   Map<int, String> map = HashMap();
   for (var i = 0; i < n; i++) {
     map.putIfAbsent(i, () => i.toString());
   }
 }
 
-/* Linear order (recursive implementation) */
+/* Lineáris rend (rekurzív implementáció) */
 void linearRecur(int n) {
   print('Recursion n = $n');
   if (n == 1) return;
   linearRecur(n - 1);
 }
 
-/* Exponential order */
+/* Négyzetes rend */
 void quadratic(int n) {
-  // Matrix uses O(n^2) space
+  // Mátrix O(n^2) tárhelyet használ
   List<List<int>> numMatrix = List.generate(n, (_) => List.filled(n, 0));
-  // 2D list uses O(n^2) space
+  // Kétdimenziós lista O(n^2) tárhelyet használ
   List<List<int>> numList = [];
   for (var i = 0; i < n; i++) {
     List<int> tmp = [];
@@ -72,7 +72,7 @@ void quadratic(int n) {
   }
 }
 
-/* Quadratic order (recursive implementation) */
+/* Négyzetes rend (rekurzív implementáció) */
 int quadraticRecur(int n) {
   if (n <= 0) return 0;
   List<int> nums = List.filled(n, 0);
@@ -80,7 +80,7 @@ int quadraticRecur(int n) {
   return quadraticRecur(n - 1);
 }
 
-/* Driver Code */
+/* Főprogram */
 TreeNode? buildTree(int n) {
   if (n == 0) return null;
   TreeNode root = TreeNode(0);
@@ -89,18 +89,18 @@ TreeNode? buildTree(int n) {
   return root;
 }
 
-/* Driver Code */
+/* Főprogram */
 void main() {
   int n = 5;
-  // Constant order
+  // Konstans rend
   constant(n);
-  // Linear order
+  // Lineáris rend
   linear(n);
   linearRecur(n);
-  // Exponential order
+  // Négyzetes rend
   quadratic(n);
   quadraticRecur(n);
-  // Exponential order
+  // Exponenciális rend
   TreeNode? root = buildTree(n);
   printTree(root);
 }

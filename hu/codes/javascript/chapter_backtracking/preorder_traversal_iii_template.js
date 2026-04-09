@@ -7,58 +7,58 @@
 const { arrToTree } = require('../modules/TreeNode');
 const { printTree } = require('../modules/PrintUtil');
 
-/* Check if the current state is a solution */
+/* Ellenőrzi, hogy a jelenlegi állapot megoldás-e */
 function isSolution(state) {
     return state && state[state.length - 1]?.val === 7;
 }
 
-/* Record solution */
+/* Megoldás rögzítése */
 function recordSolution(state, res) {
     res.push([...state]);
 }
 
-/* Check if the choice is valid under the current state */
+/* Ellenőrzi, hogy a választás érvényes-e a jelenlegi állapotban */
 function isValid(state, choice) {
     return choice !== null && choice.val !== 3;
 }
 
-/* Update state */
+/* Állapot frissítése */
 function makeChoice(state, choice) {
     state.push(choice);
 }
 
-/* Restore state */
+/* Állapot visszaállítása */
 function undoChoice(state) {
     state.pop();
 }
 
-/* Backtracking algorithm: Example 3 */
+/* Visszalépéses algoritmus: 3. példa */
 function backtrack(state, choices, res) {
-    // Check if it is a solution
+    // Ellenőrzi, hogy megoldás-e
     if (isSolution(state)) {
-        // Record solution
+        // Megoldás rögzítése
         recordSolution(state, res);
     }
-    // Traverse all choices
+    // Bejárjuk az összes választási lehetőséget
     for (const choice of choices) {
-        // Pruning: check if the choice is valid
+        // Metszés: ellenőrzi, hogy a választás érvényes-e
         if (isValid(state, choice)) {
-            // Attempt: make choice, update state
+            // Kísérlet: választás megtétele, állapot frissítése
             makeChoice(state, choice);
-            // Proceed to the next round of selection
+            // Folytatjuk a következő kiválasztási körrel
             backtrack(state, [choice.left, choice.right], res);
-            // Backtrack: undo choice, restore to previous state
+            // Visszalépés: a választás visszavonása, visszaállítás az előző állapotra
             undoChoice(state);
         }
     }
 }
 
-// Driver Code
+// Tesztkód
 const root = arrToTree([1, 7, 3, 4, 5, 6, 7]);
 console.log('\nInitialize binary tree');
 printTree(root);
 
-// Backtracking algorithm
+// Visszalépéses algoritmus
 const res = [];
 backtrack([], [root], res);
 

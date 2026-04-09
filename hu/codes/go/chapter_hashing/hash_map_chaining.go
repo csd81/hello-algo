@@ -10,16 +10,16 @@ import (
 	"strings"
 )
 
-/* Hash table with separate chaining */
+/* Láncolással ütközéskezelő hash tábla */
 type hashMapChaining struct {
-	size        int      // Number of key-value pairs
-	capacity    int      // Hash table capacity
-	loadThres   float64  // Load factor threshold for triggering expansion
-	extendRatio int      // Expansion multiplier
-	buckets     [][]pair // Bucket array
+	size        int      // Kulcs-érték párok száma
+	capacity    int      // Hash tábla kapacitása
+	loadThres   float64  // Terhelési tényező küszöbértéke a bővítés aktiválásához
+	extendRatio int      // Bővítési szorzó
+	buckets     [][]pair // Vödör tömb
 }
 
-/* Constructor */
+/* Konstruktor */
 func newHashMapChaining() *hashMapChaining {
 	buckets := make([][]pair, 4)
 	for i := 0; i < 4; i++ {

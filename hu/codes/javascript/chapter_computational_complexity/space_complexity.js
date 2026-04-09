@@ -8,59 +8,59 @@ const { ListNode } = require('../modules/ListNode');
 const { TreeNode } = require('../modules/TreeNode');
 const { printTree } = require('../modules/PrintUtil');
 
-/* Function */
+/* Függvény */
 function constFunc() {
-    // Perform some operations
+    // Néhány műveletet hajt végre
     return 0;
 }
 
-/* Constant order */
+/* Konstans rend */
 function constant(n) {
-    // Constants, variables, objects occupy O(1) space
+    // Konstansok, változók, objektumok O(1) helyet foglalnak
     const a = 0;
     const b = 0;
     const nums = new Array(10000);
     const node = new ListNode(0);
-    // Variables in the loop occupy O(1) space
+    // A ciklusban lévő változók O(1) helyet foglalnak
     for (let i = 0; i < n; i++) {
         const c = 0;
     }
-    // Functions in the loop occupy O(1) space
+    // A ciklusban lévő függvények O(1) helyet foglalnak
     for (let i = 0; i < n; i++) {
         constFunc();
     }
 }
 
-/* Linear order */
+/* Lineáris rend */
 function linear(n) {
-    // Array of length n uses O(n) space
+    // n hosszúságú tömb O(n) helyet használ
     const nums = new Array(n);
-    // A list of length n occupies O(n) space
+    // n hosszúságú lista O(n) helyet foglal
     const nodes = [];
     for (let i = 0; i < n; i++) {
         nodes.push(new ListNode(i));
     }
-    // A hash table of length n occupies O(n) space
+    // n hosszúságú hash tábla O(n) helyet foglal
     const map = new Map();
     for (let i = 0; i < n; i++) {
         map.set(i, i.toString());
     }
 }
 
-/* Linear order (recursive implementation) */
+/* Lineáris rend (rekurzív implementáció) */
 function linearRecur(n) {
     console.log(`Recursion n = ${n}`);
     if (n === 1) return;
     linearRecur(n - 1);
 }
 
-/* Exponential order */
+/* Exponenciális rend */
 function quadratic(n) {
-    // Matrix uses O(n^2) space
+    // A mátrix O(n^2) helyet használ
     const numMatrix = Array(n)
         .fill(null)
         .map(() => Array(n).fill(null));
-    // 2D list uses O(n^2) space
+    // A 2D lista O(n^2) helyet használ
     const numList = [];
     for (let i = 0; i < n; i++) {
         const tmp = [];
@@ -71,7 +71,7 @@ function quadratic(n) {
     }
 }
 
-/* Quadratic order (recursive implementation) */
+/* Négyzetes rend (rekurzív implementáció) */
 function quadraticRecur(n) {
     if (n <= 0) return 0;
     const nums = new Array(n);
@@ -79,7 +79,7 @@ function quadraticRecur(n) {
     return quadraticRecur(n - 1);
 }
 
-/* Driver Code */
+/* Tesztkód */
 function buildTree(n) {
     if (n === 0) return null;
     const root = new TreeNode(0);
@@ -88,16 +88,16 @@ function buildTree(n) {
     return root;
 }
 
-/* Driver Code */
+/* Tesztkód */
 const n = 5;
-// Constant order
+// Konstans rend
 constant(n);
-// Linear order
+// Lineáris rend
 linear(n);
 linearRecur(n);
-// Exponential order
+// Exponenciális rend
 quadratic(n);
 quadraticRecur(n);
-// Exponential order
+// Exponenciális rend
 const root = buildTree(n);
 printTree(root);

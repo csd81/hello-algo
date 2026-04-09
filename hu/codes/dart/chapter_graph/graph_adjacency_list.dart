@@ -6,12 +6,12 @@
 
 import '../utils/vertex.dart';
 
-/* Undirected graph class based on adjacency list */
+/* Szomszédsági listán alapuló irányítatlan gráf osztály */
 class GraphAdjList {
-  // Adjacency list, key: vertex, value: all adjacent vertices of that vertex
+  // Szomszédsági lista, kulcs: csúcs, érték: az adott csúcs összes szomszédos csúcsa
   Map<Vertex, List<Vertex>> adjList = {};
 
-  /* Constructor */
+  /* Konstruktor */
   GraphAdjList(List<List<Vertex>> edges) {
     for (List<Vertex> edge in edges) {
       addVertex(edge[0]);
@@ -20,56 +20,56 @@ class GraphAdjList {
     }
   }
 
-  /* Get the number of vertices */
+  /* Csúcsok számának lekérése */
   int size() {
     return adjList.length;
   }
 
-  /* Add edge */
+  /* Él hozzáadása */
   void addEdge(Vertex vet1, Vertex vet2) {
     if (!adjList.containsKey(vet1) ||
         !adjList.containsKey(vet2) ||
         vet1 == vet2) {
       throw ArgumentError;
     }
-    // Add edge vet1 - vet2
+    // vet1 - vet2 él hozzáadása
     adjList[vet1]!.add(vet2);
     adjList[vet2]!.add(vet1);
   }
 
-  /* Remove edge */
+  /* Él eltávolítása */
   void removeEdge(Vertex vet1, Vertex vet2) {
     if (!adjList.containsKey(vet1) ||
         !adjList.containsKey(vet2) ||
         vet1 == vet2) {
       throw ArgumentError;
     }
-    // Remove edge vet1 - vet2
+    // vet1 - vet2 él eltávolítása
     adjList[vet1]!.remove(vet2);
     adjList[vet2]!.remove(vet1);
   }
 
-  /* Add vertex */
+  /* Csúcs hozzáadása */
   void addVertex(Vertex vet) {
     if (adjList.containsKey(vet)) return;
-    // Add a new linked list in the adjacency list
+    // Új láncolt lista hozzáadása a szomszédsági listához
     adjList[vet] = [];
   }
 
-  /* Remove vertex */
+  /* Csúcs eltávolítása */
   void removeVertex(Vertex vet) {
     if (!adjList.containsKey(vet)) {
       throw ArgumentError;
     }
-    // Remove the linked list corresponding to vertex vet in the adjacency list
+    // A vet csúcshoz tartozó láncolt lista eltávolítása a szomszédsági listából
     adjList.remove(vet);
-    // Traverse the linked lists of other vertices and remove all edges containing vet
+    // Bejárja a többi csúcs láncolt listáját, és eltávolítja az összes vet-et tartalmazó élt
     adjList.forEach((key, value) {
       value.remove(vet);
     });
   }
 
-  /* Print adjacency list */
+  /* Szomszédsági lista kiírása */
   void printAdjList() {
     print("Adjacency list =");
     adjList.forEach((key, value) {
@@ -82,9 +82,9 @@ class GraphAdjList {
   }
 }
 
-/* Driver Code */
+/* Főprogram */
 void main() {
-  /* Add edge */
+  /* Él hozzáadása */
   List<Vertex> v = Vertex.valsToVets([1, 3, 2, 5, 4]);
   List<List<Vertex>> edges = [
     [v[0], v[1]],
@@ -98,26 +98,26 @@ void main() {
   print("\nAfter initialization, graph is");
   graph.printAdjList();
 
-  /* Add edge */
-  // Vertices 1, 3 are v[0], v[1]
+  /* Él hozzáadása */
+  // Az 1, 3 csúcsok v[0], v[1]
   graph.addEdge(v[0], v[2]);
   print("\nAfter adding edge 1-2, graph is");
   graph.printAdjList();
 
-  /* Remove edge */
-  // Vertex 3 is v[1]
+  /* Él eltávolítása */
+  // A 3-as csúcs v[1]
   graph.removeEdge(v[0], v[1]);
   print("\nAfter removing edge 1-3, graph is");
   graph.printAdjList();
 
-  /* Add vertex */
+  /* Csúcs hozzáadása */
   Vertex v5 = Vertex(6);
   graph.addVertex(v5);
   print("\nAfter adding vertex 6, graph is");
   graph.printAdjList();
 
-  /* Remove vertex */
-  // Vertex 3 is v[1]
+  /* Csúcs eltávolítása */
+  // A 3-as csúcs v[1]
   graph.removeVertex(v[1]);
   print("\nAfter removing vertex 3, graph is");
   graph.printAdjList();

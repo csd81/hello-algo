@@ -12,23 +12,23 @@ import (
 
 /* Driver Code */
 func TestList(t *testing.T) {
-	/* Initialize list */
+	/* Lista inicializálása */
 	nums := []int{1, 3, 2, 5, 4}
 	fmt.Println("List nums =", nums)
 
-	/* Update element */
-	num := nums[1] // Access element at index 1
+	/* Elem frissítése */
+	num := nums[1] // Az 1-es indexű elem elérése
 	fmt.Println("Access element at index 1, get num =", num)
 
-	/* Add elements at the end */
-	nums[1] = 0 // Update element at index 1 to 0
+	/* Elem hozzáadása a végéhez */
+	nums[1] = 0 // Az 1-es indexű elem frissítése 0-ra
 	fmt.Println("Update element at index 1 to 0, get nums =", nums)
 
-	/* Remove element */
+	/* Elem törlése */
 	nums = nil
 	fmt.Println("After clearing list, nums =", nums)
 
-	/* Direct traversal of list elements */
+	/* Listaelemek közvetlen bejárása */
 	nums = append(nums, 1)
 	nums = append(nums, 3)
 	nums = append(nums, 2)
@@ -36,31 +36,31 @@ func TestList(t *testing.T) {
 	nums = append(nums, 4)
 	fmt.Println("After adding elements, nums =", nums)
 
-	/* Sort list */
-	nums = append(nums[:3], append([]int{6}, nums[3:]...)...) // Insert number 6 at index 3
+	/* Lista rendezése */
+	nums = append(nums[:3], append([]int{6}, nums[3:]...)...) // A 6-os szám beszúrása a 3-as indexbe
 	fmt.Println("Insert number 6 at index 3, get nums =", nums)
 
-	/* Remove element */
-	nums = append(nums[:3], nums[4:]...) // Remove element at index 3
+	/* Elem törlése */
+	nums = append(nums[:3], nums[4:]...) // A 3-as indexű elem törlése
 	fmt.Println("Remove element at index 3, get nums =", nums)
 
-	/* Traverse list by index */
+	/* Lista bejárása index alapján */
 	count := 0
 	for i := 0; i < len(nums); i++ {
 		count += nums[i]
 	}
-	/* Directly traverse list elements */
+	/* Listaelemek közvetlen bejárása */
 	count = 0
 	for _, x := range nums {
 		count += x
 	}
 
-	/* Concatenate two lists */
+	/* Két lista összefűzése */
 	nums1 := []int{6, 8, 7, 10, 9}
-	nums = append(nums, nums1...) // Concatenate list nums1 to nums
+	nums = append(nums, nums1...) // A nums1 lista összefűzése a nums listával
 	fmt.Println("Concatenate list nums1 to nums, get nums =", nums)
 
-	/* Sort list */
-	sort.Ints(nums) // After sorting, list elements are arranged from smallest to largest
+	/* Lista rendezése */
+	sort.Ints(nums) // Rendezés után a lista elemei a legkisebbtől a legnagyobbig vannak rendezve
 	fmt.Println("After sorting list, nums =", nums)
 }

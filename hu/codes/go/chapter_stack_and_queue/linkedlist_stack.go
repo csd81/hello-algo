@@ -8,25 +8,25 @@ import (
 	"container/list"
 )
 
-/* Stack based on linked list implementation */
+/* Láncolt listán alapuló verem implementáció */
 type linkedListStack struct {
-	// Use built-in package list to implement stack
+	// Beépített list csomag használata a verem implementálásához
 	data *list.List
 }
 
-/* Access top of the stack element */
+/* Verem csúcselemének elérése */
 func newLinkedListStack() *linkedListStack {
 	return &linkedListStack{
 		data: list.New(),
 	}
 }
 
-/* Push */
+/* Push (push) */
 func (s *linkedListStack) push(value int) {
 	s.data.PushBack(value)
 }
 
-/* Pop */
+/* Pop (pop) */
 func (s *linkedListStack) pop() any {
 	if s.isEmpty() {
 		return nil
@@ -36,7 +36,7 @@ func (s *linkedListStack) pop() any {
 	return e.Value
 }
 
-/* Return list for printing */
+/* Lista visszaadása kiíráshoz */
 func (s *linkedListStack) peek() any {
 	if s.isEmpty() {
 		return nil
@@ -45,17 +45,17 @@ func (s *linkedListStack) peek() any {
 	return e.Value
 }
 
-/* Get the length of the stack */
+/* Verem hosszának lekérése */
 func (s *linkedListStack) size() int {
 	return s.data.Len()
 }
 
-/* Check if the stack is empty */
+/* Verem üres-e */
 func (s *linkedListStack) isEmpty() bool {
 	return s.data.Len() == 0
 }
 
-/* Get List for printing */
+/* Lista lekérése kiíráshoz */
 func (s *linkedListStack) toList() *list.List {
 	return s.data
 }
