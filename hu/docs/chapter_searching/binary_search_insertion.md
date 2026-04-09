@@ -1,57 +1,57 @@
-# Binary Search Insertion Point
+# Bináris keresés beillesztési pontja
 
-Binary search can not only be used to search for target elements but also to solve many variant problems, such as searching for the insertion position of a target element.
+A bináris keresés nemcsak célértékek keresésére használható, hanem számos variáns probléma megoldására is, például egy célérték beillesztési pozíciójának megkeresésére.
 
-## Case Without Duplicate Elements
+## Eset ismétlődő elemek nélkül
 
 !!! question
 
-    Given a sorted array `nums` of length $n$ and an element `target`, where the array contains no duplicate elements. Insert `target` into the array `nums` while maintaining its sorted order. If the array already contains the element `target`, insert it to its left. Return the index of `target` in the array after insertion. An example is shown in the figure below.
+    Adott egy rendezett `nums` tömb, amelynek hossza $n$, és egy `target` elem, ahol a tömb nem tartalmaz ismétlődő elemeket. Szúrja be a `target` értéket a `nums` tömbbe úgy, hogy a rendezett sorrend megmaradjon. Ha a tömb már tartalmazza a `target` elemet, szúrja be annak bal oldalára. Adja vissza a `target` indexét a tömbben a beillesztés után. Az alábbi ábra egy példát mutat.
 
-![Binary search insertion point example data](binary_search_insertion.assets/binary_search_insertion_example.png)
+![Bináris keresés beillesztési pont példaadatok](binary_search_insertion.assets/binary_search_insertion_example.png)
 
-If we want to reuse the binary search code from the previous section, we need to answer the following two questions.
+Ha az előző szakasz bináris keresési kódját szeretnénk újra felhasználni, a következő két kérdést kell megválaszolnunk.
 
-**Question 1**: When the array contains `target`, is the insertion point index the same as that element's index?
+**1. kérdés**: Ha a tömb tartalmazza a `target` értéket, a beillesztési pont indexe megegyezik-e az adott elem indexével?
 
-The problem requires inserting `target` to the left of equal elements, which means the newly inserted `target` replaces the position of the original `target`. In other words, **when the array contains `target`, the insertion point index is the index of that `target`**.
+A feladat megköveteli, hogy a `target` értéket az egyenlő elemek bal oldalára szúrjuk be, ami azt jelenti, hogy az újonnan beillesztett `target` az eredeti `target` helyét foglalja el. Más szóval, **ha a tömb tartalmazza a `target` értéket, a beillesztési pont indexe az adott `target` indexe**.
 
-**Question 2**: When the array does not contain `target`, what is the insertion point index?
+**2. kérdés**: Ha a tömb nem tartalmazza a `target` értéket, mi a beillesztési pont indexe?
 
-Further consider the binary search process: When `nums[m] < target`, $i$ moves, which means pointer $i$ is approaching elements greater than or equal to `target`. Similarly, pointer $j$ is always approaching elements less than or equal to `target`.
+Gondoljuk végig tovább a bináris keresés folyamatát: Ha `nums[m] < target`, az $i$ mutató elmozdul, ami azt jelenti, hogy az $i$ mutató a `target`-nél nagyobb vagy egyenlő elemek felé közelít. Hasonlóan, a $j$ mutató mindig a `target`-nél kisebb vagy egyenlő elemek felé közelít.
 
-Therefore, when the binary search ends, we must have: $i$ points to the first element greater than `target`, and $j$ points to the first element less than `target`. **It's easy to see that when the array does not contain `target`, the insertion index is $i$**. The code is shown below:
+Ezért a bináris keresés végén szükségszerűen: $i$ az első `target`-nél nagyobb elemre mutat, $j$ pedig az első `target`-nél kisebb elemre mutat. **Könnyen belátható, hogy ha a tömb nem tartalmazza a `target` értéket, a beillesztési index $i$**. A kód az alábbiakban látható:
 
 ```src
 [file]{binary_search_insertion}-[class]{}-[func]{binary_search_insertion_simple}
 ```
 
-## Case with Duplicate Elements
+## Eset ismétlődő elemekkel
 
 !!! question
 
-    Based on the previous problem, assume the array may contain duplicate elements, with everything else remaining the same.
+    Az előző feladathoz képest feltételezzük, hogy a tömb ismétlődő elemeket is tartalmazhat, minden más változatlan marad.
 
-Suppose there are multiple `target` elements in the array. Ordinary binary search can only return the index of one `target`, **and cannot determine how many `target` elements are to the left and right of that element**.
+Tegyük fel, hogy a tömbben több `target` elem is van. Az általános bináris keresés csak az egyik `target` indexét adja vissza, **és nem tudja meghatározni, hogy hány `target` elem található az adott elemtől balra és jobbra**.
 
-The problem requires inserting the target element at the leftmost position, **so we need to find the index of the leftmost `target` in the array**. Initially, consider implementing this through the steps shown in the figure below:
+A feladat megköveteli, hogy a célelemet a legbaloldalibb pozícióba illesszük be, **ezért meg kell találnunk a legbaloldalibb `target` indexét a tömbben**. Először fontoljuk meg, hogy az alábbi ábra lépésein keresztül valósítsuk meg ezt:
 
-1. Perform binary search to obtain the index of any `target`, denoted as $k$.
-2. Starting from index $k$, perform linear traversal to the left, and return when the leftmost `target` is found.
+1. Hajtsuk végre a bináris keresést a bármely `target` indexének megszerzéséhez, jelöljük $k$-val.
+2. A $k$ indextől kiindulva végezzük el a lineáris bejárást balra, és akkor adjunk vissza, amikor megtaláljuk a legbaloldalibb `target` elemet.
 
-![Linear search for insertion point of duplicate elements](binary_search_insertion.assets/binary_search_insertion_naive.png)
+![Lineáris keresés ismétlődő elemek beillesztési pontjára](binary_search_insertion.assets/binary_search_insertion_naive.png)
 
-Although this method works, it includes linear search, resulting in a time complexity of $O(n)$. When the array contains many duplicate `target` elements, this method is very inefficient.
+Bár ez a módszer működik, tartalmaz lineáris keresést, ami $O(n)$ időbonyolultságot eredményez. Ha a tömb sok ismétlődő `target` elemet tartalmaz, ez a módszer nagyon nem hatékony.
 
-Now consider extending the binary search code. As shown in the figure below, the overall process remains unchanged: calculate the midpoint index $m$ in each round, then compare `target` with `nums[m]`, divided into the following cases:
+Most fontoljuk meg a bináris keresési kód kiterjesztését. Ahogy az alábbi ábra mutatja, az általános folyamat változatlan marad: minden körben kiszámítjuk a középső index $m$ értékét, majd összehasonlítjuk a `target` és `nums[m]` értékeket, a következő esetekre bontva:
 
-- When `nums[m] < target` or `nums[m] > target`, it means `target` has not been found yet, so use the ordinary binary search interval narrowing operation to **make pointers $i$ and $j$ approach `target`**.
-- When `nums[m] == target`, it means elements less than `target` are in the interval $[i, m - 1]$, so use $j = m - 1$ to narrow the interval, thereby **making pointer $j$ approach elements less than `target`**.
+- Ha `nums[m] < target` vagy `nums[m] > target`, ez azt jelenti, hogy a `target` még nem található meg, ezért az általános bináris keresés intervallum-szűkítési műveletét alkalmazzuk, **hogy az $i$ és $j$ mutatók közelítsenek a `target` felé**.
+- Ha `nums[m] == target`, ez azt jelenti, hogy a `target`-nél kisebb elemek a $[i, m - 1]$ intervallumban vannak, ezért $j = m - 1$ segítségével szűkítjük az intervallumot, így **a $j$ mutató a `target`-nél kisebb elemek felé közelít**.
 
-After the loop completes, $i$ points to the leftmost `target`, and $j$ points to the first element less than `target`, **so index $i$ is the insertion point**.
+A ciklus befejezése után $i$ a legbaloldalibb `target`-re mutat, $j$ pedig az első `target`-nél kisebb elemre mutat, **tehát az $i$ index a beillesztési pont**.
 
 === "<1>"
-    ![Steps for binary search insertion point of duplicate elements](binary_search_insertion.assets/binary_search_insertion_step1.png)
+    ![Bináris keresés ismétlődő elemek beillesztési pontjának lépései](binary_search_insertion.assets/binary_search_insertion_step1.png)
 
 === "<2>"
     ![binary_search_insertion_step2](binary_search_insertion.assets/binary_search_insertion_step2.png)
@@ -74,9 +74,9 @@ After the loop completes, $i$ points to the leftmost `target`, and $j$ points to
 === "<8>"
     ![binary_search_insertion_step8](binary_search_insertion.assets/binary_search_insertion_step8.png)
 
-Observe the following code: the operations for branches `nums[m] > target` and `nums[m] == target` are the same, so the two can be merged.
+Figyeljük meg a következő kódot: a `nums[m] > target` és a `nums[m] == target` ágak műveletei megegyeznek, ezért a kettő összevonható.
 
-Even so, we can still keep the conditional branches expanded, as the logic is clearer and more readable.
+Ennek ellenére megtarthatjuk a feltételes ágakat kibővítve, mivel a logika így egyértelműbb és olvashatóbb.
 
 ```src
 [file]{binary_search_insertion}-[class]{}-[func]{binary_search_insertion}
@@ -84,8 +84,8 @@ Even so, we can still keep the conditional branches expanded, as the logic is cl
 
 !!! tip
 
-    The code in this section all uses the "closed interval" approach. Interested readers can implement the "left-closed right-open" approach themselves.
+    Az ebben a szakaszban szereplő kódok mind a „zárt intervallum" megközelítést alkalmazzák. Az érdeklődő olvasók maguk is megvalósíthatják a „bal zárt, jobb nyílt" megközelítést.
 
-Overall, binary search is simply about setting search targets for pointers $i$ and $j$ separately. The target could be a specific element (such as `target`) or a range of elements (such as elements less than `target`).
+Összességében a bináris keresés lényegében az $i$ és $j$ mutatókhoz külön keresési célok meghatározásáról szól. A cél lehet egy konkrét elem (mint a `target`) vagy egy elemtartomány (mint a `target`-nél kisebb elemek).
 
-Through continuous binary iterations, both pointers $i$ and $j$ gradually approach their preset targets. Ultimately, they either successfully find the answer or stop after crossing the boundaries.
+A folyamatos bináris iterációk révén mind az $i$, mind a $j$ mutató fokozatosan közelít előre beállított céljához. Végül vagy sikeresen megtalálják a választ, vagy a határok átlépése után megállnak.

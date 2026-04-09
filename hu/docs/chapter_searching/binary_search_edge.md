@@ -1,56 +1,56 @@
-# Binary Search Edge Cases
+# Bináris keresés határesetek
 
-## Finding the Left Boundary
+## A bal határ megkeresése
 
 !!! question
 
-    Given a sorted array `nums` of length $n$ that may contain duplicate elements, return the index of the leftmost element `target` in the array. If the array does not contain the element, return $-1$.
+    Adott egy rendezett `nums` tömb, amelynek hossza $n$, és amely ismétlődő elemeket is tartalmazhat. Adja vissza a `target` elem legbaloldalibb előfordulásának indexét a tömbben. Ha a tömb nem tartalmazza az elemet, adjon vissza $-1$-et.
 
-Recall the method for finding the insertion point with binary search. After the search completes, $i$ points to the leftmost `target`, **so finding the insertion point is essentially finding the index of the leftmost `target`**.
+Emlékezzünk vissza a bináris keresés beillesztési pontjának megtalálási módszerére. A keresés befejezése után $i$ a legbaloldalibb `target` elemre mutat, **tehát a beillesztési pont megkeresése lényegében a legbaloldalibb `target` indexének megkeresése**.
 
-Consider implementing the left boundary search using the insertion point finding function. Note that the array may not contain `target`, which could result in the following two cases:
+Valósítsuk meg a bal határ keresést a beillesztési pont megtalálási függvény segítségével. Figyeljük meg, hogy a tömb nem feltétlenül tartalmazza a `target` elemet, ami a következő két esetet eredményezheti:
 
-- The insertion point index $i$ is out of bounds.
-- The element `nums[i]` is not equal to `target`.
+- A beillesztési pont $i$ indexe kívül esik a határon.
+- A `nums[i]` elem nem egyenlő a `target` értékkel.
 
-When either of these situations occurs, simply return $-1$. The code is shown below:
+Ha ezen helyzetek valamelyike fennáll, egyszerűen adjunk vissza $-1$-et. A kód az alábbiakban látható:
 
 ```src
 [file]{binary_search_edge}-[class]{}-[func]{binary_search_left_edge}
 ```
 
-## Finding the Right Boundary
+## A jobb határ megkeresése
 
-So how do we find the rightmost `target`? The most direct approach is to modify the code and replace the pointer shrinking operation in the `nums[m] == target` case. The code is omitted here; interested readers can implement it themselves.
+Hogyan keressük meg a legjobboldalibb `target` elemet? A legközvetlenebb megközelítés a kód módosítása és a mutatócsökkentési művelet cseréje a `nums[m] == target` esetben. A kód itt kimarad; az érdeklődő olvasók maguk is megvalósíthatják.
 
-Below we introduce two more clever methods.
+Az alábbiakban két ennél elegánsabb módszert mutatunk be.
 
-### Reusing Left Boundary Search
+### A bal határ keresésének újrahasznosítása
 
-In fact, we can use the function for finding the leftmost element to find the rightmost element. The specific method is: **Convert finding the rightmost `target` into finding the leftmost `target + 1`**.
+Valójában a legbaloldalibb elem megkereséséhez használt függvény felhasználható a legjobboldalibb elem megkeresésére is. A konkrét módszer: **a legjobboldalibb `target` keresését alakítsuk át a legbaloldalibb `target + 1` keresésévé**.
 
-As shown in the figure below, after the search completes, pointer $i$ points to the leftmost `target + 1` (if it exists), while $j$ points to the rightmost `target`, **so we can simply return $j$**.
+Ahogy az alábbi ábra mutatja, a keresés befejezése után az $i$ mutató a legbaloldalibb `target + 1` elemre mutat (ha létezik), míg a $j$ mutató a legjobboldalibb `target` elemre mutat, **tehát egyszerűen a $j$ értékét adjuk vissza**.
 
-![Converting right boundary search to left boundary search](binary_search_edge.assets/binary_search_right_edge_by_left_edge.png)
+![A jobb határ keresésének átalakítása bal határ kereséssé](binary_search_edge.assets/binary_search_right_edge_by_left_edge.png)
 
-Note that the returned insertion point is $i$, so we need to subtract $1$ from it to obtain $j$:
+Figyeljük meg, hogy a visszaadott beillesztési pont $i$, ezért $1$-et kell kivonni belőle a $j$ megszerzéséhez:
 
 ```src
 [file]{binary_search_edge}-[class]{}-[func]{binary_search_right_edge}
 ```
 
-### Converting to Element Search
+### Átalakítás elemeléréssé
 
-We know that when the array does not contain `target`, $i$ and $j$ will eventually point to the first elements greater than and less than `target`, respectively.
+Tudjuk, hogy ha a tömb nem tartalmazza a `target` elemet, az $i$ és $j$ mutatók végül az első `target`-nél nagyobb, illetve kisebb elemekre mutatnak.
 
-Therefore, as shown in the figure below, we can construct an element that does not exist in the array to find the left and right boundaries.
+Ezért, ahogy az alábbi ábra mutatja, létrehozhatunk egy olyan elemet, amely nem létezik a tömbben, hogy megtaláljuk a bal és jobb határokat.
 
-- Finding the leftmost `target`: Can be converted to finding `target - 0.5` and returning pointer $i$.
-- Finding the rightmost `target`: Can be converted to finding `target + 0.5` and returning pointer $j$.
+- A legbaloldalibb `target` megkeresése: Átalakítható `target - 0.5` keresésévé, és az $i$ mutató visszaadásával.
+- A legjobboldalibb `target` megkeresése: Átalakítható `target + 0.5` keresésévé, és a $j$ mutató visszaadásával.
 
-![Converting boundary search to element search](binary_search_edge.assets/binary_search_edge_by_element.png)
+![A határkeresés átalakítása elemeléréssé](binary_search_edge.assets/binary_search_edge_by_element.png)
 
-The code is omitted here, but the following two points are worth noting:
+A kód itt kimarad, de a következő két pontot érdemes megjegyezni:
 
-- Since the given array does not contain decimals, we don't need to worry about how to handle equal cases.
-- Because this method introduces decimals, the variable `target` in the function needs to be changed to a floating-point type (Python does not require this change).
+- Mivel az adott tömb nem tartalmaz tizedes törteket, nem kell aggódnunk az egyenlő esetek kezelése miatt.
+- Mivel ez a módszer tizedes törteket vezet be, a `target` változót a függvényben lebegőpontos típusra kell változtatni (Python esetén ez a változtatás nem szükséges).

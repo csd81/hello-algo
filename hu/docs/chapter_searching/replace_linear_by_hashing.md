@@ -1,34 +1,34 @@
-# Hash Optimization Strategy
+# Hash-alapú optimalizálási stratégia
 
-In algorithm problems, **we often reduce the time complexity of algorithms by replacing linear search with hash-based search**. Let's use an algorithm problem to deepen our understanding.
+Az algoritmikus feladatoknál **gyakran csökkentjük az algoritmusok időbonyolultságát azáltal, hogy a lineáris keresést hash-alapú kereséssel váltjuk fel**. Mélyítsük el megértésünket egy algoritmikus feladaton keresztül.
 
 !!! question
 
-    Given an integer array `nums` and a target element `target`, search for two elements in the array whose "sum" equals `target`, and return their array indices. Any solution will do.
+    Adott egy egész számokból álló `nums` tömb és egy `target` célérték. Keressünk két elemet a tömbben, amelyek „összege" egyenlő a `target` értékkel, és adjuk vissza tömbindexeiket. Bármely megoldás elfogadható.
 
-## Linear Search: Trading Time for Space
+## Lineáris keresés: Idő helyett tárterületet áldoz
 
-Consider directly traversing all possible combinations. As shown in the figure below, we open a two-layer loop and judge in each round whether the sum of two integers equals `target`. If so, return their indices.
+Fontoljuk meg az összes lehetséges kombináció közvetlen bejárását. Ahogy az alábbi ábra mutatja, egy kétszintű ciklust nyitunk, és minden körben megítéljük, hogy két egész összege egyenlő-e a `target` értékkel. Ha igen, visszaadjuk az indexeiket.
 
-![Linear search solution for two sum](replace_linear_by_hashing.assets/two_sum_brute_force.png)
+![Kétösszeg lineáris keresési megoldása](replace_linear_by_hashing.assets/two_sum_brute_force.png)
 
-The code is shown below:
+A kód az alábbiakban látható:
 
 ```src
 [file]{two_sum}-[class]{}-[func]{two_sum_brute_force}
 ```
 
-This method has a time complexity of $O(n^2)$ and a space complexity of $O(1)$, which is very time-consuming with large data volumes.
+Ennek a módszernek az időbonyolultsága $O(n^2)$, a tárbonyolultsága $O(1)$, ami nagy adatmennyiség esetén nagyon időigényes.
 
-## Hash-Based Search: Trading Space for Time
+## Hash-alapú keresés: Tárterület helyett időt áldoz
 
-Consider using a hash table where key-value pairs are array elements and element indices respectively. Loop through the array, performing the steps shown in the figure below in each round:
+Fontoljuk meg egy hash tábla használatát, ahol a kulcs-érték párok tömbjelemek és elem-indexek. Járjuk be a tömböt, az alábbi ábra lépéseit végrehajtva minden körben:
 
-1. Check if the number `target - nums[i]` is in the hash table. If so, directly return the indices of these two elements.
-2. Add the key-value pair `nums[i]` and index `i` to the hash table.
+1. Ellenőrizzük, hogy a `target - nums[i]` szám szerepel-e a hash táblában. Ha igen, közvetlenül adjuk vissza a két elem indexét.
+2. Adjuk hozzá a `nums[i]` kulcs-érték párt és az `i` indexet a hash táblához.
 
 === "<1>"
-    ![Hash table solution for two sum](replace_linear_by_hashing.assets/two_sum_hashtable_step1.png)
+    ![Kétösszeg hash tábla megoldása](replace_linear_by_hashing.assets/two_sum_hashtable_step1.png)
 
 === "<2>"
     ![two_sum_hashtable_step2](replace_linear_by_hashing.assets/two_sum_hashtable_step2.png)
@@ -36,12 +36,12 @@ Consider using a hash table where key-value pairs are array elements and element
 === "<3>"
     ![two_sum_hashtable_step3](replace_linear_by_hashing.assets/two_sum_hashtable_step3.png)
 
-The implementation code is shown below, requiring only a single loop:
+Az implementációs kód az alábbiakban látható, csupán egyetlen ciklust igényel:
 
 ```src
 [file]{two_sum}-[class]{}-[func]{two_sum_hash_table}
 ```
 
-This method reduces the time complexity from $O(n^2)$ to $O(n)$ through hash-based search, greatly improving runtime efficiency.
+Ez a módszer hash-alapú kereséssel $O(n^2)$-ről $O(n)$-re csökkenti az időbonyolultságot, nagymértékben javítva a futásidő hatékonyságát.
 
-Since an additional hash table needs to be maintained, the space complexity is $O(n)$. **Nevertheless, this method achieves a more balanced overall time-space efficiency, making it the optimal solution for this problem**.
+Mivel egy extra hash táblát kell fenntartani, a tárbonyolultság $O(n)$. **Ennek ellenére ez a módszer összességében kiegyensúlyozottabb idő-tárterület hatékonyságot ér el, így ez a feladat optimális megoldása**.

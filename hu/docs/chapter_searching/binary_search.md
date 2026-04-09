@@ -1,27 +1,27 @@
-# Binary Search
+# Bináris keresés
 
-<u>Binary search</u> is an efficient searching algorithm based on the divide-and-conquer strategy. It leverages the orderliness of data to reduce the search range by half in each round until the target element is found or the search interval becomes empty.
+<u>A bináris keresés</u> egy hatékony keresési algoritmus, amely az oszd meg és uralkodj stratégián alapul. Az adatok rendezettségét kihasználva minden körben felezi a keresési tartományt, amíg meg nem találja a célelemet, vagy a keresési intervallum ki nem ürül.
 
 !!! question
 
-    Given an array `nums` of length $n$ with elements arranged in ascending order and no duplicates, search for and return the index of element `target` in the array. If the array does not contain the element, return $-1$. An example is shown in the figure below.
+    Adott egy `nums` tömb, amelynek hossza $n$, elemei növekvő sorrendben vannak rendezve, és nincsenek ismétlődések. Keresse meg és adja vissza a `target` elem indexét a tömbben. Ha a tömb nem tartalmazza az elemet, adjon vissza $-1$-et. Az alábbi ábra egy példát mutat.
 
-![Binary search example data](binary_search.assets/binary_search_example.png)
+![Bináris keresés példaadatok](binary_search.assets/binary_search_example.png)
 
-As shown in the figure below, we first initialize pointers $i = 0$ and $j = n - 1$, pointing to the first and last elements of the array respectively, representing the search interval $[0, n - 1]$. Note that square brackets denote a closed interval, which includes the boundary values themselves.
+Ahogy az alábbi ábra mutatja, először inicializáljuk az $i = 0$ és $j = n - 1$ mutatókat, amelyek a tömb első és utolsó elemeire mutatnak, ezzel meghatározva a $[0, n - 1]$ keresési intervallumot. Figyeljük meg, hogy a szögletes zárójelek zárt intervallumot jelölnek, amely magában foglalja a határértékeket is.
 
-Next, perform the following two steps in a loop:
+Ezután hajtsuk végre a következő két lépést ciklikusan:
 
-1. Calculate the midpoint index $m = \lfloor {(i + j) / 2} \rfloor$, where $\lfloor \: \rfloor$ denotes the floor operation.
-2. Compare `nums[m]` and `target`, which results in three cases:
-    1. When `nums[m] < target`, it indicates that `target` is in the interval $[m + 1, j]$, so execute $i = m + 1$.
-    2. When `nums[m] > target`, it indicates that `target` is in the interval $[i, m - 1]$, so execute $j = m - 1$.
-    3. When `nums[m] = target`, it indicates that `target` has been found, so return index $m$.
+1. Számítsuk ki a középső index értékét: $m = \lfloor {(i + j) / 2} \rfloor$, ahol $\lfloor \: \rfloor$ a padlófüggvényt jelöli.
+2. Hasonlítsuk össze a `nums[m]` és `target` értékeket, amelynek eredménye három eset lehet:
+    1. Ha `nums[m] < target`, ez azt jelzi, hogy a `target` a $[m + 1, j]$ intervallumban van, így hajtsuk végre az $i = m + 1$ műveletet.
+    2. Ha `nums[m] > target`, ez azt jelzi, hogy a `target` a $[i, m - 1]$ intervallumban van, így hajtsuk végre a $j = m - 1$ műveletet.
+    3. Ha `nums[m] = target`, ez azt jelzi, hogy megtaláltuk a `target` elemet, így adjuk vissza az $m$ indexet.
 
-If the array does not contain the target element, the search interval will eventually shrink to empty. In this case, return $-1$.
+Ha a tömb nem tartalmazza a célelemet, a keresési intervallum végül kiürül. Ebben az esetben adjunk vissza $-1$-et.
 
 === "<1>"
-    ![Binary search process](binary_search.assets/binary_search_step1.png)
+    ![Bináris keresés folyamata](binary_search.assets/binary_search_step1.png)
 
 === "<2>"
     ![binary_search_step2](binary_search.assets/binary_search_step2.png)
@@ -41,43 +41,43 @@ If the array does not contain the target element, the search interval will event
 === "<7>"
     ![binary_search_step7](binary_search.assets/binary_search_step7.png)
 
-It's worth noting that since both $i$ and $j$ are of `int` type, **$i + j$ may exceed the range of the `int` type**. To avoid large number overflow, we typically use the formula $m = \lfloor {i + (j - i) / 2} \rfloor$ to calculate the midpoint.
+Érdemes megjegyezni, hogy mivel mind $i$, mind $j$ `int` típusú, **az $i + j$ értéke túllépheti az `int` típus tartományát**. A nagy számok túlcsordulásának elkerülése érdekében általában az $m = \lfloor {i + (j - i) / 2} \rfloor$ képletet használjuk a középső index kiszámításához.
 
-The code is shown below:
+A kód az alábbiakban látható:
 
 ```src
 [file]{binary_search}-[class]{}-[func]{binary_search}
 ```
 
-**Time complexity is $O(\log n)$**: In the binary loop, the interval is reduced by half each round, so the number of loops is $\log_2 n$.
+**Az időbonyolultság $O(\log n)$**: A bináris ciklusban az intervallum minden körben felére csökken, így a ciklusok száma $\log_2 n$.
 
-**Space complexity is $O(1)$**: Pointers $i$ and $j$ use constant-size space.
+**A tárbonyolultság $O(1)$**: Az $i$ és $j$ mutatók állandó méretű tárterületet használnak.
 
-## Interval Representation Methods
+## Intervallum-ábrázolási módszerek
 
-In addition to the closed interval mentioned above, another common interval representation is the "left-closed right-open" interval, defined as $[0, n)$, meaning the left boundary includes itself while the right boundary does not. Under this representation, the interval $[i, j)$ is empty when $i = j$.
+A fent említett zárt intervallumon kívül egy másik elterjedt intervallum-ábrázolás a „bal zárt, jobb nyílt" intervallum, amelyet $[0, n)$-ként definiálunk, vagyis a bal határ tartalmazza magát, míg a jobb határ nem. Ebben az ábrázolásban a $[i, j)$ intervallum üres, ha $i = j$.
 
-We can implement a binary search algorithm with the same functionality based on this representation:
+Ezen ábrázolás alapján implementálhatunk egy azonos funkcionalitású bináris keresési algoritmust:
 
 ```src
 [file]{binary_search}-[class]{}-[func]{binary_search_lcro}
 ```
 
-As shown in the figure below, under the two interval representations, the initialization, loop condition, and interval narrowing operations of the binary search algorithm are all different.
+Ahogy az alábbi ábra mutatja, a két intervallum-ábrázolás esetén a bináris keresési algoritmus inicializálása, ciklusfeltétele és intervallum-szűkítési műveletei mind eltérőek.
 
-Since both the left and right boundaries in the "closed interval" representation are defined as closed, the operations to narrow the interval through pointers $i$ and $j$ are also symmetric. This makes it less error-prone, **so the "closed interval" approach is generally recommended**.
+Mivel a „zárt intervallum" ábrázolásban mind a bal, mind a jobb határok zártak, az $i$ és $j$ mutatókon keresztüli intervallum-szűkítési műveletek is szimmetrikusak. Ez kevesebb hibalehetőséget jelent, **ezért általában a „zárt intervallum" megközelítés ajánlott**.
 
-![Two interval definitions](binary_search.assets/binary_search_ranges.png)
+![Két intervallum-definíció](binary_search.assets/binary_search_ranges.png)
 
-## Advantages and Limitations
+## Előnyök és korlátok
 
-Binary search performs well in both time and space aspects.
+A bináris keresés mind idő-, mind tárterület szempontjából jól teljesít.
 
-- Binary search has high time efficiency. With large data volumes, the logarithmic time complexity has significant advantages. For example, when the data size $n = 2^{20}$, linear search requires $2^{20} = 1048576$ loop rounds, while binary search only needs $\log_2 2^{20} = 20$ rounds.
-- Binary search requires no extra space. Compared to searching algorithms that require additional space (such as hash-based search), binary search is more space-efficient.
+- A bináris keresés időbeli hatékonysága magas. Nagy adatmennyiség esetén a logaritmikus időbonyolultságnak jelentős előnyei vannak. Például ha az adatméret $n = 2^{20}$, a lineáris kereséshez $2^{20} = 1048576$ cikluskör szükséges, míg a bináris kereséshez csupán $\log_2 2^{20} = 20$ kör.
+- A bináris kereséshez nincs szükség extra tárterületre. A keresési algoritmusokhoz képest, amelyek额外tárterületet igényelnek (mint például a hash-alapú keresés), a bináris keresés tárterület-hatékonyabb.
 
-However, binary search is not suitable for all situations, mainly for the following reasons:
+A bináris keresés azonban nem alkalmas minden helyzetre, főként a következő okok miatt:
 
-- Binary search is only applicable to sorted data. If the input data is unsorted, sorting specifically to use binary search would be counterproductive, as sorting algorithms typically have a time complexity of $O(n \log n)$, which is higher than both linear search and binary search. For scenarios with frequent element insertions, maintaining array orderliness requires inserting elements at specific positions with a time complexity of $O(n)$, which is also very expensive.
-- Binary search is only applicable to arrays. Binary search requires jump-style (non-contiguous) element access, and jump-style access has low efficiency in linked lists, making it unsuitable for linked lists or data structures based on linked list implementations.
-- For small data volumes, linear search performs better. In linear search, each round requires only 1 comparison operation; while in binary search, it requires 1 addition, 1 division, 1-3 comparison operations, and 1 addition (subtraction), totaling 4-6 unit operations. Therefore, when the data volume $n$ is small, linear search is actually faster than binary search.
+- A bináris keresés csak rendezett adatokra alkalmazható. Ha a bemeneti adatok rendezetlen, a bináris kereséshez való rendezés kontraproduktív lenne, hiszen a rendező algoritmusok időbonyolultsága általában $O(n \log n)$, ami magasabb mind a lineáris, mind a bináris keresésnél. Olyan forgatókönyvek esetén, ahol gyakoriak az elemek beszúrásai, a tömb rendezettségének fenntartása meghatározott pozíciókba való beillesztést igényel, amelynek időbonyolultsága $O(n)$, ami szintén nagyon költséges.
+- A bináris keresés csak tömbökre alkalmazható. A bináris keresés ugrásszerű (nem folytonos) elemhozzáférést igényel, és az ugrásszerű hozzáférés láncoltan tárolt listákban (láncolt listák) alacsony hatékonyságú, így nem alkalmas láncolt listákra vagy láncolt lista megvalósításon alapuló adatszerkezetekre.
+- Kis adatmennyiség esetén a lineáris keresés jobban teljesít. A lineáris keresésnél minden körben csupán 1 összehasonlítási művelet szükséges; míg a bináris keresésnél 1 összeadás, 1 osztás, 1-3 összehasonlítási művelet és 1 összeadás (kivonás) szükséges, összesen 4-6 alapműveletet. Ezért ha az adatmennyiség $n$ kicsi, a lineáris keresés valójában gyorsabb a bináris keresésnél.
