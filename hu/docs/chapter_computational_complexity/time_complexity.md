@@ -1,22 +1,22 @@
-# Time Complexity
+# Időbonyolultság
 
-Runtime can intuitively and accurately reflect the efficiency of an algorithm. If we want to accurately estimate the runtime of a piece of code, how should we proceed?
+A futási idő szemléletesen és pontosan tükrözi egy algoritmus hatékonyságát. Ha pontosan meg szeretnénk becsülni egy kódrészlet futási idejét, hogyan kell eljárni?
 
-1. **Determine the running platform**, including hardware configuration, programming language, system environment, etc., as these factors all affect code execution efficiency.
-2. **Evaluate the runtime required for various computational operations**, for example, an addition operation `+` requires 1 ns, a multiplication operation `*` requires 10 ns, a print operation `print()` requires 5 ns, etc.
-3. **Count all computational operations in the code**, and sum the execution times of all operations to obtain the runtime.
+1. **Meghatározni a futtatási platformot**, beleértve a hardveres konfigurációt, a programozási nyelvet, a rendszerkörnyezetet stb., mivel ezek a tényezők mind befolyásolják a kód végrehajtási hatékonyságát.
+2. **Megbecsülni a különböző számítási műveletek futási idejét**, például egy összeadási művelet `+` 1 ns, egy szorzási művelet `*` 10 ns, egy kiírási művelet `print()` 5 ns stb.
+3. **Megszámlálni a kódban lévő összes számítási műveletet**, és összesíteni az összes művelet végrehajtási idejét a futási idő megkapásához.
 
-For example, in the following code, the input data size is $n$:
+Például az alábbi kódban a bemeneti adatméret $n$:
 
 === "Python"
 
     ```python title=""
-    # On a certain running platform
+    # Egy bizonyos futtatási platformon
     def algorithm(n: int):
         a = 2      # 1 ns
         a = a + 1  # 1 ns
         a = a * 2  # 10 ns
-        # Loop n times
+        # n-szer ciklusozva
         for _ in range(n):  # 1 ns
             print(0)        # 5 ns
     ```
@@ -24,12 +24,12 @@ For example, in the following code, the input data size is $n$:
 === "C++"
 
     ```cpp title=""
-    // On a certain running platform
+    // Egy bizonyos futtatási platformon
     void algorithm(int n) {
         int a = 2;  // 1 ns
         a = a + 1;  // 1 ns
         a = a * 2;  // 10 ns
-        // Loop n times
+        // n-szer ciklusozva
         for (int i = 0; i < n; i++) {  // 1 ns
             cout << 0 << endl;         // 5 ns
         }
@@ -39,12 +39,12 @@ For example, in the following code, the input data size is $n$:
 === "Java"
 
     ```java title=""
-    // On a certain running platform
+    // Egy bizonyos futtatási platformon
     void algorithm(int n) {
         int a = 2;  // 1 ns
         a = a + 1;  // 1 ns
         a = a * 2;  // 10 ns
-        // Loop n times
+        // n-szer ciklusozva
         for (int i = 0; i < n; i++) {  // 1 ns
             System.out.println(0);     // 5 ns
         }
@@ -54,12 +54,12 @@ For example, in the following code, the input data size is $n$:
 === "C#"
 
     ```csharp title=""
-    // On a certain running platform
+    // Egy bizonyos futtatási platformon
     void Algorithm(int n) {
         int a = 2;  // 1 ns
         a = a + 1;  // 1 ns
         a = a * 2;  // 10 ns
-        // Loop n times
+        // n-szer ciklusozva
         for (int i = 0; i < n; i++) {  // 1 ns
             Console.WriteLine(0);      // 5 ns
         }
@@ -69,12 +69,12 @@ For example, in the following code, the input data size is $n$:
 === "Go"
 
     ```go title=""
-    // On a certain running platform
+    // Egy bizonyos futtatási platformon
     func algorithm(n int) {
         a := 2     // 1 ns
         a = a + 1  // 1 ns
         a = a * 2  // 10 ns
-        // Loop n times
+        // n-szer ciklusozva
         for i := 0; i < n; i++ {  // 1 ns
             fmt.Println(a)        // 5 ns
         }
@@ -84,12 +84,12 @@ For example, in the following code, the input data size is $n$:
 === "Swift"
 
     ```swift title=""
-    // On a certain running platform
+    // Egy bizonyos futtatási platformon
     func algorithm(n: Int) {
         var a = 2 // 1 ns
         a = a + 1 // 1 ns
         a = a * 2 // 10 ns
-        // Loop n times
+        // n-szer ciklusozva
         for _ in 0 ..< n { // 1 ns
             print(0) // 5 ns
         }
@@ -99,12 +99,12 @@ For example, in the following code, the input data size is $n$:
 === "JS"
 
     ```javascript title=""
-    // On a certain running platform
+    // Egy bizonyos futtatási platformon
     function algorithm(n) {
         var a = 2; // 1 ns
         a = a + 1; // 1 ns
         a = a * 2; // 10 ns
-        // Loop n times
+        // n-szer ciklusozva
         for(let i = 0; i < n; i++) { // 1 ns
             console.log(0); // 5 ns
         }
@@ -114,12 +114,12 @@ For example, in the following code, the input data size is $n$:
 === "TS"
 
     ```typescript title=""
-    // On a certain running platform
+    // Egy bizonyos futtatási platformon
     function algorithm(n: number): void {
         var a: number = 2; // 1 ns
         a = a + 1; // 1 ns
         a = a * 2; // 10 ns
-        // Loop n times
+        // n-szer ciklusozva
         for(let i = 0; i < n; i++) { // 1 ns
             console.log(0); // 5 ns
         }
@@ -129,12 +129,12 @@ For example, in the following code, the input data size is $n$:
 === "Dart"
 
     ```dart title=""
-    // On a certain running platform
+    // Egy bizonyos futtatási platformon
     void algorithm(int n) {
       int a = 2; // 1 ns
       a = a + 1; // 1 ns
       a = a * 2; // 10 ns
-      // Loop n times
+      // n-szer ciklusozva
       for (int i = 0; i < n; i++) { // 1 ns
         print(0); // 5 ns
       }
@@ -144,12 +144,12 @@ For example, in the following code, the input data size is $n$:
 === "Rust"
 
     ```rust title=""
-    // On a certain running platform
+    // Egy bizonyos futtatási platformon
     fn algorithm(n: i32) {
         let mut a = 2;      // 1 ns
         a = a + 1;          // 1 ns
         a = a * 2;          // 10 ns
-        // Loop n times
+        // n-szer ciklusozva
         for _ in 0..n {     // 1 ns
             println!("{}", 0);  // 5 ns
         }
@@ -159,12 +159,12 @@ For example, in the following code, the input data size is $n$:
 === "C"
 
     ```c title=""
-    // On a certain running platform
+    // Egy bizonyos futtatási platformon
     void algorithm(int n) {
         int a = 2;  // 1 ns
         a = a + 1;  // 1 ns
         a = a * 2;  // 10 ns
-        // Loop n times
+        // n-szer ciklusozva
         for (int i = 0; i < n; i++) {   // 1 ns
             printf("%d", 0);            // 5 ns
         }
@@ -174,12 +174,12 @@ For example, in the following code, the input data size is $n$:
 === "Kotlin"
 
     ```kotlin title=""
-    // On a certain running platform
+    // Egy bizonyos futtatási platformon
     fun algorithm(n: Int) {
         var a = 2 // 1 ns
         a = a + 1 // 1 ns
         a = a * 2 // 10 ns
-        // Loop n times
+        // n-szer ciklusozva
         for (i in 0..<n) {  // 1 ns
             println(0)      // 5 ns
         }
@@ -189,43 +189,43 @@ For example, in the following code, the input data size is $n$:
 === "Ruby"
 
     ```ruby title=""
-    # On a certain running platform
+    # Egy bizonyos futtatási platformon
     def algorithm(n)
         a = 2       # 1 ns
         a = a + 1   # 1 ns
         a = a * 2   # 10 ns
-        # Loop n times
+        # n-szer ciklusozva
         (0...n).each do # 1 ns
             puts 0      # 5 ns
         end
     end
     ```
 
-According to the above method, the algorithm's runtime can be obtained as $(6n + 12)$ ns:
+A fenti módszer alapján az algoritmus futási ideje $(6n + 12)$ ns:
 
 $$
 1 + 1 + 10 + (1 + 5) \times n = 6n + 12
 $$
 
-In reality, however, **counting an algorithm's runtime is neither reasonable nor realistic**. First, we do not want to tie the estimated time to the running platform, because algorithms need to run on various different platforms. Second, it is difficult to know the runtime of each type of operation, which brings great difficulty to the estimation process.
+A valóságban azonban **egy algoritmus futási idejének megszámlálása sem ésszerű, sem reális**. Egyrészt nem szeretnénk a becsült időt a futtatási platformhoz kötni, mivel az algoritmusoknak különböző platformokon kell futniuk. Másrészt nehéz megismerni az egyes típusú műveletek futási idejét, ami nagy nehézséget okoz a becslési folyamatban.
 
-## Counting Time Growth Trends
+## Az időnövekedési trendek megszámlálása
 
-Time complexity analysis does not count the algorithm's runtime, **but rather counts the growth trend of the algorithm's runtime as the data volume increases**.
+Az időbonyolultság-elemzés nem az algoritmus futási idejét számolja meg, **hanem az algoritmus futási ideje növekedési trendjét az adatmennyiség növekedésével**.
 
-The concept of "time growth trend" is rather abstract; let us understand it through an example. Suppose the input data size is $n$, and given three algorithms `A`, `B`, and `C`:
+Az "időnövekedési trend" fogalma meglehetősen elvont; egy példán keresztül érthetjük meg. Tegyük fel, hogy a bemeneti adatméret $n$, és adott három algoritmus `A`, `B` és `C`:
 
 === "Python"
 
     ```python title=""
-    # Time complexity of algorithm A: constant order
+    # Az A algoritmus időbonyolultsága: konstans rend
     def algorithm_A(n: int):
         print(0)
-    # Time complexity of algorithm B: linear order
+    # A B algoritmus időbonyolultsága: lineáris rend
     def algorithm_B(n: int):
         for _ in range(n):
             print(0)
-    # Time complexity of algorithm C: constant order
+    # A C algoritmus időbonyolultsága: konstans rend
     def algorithm_C(n: int):
         for _ in range(1000000):
             print(0)
@@ -234,17 +234,17 @@ The concept of "time growth trend" is rather abstract; let us understand it thro
 === "C++"
 
     ```cpp title=""
-    // Time complexity of algorithm A: constant order
+    // Az A algoritmus időbonyolultsága: konstans rend
     void algorithm_A(int n) {
         cout << 0 << endl;
     }
-    // Time complexity of algorithm B: linear order
+    // A B algoritmus időbonyolultsága: lineáris rend
     void algorithm_B(int n) {
         for (int i = 0; i < n; i++) {
             cout << 0 << endl;
         }
     }
-    // Time complexity of algorithm C: constant order
+    // A C algoritmus időbonyolultsága: konstans rend
     void algorithm_C(int n) {
         for (int i = 0; i < 1000000; i++) {
             cout << 0 << endl;
@@ -255,17 +255,17 @@ The concept of "time growth trend" is rather abstract; let us understand it thro
 === "Java"
 
     ```java title=""
-    // Time complexity of algorithm A: constant order
+    // Az A algoritmus időbonyolultsága: konstans rend
     void algorithm_A(int n) {
         System.out.println(0);
     }
-    // Time complexity of algorithm B: linear order
+    // A B algoritmus időbonyolultsága: lineáris rend
     void algorithm_B(int n) {
         for (int i = 0; i < n; i++) {
             System.out.println(0);
         }
     }
-    // Time complexity of algorithm C: constant order
+    // A C algoritmus időbonyolultsága: konstans rend
     void algorithm_C(int n) {
         for (int i = 0; i < 1000000; i++) {
             System.out.println(0);
@@ -276,17 +276,17 @@ The concept of "time growth trend" is rather abstract; let us understand it thro
 === "C#"
 
     ```csharp title=""
-    // Time complexity of algorithm A: constant order
+    // Az A algoritmus időbonyolultsága: konstans rend
     void AlgorithmA(int n) {
         Console.WriteLine(0);
     }
-    // Time complexity of algorithm B: linear order
+    // A B algoritmus időbonyolultsága: lineáris rend
     void AlgorithmB(int n) {
         for (int i = 0; i < n; i++) {
             Console.WriteLine(0);
         }
     }
-    // Time complexity of algorithm C: constant order
+    // A C algoritmus időbonyolultsága: konstans rend
     void AlgorithmC(int n) {
         for (int i = 0; i < 1000000; i++) {
             Console.WriteLine(0);
@@ -297,17 +297,17 @@ The concept of "time growth trend" is rather abstract; let us understand it thro
 === "Go"
 
     ```go title=""
-    // Time complexity of algorithm A: constant order
+    // Az A algoritmus időbonyolultsága: konstans rend
     func algorithm_A(n int) {
         fmt.Println(0)
     }
-    // Time complexity of algorithm B: linear order
+    // A B algoritmus időbonyolultsága: lineáris rend
     func algorithm_B(n int) {
         for i := 0; i < n; i++ {
             fmt.Println(0)
         }
     }
-    // Time complexity of algorithm C: constant order
+    // A C algoritmus időbonyolultsága: konstans rend
     func algorithm_C(n int) {
         for i := 0; i < 1000000; i++ {
             fmt.Println(0)
@@ -318,19 +318,19 @@ The concept of "time growth trend" is rather abstract; let us understand it thro
 === "Swift"
 
     ```swift title=""
-    // Time complexity of algorithm A: constant order
+    // Az A algoritmus időbonyolultsága: konstans rend
     func algorithmA(n: Int) {
         print(0)
     }
 
-    // Time complexity of algorithm B: linear order
+    // A B algoritmus időbonyolultsága: lineáris rend
     func algorithmB(n: Int) {
         for _ in 0 ..< n {
             print(0)
         }
     }
 
-    // Time complexity of algorithm C: constant order
+    // A C algoritmus időbonyolultsága: konstans rend
     func algorithmC(n: Int) {
         for _ in 0 ..< 1_000_000 {
             print(0)
@@ -341,17 +341,17 @@ The concept of "time growth trend" is rather abstract; let us understand it thro
 === "JS"
 
     ```javascript title=""
-    // Time complexity of algorithm A: constant order
+    // Az A algoritmus időbonyolultsága: konstans rend
     function algorithm_A(n) {
         console.log(0);
     }
-    // Time complexity of algorithm B: linear order
+    // A B algoritmus időbonyolultsága: lineáris rend
     function algorithm_B(n) {
         for (let i = 0; i < n; i++) {
             console.log(0);
         }
     }
-    // Time complexity of algorithm C: constant order
+    // A C algoritmus időbonyolultsága: konstans rend
     function algorithm_C(n) {
         for (let i = 0; i < 1000000; i++) {
             console.log(0);
@@ -363,17 +363,17 @@ The concept of "time growth trend" is rather abstract; let us understand it thro
 === "TS"
 
     ```typescript title=""
-    // Time complexity of algorithm A: constant order
+    // Az A algoritmus időbonyolultsága: konstans rend
     function algorithm_A(n: number): void {
         console.log(0);
     }
-    // Time complexity of algorithm B: linear order
+    // A B algoritmus időbonyolultsága: lineáris rend
     function algorithm_B(n: number): void {
         for (let i = 0; i < n; i++) {
             console.log(0);
         }
     }
-    // Time complexity of algorithm C: constant order
+    // A C algoritmus időbonyolultsága: konstans rend
     function algorithm_C(n: number): void {
         for (let i = 0; i < 1000000; i++) {
             console.log(0);
@@ -384,17 +384,17 @@ The concept of "time growth trend" is rather abstract; let us understand it thro
 === "Dart"
 
     ```dart title=""
-    // Time complexity of algorithm A: constant order
+    // Az A algoritmus időbonyolultsága: konstans rend
     void algorithmA(int n) {
       print(0);
     }
-    // Time complexity of algorithm B: linear order
+    // A B algoritmus időbonyolultsága: lineáris rend
     void algorithmB(int n) {
       for (int i = 0; i < n; i++) {
         print(0);
       }
     }
-    // Time complexity of algorithm C: constant order
+    // A C algoritmus időbonyolultsága: konstans rend
     void algorithmC(int n) {
       for (int i = 0; i < 1000000; i++) {
         print(0);
@@ -405,17 +405,17 @@ The concept of "time growth trend" is rather abstract; let us understand it thro
 === "Rust"
 
     ```rust title=""
-    // Time complexity of algorithm A: constant order
+    // Az A algoritmus időbonyolultsága: konstans rend
     fn algorithm_A(n: i32) {
         println!("{}", 0);
     }
-    // Time complexity of algorithm B: linear order
+    // A B algoritmus időbonyolultsága: lineáris rend
     fn algorithm_B(n: i32) {
         for _ in 0..n {
             println!("{}", 0);
         }
     }
-    // Time complexity of algorithm C: constant order
+    // A C algoritmus időbonyolultsága: konstans rend
     fn algorithm_C(n: i32) {
         for _ in 0..1000000 {
             println!("{}", 0);
@@ -426,17 +426,17 @@ The concept of "time growth trend" is rather abstract; let us understand it thro
 === "C"
 
     ```c title=""
-    // Time complexity of algorithm A: constant order
+    // Az A algoritmus időbonyolultsága: konstans rend
     void algorithm_A(int n) {
         printf("%d", 0);
     }
-    // Time complexity of algorithm B: linear order
+    // A B algoritmus időbonyolultsága: lineáris rend
     void algorithm_B(int n) {
         for (int i = 0; i < n; i++) {
             printf("%d", 0);
         }
     }
-    // Time complexity of algorithm C: constant order
+    // A C algoritmus időbonyolultsága: konstans rend
     void algorithm_C(int n) {
         for (int i = 0; i < 1000000; i++) {
             printf("%d", 0);
@@ -447,17 +447,17 @@ The concept of "time growth trend" is rather abstract; let us understand it thro
 === "Kotlin"
 
     ```kotlin title=""
-    // Time complexity of algorithm A: constant order
+    // Az A algoritmus időbonyolultsága: konstans rend
     fun algoritm_A(n: Int) {
         println(0)
     }
-    // Time complexity of algorithm B: linear order
+    // A B algoritmus időbonyolultsága: lineáris rend
     fun algorithm_B(n: Int) {
         for (i in 0..<n){
             println(0)
         }
     }
-    // Time complexity of algorithm C: constant order
+    // A C algoritmus időbonyolultsága: konstans rend
     fun algorithm_C(n: Int) {
         for (i in 0..<1000000) {
             println(0)
@@ -468,39 +468,39 @@ The concept of "time growth trend" is rather abstract; let us understand it thro
 === "Ruby"
 
     ```ruby title=""
-    # Time complexity of algorithm A: constant order
+    # Az A algoritmus időbonyolultsága: konstans rend
     def algorithm_A(n)
         puts 0
     end
 
-    # Time complexity of algorithm B: linear order
+    # A B algoritmus időbonyolultsága: lineáris rend
     def algorithm_B(n)
         (0...n).each { puts 0 }
     end
 
-    # Time complexity of algorithm C: constant order
+    # A C algoritmus időbonyolultsága: konstans rend
     def algorithm_C(n)
         (0...1_000_000).each { puts 0 }
     end
     ```
 
-The figure below shows the time complexity of the above three algorithm functions.
+Az alábbi ábra a fenti három algoritmusfüggvény időbonyolultságát mutatja.
 
-- Algorithm `A` has only $1$ print operation, and the algorithm's runtime does not grow as $n$ increases. We call the time complexity of this algorithm "constant order".
-- In algorithm `B`, the print operation needs to loop $n$ times, and the algorithm's runtime grows linearly as $n$ increases. The time complexity of this algorithm is called "linear order".
-- In algorithm `C`, the print operation needs to loop $1000000$ times. Although the runtime is very long, it is independent of the input data size $n$. Therefore, the time complexity of `C` is the same as `A`, still "constant order".
+- Az `A` algoritmusnak csak $1$ kiírási művelete van, és az algoritmus futási ideje nem növekszik az $n$ növekedésével. Ezt az algoritmust "konstans rendű" időbonyolultságúnak nevezzük.
+- A `B` algoritmusban a kiírási műveletnek $n$-szer kell ciklusoznia, és az algoritmus futási ideje lineárisan növekszik az $n$ növekedésével. Ennek az algoritmusnak az időbonyolultságát "lineáris rendűnek" nevezzük.
+- A `C` algoritmusban a kiírási műveletnek $1000000$-szor kell ciklusoznia. Bár a futási idő nagyon hosszú, független az $n$ bemeneti adatmérettől. Ezért a `C` időbonyolultsága megegyezik az `A`-éval, és még mindig "konstans rendű".
 
-![Time growth trends of algorithms A, B, and C](time_complexity.assets/time_complexity_simple_example.png)
+![Az A, B és C algoritmusok időnövekedési trendjei](time_complexity.assets/time_complexity_simple_example.png)
 
-Compared to directly counting the algorithm's runtime, what are the characteristics of time complexity analysis?
+Összehasonlítva az algoritmus futási idejének közvetlen megszámlálásával, melyek az időbonyolultság-elemzés jellemzői?
 
-- **Time complexity can effectively evaluate algorithm efficiency**. For example, the runtime of algorithm `B` grows linearly; when $n > 1$ it is slower than algorithm `A`, and when $n > 1000000$ it is slower than algorithm `C`. In fact, as long as the input data size $n$ is sufficiently large, an algorithm with "constant order" complexity will always be superior to one with "linear order" complexity, which is precisely the meaning of time growth trend.
-- **The derivation method for time complexity is simpler**. Obviously, the running platform and the types of computational operations are both unrelated to the growth trend of the algorithm's runtime. Therefore, in time complexity analysis, we can simply treat the execution time of all computational operations as the same "unit time", thus simplifying "counting computational operation runtime" to "counting the number of computational operations", which greatly reduces the difficulty of estimation.
-- **Time complexity also has certain limitations**. For example, although algorithms `A` and `C` have the same time complexity, their actual runtimes differ significantly. Similarly, although algorithm `B` has a higher time complexity than `C`, when the input data size $n$ is small, algorithm `B` is clearly superior to algorithm `C`. In such cases, it is often difficult to judge the efficiency of algorithms based solely on time complexity. Of course, despite the above issues, complexity analysis remains the most effective and commonly used method for evaluating algorithm efficiency.
+- **Az időbonyolultság hatékonyan értékeli az algoritmus hatékonyságát**. Például a `B` algoritmus futási ideje lineárisan növekszik; $n > 1$ esetén lassabb az `A` algoritmusnál, és $n > 1000000$ esetén lassabb a `C` algoritmusnál. Valójában, amíg a bemeneti adatméret $n$ kellően nagy, a "konstans rendű" bonyolultságú algoritmus mindig jobb lesz a "lineáris rendű" bonyolultságúnál, ami pontosan az időnövekedési trend jelentése.
+- **Az időbonyolultság levezetési módszere egyszerűbb**. Nyilvánvalóan a futtatási platform és a számítási műveletek típusai egyaránt nem kapcsolódnak az algoritmus futási ideje növekedési trendjéhez. Ezért az időbonyolultság-elemzésben egyszerűen kezelhetjük az összes számítási művelet végrehajtási idejét ugyanolyan "egységidőként", így a "számítási műveletek futási idejének megszámlálásától" a "számítási műveletek számának megszámlálásáig" egyszerűsítve, ami nagymértékben csökkenti a becslés nehézségét.
+- **Az időbonyolultságnak bizonyos korlátai is vannak**. Például, bár az `A` és a `C` algoritmusok időbonyolultsága azonos, tényleges futási idejük jelentősen különbözik. Hasonlóképpen, bár a `B` algoritmus magasabb időbonyolultságú, mint a `C`, ha a bemeneti adatméret $n$ kicsi, a `B` algoritmus egyértelműen jobb a `C`-nél. Ilyen esetekben az algoritmusok hatékonyságát csak az időbonyolultság alapján nehéz megítélni. Természetesen, az előbbi problémák ellenére a bonyolultságelemzés marad az algoritmus hatékonyságának értékelésére szolgáló leghatékonyabb és leggyakrabban használt módszer.
 
-## Asymptotic Upper Bound of Functions
+## Függvények aszimptotikus felső korlátja
 
-Given a function with input size $n$:
+Adott egy $n$ bemeneti méretű függvény:
 
 === "Python"
 
@@ -509,7 +509,7 @@ Given a function with input size $n$:
         a = 1      # +1
         a = a + 1  # +1
         a = a * 2  # +1
-        # Loop n times
+        # n-szer ciklusozva
         for i in range(n):  # +1
             print(0)        # +1
     ```
@@ -521,8 +521,8 @@ Given a function with input size $n$:
         int a = 1;  // +1
         a = a + 1;  // +1
         a = a * 2;  // +1
-        // Loop n times
-        for (int i = 0; i < n; i++) { // +1 (i++ is executed each round)
+        // n-szer ciklusozva
+        for (int i = 0; i < n; i++) { // +1 (i++ minden körben végrehajtódik)
             cout << 0 << endl;    // +1
         }
     }
@@ -535,8 +535,8 @@ Given a function with input size $n$:
         int a = 1;  // +1
         a = a + 1;  // +1
         a = a * 2;  // +1
-        // Loop n times
-        for (int i = 0; i < n; i++) { // +1 (i++ is executed each round)
+        // n-szer ciklusozva
+        for (int i = 0; i < n; i++) { // +1 (i++ minden körben végrehajtódik)
             System.out.println(0);    // +1
         }
     }
@@ -549,8 +549,8 @@ Given a function with input size $n$:
         int a = 1;  // +1
         a = a + 1;  // +1
         a = a * 2;  // +1
-        // Loop n times
-        for (int i = 0; i < n; i++) {   // +1 (i++ is executed each round)
+        // n-szer ciklusozva
+        for (int i = 0; i < n; i++) {   // +1 (i++ minden körben végrehajtódik)
             Console.WriteLine(0);   // +1
         }
     }
@@ -563,7 +563,7 @@ Given a function with input size $n$:
         a := 1      // +1
         a = a + 1   // +1
         a = a * 2   // +1
-        // Loop n times
+        // n-szer ciklusozva
         for i := 0; i < n; i++ {   // +1
             fmt.Println(a)         // +1
         }
@@ -577,7 +577,7 @@ Given a function with input size $n$:
         var a = 1 // +1
         a = a + 1 // +1
         a = a * 2 // +1
-        // Loop n times
+        // n-szer ciklusozva
         for _ in 0 ..< n { // +1
             print(0) // +1
         }
@@ -591,8 +591,8 @@ Given a function with input size $n$:
         var a = 1; // +1
         a += 1; // +1
         a *= 2; // +1
-        // Loop n times
-        for(let i = 0; i < n; i++){ // +1 (i++ is executed each round)
+        // n-szer ciklusozva
+        for(let i = 0; i < n; i++){ // +1 (i++ minden körben végrehajtódik)
             console.log(0); // +1
         }
     }
@@ -605,8 +605,8 @@ Given a function with input size $n$:
         var a: number = 1; // +1
         a += 1; // +1
         a *= 2; // +1
-        // Loop n times
-        for(let i = 0; i < n; i++){ // +1 (i++ is executed each round)
+        // n-szer ciklusozva
+        for(let i = 0; i < n; i++){ // +1 (i++ minden körben végrehajtódik)
             console.log(0); // +1
         }
     }
@@ -619,8 +619,8 @@ Given a function with input size $n$:
       int a = 1; // +1
       a = a + 1; // +1
       a = a * 2; // +1
-      // Loop n times
-      for (int i = 0; i < n; i++) { // +1 (i++ is executed each round)
+      // n-szer ciklusozva
+      for (int i = 0; i < n; i++) { // +1 (i++ minden körben végrehajtódik)
         print(0); // +1
       }
     }
@@ -634,8 +634,8 @@ Given a function with input size $n$:
         a = a + 1;      // +1
         a = a * 2;      // +1
 
-        // Loop n times
-        for _ in 0..n { // +1 (i++ is executed each round)
+        // n-szer ciklusozva
+        for _ in 0..n { // +1 (i++ minden körben végrehajtódik)
             println!("{}", 0); // +1
         }
     }
@@ -648,8 +648,8 @@ Given a function with input size $n$:
         int a = 1;  // +1
         a = a + 1;  // +1
         a = a * 2;  // +1
-        // Loop n times
-        for (int i = 0; i < n; i++) {   // +1 (i++ is executed each round)
+        // n-szer ciklusozva
+        for (int i = 0; i < n; i++) {   // +1 (i++ minden körben végrehajtódik)
             printf("%d", 0);            // +1
         }
     }
@@ -662,8 +662,8 @@ Given a function with input size $n$:
         var a = 1 // +1
         a = a + 1 // +1
         a = a * 2 // +1
-        // Loop n times
-        for (i in 0..<n) { // +1 (i++ is executed each round)
+        // n-szer ciklusozva
+        for (i in 0..<n) { // +1 (i++ minden körben végrehajtódik)
             println(0) // +1
         }
     }
@@ -676,59 +676,59 @@ Given a function with input size $n$:
         a = 1       # +1
         a = a + 1   # +1
         a = a * 2   # +1
-        # Loop n times
+        # n-szer ciklusozva
         (0...n).each do # +1
             puts 0      # +1
         end
     end
     ```
 
-Let the number of operations of the algorithm be a function of the input data size $n$, denoted as $T(n)$. Then the number of operations of the above function is:
+Legyen az algoritmus műveleteinek száma az $n$ bemeneti adatméret függvénye, amelyet $T(n)$-nel jelölünk. Ekkor a fenti függvény műveleteinek száma:
 
 $$
 T(n) = 3 + 2n
 $$
 
-$T(n)$ is a linear function, indicating that its runtime growth trend is linear, and therefore its time complexity is linear order.
+$T(n)$ lineáris függvény, ami azt jelzi, hogy futási ideje növekedési trendje lineáris, ezért időbonyolultsága lineáris rend.
 
-We denote the time complexity of linear order as $O(n)$. This mathematical symbol is called <u>big-$O$ notation</u>, representing the <u>asymptotic upper bound</u> of the function $T(n)$.
+A lineáris rend időbonyolultságát $O(n)$-nel jelöljük. Ez a matematikai szimbólum <u>nagy-$O$ jelölésnek</u> nevezik, amely a $T(n)$ függvény <u>aszimptotikus felső korlátját</u> jelöli.
 
-Time complexity analysis essentially calculates the asymptotic upper bound of "the number of operations $T(n)$", which has a clear mathematical definition.
+Az időbonyolultság-elemzés lényegében a "műveletek száma $T(n)$" aszimptotikus felső korlátját számítja, amelynek egyértelmű matematikai definíciója van.
 
-!!! note "Asymptotic upper bound of functions"
+!!! note "Függvények aszimptotikus felső korlátja"
 
-    If there exist positive real numbers $c$ and $n_0$ such that for all $n > n_0$, we have $T(n) \leq c \cdot f(n)$, then $f(n)$ can be considered as an asymptotic upper bound of $T(n)$, denoted as $T(n) = O(f(n))$.
+    Ha léteznek pozitív valós számok $c$ és $n_0$, amelyekre minden $n > n_0$ esetén $T(n) \leq c \cdot f(n)$ teljesül, akkor $f(n)$ $T(n)$ aszimptotikus felső korlátjának tekinthető, amelyet $T(n) = O(f(n))$-nel jelölünk.
 
-As shown in the figure below, calculating the asymptotic upper bound is to find a function $f(n)$ such that when $n$ tends to infinity, $T(n)$ and $f(n)$ are at the same growth level, differing only by a constant coefficient $c$.
+Ahogyan az alábbi ábrán látható, az aszimptotikus felső korlát kiszámítása egy $f(n)$ függvény megtalálását jelenti, amelyre $n$ végtelenhez tartásakor $T(n)$ és $f(n)$ azonos növekedési szinten van, csak egy $c$ konstans együtthatóban különböznek.
 
-![Asymptotic upper bound of a function](time_complexity.assets/asymptotic_upper_bound.png)
+![Egy függvény aszimptotikus felső korlátja](time_complexity.assets/asymptotic_upper_bound.png)
 
-## Derivation Method
+## Levezetési módszer
 
-The asymptotic upper bound has a bit of mathematical flavor. If you feel you haven't fully understood it, don't worry. We can first master the derivation method, and gradually grasp its mathematical meaning through continuous practice.
+Az aszimptotikus felső korlátnak van egy kis matematikai íze. Ha úgy érzi, hogy nem értette meg teljesen, ne aggódjon. Először elsajátíthatjuk a levezetési módszert, és folyamatos gyakorlás révén fokozatosan megérthetjük a matematikai jelentését.
 
-According to the definition, after determining $f(n)$, we can obtain the time complexity $O(f(n))$. So how do we determine the asymptotic upper bound $f(n)$? Overall, it is divided into two steps: first count the number of operations, then determine the asymptotic upper bound.
+A definíció szerint $f(n)$ meghatározása után megkaphatjuk az $O(f(n))$ időbonyolultságot. Hogyan határozzuk meg az $f(n)$ aszimptotikus felső korlátot? Összességében két lépésre osztható: először megszámoljuk a műveletek számát, majd meghatározzuk az aszimptotikus felső korlátot.
 
-### Step 1: Count the Number of Operations
+### 1. lépés: A műveletek számának megszámlálása
 
-For code, count from top to bottom line by line. However, since the constant coefficient $c$ in $c \cdot f(n)$ above can be of any size, **coefficients and constant terms in the number of operations $T(n)$ can all be ignored**. According to this principle, the following counting simplification techniques can be summarized.
+A kód esetén felülről lefelé haladva sorról sorra számoljunk. Azonban mivel a fenti $c \cdot f(n)$-ben lévő $c$ konstans együttható bármilyen nagy lehet, **a műveletek száma $T(n)$-ben lévő együtthatók és konstans tagok mind figyelmen kívül hagyhatók**. E szerint az elv szerint az alábbi megszámlálási egyszerűsítési technikák foglalhatók össze.
 
-1. **Ignore constants in $T(n)$**. Because they are all independent of $n$, they do not affect time complexity.
-2. **Omit all coefficients**. For example, looping $2n$ times, $5n + 1$ times, etc., can all be simplified as $n$ times, because the coefficient before $n$ does not affect time complexity.
-3. **Use multiplication for nested loops**. The total number of operations equals the product of the number of operations in the outer and inner loops, with each layer of loop still able to apply techniques `1.` and `2.` separately.
+1. **Hagyja figyelmen kívül a $T(n)$-beli konstansokat**. Mivel mindegyik független $n$-től, nem befolyásolják az időbonyolultságot.
+2. **Hagyja el az összes együtthatót**. Például $2n$-szer, $5n + 1$-szer stb. ciklusozni, mind egyszerűsíthető $n$-szerre, mivel az $n$ előtti együttható nem befolyásolja az időbonyolultságot.
+3. **Egymásba ágyazott ciklusok esetén szorzást használjon**. A műveletek teljes száma egyenlő a külső és belső ciklusok műveleteinek számának szorzatával, ahol minden ciklus réteg külön-külön alkalmazhatja az `1.` és `2.` technikákat.
 
-Given a function, we can use the above techniques to count the number of operations:
+Adott egy függvény, a fenti technikák segítségével megszámolhatjuk a műveletek számát:
 
 === "Python"
 
     ```python title=""
     def algorithm(n: int):
-        a = 1      # +0 (Technique 1)
-        a = a + n  # +0 (Technique 1)
-        # +n (Technique 2)
+        a = 1      # +0 (1. technika)
+        a = a + n  # +0 (1. technika)
+        # +n (2. technika)
         for i in range(5 * n + 1):
             print(0)
-        # +n*n (Technique 3)
+        # +n*n (3. technika)
         for i in range(2 * n):
             for j in range(n + 1):
                 print(0)
@@ -738,13 +738,13 @@ Given a function, we can use the above techniques to count the number of operati
 
     ```cpp title=""
     void algorithm(int n) {
-        int a = 1;  // +0 (Technique 1)
-        a = a + n;  // +0 (Technique 1)
-        // +n (Technique 2)
+        int a = 1;  // +0 (1. technika)
+        a = a + n;  // +0 (1. technika)
+        // +n (2. technika)
         for (int i = 0; i < 5 * n + 1; i++) {
             cout << 0 << endl;
         }
-        // +n*n (Technique 3)
+        // +n*n (3. technika)
         for (int i = 0; i < 2 * n; i++) {
             for (int j = 0; j < n + 1; j++) {
                 cout << 0 << endl;
@@ -757,13 +757,13 @@ Given a function, we can use the above techniques to count the number of operati
 
     ```java title=""
     void algorithm(int n) {
-        int a = 1;  // +0 (Technique 1)
-        a = a + n;  // +0 (Technique 1)
-        // +n (Technique 2)
+        int a = 1;  // +0 (1. technika)
+        a = a + n;  // +0 (1. technika)
+        // +n (2. technika)
         for (int i = 0; i < 5 * n + 1; i++) {
             System.out.println(0);
         }
-        // +n*n (Technique 3)
+        // +n*n (3. technika)
         for (int i = 0; i < 2 * n; i++) {
             for (int j = 0; j < n + 1; j++) {
                 System.out.println(0);
@@ -776,13 +776,13 @@ Given a function, we can use the above techniques to count the number of operati
 
     ```csharp title=""
     void Algorithm(int n) {
-        int a = 1;  // +0 (Technique 1)
-        a = a + n;  // +0 (Technique 1)
-        // +n (Technique 2)
+        int a = 1;  // +0 (1. technika)
+        a = a + n;  // +0 (1. technika)
+        // +n (2. technika)
         for (int i = 0; i < 5 * n + 1; i++) {
             Console.WriteLine(0);
         }
-        // +n*n (Technique 3)
+        // +n*n (3. technika)
         for (int i = 0; i < 2 * n; i++) {
             for (int j = 0; j < n + 1; j++) {
                 Console.WriteLine(0);
@@ -795,13 +795,13 @@ Given a function, we can use the above techniques to count the number of operati
 
     ```go title=""
     func algorithm(n int) {
-        a := 1     // +0 (Technique 1)
-        a = a + n  // +0 (Technique 1)
-        // +n (Technique 2)
+        a := 1     // +0 (1. technika)
+        a = a + n  // +0 (1. technika)
+        // +n (2. technika)
         for i := 0; i < 5 * n + 1; i++ {
             fmt.Println(0)
         }
-        // +n*n (Technique 3)
+        // +n*n (3. technika)
         for i := 0; i < 2 * n; i++ {
             for j := 0; j < n + 1; j++ {
                 fmt.Println(0)
@@ -814,13 +814,13 @@ Given a function, we can use the above techniques to count the number of operati
 
     ```swift title=""
     func algorithm(n: Int) {
-        var a = 1 // +0 (Technique 1)
-        a = a + n // +0 (Technique 1)
-        // +n (Technique 2)
+        var a = 1 // +0 (1. technika)
+        a = a + n // +0 (1. technika)
+        // +n (2. technika)
         for _ in 0 ..< (5 * n + 1) {
             print(0)
         }
-        // +n*n (Technique 3)
+        // +n*n (3. technika)
         for _ in 0 ..< (2 * n) {
             for _ in 0 ..< (n + 1) {
                 print(0)
@@ -833,13 +833,13 @@ Given a function, we can use the above techniques to count the number of operati
 
     ```javascript title=""
     function algorithm(n) {
-        let a = 1;  // +0 (Technique 1)
-        a = a + n;  // +0 (Technique 1)
-        // +n (Technique 2)
+        let a = 1;  // +0 (1. technika)
+        a = a + n;  // +0 (1. technika)
+        // +n (2. technika)
         for (let i = 0; i < 5 * n + 1; i++) {
             console.log(0);
         }
-        // +n*n (Technique 3)
+        // +n*n (3. technika)
         for (let i = 0; i < 2 * n; i++) {
             for (let j = 0; j < n + 1; j++) {
                 console.log(0);
@@ -852,13 +852,13 @@ Given a function, we can use the above techniques to count the number of operati
 
     ```typescript title=""
     function algorithm(n: number): void {
-        let a = 1;  // +0 (Technique 1)
-        a = a + n;  // +0 (Technique 1)
-        // +n (Technique 2)
+        let a = 1;  // +0 (1. technika)
+        a = a + n;  // +0 (1. technika)
+        // +n (2. technika)
         for (let i = 0; i < 5 * n + 1; i++) {
             console.log(0);
         }
-        // +n*n (Technique 3)
+        // +n*n (3. technika)
         for (let i = 0; i < 2 * n; i++) {
             for (let j = 0; j < n + 1; j++) {
                 console.log(0);
@@ -871,13 +871,13 @@ Given a function, we can use the above techniques to count the number of operati
 
     ```dart title=""
     void algorithm(int n) {
-      int a = 1; // +0 (Technique 1)
-      a = a + n; // +0 (Technique 1)
-      // +n (Technique 2)
+      int a = 1; // +0 (1. technika)
+      a = a + n; // +0 (1. technika)
+      // +n (2. technika)
       for (int i = 0; i < 5 * n + 1; i++) {
         print(0);
       }
-      // +n*n (Technique 3)
+      // +n*n (3. technika)
       for (int i = 0; i < 2 * n; i++) {
         for (int j = 0; j < n + 1; j++) {
           print(0);
@@ -890,15 +890,15 @@ Given a function, we can use the above techniques to count the number of operati
 
     ```rust title=""
     fn algorithm(n: i32) {
-        let mut a = 1;     // +0 (Technique 1)
-        a = a + n;        // +0 (Technique 1)
+        let mut a = 1;     // +0 (1. technika)
+        a = a + n;        // +0 (1. technika)
 
-        // +n (Technique 2)
+        // +n (2. technika)
         for i in 0..(5 * n + 1) {
             println!("{}", 0);
         }
 
-        // +n*n (Technique 3)
+        // +n*n (3. technika)
         for i in 0..(2 * n) {
             for j in 0..(n + 1) {
                 println!("{}", 0);
@@ -911,13 +911,13 @@ Given a function, we can use the above techniques to count the number of operati
 
     ```c title=""
     void algorithm(int n) {
-        int a = 1;  // +0 (Technique 1)
-        a = a + n;  // +0 (Technique 1)
-        // +n (Technique 2)
+        int a = 1;  // +0 (1. technika)
+        a = a + n;  // +0 (1. technika)
+        // +n (2. technika)
         for (int i = 0; i < 5 * n + 1; i++) {
             printf("%d", 0);
         }
-        // +n*n (Technique 3)
+        // +n*n (3. technika)
         for (int i = 0; i < 2 * n; i++) {
             for (int j = 0; j < n + 1; j++) {
                 printf("%d", 0);
@@ -930,13 +930,13 @@ Given a function, we can use the above techniques to count the number of operati
 
     ```kotlin title=""
     fun algorithm(n: Int) {
-        var a = 1   // +0 (Technique 1)
-        a = a + n   // +0 (Technique 1)
-        // +n (Technique 2)
+        var a = 1   // +0 (1. technika)
+        a = a + n   // +0 (1. technika)
+        // +n (2. technika)
         for (i in 0..<5 * n + 1) {
             println(0)
         }
-        // +n*n (Technique 3)
+        // +n*n (3. technika)
         for (i in 0..<2 * n) {
             for (j in 0..<n + 1) {
                 println(0)
@@ -949,36 +949,36 @@ Given a function, we can use the above techniques to count the number of operati
 
     ```ruby title=""
     def algorithm(n)
-        a = 1       # +0 (Technique 1)
-        a = a + n   # +0 (Technique 1)
-        # +n (Technique 2)
+        a = 1       # +0 (1. technika)
+        a = a + n   # +0 (1. technika)
+        # +n (2. technika)
         (0...(5 * n + 1)).each do { puts 0 }
-        # +n*n (Technique 3)
+        # +n*n (3. technika)
         (0...(2 * n)).each do
             (0...(n + 1)).each do { puts 0 }
         end
     end
     ```
 
-The following formula shows the counting results before and after using the above techniques; both derive a time complexity of $O(n^2)$.
+Az alábbi képlet a fenti technikák előtti és utáni megszámlálási eredményeket mutatja; mindkettő $O(n^2)$ időbonyolultságot vezet le.
 
 $$
 \begin{aligned}
-T(n) & = 2n(n + 1) + (5n + 1) + 2 & \text{Complete count (-.-|||)} \newline
+T(n) & = 2n(n + 1) + (5n + 1) + 2 & \text{Teljes megszámlálás (-.-|||)} \newline
 & = 2n^2 + 7n + 3 \newline
-T(n) & = n^2 + n & \text{Simplified count (o.O)}
+T(n) & = n^2 + n & \text{Egyszerűsített megszámlálás (o.O)}
 \end{aligned}
 $$
 
-### Step 2: Determine the Asymptotic Upper Bound
+### 2. lépés: Az aszimptotikus felső korlát meghatározása
 
-**Time complexity is determined by the highest-order term in $T(n)$**. This is because as $n$ tends to infinity, the highest-order term will play a dominant role, and the influence of other terms can be ignored.
+**Az időbonyolultságot a $T(n)$-beli legmagasabb rendű tag határozza meg**. Ez azért van, mert ahogy $n$ végtelenhez tart, a legmagasabb rendű tag meghatározó szerepet tölt be, és a többi tag hatása elhanyagolható.
 
-The table below shows some examples, where some exaggerated values are used to emphasize the conclusion that "coefficients cannot shake the order". When $n$ tends to infinity, these constants become insignificant.
+Az alábbi táblázat néhány példát mutat, ahol eltúlzott értékeket használnak annak hangsúlyozására, hogy "az együtthatók nem változtathatják meg a rendet". Amikor $n$ végtelenhez tart, ezek a konstansok jelentéktelenné válnak.
 
-<p align="center"> Table <id> &nbsp; Time complexities corresponding to different numbers of operations </p>
+<p align="center"> Táblázat <id> &nbsp; A különböző műveletek számához tartozó időbonyolultságok </p>
 
-| Number of Operations $T(n)$ | Time Complexity $O(f(n))$ |
+| Műveletek száma $T(n)$      | Időbonyolultság $O(f(n))$ |
 | ---------------------- | -------------------- |
 | $100000$               | $O(1)$               |
 | $3n + 2$               | $O(n)$               |
@@ -986,166 +986,166 @@ The table below shows some examples, where some exaggerated values are used to e
 | $n^3 + 10000n^2$       | $O(n^3)$             |
 | $2^n + 10000n^{10000}$ | $O(2^n)$             |
 
-## Common Types
+## Általános típusok
 
-Let the input data size be $n$. Common time complexity types are shown in the figure below (arranged in order from low to high).
+Legyen a bemeneti adatméret $n$. Az általános időbonyolultság típusai az alábbi ábrán láthatók (növekvő sorrendben rendezve).
 
 $$
 \begin{aligned}
 O(1) < O(\log n) < O(n) < O(n \log n) < O(n^2) < O(2^n) < O(n!) \newline
-\text{Constant order} < \text{Logarithmic order} < \text{Linear order} < \text{Linearithmic order} < \text{Quadratic order} < \text{Exponential order} < \text{Factorial order}
+\text{Konstans rend} < \text{Logaritmikus rend} < \text{Lineáris rend} < \text{Lineáris-logaritmikus rend} < \text{Négyzetes rend} < \text{Exponenciális rend} < \text{Faktoriális rend}
 \end{aligned}
 $$
 
-![Common time complexity types](time_complexity.assets/time_complexity_common_types.png)
+![Az általános időbonyolultság típusai](time_complexity.assets/time_complexity_common_types.png)
 
-### Constant Order $O(1)$
+### Konstans rend $O(1)$
 
-The number of operations in constant order is independent of the input data size $n$, meaning it does not change as $n$ changes.
+A konstans rendű műveletek száma független az $n$ bemeneti adatmérettől, vagyis nem változik az $n$ változásával.
 
-In the following function, although the number of operations `size` may be large, since it is independent of the input data size $n$, the time complexity remains $O(1)$:
+Az alábbi függvényben, bár a műveletek száma `size` nagy lehet, mivel független az $n$ bemeneti adatmérettől, az időbonyolultság $O(1)$ marad:
 
 ```src
 [file]{time_complexity}-[class]{}-[func]{constant}
 ```
 
-### Linear Order $O(n)$
+### Lineáris rend $O(n)$
 
-The number of operations in linear order grows linearly relative to the input data size $n$. Linear order typically appears in single-layer loops:
+A lineáris rendű műveletek száma lineárisan növekszik az $n$ bemeneti adatmérethez képest. A lineáris rend általában egyrétegű ciklusokban jelenik meg:
 
 ```src
 [file]{time_complexity}-[class]{}-[func]{linear}
 ```
 
-Operations such as traversing arrays and traversing linked lists have a time complexity of $O(n)$, where $n$ is the length of the array or linked list:
+Olyan műveletek, mint a tömbök bejárása és a láncolt listák bejárása, $O(n)$ időbonyolultságúak, ahol $n$ a tömb vagy a láncolt lista hossza:
 
 ```src
 [file]{time_complexity}-[class]{}-[func]{array_traversal}
 ```
 
-It is worth noting that **the input data size $n$ should be determined according to the type of input data**. For example, in the first example, the variable $n$ is the input data size; in the second example, the array length $n$ is the data size.
+Érdemes megjegyezni, hogy **az $n$ bemeneti adatméretet a bemeneti adat típusa szerint kell meghatározni**. Például az első példában az $n$ változó a bemeneti adatméret; a második példában az $n$ tömbhossz az adatméret.
 
-### Quadratic Order $O(n^2)$
+### Négyzetes rend $O(n^2)$
 
-The number of operations in quadratic order grows quadratically relative to the input data size $n$. Quadratic order typically appears in nested loops, where both the outer and inner loops have a time complexity of $O(n)$, resulting in an overall time complexity of $O(n^2)$:
+A négyzetes rendű műveletek száma négyzetesen növekszik az $n$ bemeneti adatmérethez képest. A négyzetes rend általában egymásba ágyazott ciklusokban jelenik meg, ahol a külső és a belső ciklusok időbonyolultsága egyaránt $O(n)$, ami összességében $O(n^2)$ időbonyolultságot eredményez:
 
 ```src
 [file]{time_complexity}-[class]{}-[func]{quadratic}
 ```
 
-The figure below compares constant order, linear order, and quadratic order time complexities.
+Az alábbi ábra összehasonlítja a konstans rendű, a lineáris rendű és a négyzetes rendű időbonyolultságokat.
 
-![Time complexities of constant, linear, and quadratic orders](time_complexity.assets/time_complexity_constant_linear_quadratic.png)
+![Konstans, lineáris és négyzetes rendű időbonyolultságok](time_complexity.assets/time_complexity_constant_linear_quadratic.png)
 
-Taking bubble sort as an example, the outer loop executes $n - 1$ times, and the inner loop executes $n-1$, $n-2$, $\dots$, $2$, $1$ times, averaging $n / 2$ times, resulting in a time complexity of $O((n - 1) n / 2) = O(n^2)$:
+A buborékos rendezést példaként véve, a külső ciklus $n - 1$-szer hajtódik végre, a belső ciklus $n-1$, $n-2$, $\dots$, $2$, $1$-szer hajtódik végre, átlagosan $n / 2$-szer, ami $O((n - 1) n / 2) = O(n^2)$ időbonyolultságot eredményez:
 
 ```src
 [file]{time_complexity}-[class]{}-[func]{bubble_sort}
 ```
 
-### Exponential Order $O(2^n)$
+### Exponenciális rend $O(2^n)$
 
-Biological "cell division" is a typical example of exponential order growth: the initial state is $1$ cell, after one round of division it becomes $2$, after two rounds it becomes $4$, and so on; after $n$ rounds of division there are $2^n$ cells.
+A biológiai "sejtoszlás" az exponenciális rendű növekedés tipikus példája: a kezdeti állapot $1$ sejt, egy osztódási kör után $2$ lesz, két kör után $4$, és így tovább; $n$ osztódási kör után $2^n$ sejt van.
 
-The figure below and the following code simulate the cell division process, with a time complexity of $O(2^n)$. Note that the input $n$ represents the number of division rounds, and the return value `count` represents the total number of divisions.
+Az alábbi ábra és a következő kód a sejtoszlási folyamatot szimulálja, $O(2^n)$ időbonyolultsággal. Megjegyzendő, hogy az $n$ bemenet az osztódási körök számát jelöli, és a visszatérési érték `count` az osztódások teljes számát jelöli.
 
 ```src
 [file]{time_complexity}-[class]{}-[func]{exponential}
 ```
 
-![Time complexity of exponential order](time_complexity.assets/time_complexity_exponential.png)
+![Exponenciális rendű időbonyolultság](time_complexity.assets/time_complexity_exponential.png)
 
-In actual algorithms, exponential order often appears in recursive functions. For example, in the following code, it recursively splits in two, stopping after $n$ splits:
+A tényleges algoritmusokban az exponenciális rend gyakran rekurzív függvényekben jelenik meg. Például az alábbi kódban rekurzívan két részre osztódik, $n$ osztódás után megállva:
 
 ```src
 [file]{time_complexity}-[class]{}-[func]{exp_recur}
 ```
 
-Exponential order growth is very rapid and is common in exhaustive methods (brute force search, backtracking, etc.). For problems with large data scales, exponential order is unacceptable and typically requires dynamic programming or greedy algorithms to solve.
+Az exponenciális rendű növekedés nagyon gyors, és kimerítő módszerekben (nyers erő keresés, visszalépés stb.) fordul elő. Nagy adatméretű problémák esetén az exponenciális rend elfogadhatatlan, és általában dinamikus programozással vagy mohó algoritmusokkal kell megoldani.
 
-### Logarithmic Order $O(\log n)$
+### Logaritmikus rend $O(\log n)$
 
-In contrast to exponential order, logarithmic order reflects the situation of "reducing to half each round". Let the input data size be $n$. Since it is reduced to half each round, the number of loops is $\log_2 n$, which is the inverse function of $2^n$.
+Az exponenciális renddel ellentétben a logaritmikus rend a "minden fordulóban felezés" helyzetét tükrözi. Legyen a bemeneti adatméret $n$. Mivel minden fordulóban felére csökken, a ciklusok száma $\log_2 n$, ami a $2^n$ inverz függvénye.
 
-The figure below and the following code simulate the process of "reducing to half each round", with a time complexity of $O(\log_2 n)$, abbreviated as $O(\log n)$:
+Az alábbi ábra és a következő kód a "minden fordulóban felezés" folyamatát szimulálja, $O(\log_2 n)$ időbonyolultsággal, amelyet rövidítve $O(\log n)$-nel jelölünk:
 
 ```src
 [file]{time_complexity}-[class]{}-[func]{logarithmic}
 ```
 
-![Time complexity of logarithmic order](time_complexity.assets/time_complexity_logarithmic.png)
+![Logaritmikus rendű időbonyolultság](time_complexity.assets/time_complexity_logarithmic.png)
 
-Like exponential order, logarithmic order also commonly appears in recursive functions. The following code forms a recursion tree of height $\log_2 n$:
+Az exponenciális rendhez hasonlóan a logaritmikus rend is általánosan megjelenik rekurzív függvényekben. Az alábbi kód $\log_2 n$ magasságú rekurziós fát alkot:
 
 ```src
 [file]{time_complexity}-[class]{}-[func]{log_recur}
 ```
 
-Logarithmic order commonly appears in algorithms based on the divide-and-conquer strategy, embodying the algorithmic thinking of "dividing into many" and "simplifying complexity". It grows slowly and is the ideal time complexity second only to constant order.
+A logaritmikus rend általánosan megjelenik az oszd meg és uralkodj stratégián alapuló algoritmusokban, megtestesítve a "sokra osztás" és a "bonyolultság egyszerűsítése" algoritmikus gondolkodásmódot. Lassan növekszik, és a konstans rend után a második ideális időbonyolultság.
 
-!!! tip "What is the base of $O(\log n)$?"
+!!! tip "Mi az $O(\log n)$ alapja?"
 
-    To be precise, "dividing into $m$" corresponds to a time complexity of $O(\log_m n)$. And through the logarithmic base change formula, we can obtain time complexities with different bases that are equal:
+    Pontosabban fogalmazva, az "$m$ részre osztás" $O(\log_m n)$ időbonyolultságnak felel meg. A logaritmusalap-csere képlettel különböző alapú időbonyolultságokat kaphatunk, amelyek egyenlők:
 
     $$
     O(\log_m n) = O(\log_k n / \log_k m) = O(\log_k n)
     $$
 
-    That is to say, the base $m$ can be converted without affecting the complexity. Therefore, we usually omit the base $m$ and denote logarithmic order simply as $O(\log n)$.
+    Vagyis az $m$ alap konvertálható a bonyolultság befolyásolása nélkül. Ezért általában elhagyjuk az $m$ alapot, és a logaritmikus rendet egyszerűen $O(\log n)$-nel jelöljük.
 
-### Linearithmic Order $O(n \log n)$
+### Lineáris-logaritmikus rend $O(n \log n)$
 
-Linearithmic order commonly appears in nested loops, where the time complexities of the two layers of loops are $O(\log n)$ and $O(n)$ respectively. The relevant code is as follows:
+A lineáris-logaritmikus rend általánosan megjelenik egymásba ágyazott ciklusokban, ahol a két ciklus réteg időbonyolultsága $O(\log n)$ és $O(n)$. A kapcsolódó kód a következő:
 
 ```src
 [file]{time_complexity}-[class]{}-[func]{linear_log_recur}
 ```
 
-The figure below shows how linearithmic order is generated. Each level of the binary tree has a total of $n$ operations, and the tree has $\log_2 n + 1$ levels, resulting in a time complexity of $O(n \log n)$.
+Az alábbi ábra bemutatja, hogyan keletkezik a lineáris-logaritmikus rend. A bináris fa minden szintjén összesen $n$ művelet van, a fa $\log_2 n + 1$ szinttel rendelkezik, ami $O(n \log n)$ időbonyolultságot eredményez.
 
-![Time complexity of linearithmic order](time_complexity.assets/time_complexity_logarithmic_linear.png)
+![Lineáris-logaritmikus rendű időbonyolultság](time_complexity.assets/time_complexity_logarithmic_linear.png)
 
-Mainstream sorting algorithms typically have a time complexity of $O(n \log n)$, such as quicksort, merge sort, and heap sort.
+A főáramú rendezési algoritmusok általában $O(n \log n)$ időbonyolultságúak, például a gyorsrendezés, az összefésüléses rendezés és a kupacrendezés.
 
-### Factorial Order $O(n!)$
+### Faktoriális rend $O(n!)$
 
-Factorial order corresponds to the mathematical "permutation" problem. Given $n$ distinct elements, find all possible permutation schemes; the number of schemes is:
+A faktoriális rend a matematikai "permutáció" problémájának felel meg. Adott $n$ különböző elem, az összes lehetséges permutációs séma megtalálása; a sémák száma:
 
 $$
 n! = n \times (n - 1) \times (n - 2) \times \dots \times 2 \times 1
 $$
 
-Factorials are typically implemented using recursion. As shown in the figure below and the following code, the first level splits into $n$ branches, the second level splits into $n - 1$ branches, and so on, until the $n$-th level when splitting stops:
+A faktoriálisokat általában rekurzióval valósítják meg. Ahogyan az alábbi ábrán és a következő kódban látható, az első szint $n$ ágra osztódik, a második szint $n - 1$ ágra osztódik, és így tovább, egészen az $n$-edik szintig, ahol az osztódás megáll:
 
 ```src
 [file]{time_complexity}-[class]{}-[func]{factorial_recur}
 ```
 
-![Time complexity of factorial order](time_complexity.assets/time_complexity_factorial.png)
+![Faktoriális rendű időbonyolultság](time_complexity.assets/time_complexity_factorial.png)
 
-Note that because when $n \geq 4$ we always have $n! > 2^n$, factorial order grows faster than exponential order, and is also unacceptable for large $n$.
+Megjegyzendő, hogy mivel $n \geq 4$ esetén mindig $n! > 2^n$ teljesül, a faktoriális rend gyorsabban növekszik, mint az exponenciális rend, és nagy $n$ esetén szintén elfogadhatatlan.
 
-## Worst, Best, and Average Time Complexities
+## Legrosszabb, legjobb és átlagos időbonyolultságok
 
-**The time efficiency of an algorithm is often not fixed, but is related to the distribution of the input data**. Suppose we input an array `nums` of length $n$, where `nums` consists of numbers from $1$ to $n$, with each number appearing only once, but the element order is randomly shuffled. The task is to return the index of element $1$. We can draw the following conclusions.
+**Egy algoritmus időhatékonysága gyakran nem rögzített, hanem kapcsolódik a bemeneti adatok eloszlásához**. Tegyük fel, hogy egy $n$ hosszúságú `nums` tömböt adunk be, ahol a `nums` $1$-től $n$-ig terjedő számokból áll, minden szám pontosan egyszer szerepel, de az elemek sorrendje véletlenszerűen összekeverve van. A feladat az $1$ elem indexének visszaadása. A következő következtetéseket vonhatjuk le.
 
-- When `nums = [?, ?, ..., 1]`, i.e., when the last element is $1$, it requires a complete traversal of the array, **reaching worst-case time complexity $O(n)$**.
-- When `nums = [1, ?, ?, ...]`, i.e., when the first element is $1$, no matter how long the array is, there is no need to continue traversing, **reaching best-case time complexity $\Omega(1)$**.
+- Ha `nums = [?, ?, ..., 1]`, azaz az utolsó elem $1$, a tömb teljes bejárását igényli, **elérve a legrosszabb esetű időbonyolultságot $O(n)$**.
+- Ha `nums = [1, ?, ?, ...]`, azaz az első elem $1$, a tömb hosszától függetlenül nincs szükség a bejárás folytatására, **elérve a legjobb esetű időbonyolultságot $\Omega(1)$**.
 
-The "worst-case time complexity" corresponds to the function's asymptotic upper bound, denoted using big-$O$ notation. Correspondingly, the "best-case time complexity" corresponds to the function's asymptotic lower bound, denoted using $\Omega$ notation:
+A "legrosszabb esetű időbonyolultság" a függvény aszimptotikus felső korlátjának felel meg, amelyet Nagy-$O$ jelöléssel jelölnek. Megfelelően, a "legjobb esetű időbonyolultság" a függvény aszimptotikus alsó korlátjának felel meg, amelyet $\Omega$ jelöléssel jelölnek:
 
 ```src
 [file]{worst_best_time_complexity}-[class]{}-[func]{find_one}
 ```
 
-It is worth noting that we rarely use best-case time complexity in practice, because it can usually only be achieved with a very small probability and may be somewhat misleading. **The worst-case time complexity is more practical because it gives a safety value for efficiency**, allowing us to use the algorithm with confidence.
+Érdemes megjegyezni, hogy ritkán használjuk a legjobb esetű időbonyolultságot a gyakorlatban, mivel általában csak nagyon kis valószínűséggel érhető el, és némileg félrevezető lehet. **A legrosszabb esetű időbonyolultság praktikusabb, mivel biztonsági értéket ad a hatékonyságra**, lehetővé téve számunkra az algoritmus biztonságos használatát.
 
-From the above example, we can see that both worst-case and best-case time complexities only occur under "special data distributions", which may have a very small probability of occurrence and may not truly reflect the algorithm's running efficiency. In contrast, **average time complexity can reflect the algorithm's running efficiency under random input data**, denoted using the $\Theta$ notation.
+A fenti példából látható, hogy mind a legrosszabb, mind a legjobb esetű időbonyolultságok csak "speciális adateloszlások" esetén fordulnak elő, amelyek nagyon kis valószínűséggel fordulhatnak elő, és nem feltétlenül tükrözik valóban az algoritmus futási hatékonyságát. Ezzel szemben **az átlagos időbonyolultság tükrözi az algoritmus futási hatékonyságát véletlenszerű bemeneti adatok esetén**, amelyet a $\Theta$ jelöléssel jelölnek.
 
-For some algorithms, we can simply derive the average case under random data distribution. For example, in the above example, since the input array is shuffled, the probability of element $1$ appearing at any index is equal, so the algorithm's average number of loops is half the array length $n / 2$, giving an average time complexity of $\Theta(n / 2) = \Theta(n)$.
+Egyes algoritmusoknál egyszerűen levezethetjük az átlagos esetet véletlenszerű adateloszlás esetén. Például a fenti példában, mivel a bemeneti tömb összekeverve van, az $1$ elem bármelyik indexen való megjelenési valószínűsége egyenlő, ezért az algoritmus átlagos ciklusszáma a tömbhossz fele $n / 2$, az átlagos időbonyolultság $\Theta(n / 2) = \Theta(n)$.
 
-But for more complex algorithms, calculating average time complexity is often quite difficult, because it is hard to analyze the overall mathematical expectation under data distribution. In this case, we usually use worst-case time complexity as the criterion for judging algorithm efficiency.
+De bonyolultabb algoritmusok esetén az átlagos időbonyolultság kiszámítása gyakran meglehetősen nehéz, mivel nehéz elemezni az adateloszlás alatti összesített matematikai várható értéket. Ilyen esetben általában a legrosszabb esetű időbonyolultságot használjuk az algoritmus hatékonyságának értékelési kritériumaként.
 
-!!! question "Why is the $\Theta$ symbol rarely seen?"
+!!! question "Miért látható ritkán a $\Theta$ szimbólum?"
 
-    This may be because the $O$ symbol is too catchy, so we often use it to represent average time complexity. But strictly speaking, this practice is not standard. In this book and other materials, if you encounter expressions like "average time complexity $O(n)$", please understand it directly as $\Theta(n)$.
+    Ennek oka talán az, hogy az $O$ szimbólum túl szembeötlő, ezért gyakran az átlagos időbonyolultság jelölésére is alkalmazzák. Szigorúan véve azonban ez a gyakorlat nem szabványos. Ebben a könyvben és más forrásokban, ha olyan kifejezésekkel találkozunk, mint "átlagos időbonyolultság $O(n)$", kérjük, közvetlenül $\Theta(n)$-ként értelmezze.
