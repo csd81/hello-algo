@@ -1,86 +1,86 @@
-# Summary
+# Összefoglalás
 
-### Key Review
+### Kulcsfogalmak Áttekintése
 
-- Arrays and linked lists are two fundamental data structures, representing two different ways data can be stored in computer memory: contiguous memory storage and scattered memory storage. The characteristics of the two complement each other.
-- Arrays support random access and use less memory; however, inserting and deleting elements is inefficient, and the length is immutable after initialization.
-- Linked lists achieve efficient insertion and deletion of nodes by modifying references (pointers), and can flexibly adjust length; however, node access is inefficient and memory consumption is higher. Common linked list types include singly linked lists, circular linked lists, and doubly linked lists.
-- A list is an ordered collection of elements that supports insertion, deletion, search, and modification, typically implemented based on dynamic arrays. It retains the advantages of arrays while allowing flexible adjustment of length.
-- The emergence of lists has greatly improved the practicality of arrays, but may result in some wasted memory space.
-- During program execution, data is primarily stored in memory. Arrays provide higher memory space efficiency, while linked lists offer greater flexibility in memory usage.
-- Caches provide fast data access to the CPU through mechanisms such as cache lines, prefetching, and spatial and temporal locality, significantly improving program execution efficiency.
-- Because arrays have higher cache hit rates, they are generally more efficient than linked lists. When choosing a data structure, appropriate selection should be made based on specific requirements and scenarios.
+- A tömbök és a láncolt listák két alapvető adatstruktúra, amelyek kétféle módszert képviselnek az adatok számítógépes memóriában való tárolására: összefüggő memóriatárolás és szétszórt memóriatárolás. A kettő jellemzői kiegészítik egymást.
+- A tömbök támogatják a véletlenszerű hozzáférést és kevesebb memóriát használnak; azonban az elemek beszúrása és törlése nem hatékony, és az inicializálás után a hossz nem változtatható.
+- A láncolt listák hivatkozások (mutatók) módosításával hatékony csomópontbeszúrást és -törlést tesznek lehetővé, és rugalmasan állítható a hosszuk; azonban a csomópont-hozzáférés nem hatékony és a memóriafogyasztás magasabb. A láncolt listák általános típusai: egyirányú láncolt listák, körkörös láncolt listák és kétirányú láncolt listák.
+- A lista elemek rendezett gyűjteménye, amely támogatja a beszúrást, törlést, keresést és módosítást, általában dinamikus tömbök alapján valósul meg. Megőrzi a tömbök előnyeit, miközben lehetővé teszi a hossz rugalmas beállítását.
+- A listák megjelenése nagymértékben javította a tömbök praktikusságát, de némi memóriaterület-pazarlást okozhat.
+- A program végrehajtása során az adatok elsősorban a memóriában tárolódnak. A tömbök nagyobb memóriahatékonyságot biztosítanak, míg a láncolt listák nagyobb rugalmasságot kínálnak a memória kihasználásában.
+- A gyorsítótárak gyors adathozzáférést biztosítanak a CPU számára olyan mechanizmusokon keresztül, mint a gyorsítótár-sorok, az előolvasás, valamint a térbeli és időbeli lokalitás, amelyek jelentősen javítják a program végrehajtási hatékonyságát.
+- Mivel a tömböknek magasabb a gyorsítótár-találati arányuk, általában hatékonyabbak a láncolt listáknál. Adatstruktúra választásakor az adott követelmények és forgatókönyvek alapján kell megfelelő döntést hozni.
 
-### Q & A
+### Kérdések és Válaszok
 
-**Q**: Does storing an array on the stack versus on the heap affect time efficiency and space efficiency?
+**K**: Befolyásolja-e az idő- és tárhelyhatékonyságot, hogy egy tömböt a veremtárolón vagy a halomtárolón tárolunk?
 
-Arrays stored on the stack and on the heap are both stored in contiguous memory space, so data operation efficiency is basically the same. However, the stack and heap have their own characteristics, leading to the following differences.
+A veremtárolón és a halomtárolón tárolt tömbök egyaránt összefüggő memóriaterületen tárolódnak, ezért az adatműveleti hatékonyság alapvetően azonos. A veremnek és a halomnak azonban megvannak a saját jellemzőik, amelyek a következő különbségekhez vezetnek.
 
-1. Allocation and deallocation efficiency: The stack is a relatively small piece of memory, with allocation automatically handled by the compiler; the heap is relatively larger and can be dynamically allocated in code, more prone to fragmentation. Therefore, allocation and deallocation operations on the heap are usually slower than on the stack.
-2. Size limitations: Stack memory is relatively small, and the heap size is generally limited by available memory. Therefore, the heap is more suitable for storing large arrays.
-3. Flexibility: The size of an array on the stack must be determined at compile time, while the size of an array on the heap can be determined dynamically at runtime.
+1. Lefoglalás és felszabadítás hatékonysága: A verem viszonylag kis méretű memóriaterület, amelynek lefoglalását automatikusan kezeli a fordítóprogram; a halom viszonylag nagyobb, és kódban dinamikusan foglalható le, jobban hajlamos a töredezettségre. Ezért a halmon végzett lefoglalási és felszabadítási műveletek általában lassabbak, mint a veremtárolón.
+2. Méretkorlátozások: A verem memóriája viszonylag kis méretű, a halom mérete általában a rendelkezésre álló memória mennyiségétől függ. Ezért a halom alkalmasabb nagy tömbök tárolására.
+3. Rugalmasság: A veremtárolón lévő tömb méretét fordítási időben kell meghatározni, míg a halmon lévő tömb mérete futási időben dinamikusan határozható meg.
 
-**Q**: Why do arrays require elements of the same type, while linked lists do not emphasize this requirement?
+**K**: Miért igényelnek a tömbök azonos típusú elemeket, míg a láncolt listák nem hangsúlyozzák ezt a követelményt?
 
-Linked lists are composed of nodes, with nodes connected through references (pointers), and each node can store different types of data, such as `int`, `double`, `string`, `object`, etc.
+A láncolt listák csomópontokból állnak, amelyek hivatkozásokon (mutatókon) keresztül kapcsolódnak egymáshoz, és minden csomópont különböző típusú adatokat tárolhat, például `int`, `double`, `string`, `object` stb.
 
-In contrast, array elements must be of the same type, so that the corresponding element position can be obtained by calculating the offset. For example, if an array contains both `int` and `long` types, with individual elements occupying 4 bytes and 8 bytes respectively, then the following formula cannot be used to calculate the offset, because the array contains two different "element lengths".
+Ezzel szemben a tömbelemeknek azonos típusúaknak kell lenniük, hogy a megfelelő elem pozícióját az eltolás kiszámításával meg lehessen határozni. Például ha egy tömb `int` és `long` típusokat is tartalmaz, amelyekben az egyes elemek 4 bájtot, illetve 8 bájtot foglalnak el, akkor a következő képlettel nem számítható ki az eltolás, mert a tömb kétféle "elemhosszt" tartalmaz.
 
 ```shell
-# Element Memory Address = Array Memory Address (first Element Memory address) + Element Length * Element Index
+# Elem memóriacíme = Tömb memóriacíme (első elem memóriacíme) + Elemhossz * Elemindex
 ```
 
-**Q**: After deleting node `P`, do we need to set `P.next` to `None`?
+**K**: A `P` csomópont törlése után be kell-e állítani a `P.next`-et `None`-ra?
 
-It is not necessary to modify `P.next`. From the perspective of the linked list, traversing from the head node to the tail node will no longer encounter `P`. This means that node `P` has been removed from the linked list, and it doesn't matter where node `P` points to at this time—it won't affect the linked list.
+Nem szükséges módosítani a `P.next`-et. A láncolt lista szempontjából a fejcsomóponttól a farokcsomópontig való bejárás során már nem találkozunk `P`-vel. Ez azt jelenti, hogy a `P` csomópont el lett távolítva a láncolt listából, és nem számít, hova mutat `P` csomópont – nem befolyásolja a láncolt listát.
 
-From a data structures and algorithms perspective (problem-solving), not disconnecting the pointer doesn't matter as long as the program logic is correct. From the perspective of standard libraries, disconnecting is safer and the logic is clearer. If not disconnected, assuming the deleted node is not properly reclaimed, it may affect the memory reclamation of its successor nodes.
+Az adatstruktúrák és algoritmusok (feladatmegoldás) szempontjából a mutató leválasztásának elmaradása nem számít, amennyiben a program logikája helyes. A standard könyvtárak szempontjából a leválasztás biztonságosabb és a logika átláthatóbb. Ha nem választjuk le, feltéve, hogy a törölt csomópontot nem szabadítják fel megfelelően, ez befolyásolhatja az utódcsomópontjainak memória-visszanyerését.
 
-**Q**: In a linked list, the time complexity of insertion and deletion operations is $O(1)$. However, both insertion and deletion require $O(n)$ time to find the element; why isn't the time complexity $O(n)$?
+**K**: Egy láncolt listában a beszúrás és törlés műveletek időbonyolultsága $O(1)$. Azonban mindkét esetben $O(n)$ időt igényel az elem megkeresése; miért nem $O(n)$ az időbonyolultság?
 
-If the element is first found and then deleted, the time complexity is indeed $O(n)$. However, the advantage of $O(1)$ insertion and deletion in linked lists can be demonstrated in other applications. For example, a deque is well-suited for linked list implementation, where we maintain pointer variables always pointing to the head and tail nodes, with each insertion and deletion operation being $O(1)$.
+Ha az elemet először megkeressük, majd töröljük, az időbonyolultság valóban $O(n)$. Azonban a láncolt listáknál az $O(1)$ idejű beszúrás és törlés előnye más alkalmazásokban mutatkozik meg. Például a kétvégű sor (deque) kiválóan alkalmas láncolt lista megvalósítására, ahol fenntartunk mutató változókat, amelyek mindig a fej- és farokcsomópontokra mutatnak, és minden egyes beszúrási és törlési művelet $O(1)$ bonyolultságú.
 
-**Q**: In the diagram "Linked List Definition and Storage Methods", does the light blue pointer node occupy a single memory address, or does it share equally with the node value?
+**K**: A "Láncolt lista definíciója és tárolási módszerei" ábrán a világoskék mutató csomópont egyetlen memóriacímet foglal el, vagy egyenlően osztozik a csomópont értékével?
 
-This diagram is a qualitative representation; a quantitative representation requires analysis based on the specific situation.
+Ez az ábra kvalitatív ábrázolás; a kvantitatív ábrázoláshoz az adott helyzet alapján kell elemzést végezni.
 
-- Different types of node values occupy different amounts of space, such as `int`, `long`, `double`, and instance objects, etc.
-- The amount of memory space occupied by pointer variables depends on the operating system and compilation environment used, usually 8 bytes or 4 bytes.
+- A különböző típusú csomópont értékek különböző mennyiségű helyet foglalnak el, például `int`, `long`, `double` és példányobjektumok stb.
+- A mutató változók által elfoglalt memóriaterület az operációs rendszertől és a fordítókörnyezettől függ, általában 8 bájt vagy 4 bájt.
 
-**Q**: Is appending an element at the end of a list always $O(1)$?
+**K**: Mindig $O(1)$ egy elem lista végéhez való hozzáfűzése?
 
-If appending an element exceeds the list length, the list must first be expanded before adding. The system allocates a new block of memory and moves all elements from the original list to it, in which case the time complexity becomes $O(n)$.
+Ha egy elem hozzáfűzése meghaladja a lista hosszát, a listát először bővíteni kell, majd hozzáadjuk. A rendszer új memóriablokkot foglal le, és az eredeti lista összes elemét áthelyezi oda, ami esetén az időbonyolultság $O(n)$ lesz.
 
-**Q**: "The emergence of lists has greatly improved the practicality of arrays, but may result in some wasted memory space"—does this space waste refer to the memory occupied by additional variables such as capacity, length, and expansion factor?
+**K**: "A listák megjelenése nagymértékben javította a tömbök praktikusságát, de némi memóriaterület-pazarlást okozhat" – ez a tárhelypazarlás a kapacitás, hossz és bővítési tényező stb. által elfoglalt további változók memóriájára vonatkozik?
 
-This space waste mainly has two aspects: on one hand, lists typically set an initial length, which we may not need to fully utilize; on the other hand, to prevent frequent expansion, expansion generally multiplies by a coefficient, such as $\times 1.5$. As a result, there will be many empty positions that we typically cannot completely fill.
+Ez a tárhelypazarlás főként két szempontban nyilvánul meg: egyrészt a listák általában kezdeti hosszt állítanak be, amelyet esetleg nem kell teljesen kihasználni; másrészt a gyakori bővítés megelőzése érdekében a bővítés általában egy együtthatóval szorozza meg a méretet, például $\times 1.5$. Ennek eredményeként sok üres pozíció keletkezik, amelyeket általában nem tudunk teljesen kitölteni.
 
-**Q**: In Python, after initializing `n = [1, 2, 3]`, the addresses of these 3 elements are contiguous, but initializing `m = [2, 1, 3]` reveals that each element's id is not continuous; rather, they are the same as those in `n`. Since the addresses of these elements are not contiguous, is `m` still an array?
+**K**: Pythonban `n = [1, 2, 3]` inicializálása után ezen 3 elem címei összefüggők, de `m = [2, 1, 3]` inicializálásakor kiderül, hogy minden elem azonosítója nem folytonos; inkább ugyanolyanok, mint az `n`-ben lévők. Mivel ezen elemek címei nem összefüggők, `m` még mindig tömb?
 
-If we replace list elements with linked list nodes `n = [n1, n2, n3, n4, n5]`, usually these 5 node objects are also scattered throughout memory. However, given a list index, we can still obtain the node memory address in $O(1)$ time, thereby accessing the corresponding node. This is because the array stores references to nodes, not the nodes themselves.
+Ha a lista elemeit láncolt lista csomópontokra cseréljük `n = [n1, n2, n3, n4, n5]`, általában ez az 5 csomópontobjektum is szétszórtan helyezkedik el a memóriában. Azonban egy lista index alapján $O(1)$ időben megkaphatjuk a csomópont memóriacímét, ezáltal hozzáférhetünk a megfelelő csomóponthoz. Ez azért van, mert a tömb nem magukra a csomópontokra, hanem a csomópontokra mutató hivatkozásokat tárolja.
 
-Unlike many languages, numbers in Python are wrapped as objects, and lists store not the numbers themselves, but references to the numbers. Therefore, we find that the same numbers in two arrays have the same id, and the memory addresses of these numbers need not be contiguous.
+Sok más nyelvtől eltérően a Pythonban a számok objektumokként vannak becsomagolva, és a listák nem magukhoz a számokhoz, hanem a számokra mutató hivatkozásokat tárolják. Ezért azt találjuk, hogy a két tömbben lévő azonos számoknak ugyanolyan az azonosítójuk, és ezeknek a számoknak a memóriacímei nem szükségszerűen összefüggők.
 
-**Q**: C++ STL has `std::list` which has already implemented a doubly linked list, but it seems that some algorithm books don't use it directly. Is there a limitation?
+**K**: A C++ STL-nek van `std::list`-je, amely már megvalósított egy kétirányú láncolt listát, de úgy tűnik, néhány algoritmikai könyv nem használja közvetlenül. Van-e valamilyen korlátozása?
 
-On one hand, we often prefer to use arrays for implementing algorithms and only use linked lists when necessary, mainly for two reasons.
+Egyrészt általában inkább tömbök használatát részesítjük előnyben az algoritmusok megvalósításához, és csak szükség esetén használunk láncolt listákat, főként két ok miatt.
 
-- Space overhead: Since each element requires two additional pointers (one for the previous element and one for the next element), `std::list` typically consumes more space than `std::vector`.
-- Cache unfriendliness: Since data is not stored contiguously, `std::list` has lower cache utilization. In general, `std::vector` has better performance.
+- Tárhelyterhelés: Mivel minden elemhez két további mutató szükséges (egy az előző és egy a következő elemhez), az `std::list` általában több helyet fogyaszt, mint az `std::vector`.
+- Gyorsítótár-barátlanság: Mivel az adatok nem összefüggően tárolódnak, az `std::list` alacsonyabb gyorsítótár-kihasználtsággal rendelkezik. Általánosságban az `std::vector` jobb teljesítményt nyújt.
 
-On the other hand, cases where linked lists are necessary mainly involve binary trees and graphs. Stacks and queues usually use the `stack` and `queue` provided by the programming language, rather than linked lists.
+Másrészt azok az esetek, ahol láncolt listákra van szükség, főként bináris fákat és gráfokat érintenek. A veremek és sorok általában a programozási nyelv által biztosított `stack` és `queue` típusokat használják, nem láncolt listákat.
 
-**Q**: Does the operation `res = [[0]] * n` create a 2D list where each `[0]` is independent?
+**K**: A `res = [[0]] * n` művelet olyan kétdimenziós listát hoz létre, amelyben minden `[0]` független?
 
-No, they are not independent. In this 2D list, all the `[0]` are actually references to the same object. If we modify one element, we will find that all corresponding elements change accordingly.
+Nem, ezek nem függetlenek. Ebben a kétdimenziós listában az összes `[0]` valójában ugyanarra az objektumra mutató hivatkozás. Ha módosítunk egy elemet, azt tapasztalhatjuk, hogy az összes megfelelő elem ennek megfelelően változik.
 
-If we want each `[0]` in the 2D list to be independent, we can use `res = [[0] for _ in range(n)]` to achieve this. The principle of this approach is to initialize $n$ independent `[0]` list objects.
+Ha azt szeretnénk, hogy a kétdimenziós lista minden `[0]`-ja független legyen, a `res = [[0] for _ in range(n)]` megközelítést alkalmazhatjuk. Ennek az elvnek lényege $n$ független `[0]` lista objektum inicializálása.
 
-**Q**: Does the operation `res = [0] * n` create a list where each integer 0 is independent?
+**K**: A `res = [0] * n` művelet olyan listát hoz létre, amelyben minden egész 0 független?
 
-In this list, all integer 0s are references to the same object. This is because Python uses a caching mechanism for small integers (typically -5 to 256) to maximize object reuse and improve performance.
+Ebben a listában az összes egész 0 ugyanarra az objektumra mutató hivatkozás. Ez azért van, mert a Python egy gyorsítótárazási mechanizmust alkalmaz a kis egészekre (általában -5-tól 256-ig) az objektumok maximális újrafelhasználása és a teljesítmény javítása érdekében.
 
-Although they point to the same object, we can still independently modify each element in the list. This is because Python integers are "immutable objects". When we modify an element, we are actually switching to a reference of another object, rather than changing the original object itself.
+Bár ugyanarra az objektumra mutatnak, a lista minden elemét mégis módosíthatjuk egymástól függetlenül. Ez azért van, mert a Python egészek "megváltoztathatatlan objektumok". Egy elem módosításakor valójában egy másik objektumra mutató hivatkozásra váltunk, nem az eredeti objektumot módosítjuk.
 
-However, when list elements are "mutable objects" (such as lists, dictionaries, or class instances), modifying an element directly changes the object itself, and all elements referencing that object will have the same change.
+Azonban amikor a lista elemei "megváltoztatható objektumok" (például listák, szótárak vagy osztálypéldányok), az elem módosítása közvetlenül megváltoztatja az objektumot, és az arra az objektumra hivatkozó összes elem ugyanolyan változást tapasztal.
