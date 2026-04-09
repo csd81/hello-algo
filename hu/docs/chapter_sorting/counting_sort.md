@@ -1,46 +1,46 @@
-# Counting Sort
+# Számlálórendezés
 
-<u>Counting sort (counting sort)</u> achieves sorting by counting the number of elements, typically applied to integer arrays.
+A <u>számlálórendezés (counting sort)</u> az elemek számának megszámlálásával éri el a rendezést, jellemzően egész tömbökre alkalmazva.
 
-## Simple Implementation
+## Egyszerű megvalósítás
 
-Let's start with a simple example. Given an array `nums` of length $n$, where the elements are all "non-negative integers", the overall flow of counting sort is shown in the figure below.
+Kezdjük egy egyszerű példával. Adott egy $n$ hosszúságú `nums` tömb, amelynek elemei mind "nemnegatív egészek", a számlálórendezés teljes folyamata az alábbi ábrán látható.
 
-1. Traverse the array to find the largest number, denoted as $m$, and then create an auxiliary array `counter` of length $m + 1$.
-2. **Use `counter` to count the number of occurrences of each number in `nums`**, where `counter[num]` corresponds to the number of occurrences of the number `num`. The counting method is simple: just traverse `nums` (let the current number be `num`), and increase `counter[num]` by $1$ in each round.
-3. **Since each index of `counter` is naturally ordered, this is equivalent to all numbers being sorted**. Next, we traverse `counter` and fill in `nums` in ascending order based on the number of occurrences of each number.
+1. Bejárjuk a tömböt, megkeressük a legnagyobb számot, amelyet $m$-mel jelölünk, majd létrehozunk egy $m + 1$ hosszúságú `counter` segédtömböt.
+2. **A `counter` segítségével megszámoljuk az egyes számok előfordulási számát a `nums`-ban**, ahol `counter[num]` a `num` szám előfordulási számának felel meg. A számlálási módszer egyszerű: bejárjuk a `nums`-t (legyen az aktuális szám `num`), és minden körben $1$-gyel növeljük a `counter[num]`-t.
+3. **Mivel a `counter` minden indexe természetes sorrendben van, ez egyenértékű az összes szám rendezettségével**. Ezután bejárjuk a `counter`-t, és az egyes számok előfordulási száma alapján növekvő sorrendben feltöltjük a `nums`-t.
 
-![Counting sort flow](counting_sort.assets/counting_sort_overview.png)
+![Számlálórendezés folyamata](counting_sort.assets/counting_sort_overview.png)
 
-The code is as follows:
+A kód az alábbi:
 
 ```src
 [file]{counting_sort}-[class]{}-[func]{counting_sort_naive}
 ```
 
-!!! note "Connection between counting sort and bucket sort"
+!!! note "A számlálórendezés és a vödörrendezés kapcsolata"
 
-    From the perspective of bucket sort, we can regard each index of the counting array `counter` in counting sort as a bucket, and the process of counting quantities as distributing each element to the corresponding bucket. Essentially, counting sort is a special case of bucket sort for integer data.
+    A vödörrendezés szempontjából a számlálórendezésben a számlálótömb `counter` minden indexét egy vödörnek tekinthetjük, és a mennyiségek megszámlálásának folyamatát minden elem megfelelő vödörbe való elosztásaként. A számlálórendezés lényegében a vödörrendezés különleges esete egész adatokhoz.
 
-## Complete Implementation
+## Teljes megvalósítás
 
-Observant readers may have noticed that **if the input data is objects, step `3.` above becomes invalid**. Suppose the input data is product objects, and we want to sort the products by price (a member variable of the class), but the above algorithm can only give the sorting result of prices.
+Az éles szemű olvasók észrevehették, hogy **ha a bemeneti adatok objektumok, a fenti `3.` lépés érvénytelen**. Tegyük fel, hogy a bemeneti adatok termék objektumok, és az áruk ár szerint (az osztály egy tagváltozója) szeretnénk rendezni, de a fenti algoritmus csak az árak rendezési eredményét adhatja meg.
 
-So how can we obtain the sorting result of the original data? We first calculate the "prefix sum" of `counter`. As the name suggests, the prefix sum at index `i`, `prefix[i]`, equals the sum of the first `i` elements of the array:
+Szóval hogyan kaphatjuk meg az eredeti adatok rendezési eredményét? Először kiszámítjuk a `counter` "előtagösszegét". Ahogy a neve is sugallja, az `i` indexen lévő előtagösszeg, `prefix[i]`, a tömb első `i` elemének összege:
 
 $$
 \text{prefix}[i] = \sum_{j=0}^i \text{counter[j]}
 $$
 
-**The prefix sum has a clear meaning: `prefix[num] - 1` represents the index of the last occurrence of element `num` in the result array `res`**. This information is very critical because it tells us where each element should appear in the result array. Next, we traverse each element `num` of the original array `nums` in reverse order, performing the following two steps in each iteration.
+**Az előtagösszegnek egyértelmű jelentése van: `prefix[num] - 1` a `num` elem utolsó előfordulásának indexét jelöli az eredménytömbben `res`**. Ez az információ rendkívül kritikus, mivel megmondja, hogy az egyes elemeknek hol kell megjelenniük az eredménytömbben. Ezután fordított sorrendben bejárjuk az eredeti `nums` tömb minden `num` elemét, minden iterációban a következő két lépést hajtjuk végre.
 
-1. Fill `num` into the array `res` at index `prefix[num] - 1`.
-2. Decrease the prefix sum `prefix[num]` by $1$ to get the index for the next placement of `num`.
+1. A `num`-t a `res` tömbnek a `prefix[num] - 1` indexébe töltjük.
+2. Az előtagösszeget `prefix[num]`-t $1$-gyel csökkentjük, hogy a `num` következő elhelyezési indexét megkapjuk.
 
-After the traversal is complete, the array `res` contains the sorted result, and finally `res` is used to overwrite the original array `nums`. The complete counting sort flow is shown in the figure below.
+A bejárás befejezése után a `res` tömb tartalmazza a rendezett eredményt, végül a `res`-t felhasználjuk az eredeti `nums` tömb felülírásához. A teljes számlálórendezés folyamata az alábbi ábrán látható.
 
 === "<1>"
-    ![Counting sort steps](counting_sort.assets/counting_sort_step1.png)
+    ![Számlálórendezés lépései](counting_sort.assets/counting_sort_step1.png)
 
 === "<2>"
     ![counting_sort_step2](counting_sort.assets/counting_sort_step2.png)
@@ -63,22 +63,22 @@ After the traversal is complete, the array `res` contains the sorted result, and
 === "<8>"
     ![counting_sort_step8](counting_sort.assets/counting_sort_step8.png)
 
-The implementation code of counting sort is as follows:
+A számlálórendezés megvalósítási kódja az alábbi:
 
 ```src
 [file]{counting_sort}-[class]{}-[func]{counting_sort}
 ```
 
-## Algorithm Characteristics
+## Az algoritmus jellemzői
 
-- **Time complexity of $O(n + m)$, non-adaptive sorting**: Involves traversing `nums` and traversing `counter`, both using linear time. Generally, $n \gg m$, and time complexity tends toward $O(n)$.
-- **Space complexity of $O(n + m)$, non-in-place sorting**: Uses arrays `res` and `counter` of lengths $n$ and $m$ respectively.
-- **Stable sorting**: Since elements are filled into `res` in a "right-to-left" order, traversing `nums` in reverse can avoid changing the relative positions of equal elements, thereby achieving stable sorting. In fact, traversing `nums` in forward order can also yield correct sorting results, but the result would be unstable.
+- **$O(n + m)$ időbonyolultság, nem adaptív rendezés**: A `nums` és a `counter` bejárása egyaránt lineáris időt vesz igénybe. Általában $n \gg m$, és az időbonyolultság $O(n)$-re tendál.
+- **$O(n + m)$ térkomplexitás, nem helyben történő rendezés**: $n$ és $m$ hosszúságú `res` és `counter` tömböket használ.
+- **Stabil rendezés**: Mivel az elemeket "jobbról balra" sorrendben töltjük be a `res`-be, a `nums` fordított irányú bejárása elkerüli az egyenlő elemek relatív pozícióinak megváltoztatását, ezáltal stabil rendezést érve el. Valójában a `nums` előre irányú bejárása is helyes rendezési eredményt adhat, de az eredmény instabil lenne.
 
-## Limitations
+## Korlátok
 
-By this point, you might think counting sort is very clever, as it can achieve efficient sorting just by counting quantities. However, the prerequisites for using counting sort are relatively strict.
+Ezen a ponton úgy gondolhatja, hogy a számlálórendezés nagyon ügyes, mivel csupán mennyiségek megszámlálásával hatékony rendezést érhet el. A számlálórendezés alkalmazásának előfeltételei azonban viszonylag szigorúak.
 
-**Counting sort is only suitable for non-negative integers**. If you want to apply it to other types of data, you need to ensure that the data can be converted to non-negative integers without changing the relative size relationships between elements. For example, for an integer array containing negative numbers, you can first add a constant to all numbers to convert them all to positive numbers, and then convert them back after sorting is complete.
+**A számlálórendezés csak nemnegatív egészekhez alkalmas**. Ha más típusú adatokra szeretné alkalmazni, biztosítania kell, hogy az adatok nemnegatív egésszé konvertálhatók az elemek közötti relatív méretkapcsolatok megváltoztatása nélkül. Például negatív számokat tartalmazó egész tömb esetén először hozzáadhat egy konstanst az összes számhoz, hogy mindegyiket pozitív számmá alakítsa, majd a rendezés befejezése után visszaalakíthatja.
 
-**Counting sort is suitable for situations where the data volume is large but the data range is small**. For example, in the above example, $m$ cannot be too large, otherwise it will occupy too much space. And when $n \ll m$, counting sort uses $O(m)$ time, which may be slower than $O(n \log n)$ sorting algorithms.
+**A számlálórendezés olyan helyzetekhez alkalmas, ahol az adatmennyiség nagy, de az adattartomány kicsi**. Például a fenti példában $m$ nem lehet túl nagy, különben túl sok tárhelyet foglal el. És ha $n \ll m$, a számlálórendezés $O(m)$ időt vesz igénybe, ami lassabb lehet az $O(n \log n)$ rendezési algoritmusoknál.

@@ -1,15 +1,15 @@
-# Quick Sort
+# Gyorsrendezés
 
-<u>Quick sort (quick sort)</u> is a sorting algorithm based on the divide-and-conquer strategy, which operates efficiently and is widely applied.
+A <u>gyorsrendezés (quick sort)</u> az oszd meg és uralkodj stratégián alapuló rendezési algoritmus, amely hatékonyan működik és széles körben alkalmazott.
 
-The core operation of quick sort is "sentinel partitioning", which aims to: select a certain element in the array as the "pivot", move all elements smaller than the pivot to its left, and move elements larger than the pivot to its right. Specifically, the flow of sentinel partitioning is shown in the figure below.
+A gyorsrendezés alapművelete az "őrszem-particionálás", amelynek célja: kiválaszt egy bizonyos elemet a tömbből "pivot elemként", az összes pivot elemnél kisebb elemet a bal oldalára, az összes pivot elemnél nagyobb elemet a jobb oldalára mozgatja. Konkrétan az őrszem-particionálás folyamata az alábbi ábrán látható.
 
-1. Select the leftmost element of the array as the pivot, and initialize two pointers `i` and `j` pointing to the two ends of the array.
-2. Set up a loop in which `i` (`j`) is used in each round to find the first element larger (smaller) than the pivot, and then swap these two elements.
-3. Loop through step `2.` until `i` and `j` meet, and finally swap the pivot to the boundary line of the two sub-arrays.
+1. Válasszuk ki a tömb bal szélső elemét pivot elemként, és inicializáljunk két mutatót `i` és `j`, amelyek a tömb két végére mutatnak.
+2. Állítsunk fel egy hurkot, amelyben minden körben `i` (`j`) az első pivot elemnél nagyobb (kisebb) elemet keresi meg, majd felcseréljük ezt a két elemet.
+3. Ismételjük a `2.` lépést, amíg `i` és `j` nem találkozik, végül cseréljük a pivot elemet a két résztömb határvonalára.
 
 === "<1>"
-    ![Sentinel partitioning steps](quick_sort.assets/pivot_division_step1.png)
+    ![Őrszem-particionálás lépései](quick_sort.assets/pivot_division_step1.png)
 
 === "<2>"
     ![pivot_division_step2](quick_sort.assets/pivot_division_step2.png)
@@ -35,65 +35,65 @@ The core operation of quick sort is "sentinel partitioning", which aims to: sele
 === "<9>"
     ![pivot_division_step9](quick_sort.assets/pivot_division_step9.png)
 
-After sentinel partitioning is complete, the original array is divided into three parts: left sub-array, pivot, right sub-array, satisfying "any element in left sub-array $\leq$ pivot $\leq$ any element in right sub-array". Therefore, we next only need to sort these two sub-arrays.
+Az őrszem-particionálás befejezése után az eredeti tömb három részre osztódik: bal résztömb, pivot elem, jobb résztömb, kielégítve a "bal résztömb bármely eleme $\leq$ pivot elem $\leq$ jobb résztömb bármely eleme" feltételt. Ezért ezután csak ezt a két résztömböt kell rendeznünk.
 
-!!! note "Divide-and-conquer strategy of quick sort"
+!!! note "A gyorsrendezés oszd meg és uralkodj stratégiája"
 
-    The essence of sentinel partitioning is to simplify the sorting problem of a longer array into the sorting problems of two shorter arrays.
+    Az őrszem-particionálás lényege, hogy egy hosszabb tömb rendezési problémáját két rövidebb tömb rendezési problémájára egyszerűsíti.
 
 ```src
 [file]{quick_sort}-[class]{quick_sort}-[func]{partition}
 ```
 
-## Algorithm Flow
+## Az algoritmus folyamata
 
-The overall flow of quick sort is shown in the figure below.
+A gyorsrendezés teljes folyamata az alábbi ábrán látható.
 
-1. First, perform one "sentinel partitioning" on the original array to obtain the unsorted left sub-array and right sub-array.
-2. Then, recursively perform "sentinel partitioning" on the left sub-array and right sub-array respectively.
-3. Continue recursively until the sub-array length is 1, at which point sorting of the entire array is complete.
+1. Először végezzük el az eredeti tömbön az "őrszem-particionálást", hogy megkapjuk a rendezetlen bal és jobb résztömböt.
+2. Ezután rekurzívan végezzük el az "őrszem-particionálást" a bal és a jobb résztömbön külön-külön.
+3. Folytassuk rekurzívan, amíg a résztömb hossza 1 nem lesz, ekkor a teljes tömb rendezése kész.
 
-![Quick sort flow](quick_sort.assets/quick_sort_overview.png)
+![Gyorsrendezés folyamata](quick_sort.assets/quick_sort_overview.png)
 
 ```src
 [file]{quick_sort}-[class]{quick_sort}-[func]{quick_sort}
 ```
 
-## Algorithm Characteristics
+## Az algoritmus jellemzői
 
-- **Time complexity of $O(n \log n)$, non-adaptive sorting**: In the average case, the number of recursive levels of sentinel partitioning is $\log n$, and the total number of loops at each level is $n$, using $O(n \log n)$ time overall. In the worst case, each round of sentinel partitioning divides an array of length $n$ into two sub-arrays of length $0$ and $n - 1$, at which point the number of recursive levels reaches $n$, the number of loops at each level is $n$, and the total time used is $O(n^2)$.
-- **Space complexity of $O(n)$, in-place sorting**: In the case where the input array is completely reversed, the worst recursive depth reaches $n$, using $O(n)$ stack frame space. The sorting operation is performed on the original array without the aid of an additional array.
-- **Non-stable sorting**: In the last step of sentinel partitioning, the pivot may be swapped to the right of equal elements.
+- **$O(n \log n)$ időbonyolultság, nem adaptív rendezés**: Átlagos esetben az őrszem-particionálás rekurzív szintjeinek száma $\log n$, és az egyes szinteken lévő hurkok teljes száma $n$, összességében $O(n \log n)$ időt felhasználva. A legrosszabb esetben minden egyes őrszem-particionálási kör egy $n$ hosszúságú tömböt $0$ és $n - 1$ hosszúságú két résztömbre oszt fel, ekkor a rekurzív szintek száma eléri az $n$-t, az egyes szinteken lévő hurkok száma $n$, és az összes felhasznált idő $O(n^2)$.
+- **$O(n)$ térkomplexitás, helyben történő rendezés**: Abban az esetben, ha a bemeneti tömb teljesen fordított, a legrosszabb rekurzív mélység eléri az $n$-t, $O(n)$ verem-keret tárhelyet felhasználva. A rendezési művelet az eredeti tömbön hajtódik végre, kiegészítő tömb segítsége nélkül.
+- **Nem stabil rendezés**: Az őrszem-particionálás utolsó lépésében a pivot elem egyenlő elemek jobb oldalára cserélhető.
 
-## Why Is Quick Sort Fast
+## Miért gyors a gyorsrendezés?
 
-From the name, we can see that quick sort should have certain advantages in terms of efficiency. Although the average time complexity of quick sort is the same as "merge sort" and "heap sort", quick sort is usually more efficient, mainly for the following reasons.
+A névből láthatjuk, hogy a gyorsrendezésnek bizonyos előnyei vannak a hatékonyság terén. Bár a gyorsrendezés átlagos időbonyolultsága megegyezik az "összefésüléses rendezéssel" és a "kupacrendezéssel", a gyorsrendezés általában hatékonyabb, főként a következő okok miatt.
 
-- **The probability of the worst case occurring is very low**: Although the worst-case time complexity of quick sort is $O(n^2)$, which is not as stable as merge sort, in the vast majority of cases, quick sort can run with a time complexity of $O(n \log n)$.
-- **High cache utilization**: When performing sentinel partitioning operations, the system can load the entire sub-array into the cache, so element access efficiency is relatively high. Algorithms like "heap sort" require jump-style access to elements, thus lacking this characteristic.
-- **Small constant coefficient of complexity**: Among the three algorithms mentioned above, quick sort has the smallest total number of operations such as comparisons, assignments, and swaps. This is similar to the reason why "insertion sort" is faster than "bubble sort".
+- **A legrosszabb eset valószínűsége nagyon alacsony**: Bár a gyorsrendezés legrosszabb esetbeli időbonyolultsága $O(n^2)$, ami nem olyan stabil, mint az összefésüléses rendezés, az esetek túlnyomó többségében a gyorsrendezés $O(n \log n)$ időbonyolultsággal fut.
+- **Magas gyorsítótár-kihasználás**: Az őrszem-particionálási műveletek végrehajtásakor a rendszer betöltheti a teljes résztömböt a gyorsítótárba, így az elemekhez való hozzáférés hatékonysága viszonylag magas. Az olyan algoritmusok, mint a "kupacrendezés", ugrásszerű elemhozzáférést igényelnek, így nem rendelkeznek ezzel a jellemzővel.
+- **A bonyolultság kis konstans együtthatója**: A fent említett három algoritmus közül a gyorsrendezésnek van a legkisebb összesített összehasonlítási, hozzárendelési és cserélési műveletszáma. Ez hasonló ahhoz az okhoz, amiért a "beszúrásos rendezés" gyorsabb, mint a "buborékrendezés".
 
-## Pivot Optimization
+## Pivot elem optimalizálása
 
-**Quick sort may have reduced time efficiency for certain inputs**. Take an extreme example: suppose the input array is completely reversed. Since we select the leftmost element as the pivot, after sentinel partitioning is complete, the pivot is swapped to the rightmost end of the array, causing the left sub-array length to be $n - 1$ and the right sub-array length to be $0$. If we recurse down like this, each round of sentinel partitioning will have a sub-array length of $0$, the divide-and-conquer strategy fails, and quick sort degrades to a form approximate to "bubble sort".
+**A gyorsrendezés bizonyos bemeneteknél csökkent időbeli hatékonysággal bírhat**. Vegyünk egy szélsőséges példát: tegyük fel, hogy a bemeneti tömb teljesen fordított. Mivel a bal szélső elemet választjuk pivot elemként, az őrszem-particionálás befejezése után a pivot elem a tömb jobb szélső végéhez kerül, az bal résztömb hossza $n - 1$, a jobb résztömb hossza $0$. Ha így rekurzívan folytatjuk, minden egyes őrszem-particionálási körnek $0$ résztömbhossza lesz, az oszd meg és uralkodj stratégia meghibásodik, és a gyorsrendezés a "buborékrendezéshez" hasonló formává degradálódik.
 
-To avoid this situation as much as possible, **we can optimize the pivot selection strategy in sentinel partitioning**. For example, we can randomly select an element as the pivot. However, if luck is not good and we select a non-ideal pivot every time, efficiency is still not satisfactory.
+Ennek a helyzetnek a lehetőség szerinti elkerülése érdekében **optimalizálhatjuk a pivot elem kiválasztási stratégiát az őrszem-particionálásban**. Például véletlenszerűen választhatunk egy elemet pivot elemként. Ha azonban a szerencse nem kegyes, és minden alkalommal nem ideális pivot elemet választunk, a hatékonyság még mindig nem kielégítő.
 
-It should be noted that programming languages usually generate "pseudo-random numbers". If we construct a specific test case for a pseudo-random number sequence, the efficiency of quick sort may still degrade.
+Meg kell jegyezni, hogy a programozási nyelvek általában "pszeudo-véletlenszámokat" generálnak. Ha egy pszeudo-véletlenszám-sorozathoz specifikus tesztelési esetet konstruálunk, a gyorsrendezés hatékonysága még mindig degradálódhat.
 
-For further improvement, we can select three candidate elements in the array (usually the first, last, and middle elements of the array), **and use the median of these three candidate elements as the pivot**. In this way, the probability that the pivot is "neither too small nor too large" will be greatly increased. Of course, we can also select more candidate elements to further improve the robustness of the algorithm. After adopting this method, the probability of time complexity degrading to $O(n^2)$ is greatly reduced.
+A további javítás érdekében kiválaszthatunk három jelöltet a tömbből (általában a tömb első, utolsó és középső elemét), **és e három jelölt median értékét használhatjuk pivot elemként**. Így a valószínűsége, hogy a pivot elem "se nem túl kicsi, se nem túl nagy", nagymértékben megnövekszik. Természetesen több jelöltet is kiválaszthatunk az algoritmus robosztusságának további javítása érdekében. Ezzel a módszerrel az időbonyolultság $O(n^2)$-re való degradálódásának valószínűsége nagymértékben csökken.
 
-Example code is as follows:
+A példakód az alábbi:
 
 ```src
 [file]{quick_sort}-[class]{quick_sort_median}-[func]{partition}
 ```
 
-## Recursive Depth Optimization
+## Rekurziós mélység optimalizálása
 
-**For certain inputs, quick sort may occupy more space**. Taking a completely ordered input array as an example, let the length of the sub-array in recursion be $m$. Each round of sentinel partitioning will produce a left sub-array of length $0$ and a right sub-array of length $m - 1$, which means that the problem scale reduced per recursive call is very small (only one element is reduced), and the height of the recursion tree will reach $n - 1$, at which point $O(n)$ size of stack frame space is required.
+**Bizonyos bemeneteknél a gyorsrendezés több tárhelyet foglalhat**. Vegyük például a teljesen rendezett bemeneti tömböt, legyen a rekurzióban lévő résztömb hossza $m$. Minden egyes őrszem-particionálási kör $0$ hosszúságú bal és $m - 1$ hosszúságú jobb résztömböt hoz létre, ami azt jelenti, hogy az egyes rekurzív hívásonként csökkentett problémaskála nagyon kicsi (csak egy elem csökken), és a rekurziós fa magassága eléri az $n - 1$-t, ekkor $O(n)$ méretű verem-keret tárhelyre van szükség.
 
-To prevent the accumulation of stack frame space, we can compare the lengths of the two sub-arrays after each round of sentinel sorting is complete, **and only recurse on the shorter sub-array**. Since the length of the shorter sub-array will not exceed $n / 2$, this method can ensure that the recursion depth does not exceed $\log n$, thus optimizing the worst-case space complexity to $O(\log n)$. The code is as follows:
+A verem-keret tárhelyének felhalmozódásának megakadályozása érdekében minden egyes őrszem-rendezési kör befejezése után összehasonlíthatjuk a két résztömb hosszát, **és csak a rövidebb résztömbön rekurzívan folytatjuk**. Mivel a rövidebb résztömb hossza nem haladhatja meg az $n / 2$-t, ez a módszer biztosítja, hogy a rekurzió mélysége ne haladja meg a $\log n$-t, ezáltal a legrosszabb esetbeli térkomplexitást $O(\log n)$-re optimalizálja. A kód az alábbi:
 
 ```src
 [file]{quick_sort}-[class]{quick_sort_tail_call}-[func]{quick_sort}

@@ -1,17 +1,17 @@
-# Selection Sort
+# Kiválasztásos rendezés
 
-<u>Selection sort (selection sort)</u> works very simply: it opens a loop, and in each round, selects the smallest element from the unsorted interval and places it at the end of the sorted interval.
+A <u>kiválasztásos rendezés (selection sort)</u> nagyon egyszerűen működik: megnyit egy hurkot, és minden körben kiválasztja a legkisebb elemet a rendezetlen intervallumból, majd a rendezett intervallum végéhez helyezi.
 
-Assume the array has length $n$. The algorithm flow of selection sort is shown in the figure below.
+Tegyük fel, hogy a tömb hossza $n$. A kiválasztásos rendezés algoritmusfolyamata az alábbi ábrán látható.
 
-1. Initially, all elements are unsorted, i.e., the unsorted (index) interval is $[0, n-1]$.
-2. Select the smallest element in the interval $[0, n-1]$ and swap it with the element at index $0$. After completion, the first element of the array is sorted.
-3. Select the smallest element in the interval $[1, n-1]$ and swap it with the element at index $1$. After completion, the first 2 elements of the array are sorted.
-4. And so on. After $n - 1$ rounds of selection and swapping, the first $n - 1$ elements of the array are sorted.
-5. The only remaining element must be the largest element, requiring no sorting, so the array sorting is complete.
+1. Kezdetben minden elem rendezetlen, azaz a rendezetlen (index) intervallum $[0, n-1]$.
+2. Válasszuk ki a legkisebb elemet a $[0, n-1]$ intervallumban, és cseréljük fel a $0$ indexű elemmel. Befejezés után a tömb első eleme rendezett.
+3. Válasszuk ki a legkisebb elemet a $[1, n-1]$ intervallumban, és cseréljük fel az $1$ indexű elemmel. Befejezés után a tömb első 2 eleme rendezett.
+4. És így tovább. $n - 1$ kiválasztási és csere kör után a tömb első $n - 1$ eleme rendezett.
+5. A csak fennmaradó elem szükségszerűen a legnagyobb elem, nincs szükség rendezésre, így a tömb rendezése kész.
 
 === "<1>"
-    ![Selection sort steps](selection_sort.assets/selection_sort_step1.png)
+    ![Kiválasztásos rendezés lépései](selection_sort.assets/selection_sort_step1.png)
 
 === "<2>"
     ![selection_sort_step2](selection_sort.assets/selection_sort_step2.png)
@@ -43,16 +43,16 @@ Assume the array has length $n$. The algorithm flow of selection sort is shown i
 === "<11>"
     ![selection_sort_step11](selection_sort.assets/selection_sort_step11.png)
 
-In the code, we use $k$ to record the smallest element within the unsorted interval:
+A kódban $k$-t használjuk a rendezetlen intervallumon belüli legkisebb elem nyomon követésére:
 
 ```src
 [file]{selection_sort}-[class]{}-[func]{selection_sort}
 ```
 
-## Algorithm Characteristics
+## Az algoritmus jellemzői
 
-- **Time complexity of $O(n^2)$, non-adaptive sorting**: The outer loop has $n - 1$ rounds in total. The length of the unsorted interval in the first round is $n$, and the length of the unsorted interval in the last round is $2$. That is, each round of the outer loop contains $n$, $n - 1$, $\dots$, $3$, $2$ inner loop iterations, summing to $\frac{(n - 1)(n + 2)}{2}$.
-- **Space complexity of $O(1)$, in-place sorting**: Pointers $i$ and $j$ use a constant amount of extra space.
-- **Non-stable sorting**: As shown in the figure below, element `nums[i]` may be swapped to the right of an element equal to it, causing a change in their relative order.
+- **$O(n^2)$ időbonyolultság, nem adaptív rendezés**: A külső hurok összesen $n - 1$ kört tartalmaz. Az első körben a rendezetlen intervallum hossza $n$, az utolsó körben $2$. Vagyis a külső hurok minden köre $n$, $n - 1$, $\dots$, $3$, $2$ belső hurokiterációt tartalmaz, összesen $\frac{(n - 1)(n + 2)}{2}$.
+- **$O(1)$ térkomplexitás, helyben történő rendezés**: Az $i$ és $j$ mutatók konstans mennyiségű extra tárhelyet használnak.
+- **Nem stabil rendezés**: Ahogy az alábbi ábrán látható, a `nums[i]` elem egy vele egyenlő elem jobb oldalára cserélhető, megváltoztatva relatív sorrendjüket.
 
-![Selection sort non-stability example](selection_sort.assets/selection_sort_instability.png)
+![Kiválasztásos rendezés nem stabil példa](selection_sort.assets/selection_sort_instability.png)

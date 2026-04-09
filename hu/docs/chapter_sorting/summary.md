@@ -1,47 +1,47 @@
-# Summary
+# Összefoglalás
 
-### Key Review
+### Fő áttekintés
 
-- Bubble sort achieves sorting by swapping adjacent elements. By adding a flag to enable early return, we can optimize the best-case time complexity of bubble sort to $O(n)$.
-- Insertion sort completes sorting by inserting elements from the unsorted interval into the correct position in the sorted interval each round. Although the time complexity of insertion sort is $O(n^2)$, it is very popular in small data volume sorting tasks because it involves relatively few unit operations.
-- Quick sort is implemented based on sentinel partitioning operations. In sentinel partitioning, it is possible to select the worst pivot every time, causing the time complexity to degrade to $O(n^2)$. Introducing median pivot or random pivot can reduce the probability of such degradation. By preferentially recursing on the shorter sub-interval, the recursion depth can be effectively reduced, optimizing the space complexity to $O(\log n)$.
-- Merge sort includes two phases: divide and merge, which typically embody the divide-and-conquer strategy. In merge sort, sorting an array requires creating auxiliary arrays, with a space complexity of $O(n)$; however, the space complexity of sorting a linked list can be optimized to $O(1)$.
-- Bucket sort consists of three steps: distributing data into buckets, sorting within buckets, and merging results. It also embodies the divide-and-conquer strategy and is suitable for very large data volumes. The key to bucket sort is distributing data evenly.
-- Counting sort is a special case of bucket sort, which achieves sorting by counting the number of occurrences of data. Counting sort is suitable for situations where the data volume is large but the data range is limited, and requires that data can be converted to positive integers.
-- Radix sort achieves data sorting by sorting digit by digit, requiring that data can be represented as fixed-digit numbers.
-- Overall, we hope to find a sorting algorithm that is efficient, stable, in-place, and adaptive, with good versatility. However, just like other data structures and algorithms, no sorting algorithm has been found so far that simultaneously possesses all these characteristics. In practical applications, we need to select the appropriate sorting algorithm based on the specific characteristics of the data.
-- The figure below compares mainstream sorting algorithms in terms of efficiency, stability, in-place property, and adaptability.
+- A buborékrendezés szomszédos elemek felcserélésével éri el a rendezést. Egy jelző hozzáadásával a korai visszatérés engedélyezéséhez a buborékrendezés legjobb esetbeli időbonyolultságát $O(n)$-re optimalizálhatjuk.
+- A beszúrásos rendezés minden körben a rendezetlen intervallumból beilleszti az elemeket a rendezett intervallumban a megfelelő pozícióba. Bár a beszúrásos rendezés időbonyolultsága $O(n^2)$, kis adatmennyiségű rendezési feladatokban nagyon népszerű, mivel viszonylag kevés egységnyi műveletet tartalmaz.
+- A gyorsrendezés őrszem-particionálási műveletek alapján valósul meg. Az őrszem-particionálásban lehetséges, hogy minden alkalommal a legrosszabb pivot elemet választjuk, ami az időbonyolultságot $O(n^2)$-re degradálja. A mediánpivot vagy véletlenpivot bevezetése csökkenti az ilyen degradálódás valószínűségét. A rövidebb alintervallumban való preferenciálisan rekurzív feldolgozással a rekurzió mélysége hatékonyan csökkenthető, és a térkomplexitás $O(\log n)$-re optimalizálható.
+- Az összefésüléses rendezés két fázist tartalmaz: felosztás és összefésülés, amelyek jellemzően az oszd meg és uralkodj stratégiát testesítik meg. Az összefésüléses rendezésben egy tömb rendezéséhez segédtömbök létrehozása szükséges, térkomplexitása $O(n)$; azonban egy láncolt lista rendezésének térkomplexitása $O(1)$-re optimalizálható.
+- A vödörrendezés három lépésből áll: adatok vödrökbe osztása, vödörökön belüli rendezés, és eredmények összefésülése. Ez szintén az oszd meg és uralkodj stratégiát testesíti meg, és nagyon nagy adatmennyiségekhez alkalmas. A vödörrendezés kulcsa az adatok egyenletes elosztása.
+- A számlálórendezés a vödörrendezés különleges esete, amely az adatok előfordulási számának megszámlálásával éri el a rendezést. A számlálórendezés olyan helyzetekhez alkalmas, ahol az adatmennyiség nagy, de az adattartomány korlátozott, és megköveteli, hogy az adatok pozitív egésszé konvertálhatók legyenek.
+- Az alaprendezés jegyenként rendezi az adatokat, megkövetelve, hogy az adatok rögzített számú jegyű számokként reprezentálhatók legyenek.
+- Összességében azt reméljük, hogy olyan rendezési algoritmust találunk, amely hatékony, stabil, helyben történő és adaptív, jó sokoldalúsággal. Azonban, csakúgy mint más adatstruktúrák és algoritmusok esetén, eddig nem találtak olyan rendezési algoritmust, amely egyszerre rendelkezik mindezekkel a jellemzőkkel. A gyakorlati alkalmazásokban az adatok konkrét jellemzői alapján kell kiválasztani a megfelelő rendezési algoritmust.
+- Az alábbi ábra összehasonlítja a főbb rendezési algoritmusokat hatékonyság, stabilitás, helyben történő tulajdonság és alkalmazkodóképesség szempontjából.
 
-![Sorting algorithm comparison](summary.assets/sorting_algorithms_comparison.png)
+![Rendezési algoritmusok összehasonlítása](summary.assets/sorting_algorithms_comparison.png)
 
-### Q & A
+### Kérdések és válaszok
 
-**Q**: In what situations is the stability of sorting algorithms necessary?
+**K**: Milyen helyzetekben szükséges a rendezési algoritmusok stabilitása?
 
-In reality, we may sort based on a certain attribute of objects. For example, students have two attributes: name and height. We want to implement multi-level sorting: first sort by name to get `(A, 180) (B, 185) (C, 170) (D, 170)`; then sort by height. Because the sorting algorithm is unstable, we may get `(D, 170) (C, 170) (A, 180) (B, 185)`.
+A valóságban előfordulhat, hogy objektumok egy bizonyos attribútuma alapján rendezünk. Például a hallgatóknak két attribútuma van: név és magasság. Többszintű rendezést szeretnénk megvalósítani: először névszerint rendezünk: `(A, 180) (B, 185) (C, 170) (D, 170)`; majd magasság szerint rendezünk. Mivel a rendezési algoritmus instabil, kaphatjuk a következőt: `(D, 170) (C, 170) (A, 180) (B, 185)`.
 
-It can be seen that the positions of students D and C have been swapped, and the orderliness of names has been disrupted, which is something we don't want to see.
+Látható, hogy D és C hallgatók pozíciói felcserélődtek, és a nevek rendezettsége megbomlott, ami nem kívánatos eredmény.
 
-**Q**: Can the order of "searching from right to left" and "searching from left to right" in sentinel partitioning be swapped?
+**K**: Az őrszem-particionálásban felcserélhető-e a "jobbról balra keresés" és a "balról jobbra keresés" sorrendje?
 
-No. When we use the leftmost element as the pivot, we must first "search from right to left" and then "search from left to right". This conclusion is somewhat counterintuitive; let's analyze the reason.
+Nem. Amikor a bal szélső elemet használjuk pivot elemként, először "jobbról balra" kell keresnünk, majd "balról jobbra". Ez a következtetés kissé ellentmondásos az intuícióval; elemezzük az okát.
 
-The last step of sentinel partitioning `partition()` is to swap `nums[left]` and `nums[i]`. After the swap is complete, the elements to the left of the pivot are all `<=` the pivot, **which requires that `nums[left] >= nums[i]` must hold before the last swap**. Suppose we first "search from left to right", then if we cannot find an element larger than the pivot, **we will exit the loop when `i == j`, at which point it may be that `nums[j] == nums[i] > nums[left]`**. In other words, the last swap operation will swap an element larger than the pivot to the leftmost end of the array, causing sentinel partitioning to fail.
+Az őrszem-particionálás `partition()` utolsó lépése a `nums[left]` és `nums[i]` felcserélése. A csere befejezése után a pivot elemtől balra lévő elemek mind `<=` a pivot elemnél, **ami megköveteli, hogy az utolsó csere előtt `nums[left] >= nums[i]` teljesüljön**. Tegyük fel, hogy először "balról jobbra" keresünk, akkor ha nem találunk a pivot elemnél nagyobb elemet, **kilépünk a hurokból, amikor `i == j`, ekkor elképzelhető, hogy `nums[j] == nums[i] > nums[left]`**. Vagyis az utolsó csere egy a pivot elemnél nagyobb elemet cserél a tömb bal szélső végére, ami miatt az őrszem-particionálás meghibásodik.
 
-For example, given the array `[0, 0, 0, 0, 1]`, if we first "search from left to right", the array after sentinel partitioning is `[1, 0, 0, 0, 0]`, which is incorrect.
+Például adott a `[0, 0, 0, 0, 1]` tömb, ha először "balról jobbra" keresünk, az őrszem-particionálás utáni tömb `[1, 0, 0, 0, 0]`, ami helytelen.
 
-Thinking deeper, if we select `nums[right]` as the pivot, then it's exactly the opposite - we must first "search from left to right".
+Mélyebben gondolkodva, ha a `nums[right]`-t választjuk pivot elemként, akkor pontosan az ellenkezője igaz - először "balról jobbra" kell keresnünk.
 
-**Q**: Regarding the optimization of recursion depth in quick sort, why can selecting the shorter array ensure that the recursion depth does not exceed $\log n$?
+**K**: A gyorsrendezés rekurziós mélység optimalizálásával kapcsolatban miért biztosítja a rövidebb tömb kiválasztása, hogy a rekurzió mélysége ne haladja meg a $\log n$-t?
 
-The recursion depth is the number of currently unreturned recursive methods. Each round of sentinel partitioning divides the original array into two sub-arrays. After recursion depth optimization, the length of the sub-array to be recursively processed is at most half of the original array length. Assuming the worst case is always half the length, the final recursion depth will be $\log n$.
+A rekurzió mélysége a jelenleg vissza nem adott rekurzív metódusok száma. Minden egyes őrszem-particionálási kör az eredeti tömböt két résztömbre osztja. A rekurzió mélységének optimalizálása után a rekurzívan feldolgozandó résztömb hossza legfeljebb az eredeti tömb hosszának fele. Feltéve, hogy a legrosszabb eset mindig félhossz, a végső rekurzió mélysége $\log n$ lesz.
 
-Reviewing the original quick sort, we may continuously recurse on the longer array. In the worst case, it would be $n$, $n - 1$, $\dots$, $2$, $1$, with a recursion depth of $n$. Recursion depth optimization can avoid this situation.
+Az eredeti gyorsrendezésre visszatekintve, előfordulhat, hogy folyamatosan a hosszabb tömbbel rekurzívan folytatjuk. A legrosszabb esetben ez $n$, $n - 1$, $\dots$, $2$, $1$ lenne, $n$ rekurzió mélységgel. A rekurzió mélységének optimalizálása ezt a helyzetet el tudja kerülni.
 
-**Q**: When all elements in the array are equal, is the time complexity of quick sort $O(n^2)$? How should this degenerate case be handled?
+**K**: Ha a tömb összes eleme egyenlő, a gyorsrendezés időbonyolultsága $O(n^2)$? Hogyan kezeljük ezt a degradált esetet?
 
-Yes. For this situation, consider partitioning the array into three parts through sentinel partitioning: less than, equal to, and greater than the pivot. Only recursively process the less than and greater than parts. Under this method, an array where all input elements are equal can complete sorting in just one round of sentinel partitioning.
+Igen. Erre a helyzetre érdemes megfontolni a tömb három részre osztását az őrszem-particionálással: a pivot elemnél kisebb, azzal egyenlő, és a pivot elemnél nagyobb részekre. Csak a kisebb és nagyobb részeket rekurzívan feldolgozni. Ezzel a módszerrel egy olyan tömb, amelynek összes bemeneti eleme egyenlő, egyetlen őrszem-particionálási körrel befejezi a rendezést.
 
-**Q**: Why is the worst-case time complexity of bucket sort $O(n^2)$?
+**K**: Miért $O(n^2)$ a vödörrendezés legrosszabb esetbeli időbonyolultsága?
 
-In the worst case, all elements are distributed into the same bucket. If we use an $O(n^2)$ algorithm to sort these elements, the time complexity will be $O(n^2)$.
+A legrosszabb esetben az összes elem egy vödörbe kerül. Ha egy $O(n^2)$ algoritmust alkalmazunk ezek rendezésére, az időbonyolultság $O(n^2)$ lesz.

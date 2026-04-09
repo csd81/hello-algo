@@ -1,23 +1,23 @@
-# Merge Sort
+# Összefésüléses rendezés
 
-<u>Merge sort (merge sort)</u> is a sorting algorithm based on the divide-and-conquer strategy, which includes the "divide" and "merge" phases shown in the figure below.
+Az <u>összefésüléses rendezés (merge sort)</u> az oszd meg és uralkodj stratégián alapuló rendezési algoritmus, amely az alábbi ábrán látható "felosztási" és "összefésülési" fázisokat foglalja magában.
 
-1. **Divide phase**: Recursively split the array from the midpoint, transforming the sorting problem of a long array into the sorting problems of shorter arrays.
-2. **Merge phase**: When the sub-array length is 1, terminate the division and start merging, continuously merging two shorter sorted arrays into one longer sorted array until the process is complete.
+1. **Felosztási fázis**: Rekurzívan osztjuk fel a tömböt a középponttól, a hosszú tömb rendezési problémáját rövidebb tömbök rendezési problémáira átalakítva.
+2. **Összefésülési fázis**: Ha a résztömb hossza 1, leállítjuk a felosztást és megkezdjük az összefésülést, folyamatosan összefésülve két rövidebb rendezett tömböt egyetlen hosszabb rendezett tömbbé, amíg a folyamat be nem fejeződik.
 
-![Divide and merge phases of merge sort](merge_sort.assets/merge_sort_overview.png)
+![Az összefésüléses rendezés felosztási és összefésülési fázisai](merge_sort.assets/merge_sort_overview.png)
 
-## Algorithm Flow
+## Az algoritmus folyamata
 
-As shown in the figure below, the "divide phase" recursively splits the array from the midpoint into two sub-arrays from top to bottom.
+Az alábbi ábrán látható módon a "felosztási fázis" rekurzívan osztja fel a tömböt a középponttól felülről lefelé két résztömbre.
 
-1. Calculate the array midpoint `mid`, recursively divide the left sub-array (interval `[left, mid]`) and right sub-array (interval `[mid + 1, right]`).
-2. Recursively execute step `1.` until the sub-array interval length is 1, then terminate.
+1. Kiszámítjuk a tömb középpontját `mid`, rekurzívan felosztjuk a bal résztömböt (`[left, mid]` intervallum) és a jobb résztömböt (`[mid + 1, right]` intervallum).
+2. Rekurzívan végrehajtjuk az `1.` lépést, amíg a résztömb intervallumhossza 1 nem lesz, majd leállítjuk.
 
-The "merge phase" merges the left sub-array and right sub-array into a sorted array from bottom to top. Note that merging starts from sub-arrays of length 1, and each sub-array in the merge phase is sorted.
+Az "összefésülési fázis" alulról felfelé fésüli össze a bal és jobb résztömböt rendezett tömbbé. Megjegyzendő, hogy az összefésülés 1 hosszúságú résztömböktől kezdődik, és az összefésülési fázis minden résztömbje rendezett.
 
 === "<1>"
-    ![Merge sort steps](merge_sort.assets/merge_sort_step1.png)
+    ![Összefésüléses rendezés lépései](merge_sort.assets/merge_sort_step1.png)
 
 === "<2>"
     ![merge_sort_step2](merge_sort.assets/merge_sort_step2.png)
@@ -46,28 +46,28 @@ The "merge phase" merges the left sub-array and right sub-array into a sorted ar
 === "<10>"
     ![merge_sort_step10](merge_sort.assets/merge_sort_step10.png)
 
-It can be observed that the recursive order of merge sort is consistent with the post-order traversal of a binary tree.
+Megfigyelhető, hogy az összefésüléses rendezés rekurzív sorrendje megegyezik egy bináris fa utórendű bejárásával.
 
-- **Post-order traversal**: First recursively traverse the left subtree, then recursively traverse the right subtree, and finally process the root node.
-- **Merge sort**: First recursively process the left sub-array, then recursively process the right sub-array, and finally perform the merge.
+- **Utórendű bejárás**: Először rekurzívan bejárjuk a bal részfát, majd rekurzívan a jobb részfát, végül feldolgozzuk a gyökércsomópontot.
+- **Összefésüléses rendezés**: Először rekurzívan feldolgozzuk a bal résztömböt, majd rekurzívan a jobb résztömböt, végül elvégezzük az összefésülést.
 
-The implementation of merge sort is shown in the code below. Note that the interval to be merged in `nums` is `[left, right]`, while the corresponding interval in `tmp` is `[0, right - left]`.
+Az összefésüléses rendezés megvalósítása az alábbi kódban látható. Megjegyzendő, hogy a `nums`-ban összefésülendő intervallum `[left, right]`, míg a `tmp`-ben a megfelelő intervallum `[0, right - left]`.
 
 ```src
 [file]{merge_sort}-[class]{}-[func]{merge_sort}
 ```
 
-## Algorithm Characteristics
+## Az algoritmus jellemzői
 
-- **Time complexity of $O(n \log n)$, non-adaptive sorting**: The division produces a recursion tree of height $\log n$, and the total number of merge operations at each level is $n$, so the overall time complexity is $O(n \log n)$.
-- **Space complexity of $O(n)$, non-in-place sorting**: The recursion depth is $\log n$, using $O(\log n)$ size of stack frame space. The merge operation requires the aid of an auxiliary array, using $O(n)$ size of additional space.
-- **Stable sorting**: In the merge process, the order of equal elements remains unchanged.
+- **$O(n \log n)$ időbonyolultság, nem adaptív rendezés**: A felosztás $\log n$ magasságú rekurziós fát hoz létre, és az összefésülési műveletek teljes száma minden szinten $n$, így az összesített időbonyolultság $O(n \log n)$.
+- **$O(n)$ térkomplexitás, nem helyben történő rendezés**: A rekurzió mélysége $\log n$, $O(\log n)$ méretű verem-keret tárhelyet használva. Az összefésülési művelet egy segédtömb segítségét igényli, $O(n)$ méretű extra tárhelyet felhasználva.
+- **Stabil rendezés**: Az összefésülési folyamatban az egyenlő elemek sorrendje nem változik.
 
-## Linked List Sorting
+## Láncolt lista rendezése
 
-For linked lists, merge sort has significant advantages over other sorting algorithms, **and can optimize the space complexity of linked list sorting tasks to $O(1)$**.
+Láncolt listák esetén az összefésüléses rendezésnek jelentős előnyei vannak más rendezési algoritmusokhoz képest, **és képes a láncolt lista rendezési feladatainak térkomplexitását $O(1)$-re optimalizálni**.
 
-- **Divide phase**: "Iteration" can be used instead of "recursion" to implement linked list division work, thus saving the stack frame space used by recursion.
-- **Merge phase**: In linked lists, node insertion and deletion operations can be achieved by just changing references (pointers), so there is no need to create additional linked lists during the merge phase (merging two short ordered linked lists into one long ordered linked list).
+- **Felosztási fázis**: A "rekurzió" helyett "iteráció" is használható a láncolt lista felosztásához, ezzel megtakarítva a rekurzió által felhasznált verem-keret tárhelyet.
+- **Összefésülési fázis**: Láncolt listákban a csomópontok beillesztési és törlési műveletei a hivatkozások (mutatók) megváltoztatásával megvalósíthatók, így az összefésülési fázisban nincs szükség extra láncolt listák létrehozására (két rövid rendezett láncolt lista összefésülése egyetlen hosszú rendezett láncolt listává).
 
-The specific implementation details are quite complex, and interested readers can consult related materials for learning.
+A konkrét megvalósítási részletek meglehetősen összetettek, az érdeklődő olvasók a kapcsolódó anyagokat konzultálhatják tanuláshoz.

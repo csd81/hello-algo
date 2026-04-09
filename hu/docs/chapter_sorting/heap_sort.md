@@ -1,31 +1,31 @@
-# Heap Sort
+# Kupacrendezés
 
 !!! tip
 
-    Before reading this section, please ensure you have completed the "Heap" chapter.
+    Az ezt a fejezetet megelőzően kérjük, győződjön meg arról, hogy elvégezte a "Kupac" fejezetet.
 
-<u>Heap sort (heap sort)</u> is an efficient sorting algorithm based on the heap data structure. We can use the "build heap operation" and "element out-heap operation" that we have already learned to implement heap sort.
+A <u>kupacrendezés (heap sort)</u> egy hatékony, kupac adatstruktúrán alapuló rendezési algoritmus. A kupacrendezés megvalósításához felhasználhatjuk a már megismert "kupac felépítési műveletet" és az "elem kupacból való kivételi műveletét".
 
-1. Input the array and build a min-heap, at which point the smallest element is at the heap top.
-2. Continuously perform the out-heap operation, record the out-heap elements in sequence, and an ascending sorted sequence can be obtained.
+1. Betöltjük a tömböt és felépítjük a min-kupacot, ekkor a legkisebb elem a kupac tetején van.
+2. Folyamatosan végezzük a kupacból való kivételi műveletet, sorban rögzítjük a kivett elemeket, és egy növekvően rendezett sorozatot kapunk.
 
-Although the above method is feasible, it requires an additional array to save the popped elements, which is quite wasteful of space. In practice, we usually use a more elegant implementation method.
+Bár a fenti módszer megvalósítható, egy extra tömbköt igényel a kinyomott elemek mentéséhez, ami meglehetősen pazarló a tárhellyel. A gyakorlatban általában egy elegánsabb megvalósítási módszert alkalmazunk.
 
-## Algorithm Flow
+## Az algoritmus folyamata
 
-Assume the array length is $n$. The flow of heap sort is shown in the figure below.
+Tegyük fel, hogy a tömb hossza $n$. A kupacrendezés folyamata az alábbi ábrán látható.
 
-1. Input the array and build a max-heap. After completion, the largest element is at the heap top.
-2. Swap the heap top element (first element) with the heap bottom element (last element). After the swap is complete, reduce the heap length by $1$ and increase the count of sorted elements by $1$.
-3. Starting from the heap top element, perform top-to-bottom heapify operation (sift down). After heapify is complete, the heap property is restored.
-4. Loop through steps `2.` and `3.` After looping $n - 1$ rounds, the array sorting can be completed.
+1. Betöltjük a tömböt és felépítjük a max-kupacot. Befejezés után a legnagyobb elem a kupac tetején van.
+2. Felcseréljük a kupac tetején lévő elemet (első elem) a kupac aljában lévő elemmel (utolsó elem). A csere befejezése után csökkentjük a kupac hosszát $1$-gyel, és növeljük a rendezett elemek számát $1$-gyel.
+3. A kupac tetején lévő elemtől kezdve elvégezzük a felülről lefelé irányuló kupacosítási műveletet (süllyesztés). A kupacosítás befejezése után a kupac tulajdonsága helyreáll.
+4. Ismételjük a `2.` és `3.` lépést. $n - 1$ kör ismétlés után a tömb rendezése elvégezhető.
 
 !!! tip
 
-    In fact, the element out-heap operation also includes steps `2.` and `3.`, with just an additional step to pop the element.
+    Valójában az elem kupacból való kivételi művelete szintén tartalmazza a `2.` és `3.` lépéseket, csupán egy extra lépéssel, az elem kinyomásával egészül ki.
 
 === "<1>"
-    ![Heap sort steps](heap_sort.assets/heap_sort_step1.png)
+    ![Kupacrendezés lépései](heap_sort.assets/heap_sort_step1.png)
 
 === "<2>"
     ![heap_sort_step2](heap_sort.assets/heap_sort_step2.png)
@@ -60,14 +60,14 @@ Assume the array length is $n$. The flow of heap sort is shown in the figure bel
 === "<12>"
     ![heap_sort_step12](heap_sort.assets/heap_sort_step12.png)
 
-In the code implementation, we use the same top-to-bottom heapify function `sift_down()` from the "Heap" chapter. It is worth noting that since the heap length will decrease as the largest element is extracted, we need to add a length parameter $n$ to the `sift_down()` function to specify the current effective length of the heap. The code is as follows:
+A kód megvalósításban ugyanazt a felülről lefelé irányuló kupacosítási függvényt `sift_down()` használjuk a "Kupac" fejezetből. Megjegyzendő, hogy mivel a kupac hossza csökken, ahogy a legnagyobb elemeket kivonjuk, egy $n$ hosszparamétert kell hozzáadnunk a `sift_down()` függvényhez, amely megadja a kupac aktuális érvényes hosszát. A kód az alábbi:
 
 ```src
 [file]{heap_sort}-[class]{}-[func]{heap_sort}
 ```
 
-## Algorithm Characteristics
+## Az algoritmus jellemzői
 
-- **Time complexity of $O(n \log n)$, non-adaptive sorting**: The build heap operation uses $O(n)$ time. Extracting the largest element from the heap has a time complexity of $O(\log n)$, looping a total of $n - 1$ rounds.
-- **Space complexity of $O(1)$, in-place sorting**: A few pointer variables use $O(1)$ space. Element swapping and heapify operations are both performed on the original array.
-- **Non-stable sorting**: When swapping the heap top element and heap bottom element, the relative positions of equal elements may change.
+- **$O(n \log n)$ időbonyolultság, nem adaptív rendezés**: A kupac felépítési művelete $O(n)$ időt vesz igénybe. A legnagyobb elem kivonása a kupacból $O(\log n)$ időbonyolultságú, összesen $n - 1$ körben ismételve.
+- **$O(1)$ térkomplexitás, helyben történő rendezés**: Néhány mutató változó $O(1)$ tárhelyet használ. Az elemcserélési és kupacosítási műveletek mindkét esetben az eredeti tömbön hajtódnak végre.
+- **Nem stabil rendezés**: A kupac tetején és alján lévő elemek felcserélésekor az egyenlő elemek relatív pozíciói megváltozhatnak.

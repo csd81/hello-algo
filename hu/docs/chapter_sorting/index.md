@@ -1,9 +1,9 @@
-# Sorting
+# Rendezés
 
-![Sorting](../assets/covers/chapter_sorting.jpg)
+![Rendezés](../assets/covers/chapter_sorting.jpg)
 
 !!! abstract
 
-    Sorting is like a magic key that transforms chaos into order, enabling us to understand and process data more efficiently.
+    A rendezés olyan, mint egy varázslatos kulcs, amely a káoszból rendet teremt, lehetővé téve számunkra az adatok hatékonyabb megértését és feldolgozását.
 
-    Whether it's simple ascending order or complex categorized arrangements, sorting demonstrates the harmonious beauty of data.
+    Legyen szó egyszerű növekvő sorrendről vagy összetett kategorizált elrendezésekről, a rendezés az adatok harmonikus szépségét tükrözi.
