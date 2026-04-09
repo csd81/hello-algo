@@ -1,26 +1,26 @@
-# Binary Search Tree
+# Bináris keresőfa
 
-As shown in the figure below, a <u>binary search tree</u> satisfies the following conditions.
+Az alábbi ábrán látható módon, a <u>bináris keresőfa</u> (BST) a következő feltételeket teljesíti.
 
-1. For the root node, the value of all nodes in the left subtree $<$ the value of the root node $<$ the value of all nodes in the right subtree.
-2. The left and right subtrees of any node are also binary search trees, i.e., they satisfy condition `1.` as well.
+1. A gyökér csomópontra nézve a bal részfában lévő összes csomópont értéke $<$ a gyökér csomópont értéke $<$ a jobb részfában lévő összes csomópont értéke.
+2. Bármely csomópont bal és jobb részfája szintén bináris keresőfa, azaz az `1.` feltételt is teljesíti.
 
-![Binary search tree](binary_search_tree.assets/binary_search_tree.png)
+![Bináris keresőfa](binary_search_tree.assets/binary_search_tree.png)
 
-## Operations on a Binary Search Tree
+## Műveletek bináris keresőfán
 
-We encapsulate the binary search tree as a class `BinarySearchTree` and declare a member variable `root` pointing to the tree's root node.
+A bináris keresőfát egy `BinarySearchTree` osztályba csomagoljuk, és deklarálunk egy `root` tagváltozót, amely a fa gyökér csomópontjára mutat.
 
-### Searching for a Node
+### Csomópont keresése
 
-Given a target node value `num`, we can search according to the properties of the binary search tree. As shown in the figure below, we declare a node `cur` and start from the binary tree's root node `root`, looping to compare the node value `cur.val` with `num`.
+Adott `num` célérték esetén a bináris keresőfa tulajdonságait felhasználva kereshetünk. Az alábbi ábrán látható módon deklarálunk egy `cur` csomópontot, és a bináris fa gyökér csomópontjától (`root`) indulva ciklusban összehasonlítjuk a `cur.val` csomópontértéket `num`-mal.
 
-- If `cur.val < num`, it means the target node is in `cur`'s right subtree, thus execute `cur = cur.right`.
-- If `cur.val > num`, it means the target node is in `cur`'s left subtree, thus execute `cur = cur.left`.
-- If `cur.val = num`, it means the target node is found, exit the loop, and return the node.
+- Ha `cur.val < num`, akkor a célcsomópont `cur` jobb részfájában van, ezért `cur = cur.right` lépést hajtunk végre.
+- Ha `cur.val > num`, akkor a célcsomópont `cur` bal részfájában van, ezért `cur = cur.left` lépést hajtunk végre.
+- Ha `cur.val = num`, akkor megtaláltuk a célcsomópontot, kilépünk a ciklusból, és visszaadjuk a csomópontot.
 
 === "<1>"
-    ![Example of searching for a node in a binary search tree](binary_search_tree.assets/bst_search_step1.png)
+    ![Csomópont keresésének példája bináris keresőfában](binary_search_tree.assets/bst_search_step1.png)
 
 === "<2>"
     ![bst_search_step2](binary_search_tree.assets/bst_search_step2.png)
@@ -31,53 +31,53 @@ Given a target node value `num`, we can search according to the properties of th
 === "<4>"
     ![bst_search_step4](binary_search_tree.assets/bst_search_step4.png)
 
-The search operation in a binary search tree works on the same principle as the binary search algorithm, both eliminating half of the cases in each round. The number of loop iterations is at most the height of the binary tree. When the binary tree is balanced, it uses $O(\log n)$ time. The example code is as follows:
+A bináris keresőfában végzett keresési művelet ugyanazon az elven alapul, mint a bináris keresési algoritmus: minden körben az esetek felét zárja ki. A ciklus iterációinak száma legfeljebb a bináris fa magasságával egyenlő. Ha a bináris fa kiegyensúlyozott, $O(\log n)$ időt vesz igénybe. A példakód a következő:
 
 ```src
 [file]{binary_search_tree}-[class]{binary_search_tree}-[func]{search}
 ```
 
-### Inserting a Node
+### Csomópont beszúrása
 
-Given an element `num` to be inserted, in order to maintain the property of the binary search tree "left subtree < root node < right subtree," the insertion process is as shown in the figure below.
+Adott `num` elem beszúrása esetén a bináris keresőfa "bal részfa < gyökér csomópont < jobb részfa" tulajdonságának fenntartása érdekében a beszúrási folyamat az alábbi ábrán látható módon zajlik.
 
-1. **Finding the insertion position**: Similar to the search operation, start from the root node and loop downward searching according to the size relationship between the current node value and `num`, until passing the leaf node (traversing to `None`) and then exit the loop.
-2. **Insert the node at that position**: Initialize node `num` and place it at the `None` position.
+1. **A beszúrási pozíció megkeresése**: A keresési művelethez hasonlóan a gyökér csomóponttól indulva lefelé haladunk ciklusban, az aktuális csomópontérték és `num` közötti méretviszonyt figyelembe véve, amíg el nem érjük a levél csomópontot (azaz `None`-hoz jutunk), majd kilépünk a ciklusból.
+2. **A csomópont beszúrása arra a pozícióra**: Inicializáljuk a `num` csomópontot, és elhelyezzük a `None` pozícióra.
 
-![Inserting a node into a binary search tree](binary_search_tree.assets/bst_insert.png)
+![Csomópont beszúrása bináris keresőfába](binary_search_tree.assets/bst_insert.png)
 
-In the code implementation, note the following two points:
+A kódmegvalósításban figyelembe kell venni a következő két pontot:
 
-- Binary search trees do not allow duplicate nodes; otherwise, it would violate its definition. Therefore, if the node to be inserted already exists in the tree, the insertion is not performed and it returns directly.
-- To implement the node insertion, we need to use node `pre` to save the node from the previous loop iteration. This way, when traversing to `None`, we can obtain its parent node, thereby completing the node insertion operation.
+- A bináris keresőfa nem engedélyez duplikált csomópontokat; egyébként megsértené a definícióját. Ezért ha a beszúrandó csomópont már létezik a fában, a beszúrás nem kerül végrehajtásra, és a függvény közvetlenül visszatér.
+- A csomópont-beszúrás megvalósításához a `pre` csomópontot kell használni az előző ciklus-iteráció csomópontjának tárolásához. Így amikor `None`-hoz jutunk, megkaphatjuk a szülő csomópontját, ezáltal elvégezhetjük a csomópont-beszúrási műveletet.
 
 ```src
 [file]{binary_search_tree}-[class]{binary_search_tree}-[func]{insert}
 ```
 
-Similar to searching for a node, inserting a node uses $O(\log n)$ time.
+A csomópont kereséséhez hasonlóan a csomópont-beszúrás $O(\log n)$ időt igényel.
 
-### Removing a Node
+### Csomópont törlése
 
-First, find the target node in the binary tree, then remove it. Similar to node insertion, we need to ensure that after the removal operation is completed, the binary search tree's property of "left subtree $<$ root node $<$ right subtree" is still maintained. Therefore, depending on the number of child nodes the target node has, we divide it into 0, 1, and 2 three cases, and execute the corresponding node removal operations.
+Először megkeressük a célcsomópontot a bináris fában, majd töröljük. A csomópont-beszúráshoz hasonlóan biztosítanunk kell, hogy a törlési művelet befejezése után a bináris keresőfa "bal részfa $<$ gyökér csomópont $<$ jobb részfa" tulajdonsága megmaradjon. Ezért a célcsomópont gyermek csomópontjainak számától függően 0, 1 és 2 esetekre osztjuk fel, és elvégezzük a megfelelő csomópont-törlési műveleteket.
 
-As shown in the figure below, when the degree of the node to be removed is $0$, it means the node is a leaf node and can be directly removed.
+Az alábbi ábrán látható módon, ha a törlendő csomópont fokszáma $0$, az azt jelenti, hogy a csomópont levél csomópont, és közvetlenül törölhető.
 
-![Removing a node in a binary search tree (degree 0)](binary_search_tree.assets/bst_remove_case1.png)
+![Csomópont törlése bináris keresőfából (0. fokszám)](binary_search_tree.assets/bst_remove_case1.png)
 
-As shown in the figure below, when the degree of the node to be removed is $1$, replacing the node to be removed with its child node is sufficient.
+Az alábbi ábrán látható módon, ha a törlendő csomópont fokszáma $1$, elegendő a törlendő csomópontot gyermek csomópontjával helyettesíteni.
 
-![Removing a node in a binary search tree (degree 1)](binary_search_tree.assets/bst_remove_case2.png)
+![Csomópont törlése bináris keresőfából (1. fokszám)](binary_search_tree.assets/bst_remove_case2.png)
 
-When the degree of the node to be removed is $2$, we cannot directly remove it; instead, we need to use a node to replace it. To maintain the binary search tree's property of "left subtree $<$ root node $<$ right subtree," **this node can be either the smallest node in the right subtree or the largest node in the left subtree**.
+Ha a törlendő csomópont fokszáma $2$, nem törölhetjük közvetlenül; ehelyett egy csomóponttal kell helyettesíteni. A bináris keresőfa "bal részfa $<$ gyökér csomópont $<$ jobb részfa" tulajdonságának fenntartásához **ez a csomópont lehet a jobb részfa legkisebb csomópontja vagy a bal részfa legnagyobb csomópontja**.
 
-Assuming we choose the smallest node in the right subtree (the next node in the inorder traversal), the removal process is as shown in the figure below.
+Feltéve, hogy a jobb részfa legkisebb csomópontját választjuk (a szimmetrikus rendű bejárás következő csomópontja), a törlési folyamat az alábbi ábrán látható módon zajlik.
 
-1. Find the next node of the node to be removed in the "inorder traversal sequence," denoted as `tmp`.
-2. Replace the value of the node to be removed with the value of `tmp`, and recursively remove node `tmp` in the tree.
+1. Megkeressük a törlendő csomópont "szimmetrikus rendű bejárási sorozatban" következő csomópontját, amelyet `tmp`-vel jelölünk.
+2. Felülírjuk a törlendő csomópont értékét `tmp` értékével, majd rekurzívan töröljük a `tmp` csomópontot a fában.
 
 === "<1>"
-    ![Removing a node in a binary search tree (degree 2)](binary_search_tree.assets/bst_remove_case3_step1.png)
+    ![Csomópont törlése bináris keresőfából (2. fokszám)](binary_search_tree.assets/bst_remove_case3_step1.png)
 
 === "<2>"
     ![bst_remove_case3_step2](binary_search_tree.assets/bst_remove_case3_step2.png)
@@ -88,42 +88,42 @@ Assuming we choose the smallest node in the right subtree (the next node in the 
 === "<4>"
     ![bst_remove_case3_step4](binary_search_tree.assets/bst_remove_case3_step4.png)
 
-The node removal operation also uses $O(\log n)$ time, where finding the node to be removed requires $O(\log n)$ time, and obtaining the inorder successor node requires $O(\log n)$ time. Example code is as follows:
+A csomópont-törlési művelet szintén $O(\log n)$ időt igényel, ahol a törlendő csomópont megkeresése $O(\log n)$ időt, a szimmetrikus rendű utód csomópont megszerzése pedig $O(\log n)$ időt vesz igénybe. A példakód a következő:
 
 ```src
 [file]{binary_search_tree}-[class]{binary_search_tree}-[func]{remove}
 ```
 
-### Inorder Traversal Is Ordered
+### A szimmetrikus rendű bejárás rendezett
 
-As shown in the figure below, the inorder traversal of a binary tree follows the "left $\rightarrow$ root $\rightarrow$ right" traversal order, while the binary search tree satisfies the "left child node $<$ root node $<$ right child node" size relationship.
+Az alábbi ábrán látható módon a bináris fa szimmetrikus rendű bejárása a "bal $\rightarrow$ gyökér $\rightarrow$ jobb" bejárási sorrendet követi, míg a bináris keresőfa kielégíti a "bal gyermek csomópont $<$ gyökér csomópont $<$ jobb gyermek csomópont" méretviszonyt.
 
-This means that when performing an inorder traversal in a binary search tree, the next smallest node is always traversed first, thus yielding an important property: **The inorder traversal sequence of a binary search tree is ascending**.
+Ez azt jelenti, hogy bináris keresőfán szimmetrikus rendű bejárást végezve mindig a következő legkisebb csomópontot járjuk be először, ami egy fontos tulajdonságot eredményez: **A bináris keresőfa szimmetrikus rendű bejárási sorozata növekvő sorrendű**.
 
-Using the property of inorder traversal being ascending, we can obtain ordered data in a binary search tree in only $O(n)$ time, without the need for additional sorting operations, which is very efficient.
+A szimmetrikus rendű bejárás növekvő sorrendjének tulajdonságát felhasználva csupán $O(n)$ idővel tudunk rendezett adatokat kinyerni a bináris keresőfából, anélkül, hogy szükség lenne további rendezési műveletekre, ami igen hatékony.
 
-![Inorder traversal sequence of a binary search tree](binary_search_tree.assets/bst_inorder_traversal.png)
+![Bináris keresőfa szimmetrikus rendű bejárási sorozata](binary_search_tree.assets/bst_inorder_traversal.png)
 
-## Efficiency of Binary Search Trees
+## Bináris keresőfák hatékonysága
 
-Given a set of data, we consider using an array or a binary search tree for storage. Observing the table below, all operations in a binary search tree have logarithmic time complexity, providing stable and efficient performance. Arrays are more efficient than binary search trees only in scenarios with high-frequency additions and low-frequency searches and deletions.
+Adott adathalmaz esetén megfontoljuk, hogy tömbben vagy bináris keresőfában tároljuk-e. Az alábbi táblázatból látható, hogy a bináris keresőfában minden művelet logaritmikus időbonyolultsággal rendelkezik, ami stabil és hatékony teljesítményt nyújt. A tömbök csak nagy gyakorisággal végzett hozzáadási és alacsony gyakorisággal végzett keresési és törlési műveletek esetén hatékonyabbak a bináris keresőfáknál.
 
-<p align="center"> Table <id> &nbsp; Efficiency comparison between arrays and search trees </p>
+<p align="center"> Táblázat <id> &nbsp; Tömbök és keresőfák hatékonyságának összehasonlítása </p>
 
-|                | Unsorted array | Binary search tree |
-| -------------- | -------------- | ------------------ |
-| Search element | $O(n)$         | $O(\log n)$        |
-| Insert element | $O(1)$         | $O(\log n)$        |
-| Remove element | $O(n)$         | $O(\log n)$        |
+|                   | Rendezetlen tömb | Bináris keresőfa |
+| ----------------- | ---------------- | ---------------- |
+| Elem keresése     | $O(n)$           | $O(\log n)$      |
+| Elem beszúrása    | $O(1)$           | $O(\log n)$      |
+| Elem törlése      | $O(n)$           | $O(\log n)$      |
 
-In the ideal case, a binary search tree is "balanced," such that any node can be found within $\log n$ loop iterations.
+Ideális esetben a bináris keresőfa "kiegyensúlyozott", így bármely csomópont megtalálható $\log n$ ciklus-iteráción belül.
 
-However, if we continuously insert and remove nodes in a binary search tree, it may degenerate into a linked list as shown in the figure below, where the time complexity of various operations also degrades to $O(n)$.
+Ha azonban folyamatosan szúrunk be és törlünk csomópontokat a bináris keresőfában, az az alábbi ábrán látható módon láncolt listává degenerálódhat, ahol a különböző műveletek időbonyolultsága is $O(n)$-re romlik.
 
-![Degradation of a binary search tree](binary_search_tree.assets/bst_degradation.png)
+![Bináris keresőfa degenerálódása](binary_search_tree.assets/bst_degradation.png)
 
-## Common Applications of Binary Search Trees
+## Bináris keresőfák általánosan alkalmazott területei
 
-- Used as multi-level indexes in systems to implement efficient search, insertion, and removal operations.
-- Serves as the underlying data structure for certain search algorithms.
-- Used to store data streams to maintain their ordered state.
+- Többszintű indexek létrehozására használják rendszerekben hatékony keresési, beszúrási és törlési műveletek megvalósítása érdekében.
+- Egyes keresési algoritmusok alapjául szolgáló adatszerkezetként funkcionál.
+- Adatfolyamok tárolására használják azok rendezett állapotának fenntartása érdekében.

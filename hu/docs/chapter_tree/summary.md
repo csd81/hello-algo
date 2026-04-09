@@ -1,54 +1,54 @@
-# Summary
+# Összefoglalás
 
-### Key Review
+### Kulcsfontosságú áttekintés
 
-- A binary tree is a non-linear data structure that embodies the divide-and-conquer logic of "one divides into two". Each binary tree node contains a value and two pointers, which respectively point to its left and right child nodes.
-- For a certain node in a binary tree, the tree formed by its left (right) child node and all nodes below is called the left (right) subtree of that node.
-- Related terminology of binary trees includes root node, leaf node, level, degree, edge, height, and depth.
-- The initialization, node insertion, and node removal operations of binary trees are similar to those of linked lists.
-- Common types of binary trees include perfect binary trees, complete binary trees, full binary trees, and balanced binary trees. The perfect binary tree is the ideal state, while the linked list is the worst state after degradation.
-- A binary tree can be represented using an array by arranging node values and empty slots in level-order traversal sequence, and implementing pointers based on the index mapping relationship between parent and child nodes.
-- Level-order traversal of a binary tree is a breadth-first search method, embodying a layer-by-layer traversal approach of "expanding outward circle by circle", typically implemented using a queue.
-- Preorder, inorder, and postorder traversals all belong to depth-first search, embodying a traversal approach of "first go to the end, then backtrack and continue", typically implemented using recursion.
-- A binary search tree is an efficient data structure for element searching, with search, insertion, and removal operations all having time complexity of $O(\log n)$. When a binary search tree degenerates into a linked list, all time complexities degrade to $O(n)$.
-- An AVL tree, also known as a balanced binary search tree, ensures the tree remains balanced after continuous node insertions and removals through rotation operations.
-- Rotation operations in AVL trees include right rotation, left rotation, left rotation then right rotation, and right rotation then left rotation. After inserting or removing nodes, AVL trees perform rotation operations from bottom to top to restore the tree to balance.
+- A bináris fa egy nemlineáris adatszerkezet, amely az "egy kettőre bomlik" osztd-meg-és-uralkodj logikát testesíti meg. Minden bináris fa csomópont tartalmaz egy értéket és két mutatót, amelyek rendre a bal és jobb gyermek csomópontjára mutatnak.
+- A bináris fa egy adott csomópontjára nézve a bal (jobb) gyermek csomópontja és az alatta lévő összes csomópont által alkotott fát az adott csomópont bal (jobb) részfájának nevezzük.
+- A bináris fákhoz kapcsolódó terminológia magában foglalja a gyökér csomópontot, a levél csomópontot, a szintet, a fokszámot, az élt, a magasságot és a mélységet.
+- A bináris fák inicializálási, csomópont-beszúrási és csomópont-törlési műveletei hasonlóak a láncolt listákéhoz.
+- A bináris fák általánosan előforduló típusai közé tartoznak a tökéletes bináris fák, a teljes bináris fák, a szigorúan bináris fák és a kiegyensúlyozott bináris fák. A tökéletes bináris fa az ideális állapot, míg a láncolt lista a legrosszabb degenerált állapot.
+- A bináris fák tömbben is ábrázolhatók úgy, hogy a csomópontértékeket és az üres helyeket szintenkénti bejárás sorrendjében rendezzük el, és a mutatókat a szülő és gyermek csomópontok közötti indexleképezési kapcsolat alapján valósítjuk meg.
+- A bináris fa szintenkénti bejárása szélességi keresési módszer, amely egy "köröket kifelé terjesztve" szintenként haladó bejárási megközelítést testesít meg, és általában sor segítségével valósítják meg.
+- Az előrendű, szimmetrikus rendű és utórendű bejárások mind mélységi kereséshez tartoznak, amelyek a "először menj a végéig, aztán visszalépve folytasd" bejárási megközelítést testesítik meg, és általában rekurzió segítségével valósítják meg.
+- A bináris keresőfa hatékony adatszerkezet az elemek kereséséhez, ahol a keresési, beszúrási és törlési műveletek időbonyolultsága egyaránt $O(\log n)$. Ha a bináris keresőfa láncolt listává degenerálódik, minden időbonyolultság $O(n)$-re romlik.
+- Az AVL-fa, más néven kiegyensúlyozott bináris keresőfa, forgatási műveletek révén biztosítja, hogy a fa a folyamatos csomópont-beszúrás és -törlés után is kiegyensúlyozott maradjon.
+- Az AVL-fák forgatási műveletei közé tartozik a jobbra forgatás, a balra forgatás, a balra majd jobbra forgatás, és a jobbra majd balra forgatás. Csomópontok beszúrása vagy törlése után az AVL-fák alulról felfelé haladva végeznek forgatási műveleteket a fa egyensúlyának helyreállítása érdekében.
 
-### Q & A
+### Kérdések és válaszok
 
-**Q**: For a binary tree with only one node, are both the height of the tree and the depth of the root node $0$?
+**K**: Egy csupán egyetlen csomópontot tartalmazó bináris fa esetén a fa magassága és a gyökér csomópont mélysége is $0$?
 
-Yes, because height and depth are typically defined as "the number of edges passed."
+Igen, mert a magasságot és a mélységet általában "az átlépett élek számával" definiálják.
 
-**Q**: The insertion and removal in a binary tree are generally accomplished by a set of operations. What does "a set of operations" refer to here? Does it imply releasing the resources of the child nodes?
+**K**: A bináris fában végzett beszúrás és törlés általában egy műveletsorra van bontva. Mit jelent ez a "műveletsora" kifejezés? Jelenti-e ez a gyermek csomópontok erőforrásainak felszabadítását?
 
-Taking the binary search tree as an example, the operation of removing a node needs to be handled in three different scenarios, each requiring multiple steps of node operations.
+A bináris keresőfát példaként véve, egy csomópont törlési műveletét három különböző esetben kell kezelni, amelyek mindegyike csomópontok több lépéses működtetését igényli.
 
-**Q**: Why does DFS traversal of binary trees have three orders: preorder, inorder, and postorder, and what are their uses?
+**K**: Miért van a bináris fa mélységi keresési bejárásának három sorrendje: előrendű, szimmetrikus rendű és utórendű, és mi a hasznuk?
 
-Similar to forward and reverse traversal of arrays, preorder, inorder, and postorder traversals are three methods of binary tree traversal that allow us to obtain a traversal result in a specific order. For example, in a binary search tree, since nodes satisfy the relationship `left child node value < root node value < right child node value`, we only need to traverse the tree with the priority of "left $\rightarrow$ root $\rightarrow$ right" to obtain an ordered node sequence.
+A tömbök előre és visszafelé irányú bejárásához hasonlóan az előrendű, szimmetrikus rendű és utórendű bejárások a bináris fa bejárásának három módszere, amelyek lehetővé teszik egy adott sorrendű bejárási eredmény megszerzését. Például egy bináris keresőfában, ahol a csomópontok kielégítik a "bal gyermek csomópont értéke < gyökér csomópont értéke < jobb gyermek csomópont értéke" kapcsolatot, csupán annyi szükséges, hogy a fát a "bal $\rightarrow$ gyökér $\rightarrow$ jobb" prioritással járjuk be a rendezett csomópontsorozat eléréséhez.
 
-**Q**: In a right rotation operation handling the relationship between unbalanced nodes `node`, `child`, and `grand_child`, doesn't the connection between `node` and its parent node get lost after the right rotation?
+**K**: A jobbra forgatási műveletben a kiegyensúlyozatlan `node`, `child` és `grand_child` csomópontok kapcsolatának kezelése során nem veszik-e el a `node` és szülő csomópontja közötti kapcsolat a jobbra forgatás után?
 
-We need to view this problem from a recursive perspective. The right rotation operation `right_rotate(root)` passes in the root node of the subtree and eventually returns the root node of the subtree after rotation with `return child`. The connection between the subtree's root node and its parent node is completed after the function returns, which is not within the maintenance scope of the right rotation operation.
+Rekurzív szemszögből kell megvizsgálni ezt a problémát. A jobbra forgatás `right_rotate(root)` művelet átkapja a részfa gyökér csomópontját, és végül visszaadja a forgatás utáni részfa gyökér csomópontját `return child`-dal. A részfa gyökér csomópontja és szülő csomópontja közötti kapcsolat a függvény visszatérése után jön létre, ami nem tartozik a jobbra forgatás műveleti hatáskörébe.
 
-**Q**: In C++, functions are divided into `private` and `public` sections. What considerations are there for this? Why are the `height()` function and the `updateHeight()` function placed in `public` and `private`, respectively?
+**K**: C++-ban a függvények `private` és `public` részekre vannak osztva. Milyen szempontok alapján történik ez? Miért kerül a `height()` függvény a `public`, az `updateHeight()` függvény pedig a `private` részbe?
 
-It mainly depends on the method's usage scope. If a method is only used within the class, then it is designed as `private`. For example, calling `updateHeight()` alone by the user makes no sense, as it is only a step in insertion or removal operations. However, `height()` is used to access node height, similar to `vector.size()`, so it is set to `public` for ease of use.
+Elsősorban a módszer felhasználási köre a döntő. Ha egy módszert csak az osztályon belül használnak, akkor `private` típusúnak tervezik. Például az `updateHeight()` önálló felhasználása a felhasználó számára értelmetlen, mivel csupán egy lépés a beszúrási vagy törlési műveleten belül. Ugyanakkor a `height()` a csomópont magasságának elérésére szolgál, a `vector.size()`-hoz hasonlóan, ezért `public` típusúra van állítva a könnyű felhasználhatóság érdekében.
 
-**Q**: How do you build a binary search tree from a set of input data? Is the choice of root node very important?
+**K**: Hogyan lehet bináris keresőfát felépíteni egy bemeneti adathalmazból? A gyökér csomópont megválasztása fontos?
 
-Yes, the method for building a tree is provided in the `build_tree()` method in the binary search tree code. As for the choice of root node, we typically sort the input data, then select the middle element as the root node, and recursively build the left and right subtrees. This approach maximizes the tree's balance.
+Igen, a fa felépítésének módszerét a bináris keresőfa kódjában lévő `build_tree()` metódus tartalmazza. A gyökér csomópont megválasztása tekintetében általában rendezzük a bemeneti adatokat, majd a középső elemet választjuk gyökér csomópontként, és rekurzívan felépítjük a bal és jobb részfákat. Ez a megközelítés maximalizálja a fa egyensúlyát.
 
-**Q**: In Java, do you always have to use the `equals()` method for string comparison?
+**K**: Java-ban mindig az `equals()` metódust kell használni a karakterlánc-összehasonlításhoz?
 
-In Java, for primitive data types, `==` is used to compare whether the values of two variables are equal. For reference types, the working principles of the two symbols are different.
+Java-ban primitív adattípusoknál a `==` jelöli, hogy két változó értéke egyenlő-e. Referencia típusoknál a két szimbólum működési elve különböző.
 
-- `==`: Used to compare whether two variables point to the same object, i.e., whether their positions in memory are the same.
-- `equals()`: Used to compare whether the values of two objects are equal.
+- `==`: Annak ellenőrzésére szolgál, hogy két változó ugyanarra az objektumra mutat-e, vagyis memóriabeli pozíciójuk megegyezik-e.
+- `equals()`: Annak ellenőrzésére szolgál, hogy két objektum értéke egyenlő-e.
 
-Therefore, if we want to compare values, we should use `equals()`. However, strings initialized via `String a = "hi"; String b = "hi";` are stored in the string constant pool and point to the same object, so `a == b` can also be used to compare the contents of the two strings.
+Ezért ha értékeket kívánunk összehasonlítani, az `equals()` metódust kell használni. Ugyanakkor a `String a = "hi"; String b = "hi";` módon inicializált karakterláncok a karakterlánc-konstans poolban tárolódnak, és ugyanarra az objektumra mutatnak, ezért az `a == b` szintén alkalmazható a két karakterlánc tartalmának összehasonlítására.
 
-**Q**: Before reaching the bottom level, is the number of nodes in the queue $2^h$ in breadth-first traversal?
+**K**: Az alsó szint elérése előtt a sorban lévő csomópontok száma $2^h$ szélességi keresési bejárásban?
 
-Yes, for example, a full binary tree with height $h = 2$ has a total of $n = 7$ nodes, then the bottom level has $4 = 2^h = (n + 1) / 2$ nodes.
+Igen, például egy $h = 2$ magasságú tökéletes bináris fának összesen $n = 7$ csomópontja van, az alsó szinten $4 = 2^h = (n + 1) / 2$ csomópont található.

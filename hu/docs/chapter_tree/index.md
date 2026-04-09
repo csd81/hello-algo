@@ -1,9 +1,9 @@
-# Tree
+# Fa
 
-![Tree](../assets/covers/chapter_tree.jpg)
+![Fa](../assets/covers/chapter_tree.jpg)
 
 !!! abstract
 
-    Towering trees are full of vitality, with deep roots and lush leaves, spreading branches and flourishing.
+    A magasba törő fák tele vannak életerővel, mély gyökerekkel és dús lombkoronával, szétterülő ágakkal és virágzással.
 
-    They show us the vivid form of divide and conquer in data.
+    Megmutatják nekünk az osztd-meg-és-uralkodj elvének szemléletes formáját az adatokban.

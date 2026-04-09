@@ -1,41 +1,41 @@
-# Binary Tree Traversal
+# Bináris fa bejárása
 
-From a physical structure perspective, a tree is a data structure based on linked lists. Hence, its traversal method involves accessing nodes one by one through pointers. However, a tree is a non-linear data structure, which makes traversing a tree more complex than traversing a linked list, requiring the assistance of search algorithms.
+A fizikai struktúra szempontjából a fa egy láncolt listákon alapuló adatszerkezet. Ezért a bejárási módszer a csomópontok mutatókon keresztüli egyenkénti elérését foglalja magában. Ugyanakkor a fa egy nemlineáris adatszerkezet, ami bonyolultabbá teszi a fa bejárását a láncolt lista bejárásához képest, és keresési algoritmusok segítségét igényli.
 
-The common traversal methods for binary trees include level-order traversal, pre-order traversal, in-order traversal, and post-order traversal.
+A bináris fák általánosan használt bejárási módszerei közé tartozik a szintenkénti bejárás, az előrendű bejárás, a szimmetrikus rendű bejárás és az utórendű bejárás.
 
-## Level-Order Traversal
+## Szintenkénti bejárás
 
-As shown in the figure below, <u>level-order traversal</u> traverses the binary tree from top to bottom, layer by layer. Within each level, it visits nodes from left to right.
+Az alábbi ábrán látható módon, a <u>szintenkénti bejárás</u> a bináris fát felülről lefelé, rétegről rétegre járja be. Minden szinten belül a csomópontokat balról jobbra látogatja meg.
 
-Level-order traversal is essentially <u>breadth-first traversal</u>, also known as <u>breadth-first search (BFS)</u>, which embodies a "expanding outward circle by circle" layer-by-layer traversal method.
+A szintenkénti bejárás lényegében <u>szélességi keresés</u>, más néven <u>szélességi első keresés (BFS)</u>, amely egy "köröket kifelé terjesztve" szintenként haladó bejárási módszert testesít meg.
 
-![Level-order traversal of a binary tree](binary_tree_traversal.assets/binary_tree_bfs.png)
+![Bináris fa szintenkénti bejárása](binary_tree_traversal.assets/binary_tree_bfs.png)
 
-### Code Implementation
+### Kódmegvalósítás
 
-Breadth-first traversal is typically implemented with the help of a "queue". The queue follows the "first in, first out" rule, while breadth-first traversal follows the "layer-by-layer progression" rule; the underlying ideas of the two are consistent. The implementation code is as follows:
+A szélességi keresést általában egy "sor" (queue) segítségével valósítják meg. A sor az "elsőnek be, elsőnek ki" szabályt követi, míg a szélességi keresés a "szintenkénti haladás" szabályt követi; a kettő alapelve megegyezik. A megvalósítási kód a következő:
 
 ```src
 [file]{binary_tree_bfs}-[class]{}-[func]{level_order}
 ```
 
-### Complexity Analysis
+### Bonyolultság elemzése
 
-- **Time complexity is $O(n)$**: All nodes are visited once, using $O(n)$ time, where $n$ is the number of nodes.
-- **Space complexity is $O(n)$**: In the worst case, i.e., a full binary tree, before traversing to the bottom level, the queue contains at most $(n + 1) / 2$ nodes simultaneously, occupying $O(n)$ space.
+- **Az időbonyolultság $O(n)$**: Az összes csomópontot egyszer látogatjuk meg, ami $O(n)$ időt igényel, ahol $n$ a csomópontok száma.
+- **A tárbonyolultság $O(n)$**: A legrosszabb esetben, azaz egy tökéletes bináris fa esetén az alsó szintre való bejárás előtt a sor egyszerre legfeljebb $(n + 1) / 2$ csomópontot tartalmaz, ami $O(n)$ tárterületet foglal.
 
-## Preorder, Inorder, and Postorder Traversal
+## Előrendű, szimmetrikus rendű és utórendű bejárás
 
-Correspondingly, preorder, inorder, and postorder traversals all belong to <u>depth-first traversal</u>, also known as <u>depth-first search (DFS)</u>, which embodies a "first go to the end, then backtrack and continue" traversal method.
+Ezzel szemben az előrendű, szimmetrikus rendű és utórendű bejárások mind a <u>mélységi kereséshez</u> tartoznak, más néven <u>mélységi első keresésnek (DFS)</u>, amelyek a "először menj a végéig, aztán visszalépve folytasd" bejárási módszert testesítik meg.
 
-The figure below shows how depth-first traversal works on a binary tree. **Depth-first traversal is like "walking" around the perimeter of the entire binary tree**, encountering three positions at each node, corresponding to preorder, inorder, and postorder traversal.
+Az alábbi ábra bemutatja, hogyan működik a mélységi keresés egy bináris fán. **A mélységi keresés olyan, mint a teljes bináris fa kerületének "bejárása"**, ahol minden csomópontnál három pozícióval találkozunk, amelyek az előrendű, szimmetrikus rendű és utórendű bejárásnak felelnek meg.
 
-![Preorder, inorder, and postorder traversal of a binary tree](binary_tree_traversal.assets/binary_tree_dfs.png)
+![Bináris fa előrendű, szimmetrikus rendű és utórendű bejárása](binary_tree_traversal.assets/binary_tree_dfs.png)
 
-### Code Implementation
+### Kódmegvalósítás
 
-Depth-first search is usually implemented based on recursion:
+A mélységi keresést általában rekurzió alapján valósítják meg:
 
 ```src
 [file]{binary_tree_dfs}-[class]{}-[func]{post_order}
@@ -43,15 +43,15 @@ Depth-first search is usually implemented based on recursion:
 
 !!! tip
 
-    Depth-first search can also be implemented based on iteration, interested readers can study this on their own.
+    A mélységi keresés iteráción alapuló megvalósítása is lehetséges; az érdeklődő olvasóknak ajánlott ezt önállóan tanulmányozni.
 
-The figure below shows the recursive process of preorder traversal of a binary tree, which can be divided into two opposite parts: "recursion" and "return".
+Az alábbi ábra a bináris fa előrendű bejárásának rekurzív folyamatát mutatja be, amely két ellentétes részre bontható: "rekurzió" és "visszatérés".
 
-1. "Recursion" means opening a new method, where the program accesses the next node in this process.
-2. "Return" means the function returns, indicating that the current node has been fully visited.
+1. A "rekurzió" egy új metódus megnyitását jelenti, amelynek során a program a következő csomóponthoz lép.
+2. A "visszatérés" a függvény visszatérését jelenti, ami azt jelzi, hogy az aktuális csomópont teljes mértékben meg lett látogatva.
 
 === "<1>"
-    ![The recursive process of preorder traversal](binary_tree_traversal.assets/preorder_step1.png)
+    ![Az előrendű bejárás rekurzív folyamata](binary_tree_traversal.assets/preorder_step1.png)
 
 === "<2>"
     ![preorder_step2](binary_tree_traversal.assets/preorder_step2.png)
@@ -83,7 +83,7 @@ The figure below shows the recursive process of preorder traversal of a binary t
 === "<11>"
     ![preorder_step11](binary_tree_traversal.assets/preorder_step11.png)
 
-### Complexity Analysis
+### Bonyolultság elemzése
 
-- **Time complexity is $O(n)$**: All nodes are visited once, using $O(n)$ time.
-- **Space complexity is $O(n)$**: In the worst case, i.e., the tree degenerates into a linked list, the recursion depth reaches $n$, and the system occupies $O(n)$ stack frame space.
+- **Az időbonyolultság $O(n)$**: Az összes csomópontot egyszer látogatjuk meg, ami $O(n)$ időt igényel.
+- **A tárbonyolultság $O(n)$**: A legrosszabb esetben, azaz amikor a fa láncolt listává degenerálódik, a rekurzió mélysége eléri az $n$-t, és a rendszer $O(n)$ stack keret területet foglal.

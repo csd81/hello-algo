@@ -1,46 +1,46 @@
-# Avl Tree *
+# AVL-fa *
 
-In the "Binary Search Tree" section, we mentioned that after multiple insertion and removal operations, a binary search tree may degenerate into a linked list. In this case, the time complexity of all operations degrades from $O(\log n)$ to $O(n)$.
+A "Bináris keresőfa" fejezetben megemlítettük, hogy többszörös beszúrási és törlési műveletek után a bináris keresőfa láncolt listává degenerálódhat. Ebben az esetben az összes művelet időbonyolultsága $O(\log n)$-ről $O(n)$-re romlik.
 
-As shown in the figure below, after two node removal operations, this binary search tree will degrade into a linked list.
+Az alábbi ábrán látható módon két csomópont-törlési művelet után ez a bináris keresőfa láncolt listává degenerálódik.
 
-![Degradation of an AVL tree after removing nodes](avl_tree.assets/avltree_degradation_from_removing_node.png)
+![AVL-fa degenerálódása csomópontok törlése után](avl_tree.assets/avltree_degradation_from_removing_node.png)
 
-For example, in the perfect binary tree shown in the figure below, after inserting two nodes, the tree will lean heavily to the left, and the time complexity of search operations will also degrade.
+Például az alábbi ábrán látható tökéletes bináris fában két csomópont beszúrása után a fa erősen balra fog dőlni, és a keresési műveletek időbonyolultsága is romlik.
 
-![Degradation of an AVL tree after inserting nodes](avl_tree.assets/avltree_degradation_from_inserting_node.png)
+![AVL-fa degenerálódása csomópontok beszúrása után](avl_tree.assets/avltree_degradation_from_inserting_node.png)
 
-In 1962, G. M. Adelson-Velsky and E. M. Landis proposed the <u>AVL tree</u> in their paper "An algorithm for the organization of information". The paper described in detail a series of operations ensuring that after continuously adding and removing nodes, the AVL tree does not degenerate, thus keeping the time complexity of various operations at the $O(\log n)$ level. In other words, in scenarios requiring frequent insertions, deletions, searches, and modifications, the AVL tree can always maintain efficient data operation performance, making it very valuable in applications.
+1962-ben G. M. Adelson-Velsky és E. M. Landis az <u>AVL-fát</u> az "An algorithm for the organization of information" (Információszervezési algoritmus) című cikkükben javasolta. A cikk részletesen leír egy sor olyan műveletet, amelyek biztosítják, hogy csomópontok folyamatos hozzáadása és eltávolítása után az AVL-fa nem degenerálódik, így a különböző műveletek időbonyolultsága $O(\log n)$ szinten marad. Más szóval, olyan esetekben, ahol gyakori a beszúrás, törlés, keresés és módosítás, az AVL-fa mindig képes fenntartani a hatékony adatmanipulálást, ami nagy értékkel bír az alkalmazásokban.
 
-## Common Terminology in Avl Trees
+## Az AVL-fák általános terminológiája
 
-An AVL tree is both a binary search tree and a balanced binary tree, simultaneously satisfying all the properties of these two types of binary trees, hence it is a <u>balanced binary search tree</u>.
+Az AVL-fa egyszerre bináris keresőfa és kiegyensúlyozott bináris fa, ezért mindkét fajta bináris fa összes tulajdonságát kielégíti; következésképpen <u>kiegyensúlyozott bináris keresőfa</u>.
 
-### Node Height
+### Csomópont magassága
 
-Since the operations related to AVL trees require obtaining node heights, we need to add a `height` variable to the node class:
+Mivel az AVL-fákhoz kapcsolódó műveletek megkövetelik a csomópontok magasságának lekérdezését, a `height` változót hozzá kell adni a csomópont osztályhoz:
 
 === "Python"
 
     ```python title=""
     class TreeNode:
-        """AVL tree node"""
+        """AVL-fa csomópontja"""
         def __init__(self, val: int):
-            self.val: int = val                 # Node value
-            self.height: int = 0                # Node height
-            self.left: TreeNode | None = None   # Left child reference
-            self.right: TreeNode | None = None  # Right child reference
+            self.val: int = val                 # Csomópont értéke
+            self.height: int = 0                # Csomópont magassága
+            self.left: TreeNode | None = None   # Bal gyermek hivatkozás
+            self.right: TreeNode | None = None  # Jobb gyermek hivatkozás
     ```
 
 === "C++"
 
     ```cpp title=""
-    /* AVL tree node */
+    /* AVL-fa csomópontja */
     struct TreeNode {
-        int val{};          // Node value
-        int height = 0;     // Node height
-        TreeNode *left{};   // Left child
-        TreeNode *right{};  // Right child
+        int val{};          // Csomópont értéke
+        int height = 0;     // Csomópont magassága
+        TreeNode *left{};   // Bal gyermek
+        TreeNode *right{};  // Jobb gyermek
         TreeNode() = default;
         explicit TreeNode(int x) : val(x){}
     };
@@ -49,12 +49,12 @@ Since the operations related to AVL trees require obtaining node heights, we nee
 === "Java"
 
     ```java title=""
-    /* AVL tree node */
+    /* AVL-fa csomópontja */
     class TreeNode {
-        public int val;        // Node value
-        public int height;     // Node height
-        public TreeNode left;  // Left child
-        public TreeNode right; // Right child
+        public int val;        // Csomópont értéke
+        public int height;     // Csomópont magassága
+        public TreeNode left;  // Bal gyermek
+        public TreeNode right; // Jobb gyermek
         public TreeNode(int x) { val = x; }
     }
     ```
@@ -62,36 +62,36 @@ Since the operations related to AVL trees require obtaining node heights, we nee
 === "C#"
 
     ```csharp title=""
-    /* AVL tree node */
+    /* AVL-fa csomópontja */
     class TreeNode(int? x) {
-        public int? val = x;    // Node value
-        public int height;      // Node height
-        public TreeNode? left;  // Left child reference
-        public TreeNode? right; // Right child reference
+        public int? val = x;    // Csomópont értéke
+        public int height;      // Csomópont magassága
+        public TreeNode? left;  // Bal gyermek hivatkozás
+        public TreeNode? right; // Jobb gyermek hivatkozás
     }
     ```
 
 === "Go"
 
     ```go title=""
-    /* AVL tree node */
+    /* AVL-fa csomópontja */
     type TreeNode struct {
-        Val    int       // Node value
-        Height int       // Node height
-        Left   *TreeNode // Left child reference
-        Right  *TreeNode // Right child reference
+        Val    int       // Csomópont értéke
+        Height int       // Csomópont magassága
+        Left   *TreeNode // Bal gyermek hivatkozás
+        Right  *TreeNode // Jobb gyermek hivatkozás
     }
     ```
 
 === "Swift"
 
     ```swift title=""
-    /* AVL tree node */
+    /* AVL-fa csomópontja */
     class TreeNode {
-        var val: Int // Node value
-        var height: Int // Node height
-        var left: TreeNode? // Left child
-        var right: TreeNode? // Right child
+        var val: Int // Csomópont értéke
+        var height: Int // Csomópont magassága
+        var left: TreeNode? // Bal gyermek
+        var right: TreeNode? // Jobb gyermek
 
         init(x: Int) {
             val = x
@@ -103,12 +103,12 @@ Since the operations related to AVL trees require obtaining node heights, we nee
 === "JS"
 
     ```javascript title=""
-    /* AVL tree node */
+    /* AVL-fa csomópontja */
     class TreeNode {
-        val; // Node value
-        height; // Node height
-        left; // Left child pointer
-        right; // Right child pointer
+        val; // Csomópont értéke
+        height; // Csomópont magassága
+        left; // Bal gyermek mutató
+        right; // Jobb gyermek mutató
         constructor(val, left, right, height) {
             this.val = val === undefined ? 0 : val;
             this.height = height === undefined ? 0 : height;
@@ -121,12 +121,12 @@ Since the operations related to AVL trees require obtaining node heights, we nee
 === "TS"
 
     ```typescript title=""
-    /* AVL tree node */
+    /* AVL-fa csomópontja */
     class TreeNode {
-        val: number;            // Node value
-        height: number;         // Node height
-        left: TreeNode | null;  // Left child pointer
-        right: TreeNode | null; // Right child pointer
+        val: number;            // Csomópont értéke
+        height: number;         // Csomópont magassága
+        left: TreeNode | null;  // Bal gyermek mutató
+        right: TreeNode | null; // Jobb gyermek mutató
         constructor(val?: number, height?: number, left?: TreeNode | null, right?: TreeNode | null) {
             this.val = val === undefined ? 0 : val;
             this.height = height === undefined ? 0 : height; 
@@ -139,12 +139,12 @@ Since the operations related to AVL trees require obtaining node heights, we nee
 === "Dart"
 
     ```dart title=""
-    /* AVL tree node */
+    /* AVL-fa csomópontja */
     class TreeNode {
-      int val;         // Node value
-      int height;      // Node height
-      TreeNode? left;  // Left child
-      TreeNode? right; // Right child
+      int val;         // Csomópont értéke
+      int height;      // Csomópont magassága
+      TreeNode? left;  // Bal gyermek
+      TreeNode? right; // Jobb gyermek
       TreeNode(this.val, [this.height = 0, this.left, this.right]);
     }
     ```
@@ -155,16 +155,16 @@ Since the operations related to AVL trees require obtaining node heights, we nee
     use std::rc::Rc;
     use std::cell::RefCell;
 
-    /* AVL tree node */
+    /* AVL-fa csomópontja */
     struct TreeNode {
-        val: i32,                               // Node value
-        height: i32,                            // Node height
-        left: Option<Rc<RefCell<TreeNode>>>,    // Left child
-        right: Option<Rc<RefCell<TreeNode>>>,   // Right child
+        val: i32,                               // Csomópont értéke
+        height: i32,                            // Csomópont magassága
+        left: Option<Rc<RefCell<TreeNode>>>,    // Bal gyermek
+        right: Option<Rc<RefCell<TreeNode>>>,   // Jobb gyermek
     }
 
     impl TreeNode {
-        /* Constructor */
+        /* Konstruktor */
         fn new(val: i32) -> Rc<RefCell<Self>> {
             Rc::new(RefCell::new(Self {
                 val,
@@ -179,7 +179,7 @@ Since the operations related to AVL trees require obtaining node heights, we nee
 === "C"
 
     ```c title=""
-    /* AVL tree node */
+    /* AVL-fa csomópontja */
     typedef struct TreeNode {
         int val;
         int height;
@@ -187,7 +187,7 @@ Since the operations related to AVL trees require obtaining node heights, we nee
         struct TreeNode *right;
     } TreeNode;
 
-    /* Constructor */
+    /* Konstruktor */
     TreeNode *newTreeNode(int val) {
         TreeNode *node;
 
@@ -203,23 +203,23 @@ Since the operations related to AVL trees require obtaining node heights, we nee
 === "Kotlin"
 
     ```kotlin title=""
-    /* AVL tree node */
-    class TreeNode(val _val: Int) {  // Node value
-        val height: Int = 0          // Node height
-        val left: TreeNode? = null   // Left child
-        val right: TreeNode? = null  // Right child
+    /* AVL-fa csomópontja */
+    class TreeNode(val _val: Int) {  // Csomópont értéke
+        val height: Int = 0          // Csomópont magassága
+        val left: TreeNode? = null   // Bal gyermek
+        val right: TreeNode? = null  // Jobb gyermek
     }
     ```
 
 === "Ruby"
 
     ```ruby title=""
-    ### AVL tree node class ###
+    ### AVL-fa csomópont osztálya ###
     class TreeNode
-      attr_accessor :val    # Node value
-      attr_accessor :height # Node height
-      attr_accessor :left   # Left child reference
-      attr_accessor :right  # Right child reference
+      attr_accessor :val    # Csomópont értéke
+      attr_accessor :height # Csomópont magassága
+      attr_accessor :left   # Bal gyermek hivatkozás
+      attr_accessor :right  # Jobb gyermek hivatkozás
 
       def initialize(val)
         @val = val
@@ -228,15 +228,15 @@ Since the operations related to AVL trees require obtaining node heights, we nee
     end
     ```
 
-The "node height" refers to the distance from that node to its farthest leaf node, i.e., the number of "edges" passed. It is important to note that the height of a leaf node is $0$, and the height of a null node is $-1$. We will create two utility functions for getting and updating the height of a node:
+A "csomópont magassága" az adott csomóponttól a legtávolabbi levél csomópontig megtett távolságot jelenti, azaz az átlépett "élek" számát. Fontos megjegyezni, hogy a levél csomópontok magassága $0$, a null csomópontok magassága pedig $-1$. Létrehozunk két segédfüggvényt a csomópont magasságának lekérdezéséhez és frissítéséhez:
 
 ```src
 [file]{avl_tree}-[class]{avl_tree}-[func]{update_height}
 ```
 
-### Node Balance Factor
+### Csomópont egyensúlyi tényezője
 
-The <u>balance factor</u> of a node is defined as the height of the node's left subtree minus the height of its right subtree, and the balance factor of a null node is defined as $0$. We also encapsulate the function to obtain the node's balance factor for convenient subsequent use:
+Egy csomópont <u>egyensúlyi tényezője</u> a csomópont bal részfájának magassága mínusz a jobb részfájának magassága; a null csomópont egyensúlyi tényezője $0$ értékre van definiálva. A csomópont egyensúlyi tényezőjét lekérdező függvényt szintén becsomagoljuk a kényelmes felhasználás érdekében:
 
 ```src
 [file]{avl_tree}-[class]{avl_tree}-[func]{balance_factor}
@@ -244,20 +244,20 @@ The <u>balance factor</u> of a node is defined as the height of the node's left 
 
 !!! tip
 
-    Let the balance factor be $f$, then the balance factor of any node in an AVL tree satisfies $-1 \le f \le 1$.
+    Legyen az egyensúlyi tényező $f$; ekkor az AVL-fa bármely csomópontjának egyensúlyi tényezője kielégíti a $-1 \le f \le 1$ feltételt.
 
-## Rotations in Avl Trees
+## Forgatások az AVL-fákban
 
-The characteristic of AVL trees lies in the "rotation" operation, which can restore balance to unbalanced nodes without affecting the inorder traversal sequence of the binary tree. In other words, **rotation operations can both maintain the property of a "binary search tree" and make the tree return to a "balanced binary tree"**.
+Az AVL-fák jellemzője a "forgatás" művelete, amely képes helyreállítani az egyensúlyt a kiegyensúlyozatlan csomópontoknál anélkül, hogy érintené a bináris fa szimmetrikus rendű bejárási sorozatát. Más szóval, **a forgatási műveletek egyszerre képesek fenntartani a "bináris keresőfa" tulajdonságát és visszaállítani a fát "kiegyensúlyozott bináris fává"**.
 
-We call nodes with a balance factor absolute value $> 1$ "unbalanced nodes". Depending on the imbalance situation, rotation operations are divided into four types: right rotation, left rotation, left rotation then right rotation, and right rotation then left rotation. Below we describe these rotation operations in detail.
+Azokat a csomópontokat, amelyek egyensúlyi tényezőjének abszolút értéke $> 1$, "kiegyensúlyozatlan csomópontoknak" nevezzük. A kiegyensúlyozatlanság jellegétől függően a forgatási műveletek négy típusra oszthatók: jobbra forgatás, balra forgatás, balra majd jobbra forgatás, és jobbra majd balra forgatás. Az alábbiakban részletesen leírjuk ezeket a forgatási műveleteket.
 
-### Right Rotation
+### Jobbra forgatás
 
-As shown in the figure below, the value below the node is the balance factor. From bottom to top, the first unbalanced node in the binary tree is "node 3". We focus on the subtree with this unbalanced node as the root, denoting the node as `node` and its left child as `child`, and perform a "right rotation" operation. After the right rotation is completed, the subtree regains balance and still maintains the properties of a binary search tree.
+Az alábbi ábrán látható módon, a csomópont alatt lévő szám az egyensúlyi tényező. Alulról felfelé haladva a bináris fa első kiegyensúlyozatlan csomópontja a "3. csomópont". Erre a kiegyensúlyozatlan csomópontra mint gyökérre fókuszálunk, a csomópontot `node`-nak, bal gyermekét `child`-nak nevezzük, és "jobbra forgatás" műveletet hajtunk végre. A jobbra forgatás befejezése után a részfa visszanyeri egyensúlyát, és megőrzi a bináris keresőfa tulajdonságait.
 
 === "<1>"
-    ![Steps of right rotation](avl_tree.assets/avltree_right_rotate_step1.png)
+    ![A jobbra forgatás lépései](avl_tree.assets/avltree_right_rotate_step1.png)
 
 === "<2>"
     ![avltree_right_rotate_step2](avl_tree.assets/avltree_right_rotate_step2.png)
@@ -268,91 +268,91 @@ As shown in the figure below, the value below the node is the balance factor. Fr
 === "<4>"
     ![avltree_right_rotate_step4](avl_tree.assets/avltree_right_rotate_step4.png)
 
-As shown in the figure below, when the `child` node has a right child (denoted as `grand_child`), a step needs to be added in the right rotation: set `grand_child` as the left child of `node`.
+Az alábbi ábrán látható módon, ha a `child` csomópontnak van jobb gyermeke (amelyet `grand_child`-nak jelölünk), a jobbra forgatáshoz egy lépést kell hozzáadni: a `grand_child`-ot a `node` bal gyermekeként kell beállítani.
 
-![Right rotation with grand_child](avl_tree.assets/avltree_right_rotate_with_grandchild.png)
+![Jobbra forgatás grand_child esetén](avl_tree.assets/avltree_right_rotate_with_grandchild.png)
 
-"Right rotation" is a figurative term; in practice, it is achieved by modifying node pointers, as shown in the following code:
+A "jobbra forgatás" szemléletes elnevezés; a gyakorlatban a csomópont mutatóinak módosításával valósítják meg, ahogy a következő kódban látható:
 
 ```src
 [file]{avl_tree}-[class]{avl_tree}-[func]{right_rotate}
 ```
 
-### Left Rotation
+### Balra forgatás
 
-Correspondingly, if considering the "mirror" of the above unbalanced binary tree, the "left rotation" operation shown in the figure below needs to be performed.
+Megfelelően, ha a fenti kiegyensúlyozatlan bináris fa "tükörképét" tekintjük, az alábbi ábrán látható "balra forgatás" műveletet kell elvégezni.
 
-![Left rotation operation](avl_tree.assets/avltree_left_rotate.png)
+![Balra forgatás művelete](avl_tree.assets/avltree_left_rotate.png)
 
-Similarly, as shown in the figure below, when the `child` node has a left child (denoted as `grand_child`), a step needs to be added in the left rotation: set `grand_child` as the right child of `node`.
+Hasonlóan, az alábbi ábrán látható módon, ha a `child` csomópontnak van bal gyermeke (amelyet `grand_child`-nak jelölünk), a balra forgatáshoz egy lépést kell hozzáadni: a `grand_child`-ot a `node` jobb gyermekeként kell beállítani.
 
-![Left rotation with grand_child](avl_tree.assets/avltree_left_rotate_with_grandchild.png)
+![Balra forgatás grand_child esetén](avl_tree.assets/avltree_left_rotate_with_grandchild.png)
 
-It can be observed that **right rotation and left rotation operations are mirror symmetric in logic, and the two imbalance cases they solve are also symmetric**. Based on symmetry, we only need to replace all `left` in the right rotation implementation code with `right`, and all `right` with `left`, to obtain the left rotation implementation code:
+Megfigyelhető, hogy **a jobbra és balra forgatási műveletek tükörszimmetrikusak logikailag, és az általuk megoldott két kiegyensúlyozatlansági eset szintén szimmetrikus**. A szimmetria alapján csak annyi szükséges, hogy a jobbra forgatás megvalósítási kódjában az összes `left`-et `right`-ra, az összes `right`-ot `left`-re cseréljük, így megkapjuk a balra forgatás megvalósítási kódját:
 
 ```src
 [file]{avl_tree}-[class]{avl_tree}-[func]{left_rotate}
 ```
 
-### Left Rotation Then Right Rotation
+### Balra majd jobbra forgatás
 
-For the unbalanced node 3 in the figure below, using either left rotation or right rotation alone cannot restore the subtree to balance. In this case, a "left rotation" needs to be performed on `child` first, followed by a "right rotation" on `node`.
+Az alábbi ábra 3-as kiegyensúlyozatlan csomópontja esetén sem a balra forgatás, sem a jobbra forgatás önmagában nem képes visszaállítani a részfa egyensúlyát. Ebben az esetben először "balra forgatást" kell végezni a `child`-on, majd "jobbra forgatást" a `node`-on.
 
-![Left-right rotation](avl_tree.assets/avltree_left_right_rotate.png)
+![Balra-jobbra forgatás](avl_tree.assets/avltree_left_right_rotate.png)
 
-### Right Rotation Then Left Rotation
+### Jobbra majd balra forgatás
 
-As shown in the figure below, for the mirror case of the above unbalanced binary tree, a "right rotation" needs to be performed on `child` first, then a "left rotation" on `node`.
+Az alábbi ábrán látható módon, a fenti kiegyensúlyozatlan bináris fa tükörképe esetén először "jobbra forgatást" kell végezni a `child`-on, majd "balra forgatást" a `node`-on.
 
-![Right-left rotation](avl_tree.assets/avltree_right_left_rotate.png)
+![Jobbra-balra forgatás](avl_tree.assets/avltree_right_left_rotate.png)
 
-### Choice of Rotation
+### A forgatás megválasztása
 
-The four imbalances shown in the figure below correspond one-to-one with the above cases, requiring right rotation, left rotation then right rotation, right rotation then left rotation, and left rotation operations respectively.
+Az alábbi ábrán látható négy kiegyensúlyozatlansági eset egy-egy megfelel a fenti eseteknek, amelyek rendre jobbra forgatást, balra majd jobbra forgatást, jobbra majd balra forgatást és balra forgatást igényelnek.
 
-![The four rotation cases of AVL tree](avl_tree.assets/avltree_rotation_cases.png)
+![Az AVL-fa négy forgatási esete](avl_tree.assets/avltree_rotation_cases.png)
 
-As shown in the table below, we determine which case the unbalanced node belongs to by judging the signs of the balance factor of the unbalanced node and the balance factor of its taller-side child node.
+Az alábbi táblázatban látható módon meghatározzuk, melyik esethez tartozik a kiegyensúlyozatlan csomópont, ha megvizsgáljuk a kiegyensúlyozatlan csomópont egyensúlyi tényezőjének és a magasabb oldalon lévő gyermek csomópont egyensúlyi tényezőjének előjelét.
 
-<p align="center"> Table <id> &nbsp; Conditions for Choosing Among the Four Rotation Cases </p>
+<p align="center"> Táblázat <id> &nbsp; A négy forgatási eset megválasztásának feltételei </p>
 
-| Balance factor of the unbalanced node | Balance factor of the child node | Rotation method to apply          |
-| -------------------------------------- | --------------------------------- | --------------------------------- |
-| $> 1$ (left-leaning tree)              | $\geq 0$                          | Right rotation                    |
-| $> 1$ (left-leaning tree)              | $<0$                              | Left rotation then right rotation |
-| $< -1$ (right-leaning tree)            | $\leq 0$                          | Left rotation                     |
-| $< -1$ (right-leaning tree)            | $>0$                              | Right rotation then left rotation |
+| A kiegyensúlyozatlan csomópont egyensúlyi tényezője | A gyermek csomópont egyensúlyi tényezője | Alkalmazandó forgatási módszer    |
+| ---------------------------------------------------- | ---------------------------------------- | --------------------------------- |
+| $> 1$ (balra dőlő fa)                               | $\geq 0$                                 | Jobbra forgatás                   |
+| $> 1$ (balra dőlő fa)                               | $<0$                                     | Balra majd jobbra forgatás        |
+| $< -1$ (jobbra dőlő fa)                             | $\leq 0$                                 | Balra forgatás                    |
+| $< -1$ (jobbra dőlő fa)                             | $>0$                                     | Jobbra majd balra forgatás        |
 
-For ease of use, we encapsulate the rotation operations into a function. **With this function, we can perform rotations for various imbalance situations, restoring balance to unbalanced nodes**. The code is as follows:
+A könnyebb felhasználás érdekében a forgatási műveleteket egy függvénybe csomagoljuk. **Ezzel a függvénnyel különböző kiegyensúlyozatlansági helyzetekhez végezhetünk forgatásokat, helyreállítva az egyensúlyt a kiegyensúlyozatlan csomópontoknál**. A kód a következő:
 
 ```src
 [file]{avl_tree}-[class]{avl_tree}-[func]{rotate}
 ```
 
-## Common Operations in Avl Trees
+## Az AVL-fák általánosan végzett műveletei
 
-### Node Insertion
+### Csomópont-beszúrás
 
-The node insertion operation in AVL trees is similar in principle to that in binary search trees. The only difference is that after inserting a node in an AVL tree, a series of unbalanced nodes may appear on the path from that node to the root. Therefore, **we need to start from this node and perform rotation operations from bottom to top, restoring balance to all unbalanced nodes**. The code is as follows:
+Az AVL-fákban végzett csomópont-beszúrás elve hasonló a bináris keresőfákban végzett csomópont-beszúráshoz. Az egyetlen különbség az, hogy az AVL-fában csomópont-beszúrás után az adott csomóponttól a gyökérig vezető úton kiegyensúlyozatlan csomópontok sorozata jelenhet meg. Ezért **ennél a csomópontnál kell elkezdenünk, és alulról felfelé haladva kell forgatási műveleteket végrehajtani, helyreállítva az egyensúlyt az összes kiegyensúlyozatlan csomópontnál**. A kód a következő:
 
 ```src
 [file]{avl_tree}-[class]{avl_tree}-[func]{insert_helper}
 ```
 
-### Node Removal
+### Csomópont-törlés
 
-Similarly, on the basis of the binary search tree's node removal method, rotation operations need to be performed from bottom to top to restore balance to all unbalanced nodes. The code is as follows:
+Hasonlóan, a bináris keresőfa csomópont-törlési módszerére alapozva alulról felfelé haladva kell forgatási műveleteket végrehajtani az összes kiegyensúlyozatlan csomópont egyensúlyának helyreállítása érdekében. A kód a következő:
 
 ```src
 [file]{avl_tree}-[class]{avl_tree}-[func]{remove_helper}
 ```
 
-### Node Search
+### Csomópont-keresés
 
-The node search operation in AVL trees is consistent with that in binary search trees, and will not be elaborated here.
+Az AVL-fákban végzett csomópont-keresés megegyezik a bináris keresőfákban végzett csomópont-kereséssel, ezért ezt itt nem részletezzük.
 
-## Typical Applications of Avl Trees
+## Az AVL-fák tipikus alkalmazásai
 
-- Organizing and storing large-scale data, suitable for scenarios with high-frequency searches and low-frequency insertions and deletions.
-- Used to build index systems in databases.
-- Red-black trees are also a common type of balanced binary search tree. Compared to AVL trees, red-black trees have more relaxed balance conditions, require fewer rotation operations for node insertion and deletion, and have higher average efficiency for node addition and deletion operations.
+- Nagy méretű adatok rendszerezéséhez és tárolásához, olyan esetekben alkalmas, ahol a keresés magas, a beszúrás és törlés pedig alacsony gyakorisággal történik.
+- Adatbázisokban indexrendszerek építésére használják.
+- A piros-fekete fák szintén elterjedt kiegyensúlyozott bináris keresőfák. Az AVL-fákhoz képest a piros-fekete fáknak lazább egyensúlyi feltételei vannak, csomópont-beszúráshoz és -törléshez kevesebb forgatási műveletet igényelnek, és átlagosan hatékonyabbak a csomópontok hozzáadásában és törlésében.

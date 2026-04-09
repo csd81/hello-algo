@@ -1,160 +1,160 @@
-# Array Representation of Binary Trees
+# Bináris fák tömbös ábrázolása
 
-Under the linked list representation, the storage unit of a binary tree is a node `TreeNode`, and nodes are connected by pointers. The previous section introduced the basic operations of binary trees under the linked list representation.
+A láncolt listás ábrázolás esetén a bináris fa tárolási egysége a `TreeNode` csomópont, a csomópontokat mutatók kötik össze. Az előző fejezet bevezette a bináris fák alapvető műveleteit a láncolt listás ábrázolás keretein belül.
 
-So, can we use an array to represent a binary tree? The answer is yes.
+Felmerül a kérdés: lehet-e tömbben ábrázolni egy bináris fát? A válasz igen.
 
-## Representing Perfect Binary Trees
+## Tökéletes bináris fák ábrázolása
 
-Let's analyze a simple case first. Given a perfect binary tree, we store all nodes in an array according to the order of level-order traversal, where each node corresponds to a unique array index.
+Először vizsgáljunk meg egy egyszerű esetet. Adott egy tökéletes bináris fa; az összes csomópontot egy tömbben tároljuk a szintenkénti bejárás sorrendjében, ahol minden csomópont egyedi tömbindexnek felel meg.
 
-Based on the characteristics of level-order traversal, we can derive a "mapping formula" between parent node index and child node indices: **If a node's index is $i$, then its left child index is $2i + 1$ and its right child index is $2i + 2$**. The figure below shows the mapping relationships between various node indices.
+A szintenkénti bejárás jellemzői alapján levezethetünk egy "leképezési képletet" a szülő csomópont indexe és a gyermek csomópontok indexei között: **Ha egy csomópont indexe $i$, akkor a bal gyermekének indexe $2i + 1$, a jobb gyermekének indexe pedig $2i + 2$**. Az alábbi ábra a különböző csomópontindexek közötti leképezési kapcsolatokat mutatja be.
 
-![Array representation of a perfect binary tree](array_representation_of_tree.assets/array_representation_binary_tree.png)
+![Tökéletes bináris fa tömbös ábrázolása](array_representation_of_tree.assets/array_representation_binary_tree.png)
 
-**The mapping formula plays a role similar to the node references (pointers) in linked lists**. Given any node in the array, we can access its left (right) child node using the mapping formula.
+**A leképezési képlet szerepe hasonló a láncolt listákban lévő csomópont-hivatkozásokhoz (mutatókhoz)**. A tömbben bármely csomóponthoz megtalálhatjuk a bal (jobb) gyermek csomópontját a leképezési képlet segítségével.
 
-## Representing Any Binary Tree
+## Tetszőleges bináris fák ábrázolása
 
-Perfect binary trees are a special case; in the middle levels of a binary tree, there are typically many `None` values. Since the level-order traversal sequence does not include these `None` values, we cannot infer the number and distribution of `None` values based on this sequence alone. **This means multiple binary tree structures can correspond to the same level-order traversal sequence**.
+A tökéletes bináris fák speciális esetnek számítanak; a bináris fa középső szintjein általában sok `None` érték található. Mivel a szintenkénti bejárás sorozata nem tartalmazza ezeket a `None` értékeket, nem tudjuk kizárólag e sorozat alapján meghatározni a `None` értékek számát és eloszlását. **Ez azt jelenti, hogy több bináris fastruktúra is megfelelhet ugyanannak a szintenkénti bejárási sorozatnak**.
 
-As shown in the figure below, given a non-perfect binary tree, the above method of array representation fails.
+Az alábbi ábrán látható módon egy nem tökéletes bináris fa esetén a fenti tömbös ábrázolási módszer nem működik.
 
-![Level-order traversal sequence corresponds to multiple binary tree possibilities](array_representation_of_tree.assets/array_representation_without_empty.png)
+![A szintenkénti bejárási sorozat több bináris fa lehetőségnek felel meg](array_representation_of_tree.assets/array_representation_without_empty.png)
 
-To solve this problem, **we can consider explicitly writing out all `None` values in the level-order traversal sequence**. As shown in the figure below, after this treatment, the level-order traversal sequence can uniquely represent a binary tree. Example code is as follows:
+E probléma megoldására **a szintenkénti bejárási sorozatban az összes `None` értéket expliciten feltüntethetjük**. Az alábbi ábrán látható módon e kezelés után a szintenkénti bejárási sorozat egyértelműen meghatározza a bináris fát. A példakód a következő:
 
 === "Python"
 
     ```python title=""
-    # Array representation of a binary tree
-    # Using None to represent empty slots
+    # Bináris fa tömbös ábrázolása
+    # None értékkel jelöljük az üres helyeket
     tree = [1, 2, 3, 4, None, 6, 7, 8, 9, None, None, 12, None, None, 15]
     ```
 
 === "C++"
 
     ```cpp title=""
-    /* Array representation of a binary tree */
-    // Using the maximum integer value INT_MAX to mark empty slots
+    /* Bináris fa tömbös ábrázolása */
+    // INT_MAX maximális egész értékkel jelöljük az üres helyeket
     vector<int> tree = {1, 2, 3, 4, INT_MAX, 6, 7, 8, 9, INT_MAX, INT_MAX, 12, INT_MAX, INT_MAX, 15};
     ```
 
 === "Java"
 
     ```java title=""
-    /* Array representation of a binary tree */
-    // Using the Integer wrapper class allows for using null to mark empty slots
+    /* Bináris fa tömbös ábrázolása */
+    // Az Integer burkoló osztály lehetővé teszi a null használatát az üres helyek jelölésére
     Integer[] tree = { 1, 2, 3, 4, null, 6, 7, 8, 9, null, null, 12, null, null, 15 };
     ```
 
 === "C#"
 
     ```csharp title=""
-    /* Array representation of a binary tree */
-    // Using nullable int (int?) allows for using null to mark empty slots
+    /* Bináris fa tömbös ábrázolása */
+    // A nullable int (int?) lehetővé teszi a null használatát az üres helyek jelölésére
     int?[] tree = [1, 2, 3, 4, null, 6, 7, 8, 9, null, null, 12, null, null, 15];
     ```
 
 === "Go"
 
     ```go title=""
-    /* Array representation of a binary tree */
-    // Using an any type slice, allowing for nil to mark empty slots
+    /* Bináris fa tömbös ábrázolása */
+    // any típusú szelet használatával a nil jelölheti az üres helyeket
     tree := []any{1, 2, 3, 4, nil, 6, 7, 8, 9, nil, nil, 12, nil, nil, 15}
     ```
 
 === "Swift"
 
     ```swift title=""
-    /* Array representation of a binary tree */
-    // Using optional Int (Int?) allows for using nil to mark empty slots
+    /* Bináris fa tömbös ábrázolása */
+    // Az opcionális Int (Int?) lehetővé teszi a nil használatát az üres helyek jelölésére
     let tree: [Int?] = [1, 2, 3, 4, nil, 6, 7, 8, 9, nil, nil, 12, nil, nil, 15]
     ```
 
 === "JS"
 
     ```javascript title=""
-    /* Array representation of a binary tree */
-    // Using null to represent empty slots
+    /* Bináris fa tömbös ábrázolása */
+    // null értékkel jelöljük az üres helyeket
     let tree = [1, 2, 3, 4, null, 6, 7, 8, 9, null, null, 12, null, null, 15];
     ```
 
 === "TS"
 
     ```typescript title=""
-    /* Array representation of a binary tree */
-    // Using null to represent empty slots
+    /* Bináris fa tömbös ábrázolása */
+    // null értékkel jelöljük az üres helyeket
     let tree: (number | null)[] = [1, 2, 3, 4, null, 6, 7, 8, 9, null, null, 12, null, null, 15];
     ```
 
 === "Dart"
 
     ```dart title=""
-    /* Array representation of a binary tree */
-    // Using nullable int (int?) allows for using null to mark empty slots
+    /* Bináris fa tömbös ábrázolása */
+    // A nullable int (int?) lehetővé teszi a null használatát az üres helyek jelölésére
     List<int?> tree = [1, 2, 3, 4, null, 6, 7, 8, 9, null, null, 12, null, null, 15];
     ```
 
 === "Rust"
 
     ```rust title=""
-    /* Array representation of a binary tree */
-    // Using None to mark empty slots
+    /* Bináris fa tömbös ábrázolása */
+    // None értékkel jelöljük az üres helyeket
     let tree = [Some(1), Some(2), Some(3), Some(4), None, Some(6), Some(7), Some(8), Some(9), None, None, Some(12), None, None, Some(15)];
     ```
 
 === "C"
 
     ```c title=""
-    /* Array representation of a binary tree */
-    // Using the maximum int value to mark empty slots, therefore, node values must not be INT_MAX
+    /* Bináris fa tömbös ábrázolása */
+    // A maximális int értékkel jelöljük az üres helyeket, ezért a csomópontok értékei nem lehetnek INT_MAX
     int tree[] = {1, 2, 3, 4, INT_MAX, 6, 7, 8, 9, INT_MAX, INT_MAX, 12, INT_MAX, INT_MAX, 15};
     ```
 
 === "Kotlin"
 
     ```kotlin title=""
-    /* Array representation of a binary tree */
-    // Using null to represent empty slots
+    /* Bináris fa tömbös ábrázolása */
+    // null értékkel jelöljük az üres helyeket
     val tree = arrayOf( 1, 2, 3, 4, null, 6, 7, 8, 9, null, null, 12, null, null, 15 )
     ```
 
 === "Ruby"
 
     ```ruby title=""
-    ### Array representation of a binary tree ###
-    # Using nil to represent empty slots
+    ### Bináris fa tömbös ábrázolása ###
+    # nil értékkel jelöljük az üres helyeket
     tree = [1, 2, 3, 4, nil, 6, 7, 8, 9, nil, nil, 12, nil, nil, 15]
     ```
 
-![Array representation of any type of binary tree](array_representation_of_tree.assets/array_representation_with_empty.png)
+![Tetszőleges bináris fa tömbös ábrázolása](array_representation_of_tree.assets/array_representation_with_empty.png)
 
-It's worth noting that **complete binary trees are very well-suited for array representation**. Recalling the definition of a complete binary tree, `None` only appears at the bottom level and towards the right, **meaning all `None` values must appear at the end of the level-order traversal sequence**.
+Megjegyzendő, hogy **a teljes bináris fák különösen jól alkalmasak tömbös ábrázolásra**. Visszagondolva a teljes bináris fa definíciójára, a `None` értékek csak az alsó szinten és jobb oldalon jelennek meg, **ami azt jelenti, hogy az összes `None` értéknek a szintenkénti bejárási sorozat végén kell szerepelnie**.
 
-This means that when using an array to represent a complete binary tree, it's possible to omit storing all `None` values, which is very convenient. The figure below gives an example.
+Ez azt jelenti, hogy tömbös ábrázolás esetén a teljes bináris fánál lehetséges az összes `None` érték tárolásának kihagyása, ami igen kényelmes. Az alábbi ábra erre mutat példát.
 
-![Array representation of a complete binary tree](array_representation_of_tree.assets/array_representation_complete_binary_tree.png)
+![Teljes bináris fa tömbös ábrázolása](array_representation_of_tree.assets/array_representation_complete_binary_tree.png)
 
-The following code implements a binary tree based on array representation, including the following operations:
+A következő kód tömbös ábrázolás alapján valósít meg egy bináris fát, amely a következő műveleteket foglalja magában:
 
-- Given a certain node, obtain its value, left (right) child node, and parent node.
-- Obtain the preorder, inorder, postorder, and level-order traversal sequences.
+- Adott csomópont esetén meghatározza annak értékét, bal (jobb) gyermek csomópontját és szülő csomópontját.
+- Előrendű, szimmetrikus rendű, utórendű és szintenkénti bejárási sorozatot állít elő.
 
 ```src
 [file]{array_binary_tree}-[class]{array_binary_tree}-[func]{}
 ```
 
-## Advantages and Limitations
+## Előnyök és korlátok
 
-The array representation of binary trees has the following advantages:
+A bináris fák tömbös ábrázolásának a következő előnyei vannak:
 
-- Arrays are stored in contiguous memory space, which is cache-friendly, allowing faster access and traversal.
-- It does not require storing pointers, which saves space.
-- It allows random access to nodes.
+- A tömbök folytonos memóriaterületen tárolódnak, ami gyorsítótár-barát, lehetővé téve a gyorsabb hozzáférést és bejárást.
+- Nem igényel mutatók tárolását, ami tárhelyet takarít meg.
+- Véletlenszerű hozzáférést tesz lehetővé a csomópontokhoz.
 
-However, the array representation also has some limitations:
+Ugyanakkor a tömbös ábrázolásnak vannak korlátai is:
 
-- Array storage requires contiguous memory space, so it is not suitable for storing trees with a large amount of data.
-- Adding or removing nodes requires array insertion and deletion operations, which have lower efficiency.
-- When there are many `None` values in the binary tree, the proportion of node data contained in the array is low, leading to lower space utilization.
+- A tömbös tárolás folytonos memóriaterületet igényel, ezért nem alkalmas nagy mennyiségű adatot tartalmazó fák tárolására.
+- A csomópontok hozzáadása vagy eltávolítása tömb-beszúrási és törlési műveleteket igényel, amelyek kevésbé hatékonyak.
+- Ha a bináris fában sok `None` érték található, a tömbben tárolt csomópontadatok aránya alacsony, ami alacsonyabb tárterület-kihasználtsághoz vezet.
