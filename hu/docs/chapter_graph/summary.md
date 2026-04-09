@@ -1,31 +1,31 @@
-# Summary
+# Összefoglalás
 
-### Key Review
+### Kulcsfontosságú Áttekintés
 
-- Graphs consist of vertices and edges and can be represented as a set of vertices and a set of edges.
-- Compared to linear relationships (linked lists) and divide-and-conquer relationships (trees), network relationships (graphs) have a higher degree of freedom and are therefore more complex.
-- Directed graphs have edges with directionality, connected graphs have all vertices reachable from any vertex, and weighted graphs have edges that each contain a weight variable.
-- Adjacency matrices use matrices to represent graphs, where each row (column) represents a vertex, and matrix elements represent edges, using $1$ or $0$ to indicate whether two vertices have an edge or not. Adjacency matrices are highly efficient for addition, deletion, lookup, and modification operations, but consume significant space.
-- Adjacency lists use multiple linked lists to represent graphs, where the $i$-th linked list corresponds to vertex $i$ and stores all adjacent vertices of that vertex. Adjacency lists are more space-efficient than adjacency matrices, but have lower time efficiency because they require traversing linked lists to find edges.
-- When linked lists in adjacency lists become too long, they can be converted to red-black trees or hash tables, thereby improving lookup efficiency.
-- From an algorithmic perspective, adjacency matrices embody "trading space for time", while adjacency lists embody "trading time for space".
-- Graphs can be used to model various real-world systems, such as social networks and subway lines.
-- Trees are a special case of graphs, and tree traversal is a special case of graph traversal.
-- Breadth-first search of graphs is a near-to-far, layer-by-layer expansion search method, typically implemented using a queue.
-- Depth-first search of graphs is a search method that prioritizes going as far as possible and backtracks when no path remains, commonly implemented using recursion.
+- A gráfok csúcsokból és élekből állnak, és csúcsok és élek halmazaként ábrázolhatók.
+- A lineáris kapcsolatokhoz (láncolt listák) és az oszd meg és uralkodj kapcsolatokhoz (fák) képest a hálózati kapcsolatok (gráfok) magasabb fokú szabadsággal rendelkeznek, ezért összetettebbek.
+- Az irányított gráfok élei iránnyal rendelkeznek, az összefüggő gráfokban bármely csúcsból minden más csúcs elérhető, a súlyozott gráfokban pedig minden él tartalmaz egy súlyváltozót.
+- A szomszédsági mátrixok mátrixokkal ábrázolják a gráfokat, ahol minden sor (oszlop) egy csúcsot jelöl, a mátrix elemei pedig az éleket jelölik: $1$ vagy $0$ értékkel jelzik, hogy két csúcs között van-e él. A szomszédsági mátrixok hozzáadási, törlési, keresési és módosítási műveletek szempontjából rendkívül hatékonyak, de jelentős tárhelyet foglalnak.
+- A szomszédsági listák több láncolt listával ábrázolják a gráfokat, ahol az $i$-edik láncolt lista az $i$-edik csúcsnak felel meg, és tárolja az adott csúcs összes szomszédját. A szomszédsági listák tárhelyhatékonyabbak a szomszédsági mátrixoknál, de az élek megtalálásához be kell járni a láncolt listákat, ezért kisebb az időbeli hatékonyságuk.
+- Ha a szomszédsági listák láncolt listái túl hosszúvá válnak, vörös-fekete fákra vagy hash táblákra cserélhetők, ezzel javítva a keresési hatékonyságot.
+- Algoritmikus szempontból a szomszédsági mátrix a „tér idő ellenében" elvét testesíti meg, míg a szomszédsági lista az „idő tér ellenében" elvét.
+- A gráfok különféle valós rendszerek modellezésére alkalmazhatók, például közösségi hálók és metróvonalak esetén.
+- A fák a gráfok speciális esetei, a fabejárás pedig a gráfbejárás speciális esete.
+- A gráfok szélességi bejárása (BFS) egy közelitől távoliig, rétegről rétegre bővülő keresési módszer, amelyet általában sorral valósítanak meg.
+- A gráfok mélységi bejárása (DFS) olyan keresési módszer, amely az elérhető legmélyebb pontig halad, majd visszalép, ha nincs tovább vezető út; általában rekurzióval valósítják meg.
 
-### Q & A
+### Kérdések és Válaszok
 
-**Q**: Is a path defined as a sequence of vertices or a sequence of edges?
+**K**: Az út csúcsok sorozataként vagy élek sorozataként van meghatározva?
 
-The definitions in different language versions of Wikipedia are inconsistent: the English version states "a path is a sequence of edges", while the Chinese version states "a path is a sequence of vertices". The following is the original English text: In graph theory, a path in a graph is a finite or infinite sequence of edges which joins a sequence of vertices.
+A Wikipedia különböző nyelvű verzióiban az értelmezések eltérnek: az angol változat szerint „az út élek sorozata", míg a kínai verzió szerint „az út csúcsok sorozata". Az eredeti angol szöveg: In graph theory, a path in a graph is a finite or infinite sequence of edges which joins a sequence of vertices.
 
-In this text, a path is viewed as a sequence of edges, not a sequence of vertices. This is because there may be multiple edges connecting two vertices, in which case each edge corresponds to a path.
+Ebben a szövegben az utat élek sorozataként értelmezzük, nem csúcsok sorozataként. Ennek oka, hogy két csúcs között több él is húzódhat, és ilyenkor minden él egy-egy útnak felel meg.
 
-**Q**: In a disconnected graph, will there be unreachable vertices?
+**K**: Egy nem összefüggő gráfban lesznek-e elérhetetlen csúcsok?
 
-In a disconnected graph, starting from a certain vertex, at least one vertex cannot be reached. Traversing a disconnected graph requires setting multiple starting points to traverse all connected components of the graph.
+Egy nem összefüggő gráfban egy adott csúcsból kiindulva legalább egy csúcs nem érhető el. Egy nem összefüggő gráf bejárásához több kiindulópontot kell megadni, hogy a gráf összes összefüggő komponensét be lehessen járni.
 
-**Q**: In an adjacency list, is there a requirement for the order of "all vertices connected to that vertex"?
+**K**: A szomszédsági listában kötelező-e meghatározott sorrendet betartani „az adott csúcshoz kapcsolódó összes csúcs" tekintetében?
 
-It can be in any order. However, in practical applications, it may be necessary to sort according to specified rules, such as the order in which vertices were added, or the order of vertex values, which helps quickly find vertices "with certain extreme values".
+Tetszőleges sorrend alkalmazható. Azonban a gyakorlati alkalmazásokban szükséges lehet meghatározott szabályok szerinti rendezés, például a csúcsok hozzáadásának sorrendje vagy a csúcsértékek sorrendje alapján, ami segít gyorsan megtalálni a „bizonyos szélsőértékekkel rendelkező" csúcsokat.

@@ -1,9 +1,9 @@
-# Graph
+# Gráf
 
-![Graph](../assets/covers/chapter_graph.jpg)
+![Gráf](../assets/covers/chapter_graph.jpg)
 
 !!! abstract
 
-    In the journey of life, we are like nodes, connected by countless invisible edges.
+    Az élet útján olyanok vagyunk, mint a csúcsok, melyeket megszámlálhatatlan láthatatlan él köt össze.
 
-    Each encounter and parting leaves a unique mark on this vast network graph.
+    Minden találkozás és elválás egyedi nyomot hagy e hatalmas hálózati gráfban.

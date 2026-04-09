@@ -1,37 +1,37 @@
-# Graph Traversal
+# Gráfbejárás
 
-Trees represent "one-to-many" relationships, while graphs have a higher degree of freedom and can represent any "many-to-many" relationships. Therefore, we can view trees as a special case of graphs. Clearly, **tree traversal operations are also a special case of graph traversal operations**.
+A fák „egy-a-többhöz" kapcsolatokat jelölnek, míg a gráfok magasabb fokú szabadsággal rendelkeznek, és tetszőleges „több-a-többhöz" kapcsolatokat képesek ábrázolni. Ezért a fákat a gráfok speciális eseteiként tekinthetjük. Nyilvánvaló, hogy **a fabejárási műveletek is a gráfbejárási műveletek speciális esetei**.
 
-Both graphs and trees require the application of search algorithms to implement traversal operations. Graph traversal methods can also be divided into two types: <u>breadth-first traversal</u> and <u>depth-first traversal</u>.
+Mind a gráfok, mind a fák esetén keresési algoritmusokra van szükség a bejárási műveletek megvalósításához. A gráfbejárási módszerek két típusra oszthatók: <u>szélességi bejárás</u> és <u>mélységi bejárás</u>.
 
-## Breadth-First Search
+## Szélességi Bejárás (BFS)
 
-**Breadth-first search is a near-to-far traversal method that, starting from a certain node, always prioritizes visiting the nearest vertices and expands outward layer by layer**. As shown in the figure below, starting from the top-left vertex, first traverse all adjacent vertices of that vertex, then traverse all adjacent vertices of the next vertex, and so on, until all vertices have been visited.
+**A szélességi bejárás (BFS) egy közelitől távoliig haladó bejárási módszer, amely egy adott csomóponttól kiindulva mindig a legközelebbi csúcsok felkeresését részesíti előnyben, és rétegről rétegre terjeszkedik kifelé**. Ahogy az alábbi ábra mutatja, a bal felső csúcstól kiindulva először bejárjuk az adott csúcs összes szomszédját, majd a következő csúcs összes szomszédját, és így tovább, amíg az összes csúcsot meg nem látogattuk.
 
-![Breadth-first search of a graph](graph_traversal.assets/graph_bfs.png)
+![Gráf szélességi bejárása](graph_traversal.assets/graph_bfs.png)
 
-### Algorithm Implementation
+### Algoritmus Implementációja
 
-BFS is typically implemented with the help of a queue, as shown in the code below. The queue has a "first in, first out" property, which aligns with the BFS idea of "near to far".
+A szélességi bejárást (BFS) általában sor (queue) segítségével valósítják meg, ahogy az alábbi kódban látható. A sornak „elsőnek be, elsőnek ki" tulajdonsága van, ami megfelel a szélességi bejárás „közelitől távoliig" megközelítésének.
 
-1. Add the starting vertex `startVet` to the queue and begin the loop.
-2. In each iteration of the loop, pop the vertex at the front of the queue and record it as visited, then add all adjacent vertices of that vertex to the back of the queue.
-3. Repeat step `2.` until all vertices have been visited.
+1. A kezdő `startVet` csúcsot hozzáadjuk a sorhoz, és elkezdjük a ciklust.
+2. A ciklus minden iterációjában kivesszük a sor elejéről lévő csúcsot, meglátogatottként rögzítjük, majd az adott csúcs összes szomszédját hozzáadjuk a sor végéhez.
+3. Addig ismételjük a `2.` lépést, amíg az összes csúcsot meg nem látogattuk.
 
-To prevent revisiting vertices, we use a hash set `visited` to record which nodes have been visited.
+A csúcsok ismételt meglátogatásának elkerülése érdekében egy `visited` hash halmazt használunk a már meglátogatott csomópontok nyilvántartásához.
 
 !!! tip
 
-    A hash set can be viewed as a hash table that stores only `key` without storing `value`. It can perform addition, deletion, lookup, and modification operations on `key` in $O(1)$ time complexity. Based on the uniqueness of `key`, hash sets are typically used for data deduplication and similar scenarios.
+    A hash halmaz egy olyan hash táblaként tekinthető, amely csak `key` értékeket tárol `value` értékek nélkül. $O(1)$ időbeli komplexitással képes `key`-eken hozzáadási, törlési, keresési és módosítási műveleteket végezni. A `key` egyediségéből adódóan a hash halmazokat általában adatdeduplikálásra és hasonló feladatokra használják.
 
 ```src
 [file]{graph_bfs}-[class]{}-[func]{graph_bfs}
 ```
 
-The code is relatively abstract; it is recommended to refer to the figure below to deepen understanding.
+A kód viszonylag elvont; az alábbi ábrára támaszkodva ajánlott mélyíteni a megértést.
 
 === "<1>"
-    ![Steps of breadth-first search of a graph](graph_traversal.assets/graph_bfs_step1.png)
+    ![Gráf szélességi bejárásának lépései](graph_traversal.assets/graph_bfs_step1.png)
 
 === "<2>"
     ![graph_bfs_step2](graph_traversal.assets/graph_bfs_step2.png)
@@ -63,39 +63,39 @@ The code is relatively abstract; it is recommended to refer to the figure below 
 === "<11>"
     ![graph_bfs_step11](graph_traversal.assets/graph_bfs_step11.png)
 
-!!! question "Is the breadth-first traversal sequence unique?"
+!!! question "Egyedi-e a szélességi bejárási sorrend?"
 
-    Not unique. Breadth-first search only requires traversing in a "near to far" order, **and the traversal order of vertices at the same distance can be arbitrarily shuffled**. Taking the figure above as an example, the visit order of vertices $1$ and $3$ can be swapped, as can the visit order of vertices $2$, $4$, and $6$.
+    Nem egyedi. A szélességi bejárás (BFS) csak azt követeli meg, hogy a bejárás „közelitől távoliig" sorrendben haladjon, **az azonos távolságra lévő csúcsok bejárási sorrendje tetszőlegesen megváltoztatható**. A fenti ábrát például véve az 1-es és 3-as csúcs meglátogatásának sorrendje felcserélhető, csakúgy, mint a 2-es, 4-es és 6-os csúcsoké.
 
-### Complexity Analysis
+### Komplexitáselemzés
 
-**Time complexity**: All vertices will be enqueued and dequeued once, using $O(|V|)$ time; in the process of traversing adjacent vertices, since it is an undirected graph, all edges will be visited $2$ times, using $O(2|E|)$ time; overall using $O(|V| + |E|)$ time.
+**Időbeli komplexitás**: Az összes csúcsot egyszer sorba helyezzük és kivesszük a sorból, ami $O(|V|)$ időt igényel; a szomszédos csúcsok bejárásakor, mivel irányítatlan gráfról van szó, az összes élt $2$-szer látogatjuk meg, ami $O(2|E|)$ időt igényel; összességében $O(|V| + |E|)$ időt vesz igénybe.
 
-**Space complexity**: The list `res`, hash set `visited`, and queue `que` can contain at most $|V|$ vertices, using $O(|V|)$ space.
+**Térbeli komplexitás**: A `res` lista, a `visited` hash halmaz és a `que` sor legfeljebb $|V|$ csúcsot tartalmazhat, ami $O(|V|)$ tárhelyet igényel.
 
-## Depth-First Search
+## Mélységi Bejárás (DFS)
 
-**Depth-first search is a traversal method that prioritizes going as far as possible, then backtracks when no path remains**. As shown in the figure below, starting from the top-left vertex, visit an adjacent vertex of the current vertex, continuing until reaching a dead end, then return and continue going as far as possible before returning again, and so on, until all vertices have been traversed.
+**A mélységi bejárás (DFS) egy olyan bejárási módszer, amely az elérhető legmélyebb pontig halad, majd visszalép, ha nincs tovább vezető út**. Ahogy az alábbi ábra mutatja, a bal felső csúcstól kiindulva meglátogatjuk az aktuális csúcs egyik szomszédját, és folytatjuk egészen a zsákutcáig, majd visszamegyünk, és ismét olyan messzire haladunk, amennyire csak lehetséges, majd ismét visszatérünk, és így tovább, amíg az összes csúcsot be nem jártuk.
 
-![Depth-first search of a graph](graph_traversal.assets/graph_dfs.png)
+![Gráf mélységi bejárása](graph_traversal.assets/graph_dfs.png)
 
-### Algorithm Implementation
+### Algoritmus Implementációja
 
-This "go as far as possible then return" algorithm paradigm is typically implemented using recursion. Similar to breadth-first search, in depth-first search we also need a hash set `visited` to record visited vertices and avoid revisiting.
+Ez az „amilyen messzire csak lehetséges, majd visszatérés" algoritmikus paradigma általában rekurzióval valósítható meg. A szélességi bejáráshoz hasonlóan a mélységi bejárásban (DFS) is szükségünk van egy `visited` hash halmazra a meglátogatott csúcsok nyilvántartásához és az ismételt meglátogatás elkerüléséhez.
 
 ```src
 [file]{graph_dfs}-[class]{}-[func]{graph_dfs}
 ```
 
-The algorithm flow of depth-first search is shown in the figure below.
+A mélységi bejárás (DFS) algoritmikus folyamatát az alábbi ábra szemlélteti.
 
-- **Straight dashed lines represent downward recursion**, indicating that a new recursive method has been initiated to visit a new vertex.
-- **Curved dashed lines represent upward backtracking**, indicating that this recursive method has returned to the position where it was initiated.
+- **Az egyenes szaggatott vonalak lefelé irányuló rekurziót jelölnek**, ami azt mutatja, hogy egy új rekurzív hívás indult egy új csúcs meglátogatásához.
+- **A görbe szaggatott vonalak felfelé irányuló visszalépést jelölnek**, ami azt jelzi, hogy ez a rekurzív hívás visszatért oda, ahol elindult.
 
-To deepen understanding, it is recommended to combine the figure below with the code to mentally simulate (or draw out) the entire DFS process, including when each recursive method is initiated and when it returns.
+A megértés elmélyítéséhez ajánlott az alábbi ábrát és a kódot összekapcsolva mentálisan szimulálni (vagy lerajzolni) a teljes mélységi bejárási (DFS) folyamatot, beleértve azt is, hogy az egyes rekurzív hívások mikor indulnak el és mikor térnek vissza.
 
 === "<1>"
-    ![Steps of depth-first search of a graph](graph_traversal.assets/graph_dfs_step1.png)
+    ![Gráf mélységi bejárásának lépései](graph_traversal.assets/graph_dfs_step1.png)
 
 === "<2>"
     ![graph_dfs_step2](graph_traversal.assets/graph_dfs_step2.png)
@@ -127,14 +127,14 @@ To deepen understanding, it is recommended to combine the figure below with the 
 === "<11>"
     ![graph_dfs_step11](graph_traversal.assets/graph_dfs_step11.png)
 
-!!! question "Is the depth-first traversal sequence unique?"
+!!! question "Egyedi-e a mélységi bejárási sorrend?"
 
-    Similar to breadth-first search, the order of depth-first traversal sequences is also not unique. Given a certain vertex, exploring in any direction first is valid, meaning the order of adjacent vertices can be arbitrarily shuffled, all being depth-first search.
+    A szélességi bejáráshoz hasonlóan a mélységi bejárási sorozat sorrendje sem egyedi. Adott csúcsnál bármely irányba elsőként való haladás érvényes, vagyis a szomszédos csúcsok sorrendje tetszőlegesen megváltoztatható – mindez mélységi bejárásnak számít.
 
-    Taking tree traversal as an example, "root $\rightarrow$ left $\rightarrow$ right", "left $\rightarrow$ root $\rightarrow$ right", and "left $\rightarrow$ right $\rightarrow$ root" correspond to pre-order, in-order, and post-order traversals, respectively. They represent three different traversal priorities, yet all three belong to depth-first search.
+    A fabejárást példaként véve a „gyökér $\rightarrow$ bal $\rightarrow$ jobb", a „bal $\rightarrow$ gyökér $\rightarrow$ jobb" és a „bal $\rightarrow$ jobb $\rightarrow$ gyökér" sorozatok rendre az előrendű, a középrendű és az utórendű bejárásnak felelnek meg. Ezek három különböző bejárási prioritást jelölnek, mégis mindhárom mélységi bejárásnak minősül.
 
-### Complexity Analysis
+### Komplexitáselemzés
 
-**Time complexity**: All vertices will be visited $1$ time, using $O(|V|)$ time; all edges will be visited $2$ times, using $O(2|E|)$ time; overall using $O(|V| + |E|)$ time.
+**Időbeli komplexitás**: Az összes csúcsot $1$-szer látogatjuk meg, ami $O(|V|)$ időt igényel; az összes élt $2$-szer látogatjuk meg, ami $O(2|E|)$ időt igényel; összességében $O(|V| + |E|)$ időt vesz igénybe.
 
-**Space complexity**: The list `res` and hash set `visited` can contain at most $|V|$ vertices, and the maximum recursion depth is $|V|$, therefore using $O(|V|)$ space.
+**Térbeli komplexitás**: A `res` lista és a `visited` hash halmaz legfeljebb $|V|$ csúcsot tartalmazhat, a maximális rekurziós mélység $|V|$, ezért a tárhelyigény $O(|V|)$.

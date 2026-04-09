@@ -1,18 +1,18 @@
-# Basic Operations on Graphs
+# Gráfok Alapműveletei
 
-Basic operations on graphs can be divided into operations on "edges" and operations on "vertices". Under the two representation methods of "adjacency matrix" and "adjacency list", the implementation methods differ.
+A gráfok alapműveletei „éleken" és „csúcsokon" végzett műveletekre bonthatók. A „szomszédsági mátrix" és a „szomszédsági lista" két ábrázolási módszernél az implementáció eltérő.
 
-## Implementation Based on Adjacency Matrix
+## Szomszédsági Mátrixon Alapuló Implementáció
 
-Given an undirected graph with $n$ vertices, the various operations are implemented as shown in the figure below.
+Adott egy $n$ csúcsból álló irányítatlan gráf; a különféle műveletek az alábbi ábra szerint implementálhatók.
 
-- **Adding or removing an edge**: Directly modify the specified edge in the adjacency matrix, using $O(1)$ time. Since it is an undirected graph, both directions of the edge need to be updated simultaneously.
-- **Adding a vertex**: Add a row and a column at the end of the adjacency matrix and fill them all with $0$s, using $O(n)$ time.
-- **Removing a vertex**: Delete a row and a column in the adjacency matrix. The worst case occurs when removing the first row and column, requiring $(n-1)^2$ elements to be "moved up and to the left", thus using $O(n^2)$ time.
-- **Initialization**: Pass in $n$ vertices, initialize a vertex list `vertices` of length $n$, using $O(n)$ time; initialize an adjacency matrix `adjMat` of size $n \times n$, using $O(n^2)$ time.
+- **Él hozzáadása vagy törlése**: Közvetlenül módosítjuk a megadott élt a szomszédsági mátrixban, $O(1)$ időben. Mivel irányítatlan gráfról van szó, mindkét irányú élt egyszerre kell frissíteni.
+- **Csúcs hozzáadása**: Egy sort és egy oszlopot adunk a szomszédsági mátrix végéhez, és $0$-kal töltjük fel, $O(n)$ időben.
+- **Csúcs törlése**: Törlünk egy sort és egy oszlopot a szomszédsági mátrixból. A legrosszabb eset az első sor és oszlop törlésekor áll fenn, amikor $(n-1)^2$ elemet kell „felfelé és balra mozgatni", ezért az időbeli komplexitás $O(n^2)$.
+- **Inicializálás**: $n$ csúcsot adunk át, inicializálunk egy $n$ hosszúságú `vertices` csúcslistát $O(n)$ időben; inicializálunk egy $n \times n$ méretű `adjMat` szomszédsági mátrixot $O(n^2)$ időben.
 
 === "<1>"
-    ![Initialization, adding and removing edges, adding and removing vertices in adjacency matrix](graph_operations.assets/adjacency_matrix_step1_initialization.png)
+    ![Szomszédsági mátrix inicializálása, élek és csúcsok hozzáadása és törlése](graph_operations.assets/adjacency_matrix_step1_initialization.png)
 
 === "<2>"
     ![adjacency_matrix_add_edge](graph_operations.assets/adjacency_matrix_step2_add_edge.png)
@@ -26,24 +26,24 @@ Given an undirected graph with $n$ vertices, the various operations are implemen
 === "<5>"
     ![adjacency_matrix_remove_vertex](graph_operations.assets/adjacency_matrix_step5_remove_vertex.png)
 
-The following is the implementation code for graphs represented using an adjacency matrix:
+Az alábbiakban a szomszédsági mátrixszal ábrázolt gráfok implementációs kódja látható:
 
 ```src
 [file]{graph_adjacency_matrix}-[class]{graph_adj_mat}-[func]{}
 ```
 
-## Implementation Based on Adjacency List
+## Szomszédsági Listán Alapuló Implementáció
 
-Given an undirected graph with a total of $n$ vertices and $m$ edges, the various operations can be implemented as shown in the figure below.
+Adott egy irányítatlan gráf, amelynek összesen $n$ csúcsa és $m$ éle van; a különféle műveletek az alábbi ábra szerint implementálhatók.
 
-- **Adding an edge**: Add the edge at the end of the corresponding vertex's linked list, using $O(1)$ time. Since it is an undirected graph, edges in both directions need to be added simultaneously.
-- **Removing an edge**: Find and remove the specified edge in the corresponding vertex's linked list, using $O(m)$ time. In an undirected graph, edges in both directions need to be removed simultaneously.
-- **Adding a vertex**: Add a linked list in the adjacency list and set the new vertex as the head node of the list, using $O(1)$ time.
-- **Removing a vertex**: Traverse the entire adjacency list and remove all edges containing the specified vertex, using $O(n + m)$ time.
-- **Initialization**: Create $n$ vertices and $2m$ edges in the adjacency list, using $O(n + m)$ time.
+- **Él hozzáadása**: Az élt a megfelelő csúcs láncolt listájának végéhez fűzzük, $O(1)$ időben. Mivel irányítatlan gráfról van szó, mindkét irányú élt egyszerre kell hozzáadni.
+- **Él törlése**: Megkeressük és töröljük a megadott élt a megfelelő csúcs láncolt listájából, $O(m)$ időben. Irányítatlan gráfban mindkét irányú élt egyszerre kell törölni.
+- **Csúcs hozzáadása**: Új láncolt listát adunk a szomszédsági listához, és az új csúcsot a lista fejcsomópontjaként állítjuk be, $O(1)$ időben.
+- **Csúcs törlése**: Bejárjuk a teljes szomszédsági listát, és eltávolítjuk az adott csúcsot tartalmazó összes élt, $O(n + m)$ időben.
+- **Inicializálás**: $n$ csúcsot és $2m$ élt hozunk létre a szomszédsági listában, $O(n + m)$ időben.
 
 === "<1>"
-    ![Initialization, adding and removing edges, adding and removing vertices in adjacency list](graph_operations.assets/adjacency_list_step1_initialization.png)
+    ![Szomszédsági lista inicializálása, élek és csúcsok hozzáadása és törlése](graph_operations.assets/adjacency_list_step1_initialization.png)
 
 === "<2>"
     ![adjacency_list_add_edge](graph_operations.assets/adjacency_list_step2_add_edge.png)
@@ -57,30 +57,30 @@ Given an undirected graph with a total of $n$ vertices and $m$ edges, the variou
 === "<5>"
     ![adjacency_list_remove_vertex](graph_operations.assets/adjacency_list_step5_remove_vertex.png)
 
-The following is the adjacency list code implementation. Compared to the figure above, the actual code has the following differences.
+Az alábbiakban a szomszédsági lista implementációs kódja látható. A fenti ábrához képest a tényleges kód az alábbi eltéréseket mutatja.
 
-- For convenience in adding and removing vertices, and to simplify the code, we use lists (dynamic arrays) instead of linked lists.
-- A hash table is used to store the adjacency list, where `key` is the vertex instance and `value` is the list (linked list) of adjacent vertices for that vertex.
+- A csúcsok hozzáadásának és törlésének megkönnyítése, valamint a kód egyszerűsítése érdekében láncolt listák helyett listákat (dinamikus tömböket) használunk.
+- A szomszédsági lista tárolásához hash táblát használunk, ahol a `key` a csúcs példánya, a `value` pedig az adott csúcs szomszédos csúcsainak listája (láncolt lista).
 
-Additionally, we use the `Vertex` class to represent vertices in the adjacency list. The reason for this is: if we used list indices to distinguish different vertices as with adjacency matrices, then to delete the vertex at index $i$, we would need to traverse the entire adjacency list and decrement all indices greater than $i$ by $1$, which is very inefficient. However, if each vertex is a unique `Vertex` instance, deleting a vertex does not require modifying other vertices.
+Emellett a szomszédsági listában a csúcsok jelölésére a `Vertex` osztályt használjuk. Ennek oka a következő: ha a szomszédsági mátrixhoz hasonlóan lista-indexeket alkalmaznánk a különböző csúcsok megkülönböztetésére, akkor az $i$-edik indexű csúcs törlésekor be kellene járni a teljes szomszédsági listát, és az összes $i$-nél nagyobb indexet $1$-gyel csökkenteni, ami nagyon nem hatékony. Ha azonban minden csúcs egyedi `Vertex` példány, a csúcs törlése nem igényli a többi csúcs módosítását.
 
 ```src
 [file]{graph_adjacency_list}-[class]{graph_adj_list}-[func]{}
 ```
 
-## Efficiency Comparison
+## Hatékonysági Összehasonlítás
 
-Assuming the graph has $n$ vertices and $m$ edges, the table below compares the time efficiency and space efficiency of adjacency matrices and adjacency lists. Note that the adjacency list (linked list) corresponds to the implementation in this text, while the adjacency list (hash table) refers specifically to the implementation where all linked lists are replaced with hash tables.
+Feltéve, hogy a gráfnak $n$ csúcsa és $m$ éle van, az alábbi táblázat összehasonlítja a szomszédsági mátrix és a szomszédsági lista időbeli és térbeli hatékonyságát. Megjegyzendő, hogy a szomszédsági lista (láncolt lista) ebben a szövegben ismertetett implementációnak felel meg, míg a szomszédsági lista (hash tábla) kifejezetten arra az implementációra utal, amelynél az összes láncolt listát hash táblákra cserélik.
 
-<p align="center"> Table <id> &nbsp; Comparison of adjacency matrix and adjacency list </p>
+<p align="center"> Table <id> &nbsp; Szomszédsági mátrix és szomszédsági lista összehasonlítása </p>
 
-|                        | Adjacency matrix | Adjacency list (linked list) | Adjacency list (hash table) |
-| ---------------------- | ---------------- | ---------------------------- | --------------------------- |
-| Determine adjacency    | $O(1)$           | $O(n)$                       | $O(1)$                      |
-| Add an edge            | $O(1)$           | $O(1)$                       | $O(1)$                      |
-| Remove an edge         | $O(1)$           | $O(n)$                       | $O(1)$                      |
-| Add a vertex           | $O(n)$           | $O(1)$                       | $O(1)$                      |
-| Remove a vertex        | $O(n^2)$         | $O(n + m)$                   | $O(n)$                      |
-| Memory space usage     | $O(n^2)$         | $O(n + m)$                   | $O(n + m)$                  |
+|                        | Szomszédsági mátrix | Szomszédsági lista (láncolt lista) | Szomszédsági lista (hash tábla) |
+| ---------------------- | ------------------- | ---------------------------------- | ------------------------------- |
+| Szomszédosság eldöntése | $O(1)$             | $O(n)$                             | $O(1)$                          |
+| Él hozzáadása          | $O(1)$              | $O(1)$                             | $O(1)$                          |
+| Él törlése             | $O(1)$              | $O(n)$                             | $O(1)$                          |
+| Csúcs hozzáadása       | $O(n)$              | $O(1)$                             | $O(1)$                          |
+| Csúcs törlése          | $O(n^2)$            | $O(n + m)$                         | $O(n)$                          |
+| Memóriafelhasználás    | $O(n^2)$            | $O(n + m)$                         | $O(n + m)$                      |
 
-Observing the table above, it appears that the adjacency list (hash table) has the best time efficiency and space efficiency. However, in practice, operating on edges in the adjacency matrix is more efficient, requiring only a single array access or assignment operation. Overall, adjacency matrices embody the principle of "trading space for time", while adjacency lists embody "trading time for space".
+A fenti táblázat alapján úgy tűnik, hogy a szomszédsági lista (hash tábla) rendelkezik a legjobb időbeli és térbeli hatékonysággal. A gyakorlatban azonban a szomszédsági mátrixon végzett élműveletek hatékonyabbak, mivel csupán egyetlen tömbelérési vagy -hozzárendelési műveletet igényelnek. Összességében a szomszédsági mátrix a „tér idő ellenében" elvét testesíti meg, míg a szomszédsági lista a „idő tér ellenében" elvét.

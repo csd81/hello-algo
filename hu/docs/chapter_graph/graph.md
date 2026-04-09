@@ -1,6 +1,6 @@
-# Graph
+# Gráf
 
-A <u>graph</u> is a nonlinear data structure consisting of <u>vertices</u> and <u>edges</u>. We can abstractly represent a graph $G$ as a set of vertices $V$ and a set of edges $E$. The following example shows a graph containing 5 vertices and 7 edges.
+A <u>gráf</u> egy nemlineáris adatszerkezet, amely <u>csúcsokból</u> és <u>élekből</u> áll. Egy $G$ gráfot elvontan egy $V$ csúcshalmaz és egy $E$ élhalmaz segítségével ábrázolhatunk. Az alábbi példa egy 5 csúcsot és 7 élt tartalmazó gráfot mutat.
 
 $$
 \begin{aligned}
@@ -10,74 +10,74 @@ G & = \{ V, E \} \newline
 \end{aligned}
 $$
 
-If we view vertices as nodes and edges as references (pointers) connecting the nodes, we can see graphs as a data structure extended from linked lists. As shown in the figure below, **compared to linear relationships (linked lists) and divide-and-conquer relationships (trees), network relationships (graphs) have a higher degree of freedom and are therefore more complex**.
+Ha a csúcsokat csomópontokként, az éleket pedig a csomópontokat összekötő hivatkozásokként (mutatókként) tekintjük, a gráfokat úgy szemlélhetjük, mint a láncolt listákból kibővített adatszerkezeteket. Ahogy az alábbi ábra mutatja, **a lineáris kapcsolatokhoz (láncolt listák) és az oszd meg és uralkodj kapcsolatokhoz (fák) képest a hálózati kapcsolatok (gráfok) magasabb fokú szabadsággal rendelkeznek, ezért összetettebbek**.
 
-![Relationships among linked lists, trees, and graphs](graph.assets/linkedlist_tree_graph.png)
+![Kapcsolatok láncolt listák, fák és gráfok között](graph.assets/linkedlist_tree_graph.png)
 
-## Common Types and Terminology of Graphs
+## Gráfok Típusai és Terminológiája
 
-Graphs can be divided into <u>undirected graphs</u> and <u>directed graphs</u> based on whether edges have direction, as shown in the figure below.
+A gráfokat aszerint, hogy az élek rendelkeznek-e iránnyal, <u>irányítatlan gráfokra</u> és <u>irányított gráfokra</u> oszthatjuk, ahogy az alábbi ábra mutatja.
 
-- In undirected graphs, edges represent a "bidirectional" connection between two vertices, such as the "friend relationship" on WeChat or QQ.
-- In directed graphs, edges have directionality, meaning edges $A \rightarrow B$ and $A \leftarrow B$ are independent of each other, such as the "follow" and "be followed" relationships on Weibo or TikTok.
+- Az irányítatlan gráfokban az élek két csúcs közötti „kétirányú" kapcsolatot jelölnek, például a WeChat vagy QQ „baráti kapcsolatait".
+- Az irányított gráfokban az éleknek iránya van, vagyis az $A \rightarrow B$ és az $A \leftarrow B$ élek egymástól függetlenek, például a Weibón vagy a TikTokon a „követés" és a „követett" kapcsolatok.
 
-![Directed and undirected graphs](graph.assets/directed_graph.png)
+![Irányított és irányítatlan gráfok](graph.assets/directed_graph.png)
 
-Graphs can be divided into <u>connected graphs</u> and <u>disconnected graphs</u> based on whether all vertices are connected, as shown in the figure below.
+A gráfokat aszerint, hogy az összes csúcs összefüggő-e, <u>összefüggő gráfokra</u> és <u>nem összefüggő gráfokra</u> oszthatjuk, ahogy az alábbi ábra mutatja.
 
-- For connected graphs, starting from any vertex, all other vertices can be reached.
-- For disconnected graphs, starting from a certain vertex, at least one vertex cannot be reached.
+- Az összefüggő gráfokban bármely csúcsból kiindulva az összes többi csúcs elérhető.
+- A nem összefüggő gráfokban egy adott csúcsból kiindulva legalább egy csúcs nem érhető el.
 
-![Connected and disconnected graphs](graph.assets/connected_graph.png)
+![Összefüggő és nem összefüggő gráfok](graph.assets/connected_graph.png)
 
-We can also add a "weight" variable to edges, resulting in <u>weighted graphs</u> as shown in the figure below. For example, in mobile games like "Honor of Kings", the system calculates the "intimacy" between players based on their shared game time, and such intimacy networks can be represented using weighted graphs.
+Az élekhez „súly" változót is adhatunk, így <u>súlyozott gráfokat</u> kapunk, ahogy az alábbi ábra mutatja. Például az olyan mobilos játékokban, mint a „Királyok Becsülete", a rendszer a játékosok közötti közös játékidő alapján számítja ki a köztük lévő „közelséget", és az ilyen közelségi hálózatok súlyozott gráfokkal ábrázolhatók.
 
-![Weighted and unweighted graphs](graph.assets/weighted_graph.png)
+![Súlyozott és súlyozatlan gráfok](graph.assets/weighted_graph.png)
 
-Graph data structures include the following commonly used terms.
+A gráf adatszerkezetek tartalmazzák az alábbi, gyakran használt fogalmakat.
 
-- <u>Adjacency</u>: When two vertices are connected by an edge, these two vertices are said to be "adjacent". In the figure above, the adjacent vertices of vertex 1 are vertices 2, 3, and 5.
-- <u>Path</u>: The sequence of edges from vertex A to vertex B is called a "path" from A to B. In the figure above, the edge sequence 1-5-2-4 is a path from vertex 1 to vertex 4.
-- <u>Degree</u>: The number of edges a vertex has. For directed graphs, <u>in-degree</u> indicates how many edges point to the vertex, and <u>out-degree</u> indicates how many edges point out from the vertex.
+- <u>Szomszédosság</u>: Amikor két csúcsot él köt össze, azt mondjuk, hogy a két csúcs „szomszédos". A fenti ábrán az 1-es csúcs szomszédjai a 2-es, 3-as és 5-ös csúcsok.
+- <u>Út</u>: Az A csúcstól a B csúcsig vezető élek sorozatát „útnak" nevezzük A-tól B-ig. A fenti ábrán az 1-5-2-4 élsorozat egy út az 1-es csúcstól a 4-es csúcsig.
+- <u>Fok</u>: Egy csúcshoz tartozó élek száma. Irányított gráfoknál a <u>befok</u> azt jelöli, hány él mutat a csúcsra, a <u>kifok</u> pedig azt, hány él indul ki a csúcsból.
 
-## Representation of Graphs
+## Gráfok Ábrázolása
 
-Common representations of graphs include "adjacency matrices" and "adjacency lists". The following uses undirected graphs as examples.
+A gráfok leggyakoribb ábrázolási módjai a „szomszédsági mátrix" és a „szomszédsági lista". A következőkben irányítatlan gráfokat használunk példaként.
 
-### Adjacency Matrix
+### Szomszédsági Mátrix
 
-Given a graph with $n$ vertices, an <u>adjacency matrix</u> uses an $n \times n$ matrix to represent the graph, where each row (column) represents a vertex, and matrix elements represent edges, using $1$ or $0$ to indicate whether an edge exists between two vertices.
+Adott egy $n$ csúcsból álló gráf; a <u>szomszédsági mátrix</u> egy $n \times n$-es mátrixszal ábrázolja a gráfot, ahol minden sor (oszlop) egy-egy csúcsot jelöl, a mátrix elemei pedig az éleket jelölik: $1$ vagy $0$ értékkel jelzik, hogy két csúcs között van-e él.
 
-As shown in the figure below, let the adjacency matrix be $M$ and the vertex list be $V$. Then matrix element $M[i, j] = 1$ indicates that an edge exists between vertex $V[i]$ and vertex $V[j]$, whereas $M[i, j] = 0$ indicates no edge between the two vertices.
+Ahogy az alábbi ábra mutatja, legyen a szomszédsági mátrix $M$, a csúcslista pedig $V$. Ekkor az $M[i, j] = 1$ mátrixelem azt jelzi, hogy él van a $V[i]$ és a $V[j]$ csúcs között, míg az $M[i, j] = 0$ azt jelzi, hogy nincs él a két csúcs között.
 
-![Adjacency matrix representation of a graph](graph.assets/adjacency_matrix.png)
+![Gráf szomszédsági mátrixos ábrázolása](graph.assets/adjacency_matrix.png)
 
-Adjacency matrices have the following properties.
+A szomszédsági mátrixoknak az alábbi tulajdonságai vannak.
 
-- In simple graphs, vertices cannot connect to themselves, so the elements on the main diagonal of the adjacency matrix are meaningless.
-- For undirected graphs, edges in both directions are equivalent, so the adjacency matrix is symmetric about the main diagonal.
-- Replacing the elements of the adjacency matrix from $1$ and $0$ to weights allows representation of weighted graphs.
+- Egyszerű gráfokban a csúcsok nem kapcsolódhatnak önmagukhoz, ezért a szomszédsági mátrix főátlójában lévő elemeknek nincs jelentőségük.
+- Irányítatlan gráfokban mindkét irányú él egyenértékű, ezért a szomszédsági mátrix szimmetrikus a főátlóra.
+- Ha a szomszédsági mátrix $1$ és $0$ elemeit súlyokra cseréljük, súlyozott gráfok is ábrázolhatók.
 
-When using adjacency matrices to represent graphs, we can directly access matrix elements to obtain edges, resulting in highly efficient addition, deletion, lookup, and modification operations, all with a time complexity of $O(1)$. However, the space complexity of the matrix is $O(n^2)$, which consumes significant memory.
+Amikor szomszédsági mátrixokkal ábrázolunk gráfokat, közvetlenül elérhetjük a mátrixelemeket az élek lekéréséhez, így a hozzáadás, törlés, keresés és módosítás műveletek rendkívül hatékonyak, és mindegyikük időbeli komplexitása $O(1)$. A mátrix térbeli komplexitása azonban $O(n^2)$, ami jelentős memóriafelhasználást jelent.
 
-### Adjacency List
+### Szomszédsági Lista
 
-An <u>adjacency list</u> uses $n$ linked lists to represent a graph, with linked list nodes representing vertices. The $i$-th linked list corresponds to vertex $i$ and stores all adjacent vertices of that vertex (vertices connected to that vertex). The figure below shows an example of a graph stored using an adjacency list.
+A <u>szomszédsági lista</u> $n$ láncolt listával ábrázolja a gráfot, ahol a listaelemek csúcsokat jelölnek. Az $i$-edik láncolt lista az $i$-edik csúcsnak felel meg, és az adott csúcs összes szomszédjára (az adott csúcshoz kapcsolódó csúcsokra) mutat. Az alábbi ábra egy szomszédsági listával tárolt gráfra mutat példát.
 
-![Adjacency list representation of a graph](graph.assets/adjacency_list.png)
+![Gráf szomszédsági listás ábrázolása](graph.assets/adjacency_list.png)
 
-Adjacency lists only store edges that actually exist, and the total number of edges is typically much less than $n^2$, making them more space-efficient. However, finding edges in an adjacency list requires traversing the linked list, so its time efficiency is inferior to that of adjacency matrices.
+A szomszédsági lista csak a ténylegesen létező éleket tárolja, és az élek teljes száma általában jóval kevesebb $n^2$-nél, ezért hatékonyabban használja a tárhelyet. Az élek megtalálásához azonban a szomszédsági listában be kell járni a láncolt listát, ezért az időbeli hatékonysága alatta marad a szomszédsági mátrixénak.
 
-Observing the figure above, **the structure of adjacency lists is very similar to "chaining" in hash tables, so we can adopt similar methods to optimize efficiency**. For example, when linked lists are long, they can be converted to AVL trees or red-black trees, thereby optimizing time efficiency from $O(n)$ to $O(\log n)$; linked lists can also be converted to hash tables, thereby reducing time complexity to $O(1)$.
+A fenti ábra alapján **a szomszédsági lista szerkezete nagyon hasonlít a hash táblák „láncolás" módszeréhez, ezért hasonló megközelítésekkel optimalizálhatjuk a hatékonyságot**. Ha például a láncolt listák hosszúak, AVL-fákra vagy vörös-fekete fákra cserélhetők, ezzel az időbeli hatékonyságot $O(n)$-ről $O(\log n)$-re javítva; a láncolt listák hash táblákra is cserélhetők, így az időbeli komplexitás $O(1)$-re csökkenthető.
 
-## Common Applications of Graphs
+## Gráfok Általános Alkalmazásai
 
-As shown in the table below, many real-world systems can be modeled using graphs, and corresponding problems can be reduced to graph computation problems.
+Ahogy az alábbi táblázat mutatja, számos valós rendszer modellezhető gráfokkal, és a megfelelő problémák gráfszámítási problémákra vezethetők vissza.
 
-<p align="center"> Table <id> &nbsp; Common graphs in real life </p>
+<p align="center"> Table <id> &nbsp; Mindennapi életből vett gráfok </p>
 
-|                | Vertices        | Edges                                  | Graph Computation Problem     |
-| -------------- | --------------- | -------------------------------------- | ----------------------------- |
-| Social network | Users           | Friend relationships                   | Potential friend recommendation |
-| Subway lines   | Stations        | Connectivity between stations          | Shortest route recommendation |
-| Solar system   | Celestial bodies | Gravitational forces between celestial bodies | Planetary orbit calculation   |
+|                | Csúcsok           | Élek                                     | Gráfszámítási probléma           |
+| -------------- | ----------------- | ---------------------------------------- | -------------------------------- |
+| Közösségi háló | Felhasználók      | Baráti kapcsolatok                       | Potenciális barátok ajánlása     |
+| Metróvonalak   | Állomások         | Állomások közötti összeköttetések        | Legrövidebb útvonal ajánlása     |
+| Naprendszer    | Égitestek         | Égitestek közötti gravitációs erők       | Bolygópálya-számítás             |
