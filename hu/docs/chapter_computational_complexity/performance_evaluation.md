@@ -1,49 +1,49 @@
-# Algorithm Efficiency Evaluation
+# Algoritmusok hatékonyságának kiértékelése
 
-In algorithm design, we pursue the following two levels of objectives sequentially.
+Az algoritmus-tervezésben a következő két szintű célkitűzést követjük sorban.
 
-1. **Finding a solution to the problem**: The algorithm must reliably obtain the correct solution within the specified input range.
-2. **Seeking the optimal solution**: Multiple solutions may exist for the same problem, and we hope to find an algorithm that is as efficient as possible.
+1. **A probléma megoldásának megtalálása**: Az algoritmusnak megbízhatóan helyes megoldást kell adnia a megadott bemeneti tartományon belül.
+2. **Az optimális megoldás keresése**: Ugyanarra a problémára több megoldás is létezhet, és olyan algoritmust szeretnénk találni, amely a lehető leghatékonyabb.
 
-In other words, under the premise of being able to solve the problem, algorithm efficiency has become the primary evaluation criterion for measuring the quality of algorithms. It includes the following two dimensions.
+Más szóval, a probléma megoldhatóságának feltételezése mellett az algoritmus hatékonysága vált az elsődleges értékelési szemponttá az algoritmusok minőségének mérésére. Ez a következő két dimenziót foglalja magában.
 
-- **Time efficiency**: The length of time the algorithm runs.
-- **Space efficiency**: The size of memory space the algorithm occupies.
+- **Időhatékonyság**: Az algoritmus futási ideje.
+- **Térhatékonyság**: Az algoritmus által elfoglalt memóriaterület mérete.
 
-In short, **our goal is to design data structures and algorithms that are "both fast and memory-efficient"**. Effectively evaluating algorithm efficiency is crucial, because only in this way can we compare various algorithms and guide the algorithm design and optimization process.
+Röviden összefoglalva, **célunk olyan adatszerkezetek és algoritmusok tervezése, amelyek „egyszerre gyorsak és memóriahatékonyak"**. Az algoritmusok hatékonyságának eredményes értékelése elengedhetetlen, mert csak így tudjuk összehasonlítani a különböző algoritmusokat, és irányítani az algoritmus-tervezési és optimalizálási folyamatot.
 
-Efficiency evaluation methods are mainly divided into two types: actual testing and theoretical estimation.
+A hatékonyságértékelési módszerek főként két típusra oszthatók: tényleges tesztelés és elméleti becslés.
 
-## Actual Testing
+## Tényleges tesztelés
 
-Suppose we now have algorithm `A` and algorithm `B`, both of which can solve the same problem, and we need to compare the efficiency of these two algorithms. The most direct method is to find a computer, run these two algorithms, and monitor and record their running time and memory usage. This evaluation approach can reflect the real situation, but it also has considerable limitations.
+Tegyük fel, hogy van egy `A` algoritmusunk és egy `B` algoritmusunk, mindkettő ugyanazt a problémát oldja meg, és össze kell hasonlítanunk a két algoritmus hatékonyságát. A legközvetlenebb módszer egy számítógép megkeresése, mindkét algoritmus futtatása, valamint futási idejük és memóriahasználatuk megfigyelése és rögzítése. Ez az értékelési megközelítés a valós helyzetet tükrözi, de számos korlátja is van.
 
-On one hand, **it is difficult to eliminate interference factors from the testing environment**. Hardware configuration affects the performance of algorithms. For example, if an algorithm has a high degree of parallelism, it is more suitable for running on multi-core CPUs; if an algorithm has intensive memory operations, it will perform better on high-performance memory. In other words, the test results of an algorithm on different machines may be inconsistent. This means we need to test on various machines and calculate average efficiency, which is impractical.
+Egyrészt **nehéz kiküszöbölni a tesztkörnyezet zavaró tényezőit**. A hardverkonfiguráció befolyásolja az algoritmusok teljesítményét. Például ha egy algoritmus magas párhuzamossági fokú, jobban futtatható több processzormagos CPU-n; ha egy algoritmusnak intenzív memóriaoperációi vannak, jobban teljesít nagy teljesítményű memóriával. Más szóval, egy algoritmus tesztelési eredményei különböző gépeken eltérőek lehetnek. Ez azt jelenti, hogy különböző gépeken kell tesztelni és kiszámítani az átlagos hatékonyságot, ami nem praktikus.
 
-On the other hand, **conducting complete testing is very resource-intensive**. As the input data volume changes, the algorithm will exhibit different efficiencies. For example, when the input data volume is small, the running time of algorithm `A` is shorter than algorithm `B`; but when the input data volume is large, the test results may be exactly the opposite. Therefore, to obtain convincing conclusions, we need to test input data of various scales, which requires a large amount of computational resources.
+Másrészt **a teljes körű tesztelés nagyon erőforrás-igényes**. Ahogy a bemeneti adatok mennyisége változik, az algoritmus különböző hatékonyságokat mutat. Például ha a bemeneti adatok mennyisége kicsi, az `A` algoritmus futási ideje rövidebb, mint a `B` algoritmusé; de ha a bemeneti adatok mennyisége nagy, a tesztelési eredmények ennek pontosan az ellenkezőjét mutathatják. Ezért meggyőző következtetések levonásához különböző léptékű bemeneti adatokat kell tesztelni, ami nagy számítási erőforrásokat igényel.
 
-## Theoretical Estimation
+## Elméleti becslés
 
-Since actual testing has considerable limitations, we can consider evaluating algorithm efficiency through calculations alone. This estimation method is called <u>asymptotic complexity analysis</u>, or <u>complexity analysis</u> for short.
+Mivel a tényleges tesztelésnek jelentős korlátai vannak, megfontolhatjuk az algoritmusok hatékonyságának kizárólag számítások útján történő értékelését. Ezt a becslési módszert <u>aszimptotikus komplexitáselemzésnek</u>, röviden <u>komplexitáselemzésnek</u> nevezzük.
 
-Complexity analysis can reflect the relationship between the time and space resources required for algorithm execution and the input data scale. **It describes the growth trend of the time and space required for algorithm execution as the input data scale increases**. This definition is somewhat convoluted, so we can break it down into three key points to understand.
+A komplexitáselemzés tükrözi az algoritmus végrehajtásához szükséges idő- és térerőforrások, valamint a bemeneti adatok léptéke közötti összefüggést. **Leírja az algoritmus végrehajtásához szükséges idő és tér növekedési tendenciáját a bemeneti adatok léptékének növekedésével**. Ez a meghatározás némileg bonyolult, ezért három kulcsfontosságú pontra bonthatjuk le a megértés érdekében.
 
-- "Time and space resources" correspond to <u>time complexity</u> and <u>space complexity</u>, respectively.
-- "As the input data scale increases" means that complexity reflects the relationship between algorithm running efficiency and input data scale.
-- "Growth trend of time and space" indicates that complexity analysis focuses not on the specific values of running time or occupied space, but on how "fast" time or space grows.
+- Az „idő- és térerőforrások" az <u>időbonyolultságnak</u> és a <u>térbonyolultságnak</u> felelnek meg.
+- A „bemeneti adatok léptékének növekedésével" azt jelenti, hogy a komplexitás tükrözi az algoritmus futási hatékonyságának és a bemeneti adatok léptékének összefüggését.
+- Az „idő és tér növekedési tendenciája" azt jelzi, hogy a komplexitáselemzés nem a futási idő vagy az elfoglalt tér konkrét értékeire összpontosít, hanem arra, hogy az idő vagy tér milyen „gyorsan" növekszik.
 
-**Complexity analysis overcomes the drawbacks of the actual testing method**, reflected in the following aspects.
+**A komplexitáselemzés leküzdi a tényleges tesztelési módszer hátrányait**, amelyek a következő szempontokban tükröződnek.
 
-- It does not need to actually run the code, making it more environmentally friendly and energy-efficient.
-- It is independent of the testing environment, and the analysis results are applicable to all running platforms.
-- It can reflect algorithm efficiency at different data volumes, especially algorithm performance at large data volumes.
+- Nem szükséges ténylegesen futtatni a kódot, ami környezetbarátabbá és energiahatékonyabbá teszi.
+- Független a tesztkörnyezettől, és az elemzési eredmények minden futtatási platformon alkalmazhatók.
+- Tükrözheti az algoritmusok hatékonyságát különböző adatmennyiségek esetén, különösen nagy adatmennyiségek esetén.
 
 !!! tip
 
-    If you are still confused about the concept of complexity, don't worry—we will introduce it in detail in subsequent chapters.
+    Ha még mindig homályos a komplexitás fogalma, ne aggódj – a következő fejezetekben részletesen tárgyaljuk.
 
-Complexity analysis provides us with a "ruler" for evaluating algorithm efficiency, allowing us to measure the time and space resources required to execute a certain algorithm and compare the efficiency between different algorithms.
+A komplexitáselemzés „mérőeszközt" nyújt az algoritmusok hatékonyságának értékeléséhez, lehetővé téve, hogy megmérjük egy adott algoritmus végrehajtásához szükséges idő- és térerőforrásokat, és összehasonlítsuk a különböző algoritmusok hatékonyságát.
 
-Complexity is a mathematical concept that may be relatively abstract for beginners, with a relatively high learning difficulty. From this perspective, complexity analysis may not be very suitable as the first content to be introduced. However, when we discuss the characteristics of a certain data structure or algorithm, it is difficult to avoid analyzing its running speed and space usage.
+A komplexitás matematikai fogalom, amely a kezdők számára viszonylag elvont lehet, és viszonylag magas a tanulási nehézség. Ebből a szempontból a komplexitáselemzés nem feltétlenül a legalkalmasabb első tárgyalandó tartalom. Azonban amikor egy adott adatszerkezet vagy algoritmus jellemzőiről tárgyalunk, nehéz elkerülni a futási sebesség és a memóriahasználat elemzését.
 
-In summary, it is recommended that before diving deep into data structures and algorithms, **you first establish a preliminary understanding of complexity analysis so that you can complete complexity analysis of simple algorithms**.
+Összefoglalva, ajánlott, hogy mielőtt mélyen elmerülnél az adatszerkezetekben és algoritmusokban, **először alakíts ki egy előzetes megértést a komplexitáselemzésről, hogy képes legyél egyszerű algoritmusok komplexitáselemzésére**.

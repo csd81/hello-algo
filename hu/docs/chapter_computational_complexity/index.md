@@ -1,9 +1,9 @@
-# Complexity Analysis
+# Komplexitáselemzés
 
-![Complexity analysis](../assets/covers/chapter_complexity_analysis.jpg)
+![Komplexitáselemzés](../assets/covers/chapter_complexity_analysis.jpg)
 
 !!! abstract
 
-    Complexity analysis is like a space-time guide in the vast universe of algorithms.
+    A komplexitáselemzés olyan, mint egy tér-idő útmutató az algoritmusok hatalmas univerzumában.
 
-    It leads us to explore deeply within the two dimensions of time and space, seeking more elegant solutions.
+    Mélyebb felfedezésre vezet minket az idő és a tér két dimenziójában, elegánsabb megoldások keresésére.
