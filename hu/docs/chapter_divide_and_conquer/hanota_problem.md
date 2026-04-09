@@ -1,37 +1,37 @@
-# Hanota Problem
+# Hanoi-probléma
 
-In merge sort and building binary trees, we decompose the original problem into two subproblems, each half the size of the original problem. However, for the hanota problem, we adopt a different decomposition strategy.
+Az összefésüléses rendezésnél és a bináris fák felépítésénél az eredeti problémát két, az eredeti probléma méretének felével rendelkező részproblémára bontottuk. A Hanoi-problémánál azonban egy eltérő lebontási stratégiát alkalmazunk.
 
 !!! question
 
-    Given three pillars, denoted as `A`, `B`, and `C`. Initially, pillar `A` has $n$ discs stacked on it, arranged from top to bottom in ascending order of size. Our task is to move these $n$ discs to pillar `C` while maintaining their original order (as shown in the figure below). The following rules must be followed when moving the discs.
+    Adott három oszlop, amelyeket `A`, `B` és `C`-vel jelölünk. Kezdetben az `A` oszlopon $n$ korong van egymásra rakva, méret szerint növekvő sorrendben alulról fölfelé. Feladatunk, hogy ezt az $n$ korongot az `A` oszlopról a `C` oszlopra helyezzük át, az eredeti sorrendjüket megőrizve (ahogy az alábbi ábra mutatja). A korongok mozgatásakor a következő szabályokat kell betartani.
 
-    1. A disc can only be taken from the top of one pillar and placed on top of another pillar.
-    2. Only one disc can be moved at a time.
-    3. A smaller disc must always be on top of a larger disc.
+    1. Egy korongot csak egy oszlop tetejéről lehet levenni és egy másik oszlop tetejére helyezni.
+    2. Egyszerre csak egy korongot lehet mozgatni.
+    3. Egy kisebb korongnak mindig egy nagyobb korong tetején kell lennie.
 
-![Example of the hanota problem](hanota_problem.assets/hanota_example.png)
+![A Hanoi-probléma példája](hanota_problem.assets/hanota_example.png)
 
-**We denote the hanota problem of size $i$ as $f(i)$**. For example, $f(3)$ represents moving $3$ discs from `A` to `C`.
+**A $i$ méretű Hanoi-problémát $f(i)$-vel jelöljük**. Például $f(3)$ jelöli azt, hogy $3$ korongot kell áthelyezni az `A`-ról a `C`-re.
 
-### Considering the Base Cases
+### Az alapesetek vizsgálata
 
-As shown in the figure below, for problem $f(1)$, when there is only one disc, we can move it directly from `A` to `C`.
+Ahogy az alábbi ábra mutatja, az $f(1)$ problémánál, amikor csak egy korong van, közvetlenül átmozdíthatjuk az `A`-ról a `C`-re.
 
 === "<1>"
-    ![Solution for a problem of size 1](hanota_problem.assets/hanota_f1_step1.png)
+    ![1-es méretű probléma megoldása](hanota_problem.assets/hanota_f1_step1.png)
 
 === "<2>"
     ![hanota_f1_step2](hanota_problem.assets/hanota_f1_step2.png)
 
-As shown in the figure below, for problem $f(2)$, when there are two discs, **since we must always keep the smaller disc on top of the larger disc, we need to use `B` to assist in the move**.
+Ahogy az alábbi ábra mutatja, az $f(2)$ problémánál, amikor két korong van, **mivel mindig ügyelni kell arra, hogy a kisebb korong a nagyobb felett legyen, a mozgatáshoz `B`-t kell segítségül hívnunk**.
 
-1. First, move the smaller disc from `A` to `B`.
-2. Then move the larger disc from `A` to `C`.
-3. Finally, move the smaller disc from `B` to `C`.
+1. Először mozgassuk a kisebb korongot az `A`-ról a `B`-re.
+2. Majd mozgassuk a nagyobb korongot az `A`-ról a `C`-re.
+3. Végül mozgassuk a kisebb korongot a `B`-ről a `C`-re.
 
 === "<1>"
-    ![Solution for a problem of size 2](hanota_problem.assets/hanota_f2_step1.png)
+    ![2-es méretű probléma megoldása](hanota_problem.assets/hanota_f2_step1.png)
 
 === "<2>"
     ![hanota_f2_step2](hanota_problem.assets/hanota_f2_step2.png)
@@ -42,20 +42,20 @@ As shown in the figure below, for problem $f(2)$, when there are two discs, **si
 === "<4>"
     ![hanota_f2_step4](hanota_problem.assets/hanota_f2_step4.png)
 
-The process of solving problem $f(2)$ can be summarized as: **moving two discs from `A` to `C` with the help of `B`**. Here, `C` is called the target pillar, and `B` is called the buffer pillar.
+Az $f(2)$ megoldásának folyamata így foglalható össze: **két korong átmozgatása az `A`-ról a `C`-re a `B` segítségével**. Itt `C` a céloszlop, `B` pedig a pufferoszlop.
 
-### Subproblem Decomposition
+### Részprobléma-lebontás
 
-For problem $f(3)$, when there are three discs, the situation becomes slightly more complex.
+Az $f(3)$ problémánál, amikor három korong van, a helyzet kissé bonyolultabb.
 
-Since we already know the solutions to $f(1)$ and $f(2)$, we can think from a divide and conquer perspective, **treating the top two discs on `A` as a whole**, and execute the steps shown in the figure below. This successfully moves the three discs from `A` to `C`.
+Mivel már ismerjük az $f(1)$ és $f(2)$ megoldásait, az oszd meg és uralkodj szemszögéből gondolkodhatunk, **az `A`-n lévő felső két korongot egységként kezelve**, és az alábbi ábrán bemutatott lépéseket végrehajtva. Így sikeresen átmozgatjuk a három korongot az `A`-ról a `C`-re.
 
-1. Let `B` be the target pillar and `C` be the buffer pillar, and move two discs from `A` to `B`.
-2. Move the remaining disc from `A` directly to `C`.
-3. Let `C` be the target pillar and `A` be the buffer pillar, and move two discs from `B` to `C`.
+1. Legyen `B` a céloszlop és `C` a pufferoszlop, és mozgassuk a két korongot az `A`-ról a `B`-re.
+2. Mozgassuk a maradék korongot közvetlenül az `A`-ról a `C`-re.
+3. Legyen `C` a céloszlop és `A` a pufferoszlop, és mozgassuk a két korongot a `B`-ről a `C`-re.
 
 === "<1>"
-    ![Solution for a problem of size 3](hanota_problem.assets/hanota_f3_step1.png)
+    ![3-as méretű probléma megoldása](hanota_problem.assets/hanota_f3_step1.png)
 
 === "<2>"
     ![hanota_f3_step2](hanota_problem.assets/hanota_f3_step2.png)
@@ -66,32 +66,32 @@ Since we already know the solutions to $f(1)$ and $f(2)$, we can think from a di
 === "<4>"
     ![hanota_f3_step4](hanota_problem.assets/hanota_f3_step4.png)
 
-Essentially, **we divide problem $f(3)$ into two subproblems $f(2)$ and one subproblem $f(1)$**. By solving these three subproblems in order, the original problem is solved. This shows that the subproblems are independent and their solutions can be merged.
+Lényegében **az $f(3)$ problémát két $f(2)$ részproblémára és egy $f(1)$ részproblémára bontottuk**. A három részprobléma sorban megoldva az eredeti problémát megoldjuk. Ez mutatja, hogy a részproblémák függetlenek és megoldásaik összefésülhetők.
 
-From this, we can summarize the divide and conquer strategy for solving the hanota problem shown in the figure below: divide the original problem $f(n)$ into two subproblems $f(n-1)$ and one subproblem $f(1)$, and solve these three subproblems in the following order.
+Ebből levezethető a Hanoi-probléma megoldásához szükséges oszd meg és uralkodj stratégia, ahogy az alábbi ábra mutatja: az eredeti $f(n)$ problémát két $f(n-1)$ részproblémára és egy $f(1)$ részproblémára bontjuk, és a három részproblémát a következő sorrendben oldjuk meg.
 
-1. Move $n-1$ discs from `A` to `B` with the help of `C`.
-2. Move the remaining $1$ disc directly from `A` to `C`.
-3. Move $n-1$ discs from `B` to `C` with the help of `A`.
+1. Mozgassuk az $n-1$ korongot az `A`-ról a `B`-re a `C` segítségével.
+2. Mozgassuk a maradék $1$ korongot közvetlenül az `A`-ról a `C`-re.
+3. Mozgassuk az $n-1$ korongot a `B`-ről a `C`-re az `A` segítségével.
 
-For these two subproblems $f(n-1)$, **we can recursively divide them in the same way** until reaching the smallest subproblem $f(1)$. The solution to $f(1)$ is known and requires only one move operation.
+A két $f(n-1)$ részproblémánál **ugyanígy rekurzívan oszthatjuk tovább**, amíg el nem érjük a legkisebb $f(1)$ részproblémát. Az $f(1)$ megoldása ismert, és csak egyetlen mozgatási műveletet igényel.
 
-![Divide and conquer strategy for solving the hanota problem](hanota_problem.assets/hanota_divide_and_conquer.png)
+![A Hanoi-probléma megoldásának oszd meg és uralkodj stratégiája](hanota_problem.assets/hanota_divide_and_conquer.png)
 
-### Code Implementation
+### Kód megvalósítása
 
-In the code, we declare a recursive function `dfs(i, src, buf, tar)`, whose purpose is to move the top $i$ discs from pillar `src` to target pillar `tar` with the help of buffer pillar `buf`:
+A kódban egy `dfs(i, src, buf, tar)` rekurzív függvényt deklarálunk, amelynek célja, hogy a felső $i$ korongot a `src` oszlopról a `tar` céloszlopra mozgassa a `buf` pufferoszlop segítségével:
 
 ```src
 [file]{hanota}-[class]{}-[func]{solve_hanota}
 ```
 
-As shown in the figure below, the hanota problem forms a recursion tree of height $n$, where each node represents a subproblem corresponding to an invocation of the `dfs()` function, **therefore the time complexity is $O(2^n)$ and the space complexity is $O(n)$**.
+Ahogy az alábbi ábra mutatja, a Hanoi-probléma $n$ magasságú rekurziós fát alkot, ahol minden csomópont egy részproblémát képvisel, amely megfelel egy `dfs()` függvényhívásnak, **ezért az időbonyolultság $O(2^n)$ és a tárhelybonyolultság $O(n)$**.
 
-![Recursion tree of the hanota problem](hanota_problem.assets/hanota_recursive_tree.png)
+![A Hanoi-probléma rekurziós fája](hanota_problem.assets/hanota_recursive_tree.png)
 
 !!! quote
 
-    The hanota problem originates from an ancient legend. In a temple in ancient India, monks had three tall diamond pillars and $64$ golden discs of different sizes. The monks continuously moved the discs, believing that when the last disc was correctly placed, the world would come to an end.
+    A Hanoi-probléma egy ősi legendából ered. Az ókori Indiában egy templomban a szerzeteseknek három magas gyémántoszlopuk és $64$ különböző méretű aranylap-korongjuk volt. A szerzetesek folyamatosan mozgatták a korongokat, abban a hitben, hogy amikor az utolsó korongot helyesen helyezik el, a világ véget ér.
 
-    However, even if the monks moved one disc per second, it would take approximately $2^{64} \approx 1.84×10^{19}$ seconds, which is about $5850$ billion years, far exceeding current estimates of the age of the universe. Therefore, if this legend is true, we should not need to worry about the end of the world.
+    Azonban még ha a szerzetesek másodpercenként egy korongot mozgattak volna is, körülbelül $2^{64} \approx 1.84 \times 10^{19}$ másodpercre lett volna szükségük, ami körülbelül $5850$ milliárd év, jóval meghaladva az univerzum becsült korát. Ezért ha ez a legenda igaz, nem kell aggódnunk a világ végétől.

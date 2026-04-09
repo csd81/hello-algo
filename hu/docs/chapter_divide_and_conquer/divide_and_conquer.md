@@ -1,48 +1,48 @@
-# Divide and Conquer Algorithms
+# Oszd meg és uralkodj algoritmusok
 
-<u>Divide and conquer</u> is a very important and common algorithm strategy. Divide and conquer is typically implemented based on recursion, consisting of two steps: "divide" and "conquer".
+Az <u>oszd meg és uralkodj</u> egy nagyon fontos és elterjedt algoritmus-stratégia. Az oszd meg és uralkodj jellemzően rekurzión alapul, és két lépésből áll: „felosztás" és „meghódítás".
 
-1. **Divide (partition phase)**: Recursively divide the original problem into two or more subproblems until the smallest subproblem is reached.
-2. **Conquer (merge phase)**: Starting from the smallest subproblems with known solutions, merge the solutions of subproblems from bottom to top to construct the solution to the original problem.
+1. **Felosztás (particionálási fázis)**: Az eredeti problémát rekurzívan két vagy több részproblémára osztjuk, amíg el nem érjük a legkisebb részproblémát.
+2. **Meghódítás (összefésülési fázis)**: Az ismert megoldással rendelkező legkisebb részproblémáktól kezdve alulról felfelé összefésüljük a részproblémák megoldásait, hogy megkapjuk az eredeti probléma megoldását.
 
-As shown in the figure below, "merge sort" is one of the typical applications of the divide and conquer strategy.
+Ahogy az alábbi ábra is mutatja, az „összefésüléses rendezés" az oszd meg és uralkodj stratégia egyik tipikus alkalmazása.
 
-1. **Divide**: Recursively divide the original array (original problem) into two subarrays (subproblems) until the subarray has only one element (smallest subproblem).
-2. **Conquer**: Merge the sorted subarrays (solutions to subproblems) from bottom to top to obtain a sorted original array (solution to the original problem).
+1. **Felosztás**: Az eredeti tömböt (eredeti probléma) rekurzívan két résztömbre (részprobléma) osztjuk, amíg a résztömb csak egy elemet tartalmaz (legkisebb részprobléma).
+2. **Meghódítás**: Az alulról felfelé összefésüljük a rendezett résztömböket (részproblémák megoldásait), hogy megkapjuk a rendezett eredeti tömböt (az eredeti probléma megoldását).
 
-![Divide and conquer strategy of merge sort](divide_and_conquer.assets/divide_and_conquer_merge_sort.png)
+![Az összefésüléses rendezés oszd meg és uralkodj stratégiája](divide_and_conquer.assets/divide_and_conquer_merge_sort.png)
 
-## How to Determine Divide and Conquer Problems
+## Hogyan azonosítsuk az oszd meg és uralkodj problémákat
 
-Whether a problem is suitable for solving with divide and conquer can usually be determined based on the following criteria.
+Azt, hogy egy probléma megoldható-e az oszd meg és uralkodj módszerrel, általában az alábbi szempontok alapján lehet meghatározni.
 
-1. **The problem can be decomposed**: The original problem can be divided into smaller, similar subproblems, and can be recursively divided in the same way.
-2. **Subproblems are independent**: There is no overlap between subproblems, they are independent of each other and can be solved independently.
-3. **Solutions of subproblems can be merged**: The solution to the original problem is obtained by merging the solutions of subproblems.
+1. **A probléma lebontható**: Az eredeti probléma kisebb, hasonló részproblémákra osztható, és ugyanúgy rekurzívan tovább osztható.
+2. **A részproblémák függetlenek**: A részproblémák között nincs átfedés, egymástól függetlenek és önállóan megoldhatók.
+3. **A részproblémák megoldásai összefésülhetők**: Az eredeti probléma megoldása a részproblémák megoldásainak összefésülésével kapható meg.
 
-Clearly, merge sort satisfies these three criteria.
+Nyilvánvaló, hogy az összefésüléses rendezés megfelel mindhárom feltételnek.
 
-1. **The problem can be decomposed**: Recursively divide the array (original problem) into two subarrays (subproblems).
-2. **Subproblems are independent**: Each subarray can be sorted independently (subproblems can be solved independently).
-3. **Solutions of subproblems can be merged**: Two sorted subarrays (solutions of subproblems) can be merged into one sorted array (solution of the original problem).
+1. **A probléma lebontható**: A tömböt (eredeti probléma) rekurzívan két résztömbre (részprobléma) osztjuk.
+2. **A részproblémák függetlenek**: Minden résztömb önállóan rendezhető (a részproblémák egymástól függetlenül megoldhatók).
+3. **A részproblémák megoldásai összefésülhetők**: Két rendezett résztömb (részproblémák megoldásai) összefésülhető egyetlen rendezett tömbbé (az eredeti probléma megoldása).
 
-## Improving Efficiency Through Divide and Conquer
+## Hatékonyság javítása oszd meg és uralkodj segítségével
 
-**Divide and conquer can not only effectively solve algorithmic problems but often also improve algorithm efficiency**. In sorting algorithms, quick sort, merge sort, and heap sort are faster than selection, bubble, and insertion sort because they apply the divide and conquer strategy.
+**Az oszd meg és uralkodj nemcsak hatékonyan oldja meg az algoritmikus problémákat, hanem gyakran javítja az algoritmus hatékonyságát is**. A rendezési algoritmusok között a gyors rendezés, az összefésüléses rendezés és a kupacrendezés gyorsabb, mint a kiválasztásos, buborékos és beillesztéses rendezés, mert az oszd meg és uralkodj stratégiát alkalmazzák.
 
-This raises the question: **Why can divide and conquer improve algorithm efficiency, and what is the underlying logic**? In other words, why is dividing a large problem into multiple subproblems, solving the subproblems, and merging their solutions more efficient than directly solving the original problem? This question can be discussed from two aspects: operation count and parallel computation.
+Ez felveti a kérdést: **Miért javítja az oszd meg és uralkodj az algoritmus hatékonyságát, és mi az alapvető logika?** Más szóval, miért hatékonyabb egy nagy problémát több részproblémára osztani, megoldani azokat, majd összefésülni a megoldásokat, mint közvetlenül megoldani az eredeti problémát? Ezt a kérdést két szempontból lehet megközelíteni: a műveletek számától és a párhuzamos számítástól.
 
-### Operation Count Optimization
+### Műveletek számának optimalizálása
 
-Taking "bubble sort" as an example, processing an array of length $n$ requires $O(n^2)$ time. Suppose we divide the array into two subarrays from the midpoint as shown in the figure below, the division requires $O(n)$ time, sorting each subarray requires $O((n / 2)^2)$ time, and merging the two subarrays requires $O(n)$ time, resulting in an overall time complexity of:
+Vegyük példaként a „buborékos rendezést": egy $n$ hosszúságú tömb feldolgozása $O(n^2)$ időt igényel. Tegyük fel, hogy a tömböt a középponttól két résztömbre osztjuk, ahogy az alábbi ábra mutatja: a felosztás $O(n)$ időt vesz igénybe, minden résztömb rendezése $O((n / 2)^2)$ időt, a két résztömb összefésülése $O(n)$ időt, és az összesített időbonyolultság:
 
 $$
 O(n + (\frac{n}{2})^2 \times 2 + n) = O(\frac{n^2}{2} + 2n)
 $$
 
-![Bubble sort before and after array division](divide_and_conquer.assets/divide_and_conquer_bubble_sort.png)
+![Buborékos rendezés tömbfelosztás előtt és után](divide_and_conquer.assets/divide_and_conquer_bubble_sort.png)
 
-Next, we compute the following inequality, where the left and right sides represent the total number of operations before and after division, respectively:
+Ezután kiszámítjuk az alábbi egyenlőtlenséget, ahol a bal és jobb oldal a felosztás előtti és utáni összes műveletek számát jelenti:
 
 $$
 \begin{aligned}
@@ -52,40 +52,40 @@ n(n - 4) & > 0
 \end{aligned}
 $$
 
-**This means that when $n > 4$, the number of operations after division is smaller, and sorting efficiency should be higher**. Note that the time complexity after division is still quadratic $O(n^2)$, but the constant term in the complexity has become smaller.
+**Ez azt jelenti, hogy ha $n > 4$, a felosztás utáni műveletek száma kisebb, és a rendezés hatékonysága magasabb**. Megjegyzendő, hogy a felosztás utáni időbonyolultság még mindig négyzetes $O(n^2)$, de a bonyolultságban szereplő konstans tag kisebb lett.
 
-Going further, **what if we continuously divide the subarrays from their midpoints into two subarrays** until the subarrays have only one element? This approach is actually "merge sort", with a time complexity of $O(n \log n)$.
+Tovább gondolva, **mi történik, ha a résztömböket folyamatosan a középponttól kettéosztjuk**, amíg csak egyetlen elem marad? Ez valójában az „összefésüléses rendezés", amelynek időbonyolultsága $O(n \log n)$.
 
-Thinking further, **what if we set multiple division points** and evenly divide the original array into $k$ subarrays? This situation is very similar to "bucket sort", which is well-suited for sorting massive amounts of data, with a theoretical time complexity of $O(n + k)$.
+Tovább gondolkodva, **mi van, ha több felosztási pontot állítunk be** és az eredeti tömböt egyenletesen $k$ résztömbre osztjuk? Ez a helyzet nagyon hasonlít a „vödör rendezéshez", amely jól alkalmazható hatalmas mennyiségű adat rendezésére, elméleti időbonyolultsága $O(n + k)$.
 
-### Parallel Computation Optimization
+### Párhuzamos számítás optimalizálása
 
-We know that the subproblems generated by divide and conquer are independent of each other, **so they can typically be solved in parallel**. This means divide and conquer can not only reduce the time complexity of algorithms, **but also benefits from parallel optimization by operating systems**.
+Tudjuk, hogy az oszd meg és uralkodj által generált részproblémák egymástól függetlenek, **ezért általában párhuzamosan oldhatók meg**. Ez azt jelenti, hogy az oszd meg és uralkodj nemcsak az algoritmusok időbonyolultságát csökkenti, **hanem párhuzamos optimalizálás előnyeit is élvezi az operációs rendszerek részéről**.
 
-Parallel optimization is particularly effective in multi-core or multi-processor environments, as the system can simultaneously handle multiple subproblems, making fuller use of computing resources and significantly reducing overall runtime.
+A párhuzamos optimalizálás különösen hatékony többmagos vagy többprocesszoros környezetekben, ahol a rendszer egyszerre képes több részproblémát kezelni, teljesebben kihasználva a számítási erőforrásokat és jelentősen csökkentve az összesített futási időt.
 
-For example, in the "bucket sort" shown in the figure below, we evenly distribute massive data into various buckets, and the sorting tasks for all buckets can be distributed to various computing units. After completion, the results are merged.
+Például az alábbi ábrán bemutatott „vödör rendezés" esetén hatalmas mennyiségű adatot egyenletesen osztunk el különböző vödrök között, és az összes vödör rendezési feladata kiosztható különböző számítási egységekre. A befejezés után az eredmények összefésülésre kerülnek.
 
-![Parallel computation in bucket sort](divide_and_conquer.assets/divide_and_conquer_parallel_computing.png)
+![Párhuzamos számítás a vödör rendezésben](divide_and_conquer.assets/divide_and_conquer_parallel_computing.png)
 
-## Common Applications of Divide and Conquer
+## Az oszd meg és uralkodj közönséges alkalmazásai
 
-On one hand, divide and conquer can be used to solve many classic algorithmic problems.
+Egyrészt az oszd meg és uralkodj számos klasszikus algoritmikus probléma megoldására használható.
 
-- **Finding the closest pair of points**: This algorithm first divides the point set into two parts, then finds the closest pair of points in each part separately, and finally finds the closest pair of points that spans both parts.
-- **Large integer multiplication**: For example, the Karatsuba algorithm, which decomposes large integer multiplication into several smaller integer multiplications and additions.
-- **Matrix multiplication**: For example, the Strassen algorithm, which decomposes large matrix multiplication into multiple small matrix multiplications and additions.
-- **Hanota problem**: The hanota problem can be solved through recursion, which is a typical application of the divide and conquer strategy.
-- **Solving inversion pairs**: In a sequence, if a preceding number is greater than a following number, these two numbers form an inversion pair. Solving the inversion pair problem can utilize the divide and conquer approach with the help of merge sort.
+- **A legközelebbi pontpár megkeresése**: Ez az algoritmus először két részre osztja a ponthalmazt, majd mindkét részben külön-külön megkeresi a legközelebbi pontpárt, végül megkeresi a mindkét részt átívelő legközelebbi pontpárt.
+- **Nagy egész számok szorzása**: Például a Karatsuba-algoritmus, amely a nagy egész számok szorzását kisebb egész számok szorzásaira és összeadásaira bontja le.
+- **Mátrixszorzás**: Például a Strassen-algoritmus, amely a nagy mátrixszorzást több kisebb mátrixszorzásra és összeadásra bontja le.
+- **Hanoi-probléma**: A Hanoi-probléma rekurzióval megoldható, ami az oszd meg és uralkodj stratégia tipikus alkalmazása.
+- **Inverzió-párok meghatározása**: Egy sorozatban, ha egy korábbi szám nagyobb egy következőnél, ez a két szám inverzió-párt alkot. Az inverzió-párok meghatározása felhasználhatja az oszd meg és uralkodj megközelítést az összefésüléses rendezés segítségével.
 
-On the other hand, divide and conquer is widely applied in the design of algorithms and data structures.
+Másrészt az oszd meg és uralkodj széles körben alkalmazható algoritmusok és adatstruktúrák tervezésében.
 
-- **Binary search**: Binary search divides a sorted array into two parts from the midpoint index, then decides which half to eliminate based on the comparison result between the target value and the middle element value, and performs the same binary operation on the remaining interval.
-- **Merge sort**: Already introduced at the beginning of this section, no further elaboration needed.
-- **Quick sort**: Quick sort selects a pivot value, then divides the array into two subarrays, one with elements smaller than the pivot and the other with elements larger than the pivot, then performs the same division operation on these two parts until the subarrays have only one element.
-- **Bucket sort**: The basic idea of bucket sort is to scatter data into multiple buckets, then sort the elements within each bucket, and finally extract the elements from each bucket in sequence to obtain a sorted array.
-- **Trees**: For example, binary search trees, AVL trees, red-black trees, B-trees, B+ trees, etc. Their search, insertion, and deletion operations can all be viewed as applications of the divide and conquer strategy.
-- **Heaps**: A heap is a special complete binary tree, and its various operations, such as insertion, deletion, and heapify, actually imply the divide and conquer idea.
-- **Hash tables**: Although hash tables do not directly apply divide and conquer, some hash collision resolution solutions indirectly apply the divide and conquer strategy. For example, long linked lists in chaining may be converted to red-black trees to improve query efficiency.
+- **Bináris keresés**: A bináris keresés egy rendezett tömböt a középső index alapján két részre oszt, majd az eredmény összehasonlítása alapján (célérték és a középső elem értéke között) dönt arról, melyik felét zárja ki, és ugyanezt a bináris műveletet végzi el a megmaradó intervallumon.
+- **Összefésüléses rendezés**: Már bemutatásra került a fejezet elején, nem szükséges részletezni.
+- **Gyors rendezés**: A gyors rendezés kiválaszt egy pivot értéket, majd a tömböt két résztömbre osztja – az egyikben a pivotnál kisebb, a másikban a pivotnál nagyobb elemek vannak –, majd ugyanezt az osztási műveletet végzi el mindkét részen, amíg a résztömbök csak egy elemet tartalmaznak.
+- **Vödör rendezés**: A vödör rendezés alapötlete az, hogy az adatokat több vödörbe szórjuk szét, majd minden vödörben rendezzük az elemeket, és végül minden vödörből sorban kiszedve megkapjuk a rendezett tömböt.
+- **Fák**: Például bináris keresési fák, AVL-fák, piros-fekete fák, B-fák, B+-fák stb. Keresési, beillesztési és törlési műveleteik mind az oszd meg és uralkodj stratégia alkalmazásainak tekinthetők.
+- **Kupacok**: A kupac egy speciális teljes bináris fa, és különböző műveletei, mint a beillesztés, törlés és kupacosítás, valójában az oszd meg és uralkodj gondolatát tükrözik.
+- **Hash táblák**: Bár a hash táblák nem alkalmazzák közvetlenül az oszd meg és uralkodj stratégiát, néhány hash-ütközés-feloldási megoldás közvetve alkalmazza azt. Például a láncolásban lévő hosszú láncolt listák piros-fekete fákká alakíthatók a lekérdezési hatékonyság javítása érdekében.
 
-It can be seen that **divide and conquer is a "subtly pervasive" algorithmic idea**, embedded in various algorithms and data structures.
+Látható, hogy **az oszd meg és uralkodj egy „finoman mindenhol jelen lévő" algoritmikus gondolat**, amely beépül különböző algoritmusokba és adatstruktúrákba.

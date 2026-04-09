@@ -1,9 +1,9 @@
-# Divide and Conquer
+# Oszd meg és uralkodj
 
-![Divide and conquer](../assets/covers/chapter_divide_and_conquer.jpg)
+![Oszd meg és uralkodj](../assets/covers/chapter_divide_and_conquer.jpg)
 
 !!! abstract
 
-    Difficult problems are decomposed layer by layer, with each decomposition making them simpler.
+    A nehéz problémákat rétegről rétegre bontjuk le, és minden lebontással egyszerűbbé válnak.
 
-    Divide and conquer reveals an important truth: start with simplicity, and nothing remains complex.
+    Az oszd meg és uralkodj egy fontos igazságot tár fel: kezdj az egyszerűvel, és semmi sem marad bonyolult.

@@ -1,13 +1,13 @@
-# Summary
+# Összefoglalás
 
-### Key Review
+### Főbb áttekintés
 
-- Divide and conquer is a common algorithm design strategy, consisting of two phases: divide (partition) and conquer (merge), typically implemented based on recursion.
-- The criteria for determining whether a problem is a divide and conquer problem include: whether the problem can be decomposed, whether subproblems are independent, and whether subproblems can be merged.
-- Merge sort is a typical application of the divide and conquer strategy. It recursively divides an array into two equal-length subarrays until only one element remains, then merges them layer by layer to complete the sorting.
-- Introducing the divide and conquer strategy can often improve algorithm efficiency. On one hand, the divide and conquer strategy reduces the number of operations; on the other hand, it facilitates parallel optimization of the system after division.
-- Divide and conquer can both solve many algorithmic problems and is widely applied in data structure and algorithm design, appearing everywhere.
-- Compared to brute-force search, adaptive search is more efficient. Search algorithms with time complexity of $O(\log n)$ are typically implemented based on the divide and conquer strategy.
-- Binary search is another typical application of divide and conquer. It does not include the step of merging solutions of subproblems. We can implement binary search through recursive divide and conquer.
-- In the problem of building a binary tree, building the tree (original problem) can be divided into building the left subtree and right subtree (subproblems), which can be achieved by dividing the index intervals of the preorder and inorder traversals.
-- In the hanota problem, a problem of size $n$ can be divided into two subproblems of size $n-1$ and one subproblem of size $1$. After solving these three subproblems in order, the original problem is solved.
+- Az oszd meg és uralkodj egy közönséges algoritmus-tervezési stratégia, amely két fázisból áll: felosztás (particionálás) és meghódítás (összefésülés), jellemzően rekurzión alapul.
+- Az annak meghatározására szolgáló kritériumok, hogy egy probléma oszd meg és uralkodj probléma-e, a következők: lebontható-e a probléma, függetlenek-e a részproblémák, és összefésülhetők-e a részproblémák megoldásai.
+- Az összefésüléses rendezés az oszd meg és uralkodj stratégia tipikus alkalmazása. Rekurzívan felezi a tömböt, amíg csak egyetlen elem marad, majd rétegről rétegre összefésüli azokat a rendezés elvégzéséhez.
+- Az oszd meg és uralkodj stratégia bevezetése gyakran javítja az algoritmus hatékonyságát. Egyrészt az oszd meg és uralkodj stratégia csökkenti a műveletek számát; másrészt megkönnyíti a felosztás utáni párhuzamos optimalizálást a rendszer számára.
+- Az oszd meg és uralkodj egyszerre képes számos algoritmikus problémát megoldani, és széles körben alkalmazzák adatstruktúrák és algoritmusok tervezésében, mindenütt jelen van.
+- A nyers erő kereséssel összehasonlítva az adaptív keresés hatékonyabb. Az $O(\log n)$ időbonyolultságú keresési algoritmusok jellemzően az oszd meg és uralkodj stratégia alapján valósíthatók meg.
+- A bináris keresés az oszd meg és uralkodj másik tipikus alkalmazása. Nem tartalmaz részproblémák megoldásainak összefésülési lépését. A bináris keresés rekurzív oszd meg és uralkodj segítségével megvalósítható.
+- A bináris fa felépítésének problémájánál a fa felépítése (eredeti probléma) felosztható bal részfa és jobb részfa felépítésére (részproblémák), ami az előrendű és középrendű bejárások indexintervallumainak felosztásával érhető el.
+- A Hanoi-problémánál az $n$ méretű probléma két $n-1$ méretű részproblémára és egy $1$ méretű részproblémára osztható. A három részprobléma sorban megoldva az eredeti problémát megoldjuk.

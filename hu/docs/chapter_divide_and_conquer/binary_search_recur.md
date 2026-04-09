@@ -1,44 +1,44 @@
-# Divide and Conquer Search Strategy
+# Oszd meg és uralkodj keresési stratégia
 
-We have already learned that search algorithms are divided into two major categories.
+Már megismertük, hogy a keresési algoritmusok két fő kategóriára oszthatók.
 
-- **Brute-force search**: Implemented by traversing the data structure, with a time complexity of $O(n)$.
-- **Adaptive search**: Utilizes unique data organization forms or prior information, with time complexity reaching $O(\log n)$ or even $O(1)$.
+- **Nyers erő keresés**: Adatstruktúra bejárásával valósítható meg, időbonyolultsága $O(n)$.
+- **Adaptív keresés**: Egyedi adatszervezési formákat vagy előzetes információkat használ fel, időbonyolultsága $O(\log n)$ vagy akár $O(1)$.
 
-In fact, **search algorithms with time complexity of $O(\log n)$ are typically implemented based on the divide and conquer strategy**, such as binary search and trees.
+Valójában **az $O(\log n)$ időbonyolultságú keresési algoritmusokat jellemzően az oszd meg és uralkodj stratégia alapján valósítják meg**, mint például a bináris keresés és a fák.
 
-- Each step of binary search divides the problem (searching for a target element in an array) into a smaller problem (searching for the target element in half of the array), continuing until the array is empty or the target element is found.
-- Trees are representative of the divide and conquer idea. In data structures such as binary search trees, AVL trees, and heaps, the time complexity of various operations is $O(\log n)$.
+- A bináris keresés minden lépése a problémát (egy célelem keresése egy tömbben) kisebb problémává alakítja (a célelem keresése a tömb felében), és addig folytatódik, amíg a tömb üres nem lesz, vagy meg nem találja a célelemet.
+- A fák az oszd meg és uralkodj gondolat reprezentatív képviselői. Bináris keresési fák, AVL-fák és kupacok esetén a különböző műveletek időbonyolultsága $O(\log n)$.
 
-The divide and conquer strategy of binary search is as follows.
+A bináris keresés oszd meg és uralkodj stratégiája a következő.
 
-- **The problem can be decomposed**: Binary search recursively decomposes the original problem (searching in an array) into subproblems (searching in half of the array), achieved by comparing the middle element with the target element.
-- **Subproblems are independent**: In binary search, each round only processes one subproblem, which is not affected by other subproblems.
-- **Solutions of subproblems do not need to be merged**: Binary search aims to find a specific element, so there is no need to merge the solutions of subproblems. When a subproblem is solved, the original problem is also solved.
+- **A probléma lebontható**: A bináris keresés rekurzívan lebontja az eredeti problémát (keresés egy tömbben) részproblémákra (keresés a tömb felében), amit a középső elem és a célelem összehasonlításával ér el.
+- **A részproblémák függetlenek**: A bináris keresésben minden körben csak egy részproblémát kezelünk, amelyet más részproblémák nem befolyásolnak.
+- **A részproblémák megoldásait nem kell összefésülni**: A bináris keresés célja egy adott elem megkeresése, ezért nincs szükség a részproblémák megoldásainak összefésülésére. Amikor egy részproblémát megoldunk, az eredeti problémát is megoldottuk.
 
-Divide and conquer can improve search efficiency because brute-force search can only eliminate one option per round, **while divide and conquer search can eliminate half of the options per round**.
+Az oszd meg és uralkodj azért javítja a keresési hatékonyságot, mert a nyers erő keresés köréből csak egy lehetőséget tud minden körben kizárni, **míg az oszd meg és uralkodj keresés minden körben a lehetőségek felét zárja ki**.
 
-### Implementing Binary Search Based on Divide and Conquer
+### Bináris keresés megvalósítása oszd meg és uralkodj alapján
 
-In previous sections, binary search was implemented based on iteration. Now we implement it based on divide and conquer (recursion).
+Az előző fejezetekben a bináris keresést iteráció alapján valósítottuk meg. Most oszd meg és uralkodj (rekurzió) alapján valósítjuk meg.
 
 !!! question
 
-    Given a sorted array `nums` of length $n$, where all elements are unique, find the element `target`.
+    Adott egy $n$ hosszúságú rendezett `nums` tömb, amelynek minden eleme egyedi. Keressük meg a `target` elemet.
 
-From a divide and conquer perspective, we denote the subproblem corresponding to the search interval $[i, j]$ as $f(i, j)$.
+Az oszd meg és uralkodj szempontjából a $[i, j]$ keresési intervallumnak megfelelő részproblémát $f(i, j)$-vel jelöljük.
 
-Starting from the original problem $f(0, n-1)$, perform binary search through the following steps.
+Az eredeti $f(0, n-1)$ problémától kiindulva a bináris keresést a következő lépésekkel végezzük el.
 
-1. Calculate the midpoint $m$ of the search interval $[i, j]$, and use it to eliminate half of the search interval.
-2. Recursively solve the subproblem reduced by half in size, which could be $f(i, m-1)$ or $f(m+1, j)$.
-3. Repeat steps `1.` and `2.` until `target` is found or the interval is empty and return.
+1. Kiszámítjuk a $[i, j]$ keresési intervallum $m$ középső pontját, és ezzel a keresési intervallum felét kizárjuk.
+2. Rekurzívan megoldjuk a felére csökkentett méretű részproblémát, amely $f(i, m-1)$ vagy $f(m+1, j)$ lehet.
+3. Megismételjük az `1.` és `2.` lépéseket, amíg meg nem találjuk a `target`-et, vagy az intervallum üres nem lesz, majd visszatérünk.
 
-The figure below shows the divide and conquer process of binary search for element $6$ in an array.
+Az alábbi ábra bemutatja a bináris keresés oszd meg és uralkodj folyamatát a $6$ elem keresésére egy tömbben.
 
-![Divide and conquer process of binary search](binary_search_recur.assets/binary_search_recur.png)
+![A bináris keresés oszd meg és uralkodj folyamata](binary_search_recur.assets/binary_search_recur.png)
 
-In the implementation code, we declare a recursive function `dfs()` to solve the problem $f(i, j)$:
+A megvalósítási kódban egy `dfs()` rekurzív függvényt deklarálunk az $f(i, j)$ probléma megoldására:
 
 ```src
 [file]{binary_search_recur}-[class]{}-[func]{binary_search}
