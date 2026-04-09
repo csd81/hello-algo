@@ -1,94 +1,94 @@
-# Greedy Algorithm
+# Mohó algoritmus
 
-<u>Greedy algorithm</u> is a common algorithm for solving optimization problems. Its basic idea is to make the seemingly best choice at each decision stage of the problem, that is, to greedily make locally optimal decisions in hopes of obtaining a globally optimal solution. Greedy algorithms are simple and efficient, and are widely applied in many practical problems.
+<u>A mohó algoritmus</u> egy általánosan használt algoritmus optimalizálási problémák megoldására. Az alapötlete az, hogy a probléma minden döntési szakaszában a látszólag legjobb választást teszi, azaz mohón hoz lokálisan optimális döntéseket abban a reményben, hogy globálisan optimális megoldást kapjon. A mohó algoritmusok egyszerűek és hatékonyak, és számos gyakorlati problémában széles körben alkalmazzák őket.
 
-Greedy algorithms and dynamic programming are both commonly used to solve optimization problems. They share some similarities, such as both relying on the optimal substructure property, but they work differently.
+A mohó algoritmusok és a dinamikus programozás egyaránt gyakran használatosak optimalizálási problémák megoldásában. Vannak köztük hasonlóságok, például mindkettő az optimális részstruktúra tulajdonságára támaszkodik, de eltérően működnek.
 
-- Dynamic programming considers all previous decisions when making the current decision, and uses solutions to past subproblems to construct the solution to the current subproblem.
-- Greedy algorithms do not consider past decisions, but instead make greedy choices moving forward, continually reducing the problem size until the problem is solved.
+- A dinamikus programozás az aktuális döntés meghozatalakor figyelembe veszi az összes korábbi döntést, és a korábbi részproblémák megoldásait felhasználja az aktuális részprobléma megoldásának felépítéséhez.
+- A mohó algoritmusok nem veszik figyelembe a korábbi döntéseket, hanem mohó választásokat hoznak előrehaladva, folyamatosan csökkentve a probléma méretét, amíg a probléma meg nem oldódik.
 
-We will first understand how greedy algorithms work through the example problem "coin change". This problem has already been introduced in the "Complete Knapsack Problem" chapter, so I believe you are not unfamiliar with it.
+Először a „pénzváltás" példafeladaton keresztül értjük meg, hogyan működnek a mohó algoritmusok. Ezt a problémát már bevezettük a „Teljes hátizsák probléma" fejezetben, ezért úgy gondolom, hogy nem ismeretlen az Ön számára.
 
 !!! question
 
-    Given $n$ types of coins, where the denomination of the $i$-th type of coin is $coins[i - 1]$, and the target amount is $amt$, with each type of coin available for repeated selection, what is the minimum number of coins needed to make up the target amount? If it is impossible to make up the target amount, return $-1$.
+    Adott $n$ típusú érme, ahol az $i$-edik típusú érme névértéke $coins[i - 1]$, és a célösszeg $amt$, ahol minden típusú érme ismételten kiválasztható, mi a minimális érmeszám, amellyel összerakható a célösszeg? Ha a célösszeg nem rakható össze, adjon vissza $-1$-et.
 
-The greedy strategy adopted for this problem is shown in the figure below. Given a target amount, **we greedily select the coin that is not greater than and closest to it**, and continuously repeat this step until the target amount is reached.
+Az erre a problémára alkalmazott mohó stratégiát az alábbi ábra mutatja. Adott célösszeg esetén **mohón kiválasztjuk azt az érmét, amely nem nagyobb és a legközelebb van hozzá**, és ezt a lépést folyamatosan ismételjük, amíg el nem érjük a célösszeget.
 
-![Greedy strategy for coin change](greedy_algorithm.assets/coin_change_greedy_strategy.png)
+![Mohó stratégia a pénzváltás problémájában](greedy_algorithm.assets/coin_change_greedy_strategy.png)
 
-The implementation code is as follows:
+A megvalósítási kód a következő:
 
 ```src
 [file]{coin_change_greedy}-[class]{}-[func]{coin_change_greedy}
 ```
 
-You might exclaim: So clean! The greedy algorithm solves the coin change problem in about ten lines of code.
+Talán felkiált: Milyen egyszerű! A mohó algoritmus körülbelül tíz sor kóddal megoldja a pénzváltás problémáját.
 
-## Advantages and Limitations of Greedy Algorithms
+## A mohó algoritmusok előnyei és korlátai
 
-**Greedy algorithms are not only straightforward and simple to implement, but are also usually very efficient**. In the code above, if the smallest coin denomination is $\min(coins)$, the greedy choice loops at most $amt / \min(coins)$ times, giving a time complexity of $O(amt / \min(coins))$. This is an order of magnitude smaller than the time complexity of the dynamic programming solution $O(n \times amt)$.
+**A mohó algoritmusok nemcsak egyenesen és egyszerűen valósíthatók meg, hanem általában nagyon hatékonyak is**. A fenti kódban, ha a legkisebb érme névértéke $\min(coins)$, a mohó választás ciklusai legfeljebb $amt / \min(coins)$ alkalommal futnak, így az időbonyolultság $O(amt / \min(coins))$. Ez nagyságrendekkel kisebb, mint a dinamikus programozási megoldás $O(n \times amt)$ időbonyolultsága.
 
-However, **for certain coin denomination combinations, greedy algorithms cannot find the optimal solution**. The figure below provides two examples.
+Azonban **bizonyos érme névérték-kombinációk esetén a mohó algoritmusok nem találják meg az optimális megoldást**. Az alábbi ábra két példát mutat.
 
-- **Positive example $coins = [1, 5, 10, 20, 50, 100]$**: With this coin combination, given any $amt$, the greedy algorithm can find the optimal solution.
-- **Negative example $coins = [1, 20, 50]$**: Suppose $amt = 60$, the greedy algorithm can only find the combination $50 + 1 \times 10$, totaling $11$ coins, but dynamic programming can find the optimal solution $20 + 20 + 20$, requiring only $3$ coins.
-- **Negative example $coins = [1, 49, 50]$**: Suppose $amt = 98$, the greedy algorithm can only find the combination $50 + 1 \times 48$, totaling $49$ coins, but dynamic programming can find the optimal solution $49 + 49$, requiring only $2$ coins.
+- **Pozitív példa $coins = [1, 5, 10, 20, 50, 100]$**: Ezzel az érmekombinációval, bármely $amt$ esetén, a mohó algoritmus meg tudja találni az optimális megoldást.
+- **Negatív példa $coins = [1, 20, 50]$**: Tegyük fel, $amt = 60$, a mohó algoritmus csak az $50 + 1 \times 10$ kombinációt találja meg, összesen $11$ érmét, de a dinamikus programozás megtalálja az optimális megoldást $20 + 20 + 20$, amelyhez csak $3$ érme szükséges.
+- **Negatív példa $coins = [1, 49, 50]$**: Tegyük fel, $amt = 98$, a mohó algoritmus csak az $50 + 1 \times 48$ kombinációt találja meg, összesen $49$ érmét, de a dinamikus programozás megtalálja az optimális megoldást $49 + 49$, amelyhez csak $2$ érme szükséges.
 
-![Examples where greedy algorithms cannot find the optimal solution](greedy_algorithm.assets/coin_change_greedy_vs_dp.png)
+![Példák, ahol a mohó algoritmusok nem találják meg az optimális megoldást](greedy_algorithm.assets/coin_change_greedy_vs_dp.png)
 
-In other words, for the coin change problem, greedy algorithms cannot guarantee finding the global optimal solution, and may even find very poor solutions. It is better suited for solving with dynamic programming.
+Más szóval, a pénzváltás problémájánál a mohó algoritmusok nem tudják garantálni a globálisan optimális megoldás megtalálását, és akár nagyon rossz megoldásokat is adhatnak. Dinamikus programozással jobb megoldani.
 
-Generally, the applicability of greedy algorithms falls into the following two situations.
+Általában a mohó algoritmusok alkalmazhatósága a következő két helyzetbe esik.
 
-1. **Can guarantee finding the optimal solution**: In this situation, greedy algorithms are often the best choice, because they tend to be more efficient than backtracking and dynamic programming.
-2. **Can find an approximate optimal solution**: Greedy algorithms are also applicable in this situation. For many complex problems, finding the global optimal solution is very difficult, and being able to find a suboptimal solution with high efficiency is also very good.
+1. **Garantálhatja az optimális megoldás megtalálását**: Ebben a helyzetben a mohó algoritmusok általában a legjobb választás, mivel általában hatékonyabbak, mint a visszalépéses keresés és a dinamikus programozás.
+2. **Megközelítőleg optimális megoldást találhat**: A mohó algoritmusok ebben a helyzetben is alkalmazhatók. Sok összetett probléma esetén nagyon nehéz megtalálni a globálisan optimális megoldást, és nagy hatékonysággal egy szuboptimális megoldást találni szintén nagyon jó eredmény.
 
-## Characteristics of Greedy Algorithms
+## A mohó algoritmusok jellemzői
 
-So the question arises: what kind of problems are suitable for solving with greedy algorithms? Or in other words, under what conditions can greedy algorithms guarantee finding the optimal solution?
+Felmerül tehát a kérdés: milyen problémák alkalmasak mohó algoritmusokkal való megoldásra? Vagy más szóval, milyen feltételek mellett tudják a mohó algoritmusok garantálni az optimális megoldás megtalálását?
 
-Compared to dynamic programming, the conditions for using greedy algorithms are stricter, mainly focusing on two properties of the problem.
+A dinamikus programozáshoz képest a mohó algoritmusok alkalmazásának feltételei szigorúbbak, főként a probléma két tulajdonságára összpontosítanak.
 
-- **Greedy choice property**: Only when locally optimal choices can always lead to a globally optimal solution can greedy algorithms guarantee obtaining the optimal solution.
-- **Optimal substructure**: The optimal solution to the original problem contains the optimal solutions to subproblems.
+- **Mohó választás tulajdonsága**: Csak akkor, ha a lokálisan optimális választások mindig globálisan optimális megoldáshoz vezet, tudják a mohó algoritmusok garantálni az optimális megoldás elérését.
+- **Optimális részstruktúra**: Az eredeti probléma optimális megoldása tartalmazza a részproblémák optimális megoldásait.
 
-Optimal substructure has already been introduced in the "Dynamic Programming" chapter, so we won't elaborate on it here. It's worth noting that the optimal substructure of some problems is not obvious, but they can still be solved using greedy algorithms.
+Az optimális részstruktúrát már bevezettük a „Dinamikus programozás" fejezetben, ezért itt nem részletezzük. Érdemes megjegyezni, hogy néhány probléma optimális részstruktúrája nem nyilvánvaló, de azok mégis megoldhatók mohó algoritmusokkal.
 
-We mainly explore methods for determining the greedy choice property. Although its description seems relatively simple, **in practice, for many problems, proving the greedy choice property is not easy**.
+Főként a mohó választás tulajdonságának meghatározására vonatkozó módszereket vizsgáljuk. Bár leírása viszonylag egyszerűnek tűnik, **a gyakorlatban sok probléma esetén a mohó választás tulajdonságának bizonyítása nem könnyű**.
 
-For example, in the coin change problem, although we can easily provide counterexamples to disprove the greedy choice property, proving it is quite difficult. If asked: **what conditions must a coin combination satisfy to be solvable using a greedy algorithm**? We often can only rely on intuition or examples to give an ambiguous answer, and find it difficult to provide a rigorous mathematical proof.
+Például a pénzváltás problémájánál, bár könnyen tudunk ellenpéldákat hozni a mohó választás tulajdonságának cáfolatára, bizonyítani nagyon nehéz. Ha azt kérdezik: **milyen feltételeknek kell megfelelnie egy érmekombinációnak ahhoz, hogy mohó algoritmussal megoldható legyen**? Gyakran csak intuíció vagy példák alapján tudunk homályos választ adni, és nehéz szigorú matematikai bizonyítást nyújtani.
 
 !!! quote
 
-    There is a paper that presents an algorithm with $O(n^3)$ time complexity for determining whether a coin combination can use a greedy algorithm to find the optimal solution for any amount.
+    Létezik egy olyan cikk, amely egy $O(n^3)$ időbonyolultságú algoritmust mutat be annak meghatározásához, hogy egy érmekombináció esetén a mohó algoritmus bármely összegre megtalálja-e az optimális megoldást.
 
     Pearson, D. A polynomial-time algorithm for the change-making problem[J]. Operations Research Letters, 2005, 33(3): 231-234.
 
-## Steps for Solving Problems with Greedy Algorithms
+## Lépések a problémák mohó algoritmusokkal való megoldásához
 
-The problem-solving process for greedy problems can generally be divided into the following three steps.
+A mohó problémák megoldási folyamata általában a következő három lépésre osztható.
 
-1. **Problem analysis**: Sort out and understand the problem characteristics, including state definition, optimization objectives, and constraints, etc. This step is also involved in backtracking and dynamic programming.
-2. **Determine the greedy strategy**: Determine how to make greedy choices at each step. This strategy should be able to reduce the problem size at each step, ultimately solving the entire problem.
-3. **Correctness proof**: It is usually necessary to prove that the problem has both greedy choice property and optimal substructure. This step may require mathematical proofs, such as mathematical induction or proof by contradiction.
+1. **Problémaelemzés**: A probléma jellemzőinek feltárása és megértése, beleértve az állapotkezdőértékeket, optimalizálási célokat és kényszerfeltételeket stb. Ez a lépés a visszalépéses keresésben és a dinamikus programozásban is szerepel.
+2. **A mohó stratégia meghatározása**: Annak meghatározása, hogyan hozzunk mohó döntéseket minden lépésben. Ennek a stratégiának minden lépésben csökkentenie kell a probléma méretét, végül megoldva az egész problémát.
+3. **Helyességbizonyítás**: Általában szükséges bizonyítani, hogy a problémának mind mohó választás tulajdonsága, mind optimális részstruktúrája van. Ez a lépés matematikai bizonyításokat igényelhet, például matematikai indukciót vagy ellentmondásos bizonyítást.
 
-Determining the greedy strategy is the core step in solving the problem, but it may not be easy to implement, mainly for the following reasons.
+A mohó stratégia meghatározása a probléma megoldásának alapvető lépése, de nem biztos, hogy könnyen megvalósítható, főként a következő okok miatt.
 
-- **Greedy strategies differ greatly between different problems**. For many problems, the greedy strategy is relatively straightforward, and we can derive it through some general thinking and attempts. However, for some complex problems, the greedy strategy may be very elusive, which really tests one's problem-solving experience and algorithmic ability.
-- **Some greedy strategies are highly misleading**. When we confidently design a greedy strategy, write the solution code and submit it for testing, we may find that some test cases cannot pass. This is because the designed greedy strategy is only "partially correct", as exemplified by the coin change problem discussed above.
+- **A mohó stratégiák nagymértékben különböznek a különböző problémák esetén**. Sok probléma esetén a mohó stratégia viszonylag egyszerű, és némi általános gondolkodással és kísérletekkel le tudjuk származtatni. Azonban néhány összetett probléma esetén a mohó stratégia nagyon nehezen megragadható, ami valóban próbára teszi a probléma-megoldó tapasztalatot és az algoritmikus képességet.
+- **Néhány mohó stratégia nagyon félrevezető**. Amikor magabiztosan tervezzük meg a mohó stratégiát, megírjuk a megoldási kódot és benyújtjuk tesztelésre, azt tapasztalhatjuk, hogy néhány teszteset nem teljesül. Ez azért van, mert a tervezett mohó stratégia csak „részben helyes", ahogy a fent tárgyalt pénzváltás probléma is példázza.
 
-To ensure correctness, we should rigorously mathematically prove the greedy strategy, **usually using proof by contradiction or mathematical induction**.
+A helyesség biztosítása érdekében szigorúan matematikailag kell bizonyítani a mohó stratégiát, **általában ellentmondásos bizonyítással vagy matematikai indukcióval**.
 
-However, correctness proofs may also not be easy. If we have no clue, we usually choose to debug the code based on test cases, step by step modifying and verifying the greedy strategy.
+Azonban a helyességbizonyítások szintén nem feltétlenül egyszerűek. Ha nincs ötletünk, általában a kódot tesztesetek alapján hibakeressük, lépésről lépésre módosítva és ellenőrizve a mohó stratégiát.
 
-## Typical Problems Solved by Greedy Algorithms
+## A mohó algoritmusok által megoldható tipikus problémák
 
-Greedy algorithms are often applied to optimization problems that satisfy greedy choice property and optimal substructure. Below are some typical greedy algorithm problems.
+A mohó algoritmusokat gyakran alkalmazzák olyan optimalizálási problémákra, amelyek kielégítik a mohó választás tulajdonságát és az optimális részstruktúrát. Az alábbiakban néhány tipikus mohó algoritmus problémát mutatunk be.
 
-- **Coin change problem**: With certain coin combinations, greedy algorithms can always obtain the optimal solution.
-- **Interval scheduling problem**: Suppose you have some tasks, each taking place during a period of time, and your goal is to complete as many tasks as possible. If you always choose the task that ends earliest, then the greedy algorithm can obtain the optimal solution.
-- **Fractional knapsack problem**: Given a set of items and a carrying capacity, your goal is to select a set of items such that the total weight does not exceed the carrying capacity and the total value is maximized. If you always choose the item with the highest value-to-weight ratio (value / weight), then the greedy algorithm can obtain the optimal solution in some cases.
-- **Stock trading problem**: Given a set of historical stock prices, you can make multiple trades, but if you already hold stocks, you cannot buy again before selling, and the goal is to obtain the maximum profit.
-- **Huffman coding**: Huffman coding is a greedy algorithm used for lossless data compression. By constructing a Huffman tree and always merging the two nodes with the lowest frequency, the resulting Huffman tree has the minimum weighted path length (encoding length).
-- **Dijkstra's algorithm**: It is a greedy algorithm for solving the shortest path problem from a given source vertex to all other vertices.
+- **Pénzváltás probléma**: Bizonyos érmekombinációk esetén a mohó algoritmusok mindig meg tudják találni az optimális megoldást.
+- **Intervallumütemezési probléma**: Tegyük fel, hogy van néhány feladatunk, amelyek mindegyike egy időszakban zajlik, és a célunk a lehető legtöbb feladat elvégzése. Ha mindig a legkorábban végző feladatot választjuk, akkor a mohó algoritmus meg tudja találni az optimális megoldást.
+- **Töredékes hátizsák probléma**: Adott egy sor tárgy és egy szállítási kapacitás, a cél olyan tárgyak kiválasztása, hogy az összsúly ne haladja meg a kapacitást és az összérték maximalizált legyen. Ha mindig a legjobb értéksűrűségű tárgyat választjuk (érték / súly), akkor a mohó algoritmus bizonyos esetekben meg tudja találni az optimális megoldást.
+- **Részvénykereskedési probléma**: Adott egy sor historikus részvényár, többször kereskedhetünk, de ha már van részvényünk, nem vásárolhatunk újra az eladás előtt, és a cél a maximális profit elérése.
+- **Huffman-kódolás**: A Huffman-kódolás egy mohó algoritmus, amelyet veszteségmentes adattömörítéshez használnak. Huffman-fa felépítésével és mindig a két legkisebb frekvenciájú csomópont összevonásával a kapott Huffman-fa minimális súlyozott úthosszal rendelkezik (kódolási hossz).
+- **Dijkstra-algoritmus**: Ez egy mohó algoritmus az adott forráscsúcstól az összes többi csúcsig tartó legrövidebb út megoldásához.

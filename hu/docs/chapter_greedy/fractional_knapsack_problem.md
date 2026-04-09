@@ -1,52 +1,52 @@
-# Fractional Knapsack Problem
+# Töredékes hátizsák probléma
 
 !!! question
 
-    Given $n$ items, where the weight of the $i$-th item is $wgt[i-1]$ and its value is $val[i-1]$, and a knapsack with capacity $cap$. Each item can be selected only once, **but a portion of an item can be selected, with the value calculated based on the proportion of weight selected**, what is the maximum value of items in the knapsack under the limited capacity? An example is shown in the figure below.
+    Adott $n$ tárgy, ahol az $i$-edik tárgy súlya $wgt[i-1]$ és értéke $val[i-1]$, és egy $cap$ kapacitású hátizsák. Minden tárgy csak egyszer választható ki, **de egy tárgy egy része is kiválasztható, az értéket a kiválasztott súly arányában számítva**, mi a tárgyak maximális értéke a hátizsákban a korlátozott kapacitás mellett? Egy példa az alábbi ábrán látható.
 
-![Example data for the fractional knapsack problem](fractional_knapsack_problem.assets/fractional_knapsack_example.png)
+![Példaadatok a töredékes hátizsák problémához](fractional_knapsack_problem.assets/fractional_knapsack_example.png)
 
-The fractional knapsack problem is very similar overall to the 0-1 knapsack problem, with states including the current item $i$ and capacity $c$, and the goal being to maximize value under the limited knapsack capacity.
+A töredékes hátizsák probléma összességében nagyon hasonló a 0-1 hátizsák problémához, az állapotok közé tartozik az aktuális tárgy $i$ és a kapacitás $c$, és a cél az érték maximalizálása a korlátozott hátizsák-kapacitás mellett.
 
-The difference is that this problem allows selecting only a portion of an item. As shown in the figure below, **we can arbitrarily split items and calculate the corresponding value based on the weight proportion**.
+A különbség az, hogy ez a probléma lehetővé teszi egy tárgy egy részének kiválasztását. Ahogy az alábbi ábra mutatja, **a tárgyakat tetszőlegesen feldarabolhatjuk és a megfelelő értéket a súlyarány alapján számíthatjuk**.
 
-1. For item $i$, its value per unit weight is $val[i-1] / wgt[i-1]$, referred to as unit value.
-2. Suppose we put a portion of item $i$ with weight $w$ into the knapsack, then the value added to the knapsack is $w \times val[i-1] / wgt[i-1]$.
+1. A $i$-edik tárgy esetén az egységnyi súlyra jutó érték $val[i-1] / wgt[i-1]$, amelyet egységértéknek nevezünk.
+2. Tegyük fel, hogy az $i$-edik tárgy egy $w$ súlyú részét betesszük a hátizsákba, akkor a hátizsákhoz hozzáadott érték $w \times val[i-1] / wgt[i-1]$.
 
-![Value of items per unit weight](fractional_knapsack_problem.assets/fractional_knapsack_unit_value.png)
+![Tárgyak egységnyi súlyra jutó értéke](fractional_knapsack_problem.assets/fractional_knapsack_unit_value.png)
 
-### Greedy Strategy Determination
+### Mohó stratégia meghatározása
 
-Maximizing the total value of items in the knapsack **is essentially maximizing the value per unit weight of items**. From this, we can derive the greedy strategy shown in the figure below.
+A hátizsákban lévő tárgyak összértékének maximalizálása **lényegében a tárgyak egységnyi súlyra jutó értékének maximalizálása**. Ebből levezethetjük az alábbi ábrán látható mohó stratégiát.
 
-1. Sort items by unit value from high to low.
-2. Iterate through all items, **greedily selecting the item with the highest unit value in each round**.
-3. If the remaining knapsack capacity is insufficient, use a portion of the current item to fill the knapsack.
+1. A tárgyakat egységérték szerint rendezzük csökkenő sorrendbe.
+2. Iterálunk az összes tárgyon, **minden körben mohón kiválasztva a legnagyobb egységértékű tárgyat**.
+3. Ha a maradék hátizsák-kapacitás nem elegendő, az aktuális tárgy egy részével töltjük meg a hátizsákot.
 
-![Greedy strategy for the fractional knapsack problem](fractional_knapsack_problem.assets/fractional_knapsack_greedy_strategy.png)
+![Mohó stratégia a töredékes hátizsák problémához](fractional_knapsack_problem.assets/fractional_knapsack_greedy_strategy.png)
 
-### Code Implementation
+### Kód megvalósítása
 
-We created an `Item` class to facilitate sorting items by unit value. We loop to make greedy selections, breaking when the knapsack is full and returning the solution:
+Létrehoztunk egy `Item` osztályt a tárgyak egységérték szerinti rendezésének megkönnyítésére. Cikluson keresztül mohó választásokat teszünk, megszakítva, amikor a hátizsák megtelt, és visszaadjuk a megoldást:
 
 ```src
 [file]{fractional_knapsack}-[class]{}-[func]{fractional_knapsack}
 ```
 
-The time complexity of built-in sorting algorithms is usually $O(\log n)$, and the space complexity is usually $O(\log n)$ or $O(n)$, depending on the specific implementation of the programming language.
+A beépített rendező algoritmusok időbonyolultsága általában $O(\log n)$, a térbonyolultság általában $O(\log n)$ vagy $O(n)$, a programozási nyelv konkrét megvalósításától függően.
 
-Apart from sorting, in the worst case the entire item list needs to be traversed, **therefore the time complexity is $O(n)$**, where $n$ is the number of items.
+A rendezésen kívül a legrosszabb esetben az egész tárgylista bejárására szükség van, **ezért az időbonyolultság $O(n)$**, ahol $n$ a tárgyak száma.
 
-Since an `Item` object list is initialized, **the space complexity is $O(n)$**.
+Mivel egy `Item` objektumlistát inicializálunk, **a térbonyolultság $O(n)$**.
 
-### Correctness Proof
+### Helyességbizonyítás
 
-Using proof by contradiction. Suppose item $x$ has the highest unit value, and some algorithm yields a maximum value of `res`, but this solution does not include item $x$.
+Ellentmondásos bizonyítással. Tegyük fel, hogy az $x$ tárgynak van a legnagyobb egységértéke, és valamilyen algoritmus maximális értéket ad `res`, de ez a megoldás nem tartalmazza az $x$ tárgyat.
 
-Now remove a unit weight of any item from the knapsack and replace it with a unit weight of item $x$. Since item $x$ has the highest unit value, the total value after replacement will definitely be greater than `res`. **This contradicts the assumption that `res` is the optimal solution, proving that the optimal solution must include item $x$**.
+Most vegyünk ki egységnyi súlyt bármely tárgyból a hátizsákból, és cseréljük le egységnyi súlyú $x$ tárgyra. Mivel az $x$ tárgynak van a legnagyobb egységértéke, a csere utáni összérték biztosan nagyobb lesz, mint `res`. **Ez ellentmond annak a feltevésnek, hogy `res` az optimális megoldás, bizonyítva, hogy az optimális megoldásnak tartalmaznia kell az $x$ tárgyat**.
 
-For other items in this solution, we can also construct the above contradiction. In summary, **items with greater unit value are always better choices**, which proves that the greedy strategy is effective.
+A megoldásban szereplő többi tárgyra vonatkozóan szintén felépíthetjük a fenti ellentmondást. Összefoglalva, **a nagyobb egységértékű tárgyak mindig jobb választások**, ami bizonyítja, hogy a mohó stratégia hatékony.
 
-As shown in the figure below, if we view item weight and item unit value as the horizontal and vertical axes of a two-dimensional chart respectively, then the fractional knapsack problem can be transformed into "finding the maximum area enclosed within a limited horizontal axis range". This analogy can help us understand the effectiveness of the greedy strategy from a geometric perspective.
+Ahogy az alábbi ábra mutatja, ha a tárgy súlyát és a tárgy egységértékét egy kétdimenziós diagram vízszintes és függőleges tengelyeként tekintjük, akkor a töredékes hátizsák probléma átalakítható „a korlátozott vízszintes tengelytartományon belül bekerített maximális terület megtalálásává". Ez az analógia segíthet megérteni a mohó stratégia hatékonyságát geometriai szempontból.
 
-![Geometric representation of the fractional knapsack problem](fractional_knapsack_problem.assets/fractional_knapsack_area_chart.png)
+![A töredékes hátizsák probléma geometriai ábrázolása](fractional_knapsack_problem.assets/fractional_knapsack_area_chart.png)

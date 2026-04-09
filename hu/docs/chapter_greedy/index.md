@@ -1,9 +1,9 @@
-# Greedy
+# Mohó
 
-![Greedy](../assets/covers/chapter_greedy.jpg)
+![Mohó](../assets/covers/chapter_greedy.jpg)
 
 !!! abstract
 
-    Sunflowers turn toward the sun, constantly pursuing the maximum potential for their own growth.
+    A napraforgók a nap felé fordulnak, folyamatosan saját növekedésük maximális lehetőségét keresve.
 
-    Through rounds of simple choices, greedy strategies gradually lead to the best answer.
+    Egyszerű döntések sorozatán keresztül a mohó stratégiák fokozatosan elvezetnek a legjobb megoldáshoz.

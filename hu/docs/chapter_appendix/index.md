@@ -1,3 +1,3 @@
-# Appendix
+# Függelék
 
-![Appendix](../assets/covers/chapter_appendix.jpg)
+![Függelék](../assets/covers/chapter_appendix.jpg)

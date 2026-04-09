@@ -1,28 +1,28 @@
-# Max Product Cutting Problem
+# Maximális szorzatdarabolás probléma
 
 !!! question
 
-    Given a positive integer $n$, split it into the sum of at least two positive integers, and find the maximum product of all integers after splitting, as shown in the figure below.
+    Adott egy $n$ pozitív egész szám, ossza fel legalább két pozitív egész szám összegére, és keresse meg az összes egész szám maximális szorzatát a felosztás után, ahogy az alábbi ábra mutatja.
 
-![Problem definition of max product cutting](max_product_cutting_problem.assets/max_product_cutting_definition.png)
+![A maximális szorzatdarabolás problémájának definíciója](max_product_cutting_problem.assets/max_product_cutting_definition.png)
 
-Suppose we split $n$ into $m$ integer factors, where the $i$-th factor is denoted as $n_i$, that is
+Tegyük fel, hogy $n$-t $m$ egész tényezőre osztjuk fel, ahol az $i$-edik tényezőt $n_i$-vel jelöljük, vagyis
 
 $$
 n = \sum_{i=1}^{m}n_i
 $$
 
-The goal of this problem is to find the maximum product of all integer factors, namely
+Ennek a problémának a célja az összes egész tényező maximális szorzatának megtalálása, azaz
 
 $$
 \max(\prod_{i=1}^{m}n_i)
 $$
 
-We need to think about: how large should the splitting count $m$ be, and what should each $n_i$ be?
+Elgondolkodnunk kell azon: mekkora legyen a felosztások száma $m$, és mik legyenek az egyes $n_i$ értékek?
 
-### Greedy Strategy Determination
+### Mohó stratégia meghatározása
 
-Based on experience, the product of two integers is often greater than their sum. Suppose we split out a factor of $2$ from $n$, then their product is $2(n-2)$. We compare this product with $n$:
+Tapasztalat alapján két egész szám szorzata gyakran nagyobb, mint összegük. Tegyük fel, hogy $n$-ből kivezetünk egy $2$ tényezőt, ekkor szorzatuk $2(n-2)$. Ezt a szorzatot összehasonlítjuk $n$-nel:
 
 $$
 \begin{aligned}
@@ -32,54 +32,54 @@ n & \geq 4
 \end{aligned}
 $$
 
-As shown in the figure below, when $n \geq 4$, splitting out a $2$ will increase the product, **which indicates that integers greater than or equal to $4$ should all be split**.
+Ahogy az alábbi ábra mutatja, ha $n \geq 4$, egy $2$ kivezetése növeli a szorzatot, **ami azt jelenti, hogy a $4$-nél nagyobb vagy egyenlő egész számokat mind fel kell osztani**.
 
-**Greedy strategy one**: If the splitting scheme includes factors $\geq 4$, then they should continue to be split. The final splitting scheme should only contain factors $1$, $2$, and $3$.
+**Mohó stratégia 1**: Ha a felosztási séma $\geq 4$ tényezőket tartalmaz, akkor azokat tovább kell osztani. A végső felosztási sémának csak $1$, $2$ és $3$ tényezőket szabad tartalmaznia.
 
-![Splitting causes product to increase](max_product_cutting_problem.assets/max_product_cutting_greedy_infer1.png)
+![A felosztás miatt a szorzat növekszik](max_product_cutting_problem.assets/max_product_cutting_greedy_infer1.png)
 
-Next, consider which factor is optimal. Among the three factors $1$, $2$, and $3$, clearly $1$ is the worst, because $1 \times (n-1) < n$ always holds, meaning splitting out $1$ will actually decrease the product.
+Ezután gondoljuk meg, melyik tényező az optimális. A három $1$, $2$ és $3$ tényező közül az $1$ nyilván a legrosszabb, mert az $1 \times (n-1) < n$ mindig teljesül, ami azt jelenti, hogy az $1$ kivezetése valójában csökkenti a szorzatot.
 
-As shown in the figure below, when $n = 6$, we have $3 \times 3 > 2 \times 2 \times 2$. **This means that splitting out $3$ is better than splitting out $2$**.
+Ahogy az alábbi ábra mutatja, ha $n = 6$, akkor $3 \times 3 > 2 \times 2 \times 2$. **Ez azt jelenti, hogy a $3$ kivezetése jobb, mint a $2$ kivezetése**.
 
-**Greedy strategy two**: In the splitting scheme, there should be at most two $2$s. Because three $2$s can always be replaced by two $3$s to obtain a larger product.
+**Mohó stratégia 2**: A felosztási sémában legfeljebb két $2$ lehet. Mert három $2$-t mindig fel lehet cserélni két $3$-ra, hogy nagyobb szorzatot kapjunk.
 
-![Optimal splitting factor](max_product_cutting_problem.assets/max_product_cutting_greedy_infer2.png)
+![Optimális felosztási tényező](max_product_cutting_problem.assets/max_product_cutting_greedy_infer2.png)
 
-In summary, the following greedy strategies can be derived.
+Összefoglalva a következő mohó stratégiák vezethetők le.
 
-1. Input integer $n$, continuously split out factor $3$ until the remainder is $0$, $1$, or $2$.
-2. When the remainder is $0$, it means $n$ is a multiple of $3$, so no further action is needed.
-3. When the remainder is $2$, do not continue splitting, keep it.
-4. When the remainder is $1$, since $2 \times 2 > 1 \times 3$, the last $3$ should be replaced with $2$.
+1. Adott $n$ egész szám, folyamatosan kivezetünk $3$ tényezőt, amíg a maradék $0$, $1$ vagy $2$ nem lesz.
+2. Ha a maradék $0$, az azt jelenti, hogy $n$ $3$ többszöröse, ezért nincs szükség további műveletre.
+3. Ha a maradék $2$, ne folytassuk az osztást, tartsuk meg.
+4. Ha a maradék $1$, mivel $2 \times 2 > 1 \times 3$, az utolsó $3$-at $2$-vel kell felváltani.
 
-### Code Implementation
+### Kód megvalósítása
 
-As shown in the figure below, we don't need to use loops to split the integer, but can use integer division to get the count of $3$s as $a$, and modulo operation to get the remainder as $b$, at which point we have:
+Ahogy az alábbi ábra mutatja, nem kell ciklusokat használnunk az egész szám felosztásához, hanem egész osztással megkaphatjuk a $3$-ok számát $a$-ként, és moduló művelettel a maradékot $b$-ként, ekkor:
 
 $$
 n = 3 a + b
 $$
 
-Please note that for the edge case of $n \leq 3$, a $1$ must be split out, with product $1 \times (n - 1)$.
+Megjegyezzük, hogy az $n \leq 3$ éles esetére egy $1$-et kötelező kivezetni, a szorzat $1 \times (n - 1)$.
 
 ```src
 [file]{max_product_cutting}-[class]{}-[func]{max_product_cutting}
 ```
 
-![Calculation method for max product cutting](max_product_cutting_problem.assets/max_product_cutting_greedy_calculation.png)
+![Számítási módszer a maximális szorzatdaraboláshoz](max_product_cutting_problem.assets/max_product_cutting_greedy_calculation.png)
 
-**The time complexity depends on the implementation of the exponentiation operation in the programming language**. Taking Python as an example, there are three commonly used power calculation functions.
+**Az időbonyolultság a programozási nyelvben az exponenciálás műveleti megvalósításától függ**. Pythont például véve, három általánosan használt hatványozási függvény van.
 
-- Both the operator `**` and the function `pow()` have time complexity $O(\log⁡ a)$.
-- The function `math.pow()` internally calls the C library's `pow()` function, which performs floating-point exponentiation, with time complexity $O(1)$.
+- A `**` operátor és a `pow()` függvény időbonyolultsága egyaránt $O(\log⁡ a)$.
+- A `math.pow()` függvény belsőleg a C könyvtár `pow()` függvényét hívja, amely lebegőpontos hatványozást végez, $O(1)$ időbonyolultsággal.
 
-Variables $a$ and $b$ use a constant amount of extra space, **therefore the space complexity is $O(1)$**.
+Az $a$ és $b$ változók állandó mennyiségű extra helyet használnak, **ezért a térbonyolultság $O(1)$**.
 
-### Correctness Proof
+### Helyességbizonyítás
 
-Using proof by contradiction, only analyzing the case where $n \geq 4$.
+Ellentmondásos bizonyítással, csak az $n \geq 4$ esetet elemezve.
 
-1. **All factors $\leq 3$**: Suppose the optimal splitting scheme includes a factor $x \geq 4$, then it can definitely continue to be split into $2(x-2)$ to obtain a larger (or equal) product. This contradicts the assumption.
-2. **The splitting scheme does not contain $1$**: Suppose the optimal splitting scheme includes a factor of $1$, then it can definitely be merged into another factor to obtain a larger product. This contradicts the assumption.
-3. **The splitting scheme contains at most two $2$s**: Suppose the optimal splitting scheme includes three $2$s, then they can definitely be replaced by two $3$s for a larger product. This contradicts the assumption.
+1. **Minden tényező $\leq 3$**: Tegyük fel, hogy az optimális felosztási séma tartalmaz egy $x \geq 4$ tényezőt, akkor azt biztosan tovább lehet osztani $2(x-2)$-re, hogy nagyobb (vagy egyenlő) szorzatot kapjunk. Ez ellentmond a feltevésnek.
+2. **A felosztási séma nem tartalmaz $1$-et**: Tegyük fel, hogy az optimális felosztási séma tartalmaz egy $1$-es tényezőt, akkor azt biztosan össze lehet vonni egy másik tényezővel, hogy nagyobb szorzatot kapjunk. Ez ellentmond a feltevésnek.
+3. **A felosztási séma legfeljebb két $2$-t tartalmaz**: Tegyük fel, hogy az optimális felosztási séma három $2$-t tartalmaz, akkor azokat biztosan fel lehet cserélni két $3$-ra a nagyobb szorzatért. Ez ellentmond a feltevésnek.

@@ -1,52 +1,52 @@
-# Max Capacity Problem
+# Maximális kapacitás probléma
 
 !!! question
 
-    Input an array $ht$, where each element represents the height of a vertical partition. Any two partitions in the array, along with the space between them, can form a container.
+    Adjon meg egy $ht$ tömböt, ahol minden elem egy függőleges válaszfal magasságát reprezentálja. A tömbben bármely két válaszfal, valamint a köztük lévő tér tárolóedényt alkothat.
 
-    The capacity of the container equals the product of height and width (area), where the height is determined by the shorter partition, and the width is the difference in array indices between the two partitions.
+    A tartály kapacitása egyenlő a magasság és a szélesség szorzatával (terület), ahol a magasságot a rövidebb válaszfal határozza meg, a szélesség pedig a két válaszfal tömbbeli indexeinek különbsége.
 
-    Please select two partitions in the array such that the capacity of the formed container is maximized, and return the maximum capacity. An example is shown in the figure below.
+    Válasszon ki két válaszfalat a tömbből úgy, hogy az alkotott tartály kapacitása maximális legyen, és adja vissza a maximális kapacitást. Egy példa az alábbi ábrán látható.
 
-![Example data for the max capacity problem](max_capacity_problem.assets/max_capacity_example.png)
+![Példaadatok a maximális kapacitás problémához](max_capacity_problem.assets/max_capacity_example.png)
 
-The container is formed by any two partitions, **therefore the state of this problem is the indices of two partitions, denoted as $[i, j]$**.
+A tartályt bármely két válaszfal alkotja, **ezért ennek a problémának az állapota a két válaszfal indexei, amelyeket $[i, j]$-vel jelölünk**.
 
-According to the problem description, capacity equals height multiplied by width, where height is determined by the shorter partition, and width is the difference in array indices between the two partitions. Let the capacity be $cap[i, j]$, then the calculation formula is:
+A problémaleírás szerint a kapacitás egyenlő a magasság és a szélesség szorzatával, ahol a magasságot a rövidebb válaszfal határozza meg, a szélesség pedig a két válaszfal tömbbeli indexeinek különbsége. Legyen a kapacitás $cap[i, j]$, ekkor a számítási képlet:
 
 $$
 cap[i, j] = \min(ht[i], ht[j]) \times (j - i)
 $$
 
-Let the array length be $n$, then the number of combinations of two partitions (total number of states) is $C_n^2 = \frac{n(n - 1)}{2}$. Most directly, **we can exhaustively enumerate all states** to find the maximum capacity, with time complexity $O(n^2)$.
+Legyen a tömb hossza $n$, ekkor a két válaszfal kombinációinak száma (az állapotok teljes száma) $C_n^2 = \frac{n(n - 1)}{2}$. A legközvetlenebb megközelítés az, hogy **kimerítően felsoroljuk az összes állapotot** a maximális kapacitás megtalálásához, $O(n^2)$ időbonyolultsággal.
 
-### Greedy Strategy Determination
+### Mohó stratégia meghatározása
 
-This problem has a more efficient solution. As shown in the figure below, select a state $[i, j]$ where index $i < j$ and height $ht[i] < ht[j]$, meaning $i$ is the short partition and $j$ is the long partition.
+Ennek a problémának van egy hatékonyabb megoldása. Ahogy az alábbi ábra mutatja, válasszunk ki egy $[i, j]$ állapotot, ahol az $i < j$ index és a $ht[i] < ht[j]$ magasság, vagyis $i$ a rövid válaszfal és $j$ a hosszú válaszfal.
 
-![Initial state](max_capacity_problem.assets/max_capacity_initial_state.png)
+![Kezdőállapot](max_capacity_problem.assets/max_capacity_initial_state.png)
 
-As shown in the figure below, **if we now move the long partition $j$ closer to the short partition $i$, the capacity will definitely decrease**.
+Ahogy az alábbi ábra mutatja, **ha most a hosszú $j$ válaszfalat közelebb mozgatjuk a rövid $i$ válaszfalhoz, a kapacitás biztosan csökken**.
 
-This is because after moving the long partition $j$, the width $j-i$ definitely decreases; and since height is determined by the short partition, the height can only remain unchanged ($i$ is still the short partition) or decrease (the moved $j$ becomes the short partition).
+Ez azért van, mert a hosszú $j$ válaszfal mozgatása után a $j-i$ szélesség biztosan csökken; és mivel a magasságot a rövid válaszfal határozza meg, a magasság csak változatlan maradhat ($i$ még mindig a rövid válaszfal) vagy csökkenhet (az áthelyezett $j$ lesz a rövid válaszfal).
 
-![State after moving the long partition inward](max_capacity_problem.assets/max_capacity_moving_long_board.png)
+![Állapot a hosszú válaszfal befelé mozgatása után](max_capacity_problem.assets/max_capacity_moving_long_board.png)
 
-Conversely, **we can only possibly increase capacity by contracting the short partition $i$ inward**. Because although width will definitely decrease, **height may increase** (the moved short partition $i$ may become taller). For example, in the figure below, the area increases after moving the short partition.
+Ezzel szemben **a kapacitást csak a rövid $i$ válaszfal befelé húzásával növelhetjük esetleg**. Mert bár a szélesség biztosan csökken, **a magasság növekedhet** (az áthelyezett rövid $i$ válaszfal magasabb lehet). Például az alábbi ábrán a terület a rövid válaszfal mozgatása után megnő.
 
-![State after moving the short partition inward](max_capacity_problem.assets/max_capacity_moving_short_board.png)
+![Állapot a rövid válaszfal befelé mozgatása után](max_capacity_problem.assets/max_capacity_moving_short_board.png)
 
-From this we can derive the greedy strategy for this problem: initialize two pointers at both ends of the container, and in each round contract the pointer corresponding to the short partition inward, until the two pointers meet.
+Ebből levezethetjük a probléma mohó stratégiáját: inicializálunk két mutatót a tartály mindkét végén, és minden körben a rövid válaszfalhoz tartozó mutatót mozgatjuk befelé, amíg a két mutató találkozik.
 
-The figure below shows the execution process of the greedy strategy.
+Az alábbi ábra a mohó stratégia végrehajtási folyamatát mutatja.
 
-1. In the initial state, pointers $i$ and $j$ are at both ends of the array.
-2. Calculate the capacity of the current state $cap[i, j]$, and update the maximum capacity.
-3. Compare the heights of partition $i$ and partition $j$, and move the short partition inward by one position.
-4. Loop through steps `2.` and `3.` until $i$ and $j$ meet.
+1. A kezdőállapotban az $i$ és $j$ mutatók a tömb két végén vannak.
+2. Kiszámítjuk az aktuális $cap[i, j]$ állapot kapacitását, és frissítjük a maximális kapacitást.
+3. Összehasonlítjuk az $i$ és $j$ válaszfalak magasságát, és a rövid válaszfalat egy pozícióval befelé mozgatjuk.
+4. A `2.` és `3.` lépéseket addig ismételjük, amíg $i$ és $j$ találkozik.
 
 === "<1>"
-    ![Greedy process for the max capacity problem](max_capacity_problem.assets/max_capacity_greedy_step1.png)
+    ![Mohó folyamat a maximális kapacitás problémához](max_capacity_problem.assets/max_capacity_greedy_step1.png)
 
 === "<2>"
     ![max_capacity_greedy_step2](max_capacity_problem.assets/max_capacity_greedy_step2.png)
@@ -72,28 +72,28 @@ The figure below shows the execution process of the greedy strategy.
 === "<9>"
     ![max_capacity_greedy_step9](max_capacity_problem.assets/max_capacity_greedy_step9.png)
 
-### Code Implementation
+### Kód megvalósítása
 
-The code loops at most $n$ rounds, **therefore the time complexity is $O(n)$**.
+A kód legfeljebb $n$ kört fut le, **ezért az időbonyolultság $O(n)$**.
 
-Variables $i$, $j$, and $res$ use a constant amount of extra space, **therefore the space complexity is $O(1)$**.
+Az $i$, $j$ és $res$ változók állandó mennyiségű extra helyet használnak, **ezért a térbonyolultság $O(1)$**.
 
 ```src
 [file]{max_capacity}-[class]{}-[func]{max_capacity}
 ```
 
-### Correctness Proof
+### Helyességbizonyítás
 
-The reason greedy is faster than exhaustive enumeration is that each round of greedy selection "skips" some states.
+A mohó algoritmus azért gyorsabb a kimerítő felsorolásnál, mert minden mohó kiválasztási körben „kihagyja" egyes állapotokat.
 
-For example, in state $cap[i, j]$ where $i$ is the short partition and $j$ is the long partition, if we greedily move the short partition $i$ inward by one position, the states shown in the figure below will be "skipped". **This means that the capacities of these states cannot be verified later**.
+Például a $cap[i, j]$ állapotban, ahol $i$ a rövid válaszfal és $j$ a hosszú válaszfal, ha mohón egy pozícióval befelé mozgatjuk a rövid $i$ válaszfalat, az alábbi ábrán látható állapotokat „kihagyjuk". **Ez azt jelenti, hogy ezeknek az állapotoknak a kapacitásait később nem lehet ellenőrizni**.
 
 $$
 cap[i, i+1], cap[i, i+2], \dots, cap[i, j-2], cap[i, j-1]
 $$
 
-![States skipped by moving the short partition](max_capacity_problem.assets/max_capacity_skipped_states.png)
+![A rövid válaszfal mozgatásával kihagyott állapotok](max_capacity_problem.assets/max_capacity_skipped_states.png)
 
-Observing carefully, **these skipped states are actually all the states obtained by moving the long partition $j$ inward**. We have already proven that moving the long partition inward will definitely decrease capacity. That is, the skipped states cannot possibly be the optimal solution, **skipping them will not cause us to miss the optimal solution**.
+Figyelmesen megfigyelve **ezek a kihagyott állapotok valójában mind azok az állapotok, amelyek a hosszú $j$ válaszfal befelé mozgatásával kaphatók**. Már bizonyítottuk, hogy a hosszú válaszfal befelé mozgatása biztosan csökkenti a kapacitást. Vagyis a kihagyott állapotok nem lehetnek az optimális megoldás, **kihagyásuk nem okozza az optimális megoldás elmulasztását**.
 
-The above analysis shows that the operation of moving the short partition is "safe", and the greedy strategy is effective.
+A fenti elemzés azt mutatja, hogy a rövid válaszfal mozgatásának művelete „biztonságos", és a mohó stratégia hatékony.

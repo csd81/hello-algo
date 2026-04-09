@@ -1,5 +1,5 @@
 # Hello Algo
 
-Data structures and algorithms crash course with animated illustrations and off-the-shelf code
+Adatstruktúrák és algoritmusok gyorstalpaló animált ábrákkal és azonnal használható kóddal
 
-[Dive in](chapter_hello_algo/)
+[Kezdjük el](chapter_hello_algo/)
