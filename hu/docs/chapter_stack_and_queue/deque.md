@@ -1,406 +1,406 @@
-# Deque
+# Kétirányú sor
 
-In a queue, we can only remove elements from the front or add elements at the rear. As shown in the figure below, a <u>double-ended queue (deque)</u> provides greater flexibility, allowing the addition or removal of elements at both the front and rear.
+Egy sorban csak az első elemtől távolíthatunk el elemeket, vagy adhatunk hozzá elemeket az utolsó elemhez. Az alábbi ábrán látható módon a <u>kétirányú sor (deque)</u> nagyobb rugalmasságot biztosít, lehetővé téve elemek hozzáadását vagy eltávolítását mind az első elemnél, mind az utolsó elemnél.
 
-![Operations of deque](deque.assets/deque_operations.png)
+![A kétirányú sor műveletei](deque.assets/deque_operations.png)
 
-## Common Deque Operations
+## A kétirányú sor gyakori műveletei
 
-The common operations on a deque are shown in the table below. The specific method names depend on the programming language used.
+A kétirányú sor leggyakoribb műveleteit az alábbi táblázat mutatja. A konkrét metódusnevek a programozási nyelvtől függnek.
 
-<p align="center"> Table <id> &nbsp; Efficiency of Deque Operations </p>
+<p align="center"> Táblázat <id> &nbsp; Kétirányú sorműveletek hatékonysága </p>
 
-| Method         | Description               | Time Complexity |
-| -------------- | ------------------------- | --------------- |
-| `push_first()` | Add element to front      | $O(1)$          |
-| `push_last()`  | Add element to rear       | $O(1)$          |
-| `pop_first()`  | Remove front element      | $O(1)$          |
-| `pop_last()`   | Remove rear element       | $O(1)$          |
-| `peek_first()` | Access front element      | $O(1)$          |
-| `peek_last()`  | Access rear element       | $O(1)$          |
+| Metódus        | Leírás                        | Időbonyolultság |
+| -------------- | ----------------------------- | --------------- |
+| `push_first()` | Elem hozzáadása az elejéhez   | $O(1)$          |
+| `push_last()`  | Elem hozzáadása a végéhez     | $O(1)$          |
+| `pop_first()`  | Az első elem eltávolítása     | $O(1)$          |
+| `pop_last()`   | Az utolsó elem eltávolítása   | $O(1)$          |
+| `peek_first()` | Az első elem megtekintése     | $O(1)$          |
+| `peek_last()`  | Az utolsó elem megtekintése   | $O(1)$          |
 
-Similarly, we can directly use the deque classes already implemented in programming languages:
+Hasonlóképpen, közvetlenül használhatjuk a programozási nyelvekben már megvalósított kétirányú sor osztályokat:
 
 === "Python"
 
     ```python title="deque.py"
     from collections import deque
 
-    # Initialize deque
+    # Kétirányú sor inicializálása
     deq: deque[int] = deque()
 
-    # Enqueue elements
-    deq.append(2)      # Add to rear
+    # Elemek sorba állítása
+    deq.append(2)      # Hozzáadás a véghez
     deq.append(5)
     deq.append(4)
-    deq.appendleft(3)  # Add to front
+    deq.appendleft(3)  # Hozzáadás az elejéhez
     deq.appendleft(1)
 
-    # Access elements
-    front: int = deq[0]  # Front element
-    rear: int = deq[-1]  # Rear element
+    # Elemek elérése
+    front: int = deq[0]  # Első elem
+    rear: int = deq[-1]  # Utolsó elem
 
-    # Dequeue elements
-    pop_front: int = deq.popleft()  # Front element dequeue
-    pop_rear: int = deq.pop()       # Rear element dequeue
+    # Elemek kivétele
+    pop_front: int = deq.popleft()  # Első elem kivétele
+    pop_rear: int = deq.pop()       # Utolsó elem kivétele
 
-    # Get deque length
+    # Kétirányú sor hosszának lekérdezése
     size: int = len(deq)
 
-    # Check if deque is empty
+    # Üresség ellenőrzése
     is_empty: bool = len(deq) == 0
     ```
 
 === "C++"
 
     ```cpp title="deque.cpp"
-    /* Initialize deque */
+    /* Kétirányú sor inicializálása */
     deque<int> deque;
 
-    /* Enqueue elements */
-    deque.push_back(2);   // Add to rear
+    /* Elemek sorba állítása */
+    deque.push_back(2);   // Hozzáadás a véghez
     deque.push_back(5);
     deque.push_back(4);
-    deque.push_front(3);  // Add to front
+    deque.push_front(3);  // Hozzáadás az elejéhez
     deque.push_front(1);
 
-    /* Access elements */
-    int front = deque.front(); // Front element
-    int back = deque.back();   // Rear element
+    /* Elemek elérése */
+    int front = deque.front(); // Első elem
+    int back = deque.back();   // Utolsó elem
 
-    /* Dequeue elements */
-    deque.pop_front();  // Front element dequeue
-    deque.pop_back();   // Rear element dequeue
+    /* Elemek kivétele */
+    deque.pop_front();  // Első elem kivétele
+    deque.pop_back();   // Utolsó elem kivétele
 
-    /* Get deque length */
+    /* Kétirányú sor hosszának lekérdezése */
     int size = deque.size();
 
-    /* Check if deque is empty */
+    /* Üresség ellenőrzése */
     bool empty = deque.empty();
     ```
 
 === "Java"
 
     ```java title="deque.java"
-    /* Initialize deque */
+    /* Kétirányú sor inicializálása */
     Deque<Integer> deque = new LinkedList<>();
 
-    /* Enqueue elements */
-    deque.offerLast(2);   // Add to rear
+    /* Elemek sorba állítása */
+    deque.offerLast(2);   // Hozzáadás a véghez
     deque.offerLast(5);
     deque.offerLast(4);
-    deque.offerFirst(3);  // Add to front
+    deque.offerFirst(3);  // Hozzáadás az elejéhez
     deque.offerFirst(1);
 
-    /* Access elements */
-    int peekFirst = deque.peekFirst();  // Front element
-    int peekLast = deque.peekLast();    // Rear element
+    /* Elemek elérése */
+    int peekFirst = deque.peekFirst();  // Első elem
+    int peekLast = deque.peekLast();    // Utolsó elem
 
-    /* Dequeue elements */
-    int popFirst = deque.pollFirst();  // Front element dequeue
-    int popLast = deque.pollLast();    // Rear element dequeue
+    /* Elemek kivétele */
+    int popFirst = deque.pollFirst();  // Első elem kivétele
+    int popLast = deque.pollLast();    // Utolsó elem kivétele
 
-    /* Get deque length */
+    /* Kétirányú sor hosszának lekérdezése */
     int size = deque.size();
 
-    /* Check if deque is empty */
+    /* Üresség ellenőrzése */
     boolean isEmpty = deque.isEmpty();
     ```
 
 === "C#"
 
     ```csharp title="deque.cs"
-    /* Initialize deque */
-    // In C#, use LinkedList as a deque
+    /* Kétirányú sor inicializálása */
+    // C#-ban LinkedList-et használunk kétirányú sorként
     LinkedList<int> deque = new();
 
-    /* Enqueue elements */
-    deque.AddLast(2);   // Add to rear
+    /* Elemek sorba állítása */
+    deque.AddLast(2);   // Hozzáadás a véghez
     deque.AddLast(5);
     deque.AddLast(4);
-    deque.AddFirst(3);  // Add to front
+    deque.AddFirst(3);  // Hozzáadás az elejéhez
     deque.AddFirst(1);
 
-    /* Access elements */
-    int peekFirst = deque.First.Value;  // Front element
-    int peekLast = deque.Last.Value;    // Rear element
+    /* Elemek elérése */
+    int peekFirst = deque.First.Value;  // Első elem
+    int peekLast = deque.Last.Value;    // Utolsó elem
 
-    /* Dequeue elements */
-    deque.RemoveFirst();  // Front element dequeue
-    deque.RemoveLast();   // Rear element dequeue
+    /* Elemek kivétele */
+    deque.RemoveFirst();  // Első elem kivétele
+    deque.RemoveLast();   // Utolsó elem kivétele
 
-    /* Get deque length */
+    /* Kétirányú sor hosszának lekérdezése */
     int size = deque.Count;
 
-    /* Check if deque is empty */
+    /* Üresség ellenőrzése */
     bool isEmpty = deque.Count == 0;
     ```
 
 === "Go"
 
     ```go title="deque_test.go"
-    /* Initialize deque */
-    // In Go, use list as a deque
+    /* Kétirányú sor inicializálása */
+    // Go-ban list-et használunk kétirányú sorként
     deque := list.New()
 
-    /* Enqueue elements */
-    deque.PushBack(2)      // Add to rear
+    /* Elemek sorba állítása */
+    deque.PushBack(2)      // Hozzáadás a véghez
     deque.PushBack(5)
     deque.PushBack(4)
-    deque.PushFront(3)     // Add to front
+    deque.PushFront(3)     // Hozzáadás az elejéhez
     deque.PushFront(1)
 
-    /* Access elements */
-    front := deque.Front() // Front element
-    rear := deque.Back()   // Rear element
+    /* Elemek elérése */
+    front := deque.Front() // Első elem
+    rear := deque.Back()   // Utolsó elem
 
-    /* Dequeue elements */
-    deque.Remove(front)    // Front element dequeue
-    deque.Remove(rear)     // Rear element dequeue
+    /* Elemek kivétele */
+    deque.Remove(front)    // Első elem kivétele
+    deque.Remove(rear)     // Utolsó elem kivétele
 
-    /* Get deque length */
+    /* Kétirányú sor hosszának lekérdezése */
     size := deque.Len()
 
-    /* Check if deque is empty */
+    /* Üresség ellenőrzése */
     isEmpty := deque.Len() == 0
     ```
 
 === "Swift"
 
     ```swift title="deque.swift"
-    /* Initialize deque */
-    // Swift does not have a built-in deque class, can use Array as a deque
+    /* Kétirányú sor inicializálása */
+    // A Swiftnek nincs beépített kétirányú sor osztálya, Array-t használhatunk kétirányú sorként
     var deque: [Int] = []
 
-    /* Enqueue elements */
-    deque.append(2) // Add to rear
+    /* Elemek sorba állítása */
+    deque.append(2) // Hozzáadás a véghez
     deque.append(5)
     deque.append(4)
-    deque.insert(3, at: 0) // Add to front
+    deque.insert(3, at: 0) // Hozzáadás az elejéhez
     deque.insert(1, at: 0)
 
-    /* Access elements */
-    let peekFirst = deque.first! // Front element
-    let peekLast = deque.last! // Rear element
+    /* Elemek elérése */
+    let peekFirst = deque.first! // Első elem
+    let peekLast = deque.last! // Utolsó elem
 
-    /* Dequeue elements */
-    // When using Array simulation, popFirst has O(n) complexity
-    let popFirst = deque.removeFirst() // Front element dequeue
-    let popLast = deque.removeLast() // Rear element dequeue
+    /* Elemek kivétele */
+    // Array szimulációnál a popFirst O(n) bonyolultságú
+    let popFirst = deque.removeFirst() // Első elem kivétele
+    let popLast = deque.removeLast() // Utolsó elem kivétele
 
-    /* Get deque length */
+    /* Kétirányú sor hosszának lekérdezése */
     let size = deque.count
 
-    /* Check if deque is empty */
+    /* Üresség ellenőrzése */
     let isEmpty = deque.isEmpty
     ```
 
 === "JS"
 
     ```javascript title="deque.js"
-    /* Initialize deque */
-    // JavaScript does not have a built-in deque, can only use Array as a deque
+    /* Kétirányú sor inicializálása */
+    // A JavaScriptnek nincs beépített kétirányú sora, csak Array-t használhatunk kétirányú sorként
     const deque = [];
 
-    /* Enqueue elements */
+    /* Elemek sorba állítása */
     deque.push(2);
     deque.push(5);
     deque.push(4);
-    // Please note that since it's an array, unshift() has O(n) time complexity
+    // Vegyük figyelembe, hogy mivel tömb, az unshift() O(n) időbonyolultságú
     deque.unshift(3);
     deque.unshift(1);
 
-    /* Access elements */
+    /* Elemek elérése */
     const peekFirst = deque[0];
     const peekLast = deque[deque.length - 1];
 
-    /* Dequeue elements */
-    // Please note that since it's an array, shift() has O(n) time complexity
+    /* Elemek kivétele */
+    // Vegyük figyelembe, hogy mivel tömb, a shift() O(n) időbonyolultságú
     const popFront = deque.shift();
     const popBack = deque.pop();
 
-    /* Get deque length */
+    /* Kétirányú sor hosszának lekérdezése */
     const size = deque.length;
 
-    /* Check if deque is empty */
+    /* Üresség ellenőrzése */
     const isEmpty = size === 0;
     ```
 
 === "TS"
 
     ```typescript title="deque.ts"
-    /* Initialize deque */
-    // TypeScript does not have a built-in deque, can only use Array as a deque
+    /* Kétirányú sor inicializálása */
+    // A TypeScriptnek nincs beépített kétirányú sora, csak Array-t használhatunk kétirányú sorként
     const deque: number[] = [];
 
-    /* Enqueue elements */
+    /* Elemek sorba állítása */
     deque.push(2);
     deque.push(5);
     deque.push(4);
-    // Please note that since it's an array, unshift() has O(n) time complexity
+    // Vegyük figyelembe, hogy mivel tömb, az unshift() O(n) időbonyolultságú
     deque.unshift(3);
     deque.unshift(1);
 
-    /* Access elements */
+    /* Elemek elérése */
     const peekFirst: number = deque[0];
     const peekLast: number = deque[deque.length - 1];
 
-    /* Dequeue elements */
-    // Please note that since it's an array, shift() has O(n) time complexity
+    /* Elemek kivétele */
+    // Vegyük figyelembe, hogy mivel tömb, a shift() O(n) időbonyolultságú
     const popFront: number = deque.shift() as number;
     const popBack: number = deque.pop() as number;
 
-    /* Get deque length */
+    /* Kétirányú sor hosszának lekérdezése */
     const size: number = deque.length;
 
-    /* Check if deque is empty */
+    /* Üresség ellenőrzése */
     const isEmpty: boolean = size === 0;
     ```
 
 === "Dart"
 
     ```dart title="deque.dart"
-    /* Initialize deque */
-    // In Dart, Queue is defined as a deque
+    /* Kétirányú sor inicializálása */
+    // Dartban a Queue kétirányú sorként van definiálva
     Queue<int> deque = Queue<int>();
 
-    /* Enqueue elements */
-    deque.addLast(2);  // Add to rear
+    /* Elemek sorba állítása */
+    deque.addLast(2);  // Hozzáadás a véghez
     deque.addLast(5);
     deque.addLast(4);
-    deque.addFirst(3); // Add to front
+    deque.addFirst(3); // Hozzáadás az elejéhez
     deque.addFirst(1);
 
-    /* Access elements */
-    int peekFirst = deque.first; // Front element
-    int peekLast = deque.last;   // Rear element
+    /* Elemek elérése */
+    int peekFirst = deque.first; // Első elem
+    int peekLast = deque.last;   // Utolsó elem
 
-    /* Dequeue elements */
-    int popFirst = deque.removeFirst(); // Front element dequeue
-    int popLast = deque.removeLast();   // Rear element dequeue
+    /* Elemek kivétele */
+    int popFirst = deque.removeFirst(); // Első elem kivétele
+    int popLast = deque.removeLast();   // Utolsó elem kivétele
 
-    /* Get deque length */
+    /* Kétirányú sor hosszának lekérdezése */
     int size = deque.length;
 
-    /* Check if deque is empty */
+    /* Üresség ellenőrzése */
     bool isEmpty = deque.isEmpty;
     ```
 
 === "Rust"
 
     ```rust title="deque.rs"
-    /* Initialize deque */
+    /* Kétirányú sor inicializálása */
     let mut deque: VecDeque<u32> = VecDeque::new();
 
-    /* Enqueue elements */
-    deque.push_back(2);  // Add to rear
+    /* Elemek sorba állítása */
+    deque.push_back(2);  // Hozzáadás a véghez
     deque.push_back(5);
     deque.push_back(4);
-    deque.push_front(3); // Add to front
+    deque.push_front(3); // Hozzáadás az elejéhez
     deque.push_front(1);
 
-    /* Access elements */
-    if let Some(front) = deque.front() { // Front element
+    /* Elemek elérése */
+    if let Some(front) = deque.front() { // Első elem
     }
-    if let Some(rear) = deque.back() {   // Rear element
-    }
-
-    /* Dequeue elements */
-    if let Some(pop_front) = deque.pop_front() { // Front element dequeue
-    }
-    if let Some(pop_rear) = deque.pop_back() {   // Rear element dequeue
+    if let Some(rear) = deque.back() {   // Utolsó elem
     }
 
-    /* Get deque length */
+    /* Elemek kivétele */
+    if let Some(pop_front) = deque.pop_front() { // Első elem kivétele
+    }
+    if let Some(pop_rear) = deque.pop_back() {   // Utolsó elem kivétele
+    }
+
+    /* Kétirányú sor hosszának lekérdezése */
     let size = deque.len();
 
-    /* Check if deque is empty */
+    /* Üresség ellenőrzése */
     let is_empty = deque.is_empty();
     ```
 
 === "C"
 
     ```c title="deque.c"
-    // C does not provide a built-in deque
+    // A C nem biztosít beépített kétirányú sort
     ```
 
 === "Kotlin"
 
     ```kotlin title="deque.kt"
-    /* Initialize deque */
+    /* Kétirányú sor inicializálása */
     val deque = LinkedList<Int>()
 
-    /* Enqueue elements */
-    deque.offerLast(2)  // Add to rear
+    /* Elemek sorba állítása */
+    deque.offerLast(2)  // Hozzáadás a véghez
     deque.offerLast(5)
     deque.offerLast(4)
-    deque.offerFirst(3) // Add to front
+    deque.offerFirst(3) // Hozzáadás az elejéhez
     deque.offerFirst(1)
 
-    /* Access elements */
-    val peekFirst = deque.peekFirst() // Front element
-    val peekLast = deque.peekLast()   // Rear element
+    /* Elemek elérése */
+    val peekFirst = deque.peekFirst() // Első elem
+    val peekLast = deque.peekLast()   // Utolsó elem
 
-    /* Dequeue elements */
-    val popFirst = deque.pollFirst() // Front element dequeue
-    val popLast = deque.pollLast()   // Rear element dequeue
+    /* Elemek kivétele */
+    val popFirst = deque.pollFirst() // Első elem kivétele
+    val popLast = deque.pollLast()   // Utolsó elem kivétele
 
-    /* Get deque length */
+    /* Kétirányú sor hosszának lekérdezése */
     val size = deque.size
 
-    /* Check if deque is empty */
+    /* Üresség ellenőrzése */
     val isEmpty = deque.isEmpty()
     ```
 
 === "Ruby"
 
     ```ruby title="deque.rb"
-    # Initialize deque
-    # Ruby does not have a built-in deque, can only use Array as a deque
+    # Kétirányú sor inicializálása
+    # A Rubynek nincs beépített kétirányú sora, csak Array-t használhatunk kétirányú sorként
     deque = []
 
-    # Enqueue elements
+    # Elemek sorba állítása
     deque << 2
     deque << 5
     deque << 4
-    # Please note that since it's an array, Array#unshift has O(n) time complexity
+    # Vegyük figyelembe, hogy mivel tömb, az Array#unshift O(n) időbonyolultságú
     deque.unshift(3)
     deque.unshift(1)
 
-    # Access elements
+    # Elemek elérése
     peek_first = deque.first
     peek_last = deque.last
 
-    # Dequeue elements
-    # Please note that since it's an array, Array#shift has O(n) time complexity
+    # Elemek kivétele
+    # Vegyük figyelembe, hogy mivel tömb, az Array#shift O(n) időbonyolultságú
     pop_front = deque.shift
     pop_back = deque.pop
 
-    # Get deque length
+    # Kétirányú sor hosszának lekérdezése
     size = deque.length
 
-    # Check if deque is empty
+    # Üresség ellenőrzése
     is_empty = size.zero?
     ```
 
-??? pythontutor "Code Visualization"
+??? pythontutor "Kód vizualizáció"
 
     https://pythontutor.com/render.html#code=from%20collections%20import%20deque%0A%0A%22%22%22Driver%20Code%22%22%22%0Aif%20__name__%20%3D%3D%20%22__main__%22%3A%0A%20%20%20%20%23%20%E5%88%9D%E5%A7%8B%E5%8C%96%E5%8F%8C%E5%90%91%E9%98%9F%E5%88%97%0A%20%20%20%20deq%20%3D%20deque%28%29%0A%0A%20%20%20%20%23%20%E5%85%83%E7%B4%A0%E5%85%A5%E9%98%9F%0A%20%20%20%20deq.append%282%29%20%20%23%20%E6%B7%BB%E5%8A%A0%E8%87%B3%E9%98%9F%E5%B0%BE%0A%20%20%20%20deq.append%285%29%0A%20%20%20%20deq.append%284%29%0A%20%20%20%20deq.appendleft%283%29%20%20%23%20%E6%B7%BB%E5%8A%A0%E8%87%B3%E9%98%9F%E9%A6%96%0A%20%20%20%20deq.appendleft%281%29%0A%20%20%20%20print%28%22%E5%8F%8C%E5%90%91%E9%98%9F%E5%88%97%20deque%20%3D%22,%20deq%29%0A%0A%20%20%20%20%23%20%E8%AE%BF%E9%97%AE%E5%85%83%E7%B4%A0%0A%20%20%20%20front%20%3D%20deq%5B0%5D%20%20%23%20%E9%98%9F%E9%A6%96%E5%85%83%E7%B4%A0%0A%20%20%20%20print%28%22%E9%98%9F%E9%A6%96%E5%85%83%E7%B4%A0%20front%20%3D%22,%20front%29%0A%20%20%20%20rear%20%3D%20deq%5B-1%5D%20%20%23%20%E9%98%9F%E5%B0%BE%E5%85%83%E7%B4%A0%0A%20%20%20%20print%28%22%E9%98%9F%E5%B0%BE%E5%85%83%E7%B4%A0%20rear%20%3D%22,%20rear%29%0A%0A%20%20%20%20%23%20%E5%85%83%E7%B4%A0%E5%87%BA%E9%98%9F%0A%20%20%20%20pop_front%20%3D%20deq.popleft%28%29%20%20%23%20%E9%98%9F%E9%A6%96%E5%85%83%E7%B4%A0%E5%87%BA%E9%98%9F%0A%20%20%20%20print%28%22%E9%98%9F%E9%A6%96%E5%87%BA%E9%98%9F%E5%85%83%E7%B4%A0%20%20pop_front%20%3D%22,%20pop_front%29%0A%20%20%20%20print%28%22%E9%98%9F%E9%A6%96%E5%87%BA%E9%98%9F%E5%90%8E%20deque%20%3D%22,%20deq%29%0A%20%20%20%20pop_rear%20%3D%20deq.pop%28%29%20%20%23%20%E9%98%9F%E5%B0%BE%E5%85%83%E7%B4%A0%E5%87%BA%E9%98%9F%0A%20%20%20%20print%28%22%E9%98%9F%E5%B0%BE%E5%87%BA%E9%98%9F%E5%85%83%E7%B4%A0%20%20pop_rear%20%3D%22,%20pop_rear%29%0A%20%20%20%20print%28%22%E9%98%9F%E5%B0%BE%E5%87%BA%E9%98%9F%E5%90%8E%20deque%20%3D%22,%20deq%29%0A%0A%20%20%20%20%23%20%E8%8E%B7%E5%8F%96%E5%8F%8C%E5%90%91%E9%98%9F%E5%88%97%E7%9A%84%E9%95%BF%E5%BA%A6%0A%20%20%20%20size%20%3D%20len%28deq%29%0A%20%20%20%20print%28%22%E5%8F%8C%E5%90%91%E9%98%9F%E5%88%97%E9%95%BF%E5%BA%A6%20size%20%3D%22,%20size%29%0A%0A%20%20%20%20%23%20%E5%88%A4%E6%96%AD%E5%8F%8C%E5%90%91%E9%98%9F%E5%88%97%E6%98%AF%E5%90%A6%E4%B8%BA%E7%A9%BA%0A%20%20%20%20is_empty%20%3D%20len%28deq%29%20%3D%3D%200%0A%20%20%20%20print%28%22%E5%8F%8C%E5%90%91%E9%98%9F%E5%88%97%E6%98%AF%E5%90%A6%E4%B8%BA%E7%A9%BA%20%3D%22,%20is_empty%29&cumulative=false&curInstr=3&heapPrimitives=nevernest&mode=display&origin=opt-frontend.js&py=311&rawInputLstJSON=%5B%5D&textReferences=false
 
-## Deque Implementation *
+## Kétirányú sor megvalósítása *
 
-The implementation of a deque is similar to that of a queue. You can choose either a linked list or an array as the underlying data structure.
+A kétirányú sor megvalósítása hasonló a soréhoz. Alapul szolgáló adatszerkezetként választhatunk láncolt listát vagy tömböt.
 
-### Doubly Linked List Implementation
+### Kétszeresen láncolt listával való megvalósítás
 
-Reviewing the previous section, we used a regular singly linked list to implement a queue because it conveniently allows deleting the head node (corresponding to dequeue) and adding new nodes after the tail node (corresponding to enqueue).
+Az előző szakaszt áttekintve, normál egyszeresen láncolt listát használtunk sor megvalósítására, mivel kényelmesen lehetővé teszi a fejcsomópont törlését (a kivétel műveletnek megfelelően) és új csomópontok hozzáadását a végcsomópont után (a sorba állítás műveletnek megfelelően).
 
-For a deque, both the front and rear can perform enqueue and dequeue operations. In other words, a deque needs to implement operations in the opposite direction as well. For this reason, we use a "doubly linked list" as the underlying data structure for the deque.
+Kétirányú sor esetén mind az első elem, mind az utolsó elem elvégezhet sorba állítást és kivételt. Más szóval, a kétirányú sornak az ellentétes irányú műveleteket is meg kell valósítania. Ezért "kétszeresen láncolt listát" használunk a kétirányú sor alapjául szolgáló adatszerkezeteként.
 
-As shown in the figure below, we treat the head and tail nodes of the doubly linked list as the front and rear of the deque, implementing functionality to add and remove nodes at both ends.
+Az alábbi ábrán látható módon a kétszeresen láncolt lista fej- és végcsomópontjait a kétirányú sor első és utolsó elemeként kezeljük, megvalósítva a csomópontok mindkét végén való hozzáadásának és eltávolításának funkcionalitását.
 
 === "<1>"
-    ![Enqueue and dequeue operations in linked list implementation of deque](deque.assets/linkedlist_deque_step1.png)
+    ![Sorba állítás és kivétel műveletek a kétirányú sor láncolt listával való megvalósításában](deque.assets/linkedlist_deque_step1.png)
 
 === "<2>"
     ![linkedlist_deque_push_last](deque.assets/linkedlist_deque_step2_push_last.png)
@@ -414,18 +414,18 @@ As shown in the figure below, we treat the head and tail nodes of the doubly lin
 === "<5>"
     ![linkedlist_deque_pop_first](deque.assets/linkedlist_deque_step5_pop_first.png)
 
-The implementation code is shown below:
+A megvalósítási kód az alábbiakban látható:
 
 ```src
 [file]{linkedlist_deque}-[class]{linked_list_deque}-[func]{}
 ```
 
-### Array Implementation
+### Tömbbel való megvalósítás
 
-As shown in the figure below, similar to implementing a queue based on an array, we can also use a circular array to implement a deque.
+Az alábbi ábrán látható módon, hasonlóan a tömbön alapuló sor megvalósításához, körkörösen összekötött tömböt is használhatunk a kétirányú sor megvalósítására.
 
 === "<1>"
-    ![Enqueue and dequeue operations in array implementation of deque](deque.assets/array_deque_step1.png)
+    ![Sorba állítás és kivétel műveletek a kétirányú sor tömbbel való megvalósításában](deque.assets/array_deque_step1.png)
 
 === "<2>"
     ![array_deque_push_last](deque.assets/array_deque_step2_push_last.png)
@@ -439,14 +439,14 @@ As shown in the figure below, similar to implementing a queue based on an array,
 === "<5>"
     ![array_deque_pop_first](deque.assets/array_deque_step5_pop_first.png)
 
-Based on the queue implementation, we only need to add methods for "enqueue at front" and "dequeue from rear":
+A sor megvalósítása alapján csak az "első elemnél való sorba állítás" és az "utolsó elemnél való kivétel" metódusokat kell hozzáadnunk:
 
 ```src
 [file]{array_deque}-[class]{array_deque}-[func]{}
 ```
 
-## Deque Applications
+## Kétirányú sor alkalmazásai
 
-A deque combines the logic of both stacks and queues. **Therefore, it can implement all application scenarios of both, while providing greater flexibility**.
+A kétirányú sor ötvözi a veremek és sorok logikáját. **Ezért képes megvalósítani mindkettő összes alkalmazási forgatókönyvét, miközben nagyobb rugalmasságot biztosít**.
 
-We know that the "undo" function in software is typically implemented using a stack: the system pushes each change operation onto the stack and then implements undo through pop. However, considering system resource limitations, software usually limits the number of undo steps (for example, only allowing 50 steps to be saved). When the stack length exceeds 50, the software needs to perform a deletion operation at the bottom of the stack (front of the queue). **But a stack cannot implement this functionality, so a deque is needed to replace the stack**. Note that the core logic of "undo" still follows the LIFO principle of a stack; it's just that the deque can more flexibly implement some additional logic.
+Tudjuk, hogy a szoftverek "visszavonás" funkciója általában egy veremmel valósul meg: a rendszer minden változtatási műveletet push-ol a verembe, majd pop segítségével valósítja meg a visszavonást. Azonban rendszererőforrás-korlátozásokat figyelembe véve, a szoftverek általában korlátozzák a visszavonási lépések számát (például csak 50 lépés mentésének engedélyezésével). Amikor a verem hossza meghaladja az 50-et, a szoftvernek törlési műveletet kell végrehajtania a verem alján (a sor első elemén). **Egy verem azonban nem képes ezt a funkcionalitást megvalósítani, ezért szükséges a kétirányú sor használata a verem helyett.** Vegyük figyelembe, hogy a "visszavonás" alapvető logikája még mindig a verem LIFO elvét követi; csupán a kétirányú sor képes rugalmasabban megvalósítani néhány kiegészítő logikát.

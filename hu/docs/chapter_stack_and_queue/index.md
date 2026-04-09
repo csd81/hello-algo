@@ -1,9 +1,9 @@
-# Stack and Queue
+# Verem és Sor
 
-![Stack and Queue](../assets/covers/chapter_stack_and_queue.jpg)
+![Verem és Sor](../assets/covers/chapter_stack_and_queue.jpg)
 
 !!! abstract
 
-    Stacks are like stacking cats, while queues are like cats lining up.
+    A veremek olyanok, mint macskákat egymásra rakni, a sorok pedig olyanok, mint macskák sorban állása.
 
-    They represent LIFO (Last In First Out) and FIFO (First In First Out) logic, respectively.
+    Rendre a LIFO (utoljára be, először ki) és a FIFO (először be, először ki) logikát képviselik.

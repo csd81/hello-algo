@@ -1,31 +1,31 @@
-# Summary
+# Összefoglalás
 
-### Key Review
+### Főbb pontok áttekintése
 
-- A stack is a data structure that follows the LIFO principle and can be implemented using arrays or linked lists.
-- In terms of time efficiency, the array implementation of a stack has higher average efficiency, but during expansion, the time complexity of a single push operation degrades to $O(n)$. In contrast, the linked list implementation of a stack provides more stable efficiency performance.
-- In terms of space efficiency, the array implementation of a stack may lead to some degree of space wastage. However, it should be noted that the memory space occupied by linked list nodes is larger than that of array elements.
-- A queue is a data structure that follows the FIFO principle and can also be implemented using arrays or linked lists. The conclusions regarding time efficiency and space efficiency comparisons for queues are similar to those for stacks mentioned above.
-- A deque is a queue with greater flexibility that allows adding and removing elements at both ends.
+- A verem egy adatszerkezet, amely a LIFO elvét követi, és tömbökkel vagy láncolt listákkal valósítható meg.
+- Időhatékonyság szempontjából a verem tömbös megvalósítása magasabb átlagos hatékonyságot mutat, de bővítés során az egyszeri push művelet időbonyolultsága $O(n)$-re romlik. Ezzel szemben a verem láncolt listás megvalósítása stabilabb hatékonyságteljesítményt nyújt.
+- Területhatékonyság szempontjából a verem tömbös megvalósítása bizonyos mértékű területpazarláshoz vezethet. Megjegyzendő azonban, hogy a láncolt lista csomópontjai által elfoglalt memóriaterület nagyobb, mint a tömbelemek esetén.
+- A sor egy adatszerkezet, amely a FIFO elvét követi, és szintén megvalósítható tömbökkel vagy láncolt listákkal. A sorok időhatékonsági és területhatékonsági összehasonlításainak következtetései hasonlóak a fent említett veremekéihez.
+- A kétirányú sor egy nagyobb rugalmasságú sor, amely lehetővé teszi elemek hozzáadását és eltávolítását mindkét végén.
 
-### Q & A
+### Kérdések és válaszok
 
-**Q**: Is the browser's forward and backward functionality implemented with a doubly linked list?
+**K**: A böngésző előre és visszafelé navigálási funkcionalitása kétszeresen láncolt listával van megvalósítva?
 
-The forward and backward functionality of a browser is essentially a manifestation of a "stack." When a user visits a new page, that page is added to the top of the stack; when the user clicks the back button, that page is popped from the top of the stack. Using a deque can conveniently implement some additional operations, as mentioned in the "Deque" section.
+A böngésző előre és visszafelé navigálási funkcionalitása lényegében egy "verem" megnyilvánulása. Amikor a felhasználó új oldalt látogat meg, az oldal a verem tetejére kerül; amikor a felhasználó a vissza gombra kattint, az oldal a verem tetejéről pop-olódik. Kétirányú sor használatával kényelmesen megvalósíthatók egyes kiegészítő műveletek, ahogy azt a "Kétirányú sor" szakasz megemlíti.
 
-**Q**: After popping from the stack, do we need to free the memory of the popped node?
+**K**: A veremből való pop után fel kell szabadítanunk a pop-olt csomópont memóriáját?
 
-If the popped node will still be needed later, then memory does not need to be freed. If it won't be used afterward, languages like Java and Python have automatic garbage collection, so manual memory deallocation is not required; in C and C++, manual memory deallocation is necessary.
+Ha a pop-olt csomópontra később még szükség lesz, akkor a memóriát nem kell felszabadítani. Ha ezután nem lesz rá szükség, az olyan nyelvek, mint a Java és a Python, automatikus szemétgyűjtéssel rendelkeznek, ezért nem szükséges a memória manuális felszabadítása; C-ben és C++-ban azonban szükséges a manuális memória-felszabadítás.
 
-**Q**: A deque seems like two stacks joined together. What is its purpose?
+**K**: Úgy tűnik, hogy a kétirányú sor két összekötött verem. Mi a célja?
 
-A deque is like a combination of a stack and a queue, or two stacks joined together. It exhibits the logic of both stack and queue, so it can implement all applications of stacks and queues, and is more flexible.
+A kétirányú sor olyan, mint egy verem és egy sor kombinációja, vagy két összekötött verem. Mindkét verem és sor logikáját mutatja, ezért képes megvalósítani veremek és sorok összes alkalmazását, és rugalmasabb.
 
-**Q**: How are undo and redo specifically implemented?
+**K**: Hogyan valósítható meg pontosan a visszavonás és az újra elvégzés?
 
-Use two stacks: stack `A` for undo and stack `B` for redo.
+Két vermet kell használni: az `A` vermet a visszavonáshoz és a `B` vermet az újra elvégzéshez.
 
-1. Whenever the user performs an operation, push this operation onto stack `A` and clear stack `B`.
-2. When the user performs "undo," pop the most recent operation from stack `A` and push it onto stack `B`.
-3. When the user performs "redo," pop the most recent operation from stack `B` and push it onto stack `A`.
+1. Minden alkalommal, amikor a felhasználó műveletet hajt végre, push-olja ezt a műveletet az `A` verembe, és törölje a `B` vermet.
+2. Amikor a felhasználó "visszavon", pop-olja a legutóbbi műveletet az `A` veremből, és push-olja a `B` verembe.
+3. Amikor a felhasználó "újra elvégez", pop-olja a legutóbbi műveletet a `B` veremből, és push-olja az `A` verembe.
