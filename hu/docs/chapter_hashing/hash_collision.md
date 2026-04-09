@@ -1,108 +1,108 @@
-# Hash Collision
+# Hash Ütközés
 
-The previous section mentioned that, **in most cases, the input space of a hash function is much larger than the output space**, so theoretically, hash collisions are inevitable. For example, if the input space is all integers and the output space is the array capacity size, then multiple integers will inevitably be mapped to the same bucket index.
+Az előző szakaszban megemlítettük, hogy **a legtöbb esetben a hash függvény bemeneti tere sokkal nagyobb a kimeneti térnél**, ezért elméletileg a hash ütközések elkerülhetetlenek. Például, ha a bemeneti tér az összes egész szám, a kimeneti tér pedig a tömb kapacitásának mérete, akkor elkerülhetetlen, hogy több egész szám ugyanahhoz a vödörindexhez legyen rendelve.
 
-Hash collisions can lead to incorrect query results, severely impacting the usability of the hash table. To address this issue, whenever a hash collision occurs, we can perform hash table expansion until the collision disappears. This approach is simple, straightforward, and effective, but it is very inefficient because hash table expansion involves a large amount of data migration and hash value recalculation. To improve efficiency, we can adopt the following strategies:
+A hash ütközések helytelen lekérdezési eredményekhez vezethetnek, ami komolyan rontja a hash tábla használhatóságát. E probléma kezelésére, ha hash ütközés lép fel, kibővíthetjük a hash táblát, amíg az ütközés el nem tűnik. Ez a megközelítés egyszerű, közvetlen és hatékony, de nagyon nem hatékony, mert a hash tábla bővítése nagy mennyiségű adatmigrációval és hash érték újraszámolással jár. A hatékonyság javítása érdekében a következő stratégiákat alkalmazhatjuk:
 
-1. Improve the hash table data structure so that **the hash table can function normally when hash collisions occur**.
-2. Only expand when necessary, that is, only when hash collisions are severe.
+1. Javítsuk a hash tábla adatszerkezetét úgy, hogy **a hash tábla normálisan működhessen hash ütközések esetén is**.
+2. Csak szükség esetén bővítsünk, azaz csak akkor, ha a hash ütközések súlyosak.
 
-The main methods for improving the structure of hash tables include "separate chaining" and "open addressing".
+A hash táblák szerkezetének javítására szolgáló fő módszerek a „láncolás" és a „nyílt címzés".
 
-## Separate Chaining
+## Láncolás
 
-In the original hash table, each bucket can store only one key-value pair. <u>Separate chaining</u> converts a single element into a linked list, treating key-value pairs as linked list nodes and storing all colliding key-value pairs in the same linked list. The figure below shows an example of a separate chaining hash table.
+Az eredeti hash táblában minden vödör csak egy kulcs-érték párt tárolhat. A <u>láncolás</u> az egyetlen elemet láncolt listává alakítja, a kulcs-érték párokat láncolt lista csomópontokként kezeli, és az összes ütköző kulcs-érték párt ugyanabban a láncolt listában tárolja. Az alábbi ábra egy láncolást alkalmazó hash tábla példáját mutatja be.
 
-![Separate chaining hash table](hash_collision.assets/hash_table_chaining.png)
+![Láncolást alkalmazó hash tábla](hash_collision.assets/hash_table_chaining.png)
 
-The operations of a hash table implemented with separate chaining have changed as follows:
+A láncolással megvalósított hash tábla műveletei a következőképpen változtak:
 
-- **Querying elements**: Input `key`, obtain the bucket index through the hash function, then access the head node of the linked list, then traverse the linked list and compare `key` to find the target key-value pair.
-- **Adding elements**: First access the linked list head node through the hash function, then append the node (key-value pair) to the linked list.
-- **Deleting elements**: Access the head of the linked list based on the result of the hash function, then traverse the linked list to find the target node and delete it.
+- **Elem lekérdezése**: Beadjuk a `key`-t, a hash függvénnyel megkapjuk a vödörindexet, majd hozzáférünk a láncolt lista fejcsomópontjához, bejárjuk a láncolt listát és összehasonlítjuk a `key`-t, hogy megtaláljuk a célul szolgáló kulcs-érték párt.
+- **Elem hozzáadása**: Először a hash függvényen keresztül hozzáférünk a láncolt lista fejcsomópontjához, majd hozzáfűzzük a csomópontot (kulcs-érték párt) a láncolt listához.
+- **Elem törlése**: A hash függvény eredménye alapján hozzáférünk a láncolt lista fejéhez, majd bejárjuk a láncolt listát, hogy megtaláljuk a célcsomópontot és töröljük azt.
 
-Separate chaining has the following limitations:
+A láncolásnak a következő korlátai vannak:
 
-- **Increased Space Usage**: The linked list contains node pointers, which consume more memory space than arrays.
-- **Reduced Query Efficiency**: This is because linear traversal of the linked list is required to find the corresponding element.
+- **Megnövekedett tárhelyhasználat**: A láncolt lista csomópontmutatókat tartalmaz, amelyek több memóriaterületet foglalnak el, mint a tömbök.
+- **Csökkent lekérdezési hatékonyság**: Ez azért van, mert a megfelelő elem megtalálásához lineáris bejárást kell végezni a láncolt listán.
 
-The code below provides a simple implementation of a separate chaining hash table, with two things to note:
+Az alábbi kód egy egyszerű láncolást alkalmazó hash tábla megvalósítását adja meg, két fontos megjegyzéssel:
 
-- Lists (dynamic arrays) are used instead of linked lists to simplify the code. In this setup, the hash table (array) contains multiple buckets, each of which is a list.
-- This implementation includes a hash table expansion method. When the load factor exceeds $\frac{2}{3}$, we expand the hash table to $2$ times its original size.
+- Láncolt listák helyett listákat (dinamikus tömböket) használunk a kód egyszerűsítése érdekében. Ebben a beállításban a hash tábla (tömb) több vödröt tartalmaz, amelyek mindegyike egy lista.
+- Ez a megvalósítás tartalmaz egy hash tábla bővítési módszert. Ha a terhelési tényező meghaladja a $\frac{2}{3}$-ot, az eredeti méret $2$-szeresére bővítjük a hash táblát.
 
 ```src
 [file]{hash_map_chaining}-[class]{hash_map_chaining}-[func]{}
 ```
 
-It's worth noting that when the linked list is very long, the query efficiency $O(n)$ is poor. **In this case, the list can be converted to an "AVL tree" or "Red-Black tree"** to optimize the time complexity of the query operation to $O(\log n)$.
+Megjegyzendő, hogy ha a láncolt lista nagyon hosszú, a lekérdezési hatékonyság $O(n)$ gyenge. **Ebben az esetben a lista „AVL fára" vagy „piros-fekete fára" konvertálható**, hogy a lekérdezési művelet időbonyolultságát $O(\log n)$-re optimalizáljuk.
 
-## Open Addressing
+## Nyílt Címzés
 
-<u>Open addressing</u> does not introduce additional data structures but instead handles hash collisions through "multiple probes". The probing methods mainly include linear probing, quadratic probing, and double hashing.
+A <u>nyílt címzés</u> nem vezet be további adatszerkezeteket, hanem „többszörös próbálkozásokon" keresztül kezeli a hash ütközéseket. A próbálkozási módszerek főként a lineáris próbálkozást, a négyzetes próbálkozást és a kettős hashelést foglalják magukban.
 
-Let's use linear probing as an example to introduce the mechanism of open addressing hash tables.
+Vegyük a lineáris próbálkozást példaként a nyílt címzést alkalmazó hash táblák mechanizmusának bemutatásához.
 
-### Linear Probing
+### Lineáris Próbálkozás
 
-Linear probing uses a fixed-step linear search for probing, and its operation method differs from ordinary hash tables.
+A lineáris próbálkozás rögzített lépésközű lineáris keresést alkalmaz a próbálkozáshoz, és működési módja eltér a hagyományos hash tábláktól.
 
-- **Inserting elements**: Calculate the bucket index using the hash function. If the bucket already contains an element, linearly traverse forward from the conflict position (usually with a step size of $1$) until an empty bucket is found, then insert the element.
-- **Searching for elements**: If a hash collision is encountered, use the same step size to linearly traverse forward until the corresponding element is found and return `value`; if an empty bucket is encountered, it means the target element is not in the hash table, so return `None`.
+- **Elemek beszúrása**: A hash függvénnyel kiszámítjuk a vödörindexet. Ha a vödör már tartalmaz elemet, lineárisan haladunk előre az ütközési pozíciótól (általában $1$-es lépésközzel) addig, amíg üres vödröt nem találunk, majd beszúrjuk az elemet.
+- **Elemek keresése**: Ha hash ütközéssel találkozunk, ugyanolyan lépésközzel lineárisan haladunk előre, amíg meg nem találjuk a megfelelő elemet és visszaadja a `value` értéket; ha üres vödörrel találkozunk, ez azt jelenti, hogy a célelem nincs a hash táblában, ezért `None` értéket adunk vissza.
 
-The figure below shows the distribution of key-value pairs in an open addressing (linear probing) hash table. According to this hash function, keys with the same last two digits will be mapped to the same bucket. Through linear probing, they are stored sequentially in that bucket and the buckets below it.
+Az alábbi ábra a kulcs-érték párok eloszlását mutatja egy nyílt címzést (lineáris próbálkozást) alkalmazó hash táblában. E hash függvény szerint az azonos utolsó két számjeggyel rendelkező kulcsok ugyanabba a vödörbe kerülnek. A lineáris próbálkozás révén ezek sorban tárolódnak az adott vödörben és az alatta lévő vödrökben.
 
-![Distribution of key-value pairs in open addressing (linear probing) hash table](hash_collision.assets/hash_table_linear_probing.png)
+![Kulcs-érték párok eloszlása nyílt címzést (lineáris próbálkozást) alkalmazó hash táblában](hash_collision.assets/hash_table_linear_probing.png)
 
-However, **linear probing is prone to create "clustering"**. Specifically, the longer the continuously occupied positions in the array, the greater the probability of hash collisions occurring in these continuous positions, further promoting clustering growth at that position, forming a vicious cycle, and ultimately leading to degraded efficiency of insertion, deletion, query, and update operations.
+Azonban **a lineáris próbálkozás hajlamos „klaszteresedést" létrehozni**. Konkrétan, minél hosszabb a tömbben folyamatosan elfoglalt pozíciók sora, annál nagyobb a valószínűsége, hogy hash ütközések fordulnak elő ezeken a folyamatos pozíciókon, ami tovább serkenti a klaszter növekedését az adott pozícióban, ördögi kört alkotva, és végül a beszúrás, törlés, lekérdezés és frissítés műveletek hatékonyságának romlásához vezet.
 
-It's important to note that **we cannot directly delete elements in an open addressing hash table**. Deleting an element creates an empty bucket `None` in the array. When searching for elements, if linear probing encounters this empty bucket, it will return, making the elements below this empty bucket inaccessible. The program may incorrectly assume these elements do not exist, as shown in the figure below.
+Fontos megjegyezni, hogy **nem törölhetünk közvetlenül elemeket egy nyílt címzést alkalmazó hash táblában**. Egy elem törlése üres vödröt `None` hoz létre a tömbben. Elemek keresésekor, ha a lineáris próbálkozás ezt az üres vödröt találja, visszatér, és az e mögötti vödrökben lévő elemek elérhetetlenné válnak. A program tévesen azt feltételezheti, hogy ezek az elemek nem léteznek, ahogy az alábbi ábra mutatja.
 
-![Query issues caused by deletion in open addressing](hash_collision.assets/hash_table_open_addressing_deletion.png)
+![A nyílt címzésben törlés által okozott lekérdezési problémák](hash_collision.assets/hash_table_open_addressing_deletion.png)
 
-To solve this problem, we can adopt the <u>lazy deletion</u> mechanism: instead of directly removing elements from the hash table, **use a constant `TOMBSTONE` to mark the bucket**. In this mechanism, both `None` and `TOMBSTONE` represent empty buckets and can hold key-value pairs. However, when linear probing encounters `TOMBSTONE`, it should continue traversing since there may still be key-value pairs below it.
+E probléma megoldásához alkalmazhatjuk a <u>lusta törlés</u> mechanizmust: ahelyett, hogy közvetlenül eltávolítanánk az elemeket a hash táblából, **egy `TOMBSTONE` konstanssal jelöljük meg a vödröt**. Ebben a mechanizmusban mind a `None`, mind a `TOMBSTONE` üres vödröket jelöl és kulcs-érték párokat tárolhat. Azonban, ha a lineáris próbálkozás `TOMBSTONE`-ra bukkan, folytatnia kell a bejárást, mivel alatta még lehetnek kulcs-érték párok.
 
-However, **lazy deletion may accelerate the performance degradation of the hash table**. Every deletion operation produces a deletion mark, and as `TOMBSTONE` increases, the search time will also increase because linear probing may need to skip multiple `TOMBSTONE` to find the target element.
+Azonban **a lusta törlés felgyorsíthatja a hash tábla teljesítményromlását**. Minden törlési művelet törlési jelölést hoz létre, és ahogy a `TOMBSTONE` számok nőnek, a keresési idő is növekedni fog, mivel a lineáris próbálkozásnak esetleg több `TOMBSTONE`-t kell kihagynia a célelem megtalálásához.
 
-To address this, consider recording the index of the first encountered `TOMBSTONE` during linear probing and swapping the searched target element with that `TOMBSTONE`. The benefit of doing this is that each time an element is queried or added, the element will be moved to a bucket closer to its ideal position (the starting point of probing), thereby optimizing query efficiency.
+E probléma kezelésére érdemes megfontolni az első `TOMBSTONE` index rögzítését a lineáris próbálkozás során, és a keresett célelemet felcserélni ezzel a `TOMBSTONE`-nal. Ennek az az előnye, hogy minden egyes elem lekérdezésekor vagy hozzáadásakor az elem az ideális pozíciójához (a próbálkozás kiindulópontjához) közelebb lévő vödörbe kerül, ezáltal optimalizálva a lekérdezési hatékonyságot.
 
-The code below implements an open addressing (linear probing) hash table with lazy deletion. To make better use of the hash table space, we treat the hash table as a "circular array". When going beyond the end of the array, we return to the beginning and continue traversing.
+Az alábbi kód egy nyílt címzést (lineáris próbálkozást) és lusta törlést alkalmazó hash táblát valósít meg. A hash tábla terének jobb kihasználása érdekében a hash táblát „körkörös tömbként" kezeljük. Ha a tömb végén túlmegyünk, visszatérünk az elejéhez és folytatjuk a bejárást.
 
 ```src
 [file]{hash_map_open_addressing}-[class]{hash_map_open_addressing}-[func]{}
 ```
 
-### Quadratic Probing
+### Négyzetes Próbálkozás
 
-Quadratic probing is similar to linear probing and is one of the common strategies for open addressing. When a collision occurs, quadratic probing does not simply skip a fixed number of steps but skips a number of steps equal to the "square of the number of probes", i.e., $1, 4, 9, \dots$ steps.
+A négyzetes próbálkozás hasonló a lineáris próbálkozáshoz, és a nyílt címzés egyik gyakori stratégiája. Ütközés esetén a négyzetes próbálkozás nem egyszerűen rögzített számú lépést ugrik, hanem „a próbálkozások számának négyzetével" egyenlő számú lépést ugrik, azaz $1, 4, 9, \dots$ lépést.
 
-Quadratic probing has the following advantages:
+A négyzetes próbálkozásnak a következő előnyei vannak:
 
-- Quadratic probing attempts to alleviate the clustering effect of linear probing by skipping distances equal to the square of the probe count.
-- Quadratic probing skips larger distances to find empty positions, which helps to distribute data more evenly.
+- A négyzetes próbálkozás a próbálkozások számának négyzetével egyenlő távolságok kihagyásával igyekszik enyhíteni a lineáris próbálkozás klaszteresedési hatását.
+- A négyzetes próbálkozás nagyobb távolságokat ugrik az üres pozíciók megtalálásához, ami segít az adatok egyenletesebb elosztásában.
 
-However, quadratic probing is not perfect:
+A négyzetes próbálkozás azonban nem tökéletes:
 
-- Clustering still exists, i.e., some positions are more likely to be occupied than others.
-- Due to the growth of squares, quadratic probing may not probe the entire hash table, meaning that even if there are empty buckets in the hash table, quadratic probing may not be able to access them.
+- Klaszteresedés még mindig létezik, azaz egyes pozíciók nagyobb valószínűséggel foglaltak, mint mások.
+- A négyzetek növekedése miatt a négyzetes próbálkozás esetleg nem tudja bejárni az egész hash táblát, ami azt jelenti, hogy még ha vannak is üres vödrök a hash táblában, a négyzetes próbálkozás esetleg nem fér hozzájuk.
 
-### Double Hashing
+### Kettős Hashelés
 
-As the name suggests, the double hashing method uses multiple hash functions $f_1(x)$, $f_2(x)$, $f_3(x)$, $\dots$ for probing.
+Ahogy a neve is mutatja, a kettős hashelés módszer több hash függvényt $f_1(x)$, $f_2(x)$, $f_3(x)$, $\dots$ használ a próbálkozáshoz.
 
-- **Inserting elements**: If hash function $f_1(x)$ encounters a conflict, try $f_2(x)$, and so on, until an empty position is found and the element is inserted.
-- **Searching for elements**: Search in the same order of hash functions until the target element is found and return it; if an empty position is encountered or all hash functions have been tried, it indicates the element is not in the hash table, then return `None`.
+- **Elemek beszúrása**: Ha a $f_1(x)$ hash függvény ütközést észlel, próbáljuk meg a $f_2(x)$-et, és így tovább, amíg üres pozíciót nem találunk és be nem szúrjuk az elemet.
+- **Elemek keresése**: Keresünk a hash függvények ugyanolyan sorrendjében, amíg meg nem találjuk a célelemet és vissza nem adjuk; ha üres pozícióval találkozunk, vagy az összes hash függvényt kipróbáltuk, ez azt jelzi, hogy az elem nincs a hash táblában, ekkor `None` értéket adunk vissza.
 
-Compared to linear probing, the double hashing method is less prone to clustering, but multiple hash functions introduce additional computational overhead.
+A lineáris próbálkozáshoz képest a kettős hashelés módszer kevésbé hajlamos klaszteresedésre, de a több hash függvény további számítási terhelést vezet be.
 
 !!! tip
 
-    Please note that open addressing (linear probing, quadratic probing, and double hashing) hash tables all have the problem of "cannot directly delete elements".
+    Kérjük, vegye figyelembe, hogy a nyílt címzést (lineáris próbálkozás, négyzetes próbálkozás és kettős hashelés) alkalmazó hash táblák mind rendelkeznek azzal a problémával, hogy „nem lehet közvetlenül elemeket törölni".
 
-## Choice of Programming Languages
+## Programozási Nyelvek Választása
 
-Different programming languages adopt different hash table implementation strategies. Here are a few examples:
+A különböző programozási nyelvek eltérő hash tábla megvalósítási stratégiákat alkalmaznak. Íme néhány példa:
 
-- Python uses open addressing. The `dict` dictionary uses pseudo-random numbers for probing.
-- Java uses separate chaining. Since JDK 1.8, when the array length in `HashMap` reaches 64 and the length of a linked list reaches 8, the linked list is converted to a red-black tree to improve search performance.
-- Go uses separate chaining. Go stipulates that each bucket can store up to 8 key-value pairs, and if the capacity is exceeded, an overflow bucket is linked; when there are too many overflow buckets, a special equal-capacity expansion operation is performed to ensure performance.
+- A Python nyílt címzést alkalmaz. A `dict` szótár pszeudo-véletlenszámokat használ a próbálkozáshoz.
+- A Java láncolást alkalmaz. A JDK 1.8 óta, ha a `HashMap`-ben a tömb hossza eléri a 64-et és egy láncolt lista hossza eléri a 8-at, a láncolt lista piros-fekete fává alakul a keresési teljesítmény javítása érdekében.
+- A Go láncolást alkalmaz. A Go előírja, hogy minden vödör legfeljebb 8 kulcs-érték párt tárolhat, és ha a kapacitás túllépésre kerül, egy túlcsordulási vödröt láncolunk hozzá; ha túl sok a túlcsordulási vödör, egy speciális azonos kapacitású bővítési műveletet hajtanak végre a teljesítmény biztosítása érdekében.

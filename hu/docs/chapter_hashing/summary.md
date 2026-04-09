@@ -1,47 +1,47 @@
-# Summary
+# Összefoglalás
 
-### Key Review
+### Kulcsfontosságú áttekintés
 
-- Given an input `key`, a hash table can retrieve the corresponding `value` in $O(1)$ time, which is highly efficient.
-- Common hash table operations include querying, adding key-value pairs, deleting key-value pairs, and traversing the hash table.
-- The hash function maps a `key` to an array index, allowing access to the corresponding bucket and retrieval of the `value`.
-- Two different keys may end up with the same array index after hashing, leading to erroneous query results. This phenomenon is known as hash collision.
-- The larger the capacity of the hash table, the lower the probability of hash collisions. Therefore, hash table expansion can mitigate hash collisions. Similar to array expansion, hash table expansion is costly.
-- The load factor, defined as the number of elements divided by the number of buckets, reflects the severity of hash collisions and is often used as a condition to trigger hash table expansion.
-- Separate chaining addresses hash collisions by converting each element into a linked list, storing all colliding elements in the same linked list. However, excessively long linked lists can reduce query efficiency, which can be improved by converting the linked lists into red-black trees.
-- Open addressing handles hash collisions through multiple probing. Linear probing uses a fixed step size but cannot delete elements and is prone to clustering. Double hashing uses multiple hash functions for probing, which reduces clustering compared to linear probing but increases computational overhead.
-- Different programming languages adopt various hash table implementations. For example, Java's `HashMap` uses separate chaining, while Python's `dict` employs open addressing.
-- In hash tables, we desire hash algorithms with determinism, high efficiency, and uniform distribution. In cryptography, hash algorithms should also possess collision resistance and the avalanche effect.
-- Hash algorithms typically use large prime numbers as moduli to maximize the uniform distribution of hash values and reduce hash collisions.
-- Common hash algorithms include MD5, SHA-1, SHA-2, and SHA-3. MD5 is often used for file integrity checks, while SHA-2 is commonly used in secure applications and protocols.
-- Programming languages usually provide built-in hash algorithms for data types to calculate bucket indices in hash tables. Generally, only immutable objects are hashable.
+- Adott egy `key` bemenet, a hash tábla $O(1)$ időben képes visszaadni a megfelelő `value` értéket, ami igen hatékony.
+- A hash táblák gyakori műveletei közé tartozik a lekérdezés, kulcs-érték párok hozzáadása, kulcs-érték párok törlése és a hash tábla bejárása.
+- A hash függvény a `key`-t tömbindexre képezi le, lehetővé téve a megfelelő vödör elérését és a `value` visszakeresését.
+- Két különböző kulcs hashelés után ugyanolyan tömbindexet kaphat, ami helytelen lekérdezési eredményekhez vezet. Ezt a jelenséget hash ütközésnek nevezzük.
+- Minél nagyobb a hash tábla kapacitása, annál kisebb a hash ütközések valószínűsége. Ezért a hash tábla bővítése enyhítheti a hash ütközéseket. A tömbbővítéshez hasonlóan a hash tábla bővítése is költséges.
+- A terhelési tényező, amelyet az elemek száma osztva a vödrök számával kapunk, tükrözi a hash ütközések súlyosságát, és gyakran a hash tábla bővítésének feltételeként használják.
+- A láncolás úgy kezeli a hash ütközéseket, hogy minden elemet láncolt listává alakít, és az összes ütköző elemet ugyanabban a láncolt listában tárolja. Az azonban, hogy a túl hosszú láncolt listák csökkenthetik a lekérdezési hatékonyságot, javítható azzal, ha a láncolt listákat piros-fekete fákká alakítjuk.
+- A nyílt címzés többszörös próbálkozásokon keresztül kezeli a hash ütközéseket. A lineáris próbálkozás rögzített lépésközöt alkalmaz, de nem tud elemeket törölni és hajlamos klaszteresedésre. A kettős hashelés több hash függvényt alkalmaz a próbálkozáshoz, ami csökkenti a klaszteresedést a lineáris próbálkozáshoz képest, de növeli a számítási terhelést.
+- A különböző programozási nyelvek különböző hash tábla megvalósításokat alkalmaznak. Például a Java `HashMap`-je láncolást alkalmaz, míg a Python `dict`-je nyílt címzést használ.
+- A hash táblákban determinizmussal, magas hatékonysággal és egyenletes eloszlással rendelkező hash algoritmusokat keresünk. A kriptográfiában a hash algoritmusoknak ütközési ellenállással és lavina-hatással is kell rendelkezniük.
+- A hash algoritmusok általában nagy prímszámokat használnak modulusként a hash értékek egyenletes eloszlásának maximalizálása és a hash ütközések csökkentése érdekében.
+- A gyakori hash algoritmusok közé tartozik az MD5, SHA-1, SHA-2 és SHA-3. Az MD5-öt gyakran fájlintegritás-ellenőrzésre használják, míg a SHA-2-t általánosan alkalmazzák biztonságos alkalmazásokban és protokollokban.
+- A programozási nyelvek általában beépített hash algoritmusokat biztosítanak az adattípusokhoz a hash táblák vödörindexeinek kiszámításához. Általában csak megváltoztathatatlan objektumok hashelhető.
 
-### Q & A
+### Kérdések és válaszok
 
-**Q**: When does the time complexity of a hash table degrade to $O(n)$?
+**K**: Mikor romlik $O(n)$-re egy hash tábla időbonyolultsága?
 
-The time complexity of a hash table can degrade to $O(n)$ when hash collisions are severe. When the hash function is well-designed, the capacity is set appropriately, and collisions are evenly distributed, the time complexity is $O(1)$. We usually consider the time complexity to be $O(1)$ when using built-in hash tables in programming languages.
+Egy hash tábla időbonyolultsága $O(n)$-re romolhat, ha a hash ütközések súlyosak. Ha a hash függvény jól tervezett, a kapacitás megfelelően van beállítva és az ütközések egyenletesen oszlanak el, az időbonyolultság $O(1)$. A programozási nyelvekben lévő beépített hash táblák használatakor általában $O(1)$ időbonyolultságnak tekintjük.
 
-**Q**: Why not use the hash function $f(x) = x$? This would eliminate collisions.
+**K**: Miért ne használjuk a $f(x) = x$ hash függvényt? Ez kiküszöbölné az ütközéseket.
 
-Under the hash function $f(x) = x$, each element corresponds to a unique bucket index, which is equivalent to an array. However, the input space is usually much larger than the output space (array length), so the last step of a hash function is often to take the modulo of the array length. In other words, the goal of a hash table is to map a larger state space to a smaller one while providing $O(1)$ query efficiency.
+A $f(x) = x$ hash függvény esetén minden elem egyedi vödörindexnek felel meg, ami egyenértékű egy tömbbel. Azonban a bemeneti tér általában sokkal nagyobb a kimeneti térnél (tömb hosszánál), ezért a hash függvény utolsó lépése általában a tömb hosszával való modulózás. Más szóval, a hash tábla célja egy nagyobb állapottér kisebbre való leképezése $O(1)$ lekérdezési hatékonysággal.
 
-**Q**: Why can hash tables be more efficient than arrays, linked lists, or binary trees, even though hash tables are implemented using these structures?
+**K**: Miért lehetnek a hash táblák hatékonyabbak a tömböknél, láncolt listáknál vagy bináris fáknál, annak ellenére, hogy a hash táblákat éppen ezekkel a struktúrákkal valósítják meg?
 
-Firstly, hash tables have higher time efficiency but lower space efficiency. A significant portion of memory in hash tables remains unused.
+Először is, a hash tábláknak magasabb az időhatékonyságuk, de alacsonyabb a térhatékonyságuk. A hash táblákban a memória jelentős része felhasználatlan marad.
 
-Secondly, hash tables are only more time-efficient in specific use cases. If a feature can be implemented with the same time complexity using an array or a linked list, it's usually faster than using a hash table. This is because the computation of the hash function incurs overhead, making the constant factor in the time complexity larger.
+Másodszor, a hash táblák csak bizonyos felhasználási esetekben hatékonyabbak időben. Ha egy funkció azonos időbonyolultsággal megvalósítható tömbök vagy láncolt listák segítségével, ez általában gyorsabb, mint hash tábla használata. Ennek oka az, hogy a hash függvény kiszámítása terhelést jelent, ami nagyobbá teszi az időbonyolultság konstans tényezőjét.
 
-Lastly, the time complexity of hash tables can degrade. For example, in separate chaining, we perform search operations in a linked list or red-black tree, which still risks degrading to $O(n)$ time.
+Végül, a hash táblák időbonyolultsága romolhat. Például láncolás esetén a keresési műveletek láncolt listában vagy piros-fekete fában hajtódnak végre, ami még mindig $O(n)$ időre romolhat.
 
-**Q**: Does double hashing also have the flaw of not being able to delete elements directly? Can space marked as deleted be reused?
+**K**: A kettős hashelésnek is megvan az a hibája, hogy nem lehet közvetlenül elemeket törölni? Fel lehet-e újra használni a töröltként megjelölt tárhelyet?
 
-Double hashing is a form of open addressing, and all open addressing methods have the drawback of not being able to delete elements directly; they require marking elements as deleted. Marked spaces can be reused. When inserting new elements into the hash table, and the hash function points to a position marked as deleted, that position can be used by the new element. This maintains the probing sequence of the hash table while ensuring efficient use of space.
+A kettős hashelés a nyílt címzés egy formája, és minden nyílt címzési módszernek megvan az a hátránya, hogy nem tud közvetlenül elemeket törölni; töröltként kell megjelölniük az elemeket. A megjelölt helyek újra felhasználhatók. Amikor új elemeket szúrunk be a hash táblába, és a hash függvény egy töröltként megjelölt pozícióra mutat, azt a pozíciót az új elem használhatja. Ez fenntartja a hash tábla próbálkozási sorozatát, miközben biztosítja a tárhelyek hatékony kihasználását.
 
-**Q**: Why do hash collisions occur during the search process in linear probing?
+**K**: Miért fordulnak elő hash ütközések a lineáris próbálkozásos keresési folyamat során?
 
-During the search process, the hash function points to the corresponding bucket and key-value pair. If the `key` doesn't match, it indicates a hash collision. Therefore, linear probing will search downward at a predetermined step size until the correct key-value pair is found or the search fails.
+A keresési folyamat során a hash függvény a megfelelő vödörre és kulcs-érték párra mutat. Ha a `key` nem egyezik, ez hash ütközést jelez. Ezért a lineáris próbálkozás előre halad egy előre meghatározott lépésközzel, amíg meg nem találja a helyes kulcs-érték párt, vagy a keresés sikertelenül zárul.
 
-**Q**: Why can expanding a hash table alleviate hash collisions?
+**K**: Miért enyhítheti a hash tábla bővítése a hash ütközéseket?
 
-The last step of a hash function often involves taking the modulo of the array length $n$, to keep the output within the array index range. When expanding, the array length $n$ changes, and the indices corresponding to the keys may also change. Keys that were previously mapped to the same bucket might be distributed across multiple buckets after expansion, thereby mitigating hash collisions.
+Egy hash függvény utolsó lépése általában a tömb hosszával $n$ való modulózás, hogy a kimenet a tömb indexhatárain belül maradjon. Bővítéskor a tömb hossza $n$ megváltozik, és a kulcsoknak megfelelő indexek is megváltozhatnak. Azok a kulcsok, amelyek korábban ugyanabba a vödörbe kerültek, bővítés után több vödörbe oszlódhatnak, ezáltal enyhítve a hash ütközéseket.

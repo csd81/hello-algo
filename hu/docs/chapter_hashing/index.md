@@ -1,9 +1,9 @@
-# Hashing
+# Hashelés
 
-![Hashing](../assets/covers/chapter_hashing.jpg)
+![Hashelés](../assets/covers/chapter_hashing.jpg)
 
 !!! abstract
 
-    In the world of computing, a hash table is like a clever librarian.
+    A számítástechnika világában a hash tábla olyan, mint egy ügyes könyvtáros.
 
-    They know how to calculate call numbers, enabling them to quickly locate the target book.
+    Tudja, hogyan számítsa ki a raktári jelzeteket, így gyorsan megtalálja a keresett könyvet.
