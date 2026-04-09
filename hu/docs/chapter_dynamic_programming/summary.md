@@ -1,25 +1,25 @@
-# Summary
+# Összefoglalás
 
-### Key Review
+### Kulcsfontosságú áttekintés
 
-- Dynamic programming decomposes problems and avoids redundant computation by storing the solutions to subproblems, thereby significantly improving computational efficiency.
-- Without considering time constraints, all dynamic programming problems can be solved using backtracking (brute force search), but the recursion tree contains a large number of overlapping subproblems, resulting in extremely low efficiency. By introducing a memo list, we can store the solutions to all computed subproblems, ensuring that overlapping subproblems are only computed once.
-- Memoization is a top-down recursive solution, while the corresponding dynamic programming is a bottom-up iterative solution, similar to "filling in a table". Since the current state only depends on certain local states, we can eliminate one dimension of the $dp$ table to reduce space complexity.
-- Subproblem decomposition is a general algorithmic approach, with different properties in divide and conquer, dynamic programming, and backtracking.
-- Dynamic programming problems have three major characteristics: overlapping subproblems, optimal substructure, and no aftereffects.
-- If the optimal solution to the original problem can be constructed from the optimal solutions to the subproblems, then it has optimal substructure.
-- No aftereffects means that for a given state, its future development is only related to that state and has nothing to do with all past states. Many combinatorial optimization problems do not have no aftereffects and cannot be quickly solved using dynamic programming.
+- A dinamikus programozás felbontja a problémákat, és a részproblémák megoldásainak tárolásával elkerüli a redundáns számításokat, ezzel jelentősen javítva a számítási hatékonyságot.
+- Az időkorlátozásokat figyelmen kívül hagyva az összes dinamikus programozási feladat megoldható visszalépéssel (nyers erő kereséssel), de a rekurziós fa sok átfedő részproblémát tartalmaz, ami rendkívül alacsony hatékonyságot eredményez. Memo lista bevezetésével az összes kiszámított részprobléma megoldását tárolhatjuk, biztosítva, hogy az átfedő részproblémákat csak egyszer számítsuk ki.
+- A memoizálás felülről lefelé haladó rekurzív megoldás, míg a megfelelő dinamikus programozás alulról felfelé haladó iteratív megoldás, hasonlóan a "tábla kitöltéséhez". Mivel az aktuális állapot csak bizonyos lokális állapotoktól függ, eltávolíthatjuk a $dp$ tábla egy dimenzióját a tárkomplexitás csökkentéséhez.
+- A részproblémákra bontás egy általános algoritmikus megközelítés, különböző tulajdonságokkal az oszd-meg-és-uralkodj, a dinamikus programozás és a visszalépés esetén.
+- A dinamikus programozási feladatoknak három fő jellemzője van: átfedő részproblémák, optimális részstruktúra és utóhatás-mentesség.
+- Ha az eredeti probléma optimális megoldása felépíthető a részproblémák optimális megoldásaiból, akkor optimális részstruktúráról beszélünk.
+- Az utóhatás-mentesség azt jelenti, hogy adott állapot esetén annak jövőbeli fejlődése csak ettől az állapottól függ, és semmi köze az összes múltbeli állapothoz. Sok kombinatorikus optimalizálási feladat nem rendelkezik utóhatás-mentességgel, és nem oldható meg gyorsan dinamikus programozással.
 
-**Knapsack problem**
+**Hátizsák-feladat**
 
-- The knapsack problem is one of the most typical dynamic programming problems, with variants such as the 0-1 knapsack, unbounded knapsack, and multiple knapsack.
-- The state definition for the 0-1 knapsack is the maximum value among the first $i$ items in a knapsack of capacity $c$. Based on the two decisions of not putting an item in the knapsack and putting it in, the optimal substructure can be identified and the state transition equation constructed. In space optimization, since each state depends on the state directly above and to the upper-left, the list needs to be traversed in reverse order to avoid overwriting the upper-left state.
-- The unbounded knapsack problem has no limit on the selection quantity of each type of item, so the state transition for choosing to put in an item differs from the 0-1 knapsack problem. Since the state depends on the state directly above and directly to the left, space optimization should use forward traversal.
-- The coin change problem is a variant of the unbounded knapsack problem. It changes from seeking the "maximum" value to seeking the "minimum" number of coins, so $\max()$ in the state transition equation should be changed to $\min()$. It changes from seeking "not exceeding" the knapsack capacity to seeking "exactly" making up the target amount, so $amt + 1$ is used to represent the invalid solution of "unable to make up the target amount".
-- Coin change problem II changes from seeking the "minimum number of coins" to seeking the "number of coin combinations", so the state transition equation correspondingly changes from $\min()$ to a summation operator.
+- A hátizsák-feladat az egyik legtipikusabb dinamikus programozási feladat, változatai között szerepel a 0-1 hátizsák, a korlátlan hátizsák és a többszörös hátizsák.
+- A 0-1 hátizsák állapotdefiníciója az első $i$ tárgy közül $c$ kapacitású hátizsákban elérhető maximális érték. A tárgy hátizsákba nem rakásának és berakásának két döntése alapján azonosítható az optimális részstruktúra és megalkotható az állapot-átmeneti egyenlet. A tárhelyoptimalizálásban, mivel minden állapot a közvetlenül felső és a bal felső állapottól függ, a listát fordított sorrendben kell bejárni a bal felső állapot felülírásának elkerülése érdekében.
+- A korlátlan hátizsák-feladatban nincs korlátozás az egyes tárgy típusok kiválasztási mennyiségére, ezért a berakás döntésének állapot-átmenete eltér a 0-1 hátizsák-feladatétól. Mivel az állapot a közvetlenül felső és közvetlenül bal oldali állapottól függ, a tárhelyoptimalizáláshoz előre haladó bejárást kell alkalmazni.
+- Az érmecserélési feladat a korlátlan hátizsák-feladat változata. A "maximális" értéket kereséséről a "minimális" érmeszám keresésére változik, ezért az állapot-átmeneti egyenletben a $\max()$-ot $\min()$-re kell cserélni. A hátizsák kapacitásának "nem meghaladásáról" a célösszeg "pontos" kifizetésére változik, ezért az $amt + 1$ értéket használjuk a "célösszeg nem fizethető ki" érvénytelen megoldás jelölésére.
+- Az érmecserélési feladat II a "minimális érmeszám" keresésről a "érmekombinációk száma" keresésre változik, ezért az állapot-átmeneti egyenlet $\min()$-je ennek megfelelően összegző operátorra változik.
 
-**Edit distance problem**
+**Szerkesztési távolság feladat**
 
-- Edit distance (Levenshtein distance) is used to measure the similarity between two strings, defined as the minimum number of edit steps from one string to another, with edit operations including insert, delete, and replace.
-- The state definition for the edit distance problem is the minimum number of edit steps required to change the first $i$ characters of $s$ into the first $j$ characters of $t$. When $s[i] \ne t[j]$, there are three decisions: insert, delete, replace, each with corresponding remaining subproblems. From this, the optimal substructure can be identified and the state transition equation constructed. When $s[i] = t[j]$, no edit is required for the current character.
-- In edit distance, the state depends on the state directly above, directly to the left, and to the upper-left, so after space optimization, neither forward nor reverse traversal can correctly perform state transitions. For this reason, we use a variable to temporarily store the upper-left state, thus transforming to a situation equivalent to the unbounded knapsack problem, allowing for forward traversal after space optimization.
+- A szerkesztési távolság (Levenshtein-távolság) két karakterlánc hasonlóságának mérésére használatos, az egyik karakterláncból a másikba való átmenethez szükséges minimális szerkesztési lépések számaként definiálva, a szerkesztési műveletek közé tartozik a beillesztés, törlés és csere.
+- A szerkesztési távolság feladat állapotdefiníciója az $s$ első $i$ karakterét $t$ első $j$ karakterévé alakításához szükséges minimális szerkesztési lépések száma. Ha $s[i] \ne t[j]$, három döntés lehetséges: beillesztés, törlés, csere, mindegyikhez megfelelő fennmaradó részproblémával. Ebből azonosítható az optimális részstruktúra és megalkotható az állapot-átmeneti egyenlet. Ha $s[i] = t[j]$, az aktuális karakterhez nem szükséges szerkesztés.
+- A szerkesztési távolságban az állapot a közvetlenül felső, közvetlenül bal oldali és bal felső állapottól függ, ezért tárhelyoptimalizálás után sem az előre haladó, sem a fordított bejárás nem tudja helyesen végrehajtani az állapot-átmeneteket. Emiatt egy változót használunk a bal felső állapot ideiglenes tárolásához, ezzel átalakítva a helyzetet a korlátlan hátizsák-feladattal egyenértékűvé, lehetővé téve az előre haladó bejárást tárhelyoptimalizálás után.

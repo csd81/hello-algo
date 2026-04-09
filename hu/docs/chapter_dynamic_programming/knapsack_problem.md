@@ -1,97 +1,97 @@
-# 0-1 Knapsack Problem
+# 0-1 hátizsák-feladat
 
-The knapsack problem is an excellent introductory problem for dynamic programming and is one of the most common problem forms in dynamic programming. It has many variants, such as the 0-1 knapsack problem, the unbounded knapsack problem, and the multiple knapsack problem.
+A hátizsák-feladat kiváló bevezető feladat a dinamikus programozáshoz, és az egyik leggyakoribb feladattípus a dinamikus programozásban. Sok változata létezik, például a 0-1 hátizsák-feladat, a korlátlan hátizsák-feladat és a többszörös hátizsák-feladat.
 
-In this section, we will first solve the most common 0-1 knapsack problem.
+Ebben a szakaszban először a leggyakoribb 0-1 hátizsák-feladatot oldjuk meg.
 
 !!! question
 
-    Given $n$ items, where the weight of the $i$-th item is $wgt[i-1]$ and its value is $val[i-1]$, and a knapsack with capacity $cap$. Each item can only be selected once. What is the maximum value that can be placed in the knapsack within the capacity limit?
+    Adott $n$ tárgy, ahol az $i$-edik tárgy súlya $wgt[i-1]$, értéke $val[i-1]$, és egy $cap$ kapacitású hátizsák. Minden tárgy csak egyszer választható ki. Mi az a maximális érték, amelyet a kapacitáskorláton belül a hátizsákba lehet helyezni?
 
-Observe the figure below. Since item number $i$ starts counting from $1$ and array indices start from $0$, item $i$ corresponds to weight $wgt[i-1]$ and value $val[i-1]$.
+Az alábbi ábrán látható, hogy az $i$ tárgy sorszáma $1$-től kezdődik, míg a tömbindexek $0$-tól, ezért az $i$ tárgy $wgt[i-1]$ súlynak és $val[i-1]$ értéknek felel meg.
 
-![Example data for 0-1 knapsack](knapsack_problem.assets/knapsack_example.png)
+![0-1 hátizsák-feladat példa adatok](knapsack_problem.assets/knapsack_example.png)
 
-We can view the 0-1 knapsack problem as a process consisting of $n$ rounds of decisions, where for each item there are two decisions: not putting it in and putting it in, thus the problem satisfies the decision tree model.
+A 0-1 hátizsák-feladatot $n$ körös döntési folyamatként tekinthetjük, ahol minden tárgyhoz két döntés tartozik: nem rakjuk be és berakjuk, ezért a feladat teljesíti a döntési fa modellt.
 
-The goal of this problem is to find "the maximum value that can be placed in the knapsack within the capacity limit", so it is more likely to be a dynamic programming problem.
+Ennek a feladatnak a célja "a kapacitáskorláton belül a hátizsákba helyezhető maximális érték" megtalálása, ezért valószínűbben dinamikus programozási feladatról van szó.
 
-**Step 1: Think about the decisions in each round, define the state, and thus obtain the $dp$ table**
+**1. lépés: Gondolja végig az egyes körök döntéseit, definiálja az állapotot, és így kapja meg a $dp$ táblát**
 
-For each item, if not placed in the knapsack, the knapsack capacity remains unchanged; if placed in, the knapsack capacity decreases. From this, we can derive the state definition: current item number $i$ and knapsack capacity $c$, denoted as $[i, c]$.
+Minden tárgy esetén, ha nem tesszük a hátizsákba, a hátizsák kapacitása változatlan marad; ha berakjuk, a hátizsák kapacitása csökken. Ebből levezethetjük az állapotdefiníciót: az aktuális tárgy sorszáma $i$ és a hátizsák kapacitása $c$, amelyet $[i, c]$-vel jelölünk.
 
-State $[i, c]$ corresponds to the subproblem: **the maximum value among the first $i$ items in a knapsack of capacity $c$**, denoted as $dp[i, c]$.
+Az $[i, c]$ állapot a következő részproblémának felel meg: **az első $i$ tárgy közül $c$ kapacitású hátizsákban elérhető maximális érték**, amelyet $dp[i, c]$-vel jelölünk.
 
-What we need to find is $dp[n, cap]$, so we need a two-dimensional $dp$ table of size $(n+1) \times (cap+1)$.
+Amit meg kell találnunk, az $dp[n, cap]$, ezért $(n+1) \times (cap+1)$ méretű kétdimenziós $dp$ táblára van szükségünk.
 
-**Step 2: Identify the optimal substructure, and then derive the state transition equation**
+**2. lépés: Azonosítsa az optimális részstruktúrát, majd vezesse le az állapot-átmeneti egyenletet**
 
-After making the decision for item $i$, what remains is the subproblem of the first $i-1$ items, which can be divided into the following two cases.
+Az $i$ tárgy döntésének meghozatala után az első $i-1$ tárgy részproblémája marad, amely a következő két esetbe sorolható.
 
-- **Not putting item $i$**: The knapsack capacity remains unchanged, and the state changes to $[i-1, c]$.
-- **Putting item $i$**: The knapsack capacity decreases by $wgt[i-1]$, the value increases by $val[i-1]$, and the state changes to $[i-1, c-wgt[i-1]]$.
+- **Nem rakjuk be az $i$ tárgyat**: A hátizsák kapacitása változatlan marad, az állapot $[i-1, c]$-re változik.
+- **Berakjuk az $i$ tárgyat**: A hátizsák kapacitása $wgt[i-1]$-gyel csökken, az érték $val[i-1]$-gyel növekszik, az állapot $[i-1, c-wgt[i-1]]$-re változik.
 
-The above analysis reveals the optimal substructure of this problem: **the maximum value $dp[i, c]$ equals the larger value between not putting item $i$ and putting item $i$**. From this, the state transition equation can be derived:
+A fenti elemzés feltárja a feladat optimális részstruktúráját: **a maximális érték $dp[i, c]$ egyenlő az $i$ tárgy be nem rakásának és berakásának nagyobb értékével**. Ebből az állapot-átmeneti egyenlet levezethető:
 
 $$
 dp[i, c] = \max(dp[i-1, c], dp[i-1, c - wgt[i-1]] + val[i-1])
 $$
 
-Note that if the weight of the current item $wgt[i - 1]$ exceeds the remaining knapsack capacity $c$, then the only option is not to put it in the knapsack.
+Megjegyezzük, hogy ha az aktuális tárgy $wgt[i - 1]$ súlya meghaladja a fennmaradó $c$ hátizsák-kapacitást, akkor az egyetlen lehetőség, hogy nem rakjuk be a hátizsákba.
 
-**Step 3: Determine boundary conditions and state transition order**
+**3. lépés: Határozza meg a határfeltételeket és az állapot-átmeneti sorrendet**
 
-When there are no items or the knapsack capacity is $0$, the maximum value is $0$, i.e., the first column $dp[i, 0]$ and the first row $dp[0, c]$ are both equal to $0$.
+Ha nincsenek tárgyak vagy a hátizsák kapacitása $0$, a maximális érték $0$, azaz az első oszlop $dp[i, 0]$ és az első sor $dp[0, c]$ mind egyenlő $0$-val.
 
-The current state $[i, c]$ is transferred from the state above $[i-1, c]$ and the state in the upper-left $[i-1, c-wgt[i-1]]$, so the entire $dp$ table is traversed in order through two nested loops.
+Az aktuális $[i, c]$ állapot a felette lévő $[i-1, c]$ állapotból és a bal felső $[i-1, c-wgt[i-1]]$ állapotból vezethető át, ezért az egész $dp$ táblát sorrendben bejárjuk két egymásba ágyazott ciklussal.
 
-Based on the above analysis, we will next implement the brute force search, memoization, and dynamic programming solutions in order.
+A fenti elemzés alapján a nyers erő keresési, memoizálási és dinamikus programozási megoldásokat sorban valósítjuk meg.
 
-### Method 1: Brute Force Search
+### 1. módszer: Nyers erő keresés
 
-The search code includes the following elements.
+A keresési kód a következő elemeket tartalmazza.
 
-- **Recursive parameters**: state $[i, c]$.
-- **Return value**: solution to the subproblem $dp[i, c]$.
-- **Termination condition**: when the item number is out of bounds $i = 0$ or the remaining knapsack capacity is $0$, terminate recursion and return value $0$.
-- **Pruning**: if the weight of the current item exceeds the remaining knapsack capacity, only the option of not putting it in is available.
+- **Rekurzív paraméterek**: $[i, c]$ állapot.
+- **Visszatérési érték**: a $dp[i, c]$ részprobléma megoldása.
+- **Leállítási feltétel**: ha a tárgy sorszáma túlmegy a határokon $i = 0$ vagy a fennmaradó hátizsák-kapacitás $0$, befejezi a rekurziót és $0$ értéket ad vissza.
+- **Metszés**: ha az aktuális tárgy súlya meghaladja a fennmaradó hátizsák-kapacitást, csak a be nem rakás opció áll rendelkezésre.
 
 ```src
 [file]{knapsack}-[class]{}-[func]{knapsack_dfs}
 ```
 
-As shown in the figure below, since each item generates two search branches of not selecting and selecting, the time complexity is $O(2^n)$.
+Az alábbi ábrán látható, hogy minden tárgy két keresési ágat generál: a nem kiválasztást és a kiválasztást, ezért az időbonyolultság $O(2^n)$.
 
-Observing the recursion tree, it is easy to see overlapping subproblems, such as $dp[1, 10]$. When there are many items, large knapsack capacity, and especially many items with the same weight, the number of overlapping subproblems will increase significantly.
+A rekurziós fát megfigyelve könnyen láthatók az átfedő részproblémák, például $dp[1, 10]$. Sok tárgy, nagy hátizsák-kapacitás, és különösen azonos súlyú tárgyak esetén az átfedő részproblémák száma jelentősen nő.
 
-![Brute force search recursion tree for 0-1 knapsack problem](knapsack_problem.assets/knapsack_dfs.png)
+![0-1 hátizsák-feladat nyers erő keresés rekurziós fája](knapsack_problem.assets/knapsack_dfs.png)
 
-### Method 2: Memoization
+### 2. módszer: Memoizálás
 
-To ensure that overlapping subproblems are only computed once, we use a memo list `mem` to record the solutions to subproblems, where `mem[i][c]` corresponds to $dp[i, c]$.
+Annak biztosítása érdekében, hogy az átfedő részproblémákat csak egyszer számítsuk ki, egy `mem` memo listát használunk a részproblémák megoldásainak rögzítésére, ahol `mem[i][c]` a $dp[i, c]$-nek felel meg.
 
-After introducing memoization, **the time complexity depends on the number of subproblems**, which is $O(n \times cap)$. The implementation code is as follows:
+A memoizálás bevezetése után **az időbonyolultság a részproblémák számától függ**, ami $O(n \times cap)$. A megvalósítási kód a következő:
 
 ```src
 [file]{knapsack}-[class]{}-[func]{knapsack_dfs_mem}
 ```
 
-The figure below shows the search branches pruned in memoization.
+Az alábbi ábra a memoizálásban metszett keresési ágakat mutatja.
 
-![Memoization recursion tree for 0-1 knapsack problem](knapsack_problem.assets/knapsack_dfs_mem.png)
+![0-1 hátizsák-feladat memoizálás rekurziós fája](knapsack_problem.assets/knapsack_dfs_mem.png)
 
-### Method 3: Dynamic Programming
+### 3. módszer: Dinamikus programozás
 
-Dynamic programming is essentially the process of filling the $dp$ table during state transitions. The code is as follows:
+A dinamikus programozás lényegében a $dp$ tábla kitöltési folyamata az állapot-átmenetek során. A kód a következő:
 
 ```src
 [file]{knapsack}-[class]{}-[func]{knapsack_dp}
 ```
 
-As shown in the figure below, both time complexity and space complexity are determined by the size of the array `dp`, which is $O(n \times cap)$.
+Az alábbi ábrán látható, hogy mind az időbonyolultság, mind a tárkomplexitás a `dp` tömb méretétől függ, ami $O(n \times cap)$.
 
 === "<1>"
-    ![Dynamic programming process for 0-1 knapsack problem](knapsack_problem.assets/knapsack_dp_step1.png)
+    ![0-1 hátizsák-feladat dinamikus programozási folyamata](knapsack_problem.assets/knapsack_dp_step1.png)
 
 === "<2>"
     ![knapsack_dp_step2](knapsack_problem.assets/knapsack_dp_step2.png)
@@ -132,19 +132,19 @@ As shown in the figure below, both time complexity and space complexity are dete
 === "<14>"
     ![knapsack_dp_step14](knapsack_problem.assets/knapsack_dp_step14.png)
 
-### Space Optimization
+### Tárhelyoptimalizálás
 
-Since each state is only related to the state in the row above it, we can use two arrays rolling forward to reduce the space complexity from $O(n^2)$ to $O(n)$.
+Mivel minden állapot csak a felette lévő sor állapotával függ össze, két gördülő tömbben csökkenthetjük a tárkomplexitást $O(n^2)$-ről $O(n)$-re.
 
-Further thinking, can we achieve space optimization using just one array? Observing, we can see that each state is transferred from the cell directly above or the cell in the upper-left. If there is only one array, when we start traversing row $i$, that array still stores the state of row $i-1$.
+Gondolkodva tovább: egyetlen tömbbel is megvalósítható-e a tárhelyoptimalizálás? Megfigyeljük, hogy minden állapot közvetlenül felülről vagy a bal felső cellából vezethető át. Ha csak egy tömb van, az $i$ sor bejárásakor a tömb még az $i-1$ sor állapotát tárolja.
 
-- If using forward traversal, then when traversing to $dp[i, j]$, the values in the upper-left $dp[i-1, 1]$ ~ $dp[i-1, j-1]$ may have already been overwritten, thus preventing correct state transition.
-- If using reverse traversal, there will be no overwriting issue, and state transition can proceed correctly.
+- Ha előre haladó bejárást használunk, akkor $dp[i, j]$ bejárásakor a bal felső $dp[i-1, 1]$ ~ $dp[i-1, j-1]$ értékek már felülírhatók, megakadályozva a helyes állapot-átmenetet.
+- Ha fordított bejárást használunk, nem lesz felülírási probléma, és az állapot-átmenet helyesen hajtható végre.
 
-The figure below shows the transition process from row $i = 1$ to row $i = 2$ using a single array. Please consider the difference between forward and reverse traversal.
+Az alábbi ábra az $i = 1$ sorról az $i = 2$ sorra való átmenet folyamatát mutatja egyetlen tömbben. Kérjük, fontolja meg az előre haladó és a fordított bejárás különbségét.
 
 === "<1>"
-    ![Space-optimized dynamic programming process for 0-1 knapsack](knapsack_problem.assets/knapsack_dp_comp_step1.png)
+    ![0-1 hátizsák tárhelyoptimalizált dinamikus programozási folyamata](knapsack_problem.assets/knapsack_dp_comp_step1.png)
 
 === "<2>"
     ![knapsack_dp_comp_step2](knapsack_problem.assets/knapsack_dp_comp_step2.png)
@@ -161,7 +161,7 @@ The figure below shows the transition process from row $i = 1$ to row $i = 2$ us
 === "<6>"
     ![knapsack_dp_comp_step6](knapsack_problem.assets/knapsack_dp_comp_step6.png)
 
-In the code implementation, we simply need to delete the first dimension $i$ of the array `dp` and change the inner loop to reverse traversal:
+A kód megvalósításában csak törölnünk kell a `dp` tömb első $i$ dimenzióját, és a belső ciklust fordított bejárásra kell változtatni:
 
 ```src
 [file]{knapsack}-[class]{}-[func]{knapsack_dp_comp}

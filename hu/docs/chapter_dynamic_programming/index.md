@@ -1,9 +1,9 @@
-# Dynamic Programming
+# Dinamikus programozás
 
-![Dynamic programming](../assets/covers/chapter_dynamic_programming.jpg)
+![Dinamikus programozás](../assets/covers/chapter_dynamic_programming.jpg)
 
 !!! abstract
 
-    Streams converge into rivers, rivers converge into the sea.
+    A patakok folyókká, a folyók tengerré olvadnak össze.
 
-    Dynamic programming gathers solutions to small problems into answers to large problems, step by step guiding us to the shore of problem-solving.
+    A dinamikus programozás kis problémák megoldásait gyűjti össze nagy problémák válaszaivá, lépésről lépésre vezetve minket a megoldás partjára.

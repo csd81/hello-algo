@@ -1,80 +1,80 @@
-# Edit Distance Problem
+# Szerkesztési távolság feladat
 
-Edit distance, also known as Levenshtein distance, refers to the minimum number of edits required to transform one string into another, commonly used in information retrieval and natural language processing to measure the similarity between two sequences.
+A szerkesztési távolság, más néven Levenshtein-távolság, az egyik karakterlánc a másikká alakításához szükséges minimális szerkesztések számát jelöli, és általánosan használják az információkeresésben és a természetes nyelvfeldolgozásban két sorozat hasonlóságának mérésére.
 
 !!! question
 
-    Given two strings $s$ and $t$, return the minimum number of edits required to transform $s$ into $t$.
+    Adott két $s$ és $t$ karakterlánc, adja vissza az $s$ $t$-vé alakításához szükséges minimális szerkesztések számát.
 
-    You can perform three types of edit operations on a string: insert a character, delete a character, or replace a character with any other character.
+    Egy karakterláncon háromféle szerkesztési műveletet hajthat végre: karaktert szúr be, karaktert töröl, vagy egy karaktert bármely más karakterre cserél.
 
-As shown in the figure below, transforming `kitten` into `sitting` requires 3 edits, including 2 replacements and 1 insertion; transforming `hello` into `algo` requires 3 steps, including 2 replacements and 1 deletion.
+Az alábbi ábrán látható, hogy a `kitten` `sitting`-gé alakítása $3$ szerkesztést igényel, köztük $2$ cserét és $1$ beillesztést; a `hello` `algo`-vá alakítása $3$ lépést igényel, köztük $2$ cserét és $1$ törlést.
 
-![Example data for edit distance](edit_distance_problem.assets/edit_distance_example.png)
+![Szerkesztési távolság példa adatok](edit_distance_problem.assets/edit_distance_example.png)
 
-**The edit distance problem can be naturally explained using the decision tree model**. Strings correspond to tree nodes, and a round of decision (one edit operation) corresponds to an edge of the tree.
+**A szerkesztési távolság feladat természetesen magyarázható a döntési fa modellel**. A karakterláncok a fa csomópontjainak, egy kör döntése (egy szerkesztési művelet) a fa élének felel meg.
 
-As shown in the figure below, without restricting operations, each node can branch into many edges, with each edge corresponding to one operation, meaning there are many possible paths to transform `hello` into `algo`.
+Az alábbi ábrán látható, hogy a műveletek korlátozása nélkül minden csomópont sok élbe ágazhat, és minden él egy műveletnek felel meg, ami azt jelenti, hogy sok lehetséges útvonal vezet a `hello` `algo`-vá alakításához.
 
-From the perspective of the decision tree, the goal of this problem is to find the shortest path between node `hello` and node `algo`.
+A döntési fa szempontjából ennek a feladatnak a célja a `hello` és az `algo` csomópontok közötti legrövidebb útvonal megtalálása.
 
-![Representing edit distance problem based on decision tree model](edit_distance_problem.assets/edit_distance_decision_tree.png)
+![A szerkesztési távolság feladat ábrázolása döntési fa modell alapján](edit_distance_problem.assets/edit_distance_decision_tree.png)
 
-### Dynamic Programming Approach
+### Dinamikus programozásos megközelítés
 
-**Step 1: Think about the decisions in each round, define the state, and thus obtain the $dp$ table**
+**1. lépés: Gondolja végig az egyes körök döntéseit, definiálja az állapotot, és így kapja meg a $dp$ táblát**
 
-Each round of decision involves performing one edit operation on string $s$.
+Minden kör döntése egy szerkesztési művelet végrehajtása az $s$ karakterláncon.
 
-We want the problem scale to gradually decrease during the editing process, which allows us to construct subproblems. Let the lengths of strings $s$ and $t$ be $n$ and $m$ respectively. We first consider the tail characters of the two strings, $s[n-1]$ and $t[m-1]$.
+Szeretnénk, ha a feladat léptéke fokozatosan csökkenne a szerkesztési folyamat során, ami lehetővé teszi részproblémák felépítését. Legyenek az $s$ és $t$ karakterláncok hossza rendre $n$ és $m$. Először a két karakterlánc utolsó karaktereit, $s[n-1]$-et és $t[m-1]$-et vizsgáljuk.
 
-- If $s[n-1]$ and $t[m-1]$ are the same, we can skip them and directly consider $s[n-2]$ and $t[m-2]$.
-- If $s[n-1]$ and $t[m-1]$ are different, we need to perform one edit on $s$ (insert, delete, or replace) to make the tail characters of the two strings the same, allowing us to skip them and consider a smaller-scale problem.
+- Ha $s[n-1]$ és $t[m-1]$ azonosak, kihagyhatjuk őket, és közvetlenül $s[n-2]$-t és $t[m-2]$-t vizsgálhatjuk.
+- Ha $s[n-1]$ és $t[m-1]$ különbözők, egy szerkesztést kell végrehajtanunk $s$-en (beillesztés, törlés vagy csere), hogy a két karakterlánc utolsó karakterei azonosak legyenek, lehetővé téve azok kihagyását és egy kisebb léptékű probléma vizsgálatát.
 
-In other words, each round of decision (edit operation) we make on string $s$ will change the remaining characters to be matched in $s$ and $t$. Therefore, the state is the $i$-th and $j$-th characters currently being considered in $s$ and $t$, denoted as $[i, j]$.
+Más szóval, minden kör döntésünk (szerkesztési művelet), amelyet az $s$ karakterláncon hajtunk végre, megváltoztatja az $s$-ben és $t$-ben még párosítandó karakterek számát. Ezért az állapot az $s$-ben és $t$-ben aktuálisan vizsgált $i$-edik és $j$-edik karakter, amelyet $[i, j]$-vel jelölünk.
 
-State $[i, j]$ corresponds to the subproblem: **the minimum number of edits required to change the first $i$ characters of $s$ into the first $j$ characters of $t$**.
+Az $[i, j]$ állapot a következő részproblémának felel meg: **az $s$ első $i$ karakterét $t$ első $j$ karakterévé alakításához szükséges minimális szerkesztések száma**.
 
-From this, we obtain a two-dimensional $dp$ table of size $(i+1) \times (j+1)$.
+Ebből $(i+1) \times (j+1)$ méretű kétdimenziós $dp$ táblát kapunk.
 
-**Step 2: Identify the optimal substructure, and then derive the state transition equation**
+**2. lépés: Azonosítsa az optimális részstruktúrát, majd vezesse le az állapot-átmeneti egyenletet**
 
-Consider subproblem $dp[i, j]$, where the tail characters of the corresponding two strings are $s[i-1]$ and $t[j-1]$, which can be divided into the three cases shown in the figure below based on different edit operations.
+Vizsgáljuk a $dp[i, j]$ részproblémát, ahol a megfelelő két karakterlánc utolsó karakterei $s[i-1]$ és $t[j-1]$, amelyek az alábbi ábrán látható három eset valamelyikébe sorolhatók a különböző szerkesztési műveletek alapján.
 
-1. Insert $t[j-1]$ after $s[i-1]$, then the remaining subproblem is $dp[i, j-1]$.
-2. Delete $s[i-1]$, then the remaining subproblem is $dp[i-1, j]$.
-3. Replace $s[i-1]$ with $t[j-1]$, then the remaining subproblem is $dp[i-1, j-1]$.
+1. $t[j-1]$ beillesztése $s[i-1]$ után, ekkor a fennmaradó részprobléma $dp[i, j-1]$.
+2. $s[i-1]$ törlése, ekkor a fennmaradó részprobléma $dp[i-1, j]$.
+3. $s[i-1]$ $t[j-1]$-re cserélése, ekkor a fennmaradó részprobléma $dp[i-1, j-1]$.
 
-![State transition for edit distance](edit_distance_problem.assets/edit_distance_state_transfer.png)
+![Szerkesztési távolság állapot-átmenet](edit_distance_problem.assets/edit_distance_state_transfer.png)
 
-Based on the above analysis, the optimal substructure can be obtained: the minimum number of edits for $dp[i, j]$ equals the minimum among the minimum edit steps of $dp[i, j-1]$, $dp[i-1, j]$, and $dp[i-1, j-1]$, plus the edit step $1$ for this time. The corresponding state transition equation is:
+A fenti elemzés alapján az optimális részstruktúra megkapható: $dp[i, j]$ minimális szerkesztéseinek száma egyenlő $dp[i, j-1]$, $dp[i-1, j]$ és $dp[i-1, j-1]$ minimális szerkesztési lépéseinek minimuma, plusz az aktuális $1$ szerkesztési lépés. A megfelelő állapot-átmeneti egyenlet:
 
 $$
 dp[i, j] = \min(dp[i, j-1], dp[i-1, j], dp[i-1, j-1]) + 1
 $$
 
-Please note that **when $s[i-1]$ and $t[j-1]$ are the same, no edit is required for the current character**, in which case the state transition equation is:
+Megjegyezzük, hogy **ha $s[i-1]$ és $t[j-1]$ azonosak, az aktuális karakterhez nem szükséges szerkesztés**, ebben az esetben az állapot-átmeneti egyenlet:
 
 $$
 dp[i, j] = dp[i-1, j-1]
 $$
 
-**Step 3: Determine boundary conditions and state transition order**
+**3. lépés: Határozza meg a határfeltételeket és az állapot-átmeneti sorrendet**
 
-When both strings are empty, the number of edit steps is $0$, i.e., $dp[0, 0] = 0$. When $s$ is empty but $t$ is not, the minimum number of edit steps equals the length of $t$, i.e., the first row $dp[0, j] = j$. When $s$ is not empty but $t$ is empty, the minimum number of edit steps equals the length of $s$, i.e., the first column $dp[i, 0] = i$.
+Ha mindkét karakterlánc üres, a szerkesztési lépések száma $0$, azaz $dp[0, 0] = 0$. Ha $s$ üres, de $t$ nem, a minimális szerkesztési lépések száma egyenlő $t$ hosszával, azaz az első sor $dp[0, j] = j$. Ha $s$ nem üres, de $t$ üres, a minimális szerkesztési lépések száma egyenlő $s$ hosszával, azaz az első oszlop $dp[i, 0] = i$.
 
-Observing the state transition equation, the solution $dp[i, j]$ depends on solutions to the left, above, and upper-left, so the entire $dp$ table can be traversed in order through two nested loops.
+Az állapot-átmeneti egyenletet megfigyelve a $dp[i, j]$ megoldás a bal oldali, a felső és a bal felső megoldásoktól függ, ezért az egész $dp$ tábla sorrendben bejárható két egymásba ágyazott ciklussal.
 
-### Code Implementation
+### Kódmegvalósítás
 
 ```src
 [file]{edit_distance}-[class]{}-[func]{edit_distance_dp}
 ```
 
-As shown in the figure below, the state transition process for the edit distance problem is very similar to the knapsack problem and can both be viewed as the process of filling a two-dimensional grid.
+Az alábbi ábrán látható, hogy a szerkesztési távolság feladat állapot-átmeneti folyamata nagyon hasonló a hátizsák-feladathoz, és mindkettő kétdimenziós rács kitöltési folyamataként tekinthető.
 
 === "<1>"
-    ![Dynamic programming process for edit distance](edit_distance_problem.assets/edit_distance_dp_step1.png)
+    ![Szerkesztési távolság dinamikus programozási folyamata](edit_distance_problem.assets/edit_distance_dp_step1.png)
 
 === "<2>"
     ![edit_distance_dp_step2](edit_distance_problem.assets/edit_distance_dp_step2.png)
@@ -118,11 +118,11 @@ As shown in the figure below, the state transition process for the edit distance
 === "<15>"
     ![edit_distance_dp_step15](edit_distance_problem.assets/edit_distance_dp_step15.png)
 
-### Space Optimization
+### Tárhelyoptimalizálás
 
-Since $dp[i, j]$ is transferred from the solutions above $dp[i-1, j]$, to the left $dp[i, j-1]$, and to the upper-left $dp[i-1, j-1]$, forward traversal will lose the upper-left solution $dp[i-1, j-1]$, and reverse traversal cannot build $dp[i, j-1]$ in advance, so neither traversal order is feasible.
+Mivel $dp[i, j]$ a felső $dp[i-1, j]$, a bal oldali $dp[i, j-1]$ és a bal felső $dp[i-1, j-1]$ megoldásokból vezethető át, az előre haladó bejárás elveszíti a bal felső $dp[i-1, j-1]$ megoldást, a fordított bejárás pedig nem tudja előre felépíteni $dp[i, j-1]$-t, ezért egyik bejárási sorrend sem alkalmazható.
 
-For this reason, we can use a variable `leftup` to temporarily store the upper-left solution $dp[i-1, j-1]$, so we only need to consider the solutions to the left and above. This situation is the same as the unbounded knapsack problem, allowing for forward traversal. The code is as follows:
+Emiatt egy `leftup` változót használhatunk a bal felső $dp[i-1, j-1]$ megoldás ideiglenes tárolásához, így csak a bal oldali és a felső megoldásokat kell figyelembe venni. Ez a helyzet megegyezik a korlátlan hátizsák-feladattal, lehetővé téve az előre haladó bejárást. A kód a következő:
 
 ```src
 [file]{edit_distance}-[class]{}-[func]{edit_distance_dp_comp}

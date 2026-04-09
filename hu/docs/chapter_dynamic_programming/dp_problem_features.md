@@ -1,79 +1,79 @@
-# Characteristics of Dynamic Programming Problems
+# A dinamikus programozási feladatok jellemzői
 
-In the previous section, we learned how dynamic programming solves the original problem by decomposing it into subproblems. In fact, subproblem decomposition is a general algorithmic approach, with different emphases in divide and conquer, dynamic programming, and backtracking.
+Az előző szakaszban megtanultuk, hogyan oldja meg a dinamikus programozás az eredeti problémát részproblémákra bontással. Valójában a részproblémákra bontás egy általános algoritmikus megközelítés, amely különböző hangsúlyokkal jelenik meg az oszd-meg-és-uralkodj, a dinamikus programozás és a visszalépés esetén.
 
-- Divide and conquer algorithms recursively divide the original problem into multiple independent subproblems until the smallest subproblems are reached, and merge the solutions to the subproblems during backtracking to ultimately obtain the solution to the original problem.
-- Dynamic programming also recursively decomposes problems, but the main difference from divide and conquer algorithms is that subproblems in dynamic programming are interdependent, and many overlapping subproblems appear during the decomposition process.
-- Backtracking algorithms enumerate all possible solutions through trial and error, and avoid unnecessary search branches through pruning. The solution to the original problem consists of a series of decision steps, and we can regard the subsequence before each decision step as a subproblem.
+- Az oszd-meg-és-uralkodj algoritmusok rekurzívan osztják fel az eredeti problémát több független részproblémára, amíg el nem érik a legkisebb részproblémákat, majd visszalépéskor egyesítik a részproblémák megoldásait, hogy végül megkapják az eredeti probléma megoldását.
+- A dinamikus programozás szintén rekurzívan bontja fel a problémákat, de a fő különbség az oszd-meg-és-uralkodj algoritmusoktól az, hogy a dinamikus programozásban a részproblémák egymástól függenek, és a felbontási folyamat során sok átfedő részprobléma jelenik meg.
+- A visszalépéses algoritmusok próbálkozással és hibával felsorolják az összes lehetséges megoldást, és metszéssel elkerülik a szükségtelen keresési ágakat. Az eredeti probléma megoldása döntési lépések sorozatából áll, és az egyes döntési lépések előtti részsorozatot részproblémának tekinthetjük.
 
-In fact, dynamic programming is commonly used to solve optimization problems, which not only contain overlapping subproblems but also have two other major characteristics: optimal substructure and no aftereffects.
+Valójában a dinamikus programozást általában optimalizálási feladatok megoldására használják, amelyek nemcsak átfedő részproblémákat tartalmaznak, hanem két másik fontos jellemzővel is bírnak: optimális részstruktúrával és utóhatás-mentességgel.
 
-## Optimal Substructure
+## Optimális részstruktúra
 
-We make a slight modification to the stair climbing problem to make it more suitable for demonstrating the concept of optimal substructure.
+Kis módosítást végzünk a lépcsőmászási feladaton, hogy jobban szemléltesse az optimális részstruktúra fogalmát.
 
-!!! question "Climbing stairs with minimum cost"
+!!! question "Lépcsőmászás minimális költséggel"
 
-    Given a staircase, where you can climb $1$ or $2$ steps at a time, and each step has a non-negative integer representing the cost you need to pay at that step. Given a non-negative integer array $cost$, where $cost[i]$ represents the cost at the $i$-th step, and $cost[0]$ is the ground (starting point). What is the minimum cost required to reach the top?
+    Adott egy lépcső, ahol egyszerre $1$ vagy $2$ fokot lehet lépni, és minden foknak van egy nemnegatív egész száma, amely az ott szükséges költséget jelzi. Adott egy nemnegatív egész számokból álló $cost$ tömb, ahol $cost[i]$ az $i$-edik fok költségét jelöli, és $cost[0]$ a talaj (kiindulópont). Mi a minimális szükséges költség a tetejére jutáshoz?
 
-As shown in the figure below, if the costs of the $1$st, $2$nd, and $3$rd steps are $1$, $10$, and $1$ respectively, then climbing from the ground to the $3$rd step requires a minimum cost of $2$.
+Az alábbi ábrán látható, hogy ha az $1.$ , $2.$ és $3.$ fok költsége rendre $1$, $10$ és $1$, akkor a talajtól a $3.$ fokig való feljutás minimális költsége $2$.
 
-![Minimum cost to climb to the 3rd step](dp_problem_features.assets/min_cost_cs_example.png)
+![Minimális költség a 3. fokra jutáshoz](dp_problem_features.assets/min_cost_cs_example.png)
 
-Let $dp[i]$ be the accumulated cost of climbing to the $i$-th step. Since the $i$-th step can only come from the $i-1$-th or $i-2$-th step, $dp[i]$ can only equal $dp[i-1] + cost[i]$ or $dp[i-2] + cost[i]$. To minimize the cost, we should choose the smaller of the two:
+Legyen $dp[i]$ az $i$-edik fokra való feljutás felhalmozott költsége. Mivel az $i$-edik fokra csak az $i-1$-edikről vagy az $i-2$-edikről lehet lépni, $dp[i]$ csak $dp[i-1] + cost[i]$ vagy $dp[i-2] + cost[i]$ lehet. A költség minimalizálásához a kisebbiket kell választani:
 
 $$
 dp[i] = \min(dp[i-1], dp[i-2]) + cost[i]
 $$
 
-This leads us to the meaning of optimal substructure: **the optimal solution to the original problem is constructed from the optimal solutions to the subproblems**.
+Ez elvezet az optimális részstruktúra jelentéséhez: **az eredeti probléma optimális megoldása a részproblémák optimális megoldásaiból épül fel**.
 
-This problem clearly has optimal substructure: we select the better one from the optimal solutions to the two subproblems $dp[i-1]$ and $dp[i-2]$, and use it to construct the optimal solution to the original problem $dp[i]$.
+Ennek a feladatnak egyértelműen van optimális részstruktúrája: a két részprobléma $dp[i-1]$ és $dp[i-2]$ optimális megoldásai közül a jobbat választjuk, és ezzel felépítjük az eredeti probléma $dp[i]$ optimális megoldását.
 
-So, does the stair climbing problem from the previous section have optimal substructure? Its goal is to find the number of ways, which seems to be a counting problem, but if we change the question: "Find the maximum number of ways". We surprisingly discover that **although the problem before and after modification are equivalent, the optimal substructure has emerged**: the maximum number of ways for the $n$-th step equals the sum of the maximum number of ways for the $n-1$-th and $n-2$-th steps. Therefore, the interpretation of optimal substructure is quite flexible and will have different meanings in different problems.
+Akkor az előző szakaszban szereplő lépcsőmászási feladatnak van-e optimális részstruktúrája? Ennek célja az utak számának megtalálása, ami számolási feladatnak tűnik, de ha megváltoztatjuk a kérdést: "Találjuk meg az utak maximális számát". Meglepetésre felfedezzük, hogy **bár a módosítás előtti és utáni feladat egyenértékű, az optimális részstruktúra megjelent**: az $n$-edik fokra vezető utak maximális száma egyenlő az $(n-1)$-edik és $(n-2)$-edik fokra vezető utak maximális számának összegével. Ezért az optimális részstruktúra értelmezése meglehetősen rugalmas, és különböző feladatokban különböző jelentést hordoz.
 
-According to the state transition equation and the initial states $dp[1] = cost[1]$ and $dp[2] = cost[2]$, we can obtain the dynamic programming code:
+Az állapot-átmeneti egyenlet és a $dp[1] = cost[1]$, $dp[2] = cost[2]$ kezdeti állapotok alapján megkaphatjuk a dinamikus programozási kódot:
 
 ```src
 [file]{min_cost_climbing_stairs_dp}-[class]{}-[func]{min_cost_climbing_stairs_dp}
 ```
 
-The figure below shows the dynamic programming process for the above code.
+Az alábbi ábra a fenti kód dinamikus programozási folyamatát szemlélteti.
 
-![Dynamic programming process for climbing stairs with minimum cost](dp_problem_features.assets/min_cost_cs_dp.png)
+![A minimális költségű lépcsőmászás dinamikus programozási folyamata](dp_problem_features.assets/min_cost_cs_dp.png)
 
-This problem can also be space-optimized, compressing from one dimension to zero, reducing the space complexity from $O(n)$ to $O(1)$:
+Ez a feladat tárhelyoptimalizálható is, egy dimenzióról nullára tömörítve, a tárkomplexitást $O(n)$-ről $O(1)$-re csökkentve:
 
 ```src
 [file]{min_cost_climbing_stairs_dp}-[class]{}-[func]{min_cost_climbing_stairs_dp_comp}
 ```
 
-## No Aftereffects
+## Utóhatás-mentesség
 
-No aftereffects is one of the important characteristics that enable dynamic programming to solve problems effectively. Its definition is: **given a certain state, its future development is only related to the current state and has nothing to do with all past states**.
+Az utóhatás-mentesség az egyik fontos jellemző, amely lehetővé teszi a dinamikus programozás hatékony problémamegoldását. Definíciója: **adott egy bizonyos állapot, annak jövőbeli fejlődése csak az aktuális állapottól függ, és semmi köze az összes múltbeli állapothoz**.
 
-Taking the stair climbing problem as an example, given state $i$, it will develop into states $i+1$ and $i+2$, corresponding to jumping $1$ step and jumping $2$ steps, respectively. When making these two choices, we do not need to consider the states before state $i$, as they have no effect on the future of state $i$.
+Vegyük a lépcsőmászási feladatot példaként: adott az $i$ állapot, amely $i+1$ és $i+2$ állapotokba fejlődik tovább, ami $1$ fokos és $2$ fokos ugrásnak felel meg. Ezen két döntés meghozatalakor nem kell figyelembe venni az $i$ állapot előtti állapotokat, mivel azoknak nincs hatásuk az $i$ állapot jövőjére.
 
-However, if we add a constraint to the stair climbing problem, the situation changes.
+Ha azonban korlátot adunk a lépcsőmászási feladathoz, a helyzet megváltozik.
 
-!!! question "Climbing stairs with constraint"
+!!! question "Lépcsőmászás korláttal"
 
-    Given a staircase with $n$ steps, where you can climb $1$ or $2$ steps at a time, **but you cannot jump $1$ step in two consecutive rounds**. How many ways are there to climb to the top?
+    Adott egy $n$ fokos lépcső, ahol egyszerre $1$ vagy $2$ fokot lehet lépni, **de két egymást követő körben nem lehet $1$ fokot ugrani**. Hányféleképpen lehet felérni a tetejére?
 
-As shown in the figure below, there are only $2$ feasible ways to climb to the $3$rd step. The way of jumping $1$ step three consecutive times does not satisfy the constraint and is therefore discarded.
+Az alábbi ábrán látható, hogy a $3.$ fokra csak $2$ megvalósítható úton lehet feljutni. A háromszor egymás után $1$ fokot ugró út nem teljesíti a korlátot, ezért elvetjük.
 
-![Number of ways to climb to the 3rd step with constraint](dp_problem_features.assets/climbing_stairs_constraint_example.png)
+![A 3. fokra vezető utak száma korláttal](dp_problem_features.assets/climbing_stairs_constraint_example.png)
 
-In this problem, if the previous round was a jump of $1$ step, then the next round must jump $2$ steps. This means that **the next choice cannot be determined solely by the current state (current stair step number), but also depends on the previous state (the stair step number from the previous round)**.
+Ebben a feladatban, ha az előző körben $1$ fokot ugrottunk, akkor a következő körben $2$ fokot kell ugrani. Ez azt jelenti, hogy **a következő döntés nem határozható meg kizárólag az aktuális állapot (aktuális lépcsőfok sorszáma) alapján, hanem az előző állapottól (az előző kör lépcsőfok sorszámától) is függ**.
 
-It is not difficult to see that this problem no longer satisfies no aftereffects, and the state transition equation $dp[i] = dp[i-1] + dp[i-2]$ also fails, because $dp[i-1]$ represents jumping $1$ step in this round, but it includes many solutions where "the previous round was a jump of $1$ step", which cannot be directly counted in $dp[i]$ to satisfy the constraint.
+Látható, hogy ez a feladat már nem teljesíti az utóhatás-mentességet, és a $dp[i] = dp[i-1] + dp[i-2]$ állapot-átmeneti egyenlet is meghibásodik, mert $dp[i-1]$ azt jelenti, hogy ebben a körben $1$ fokot ugrunk, de sok olyan megoldást tartalmaz, ahol "az előző körben $1$ fokot ugrottunk", amelyek nem számíthatók be közvetlenül $dp[i]$-be a korlát teljesítéséhez.
 
-For this reason, we need to expand the state definition: **state $[i, j]$ represents being on the $i$-th step with the previous round having jumped $j$ steps**, where $j \in \{1, 2\}$. This state definition effectively distinguishes whether the previous round was a jump of $1$ step or $2$ steps, allowing us to determine where the current state came from.
+Emiatt ki kell bővítenünk az állapotdefiníciót: **az $[i, j]$ állapot azt jelenti, hogy az $i$-edik fokon vagyunk, és az előző körben $j$ fokot ugrottunk**, ahol $j \in \{1, 2\}$. Ez az állapotdefiníció hatékonyan megkülönbözteti, hogy az előző körben $1$ vagy $2$ fokot ugrottunk-e, lehetővé téve annak meghatározását, honnan jött az aktuális állapot.
 
-- When the previous round jumped $1$ step, the round before that could only choose to jump $2$ steps, i.e., $dp[i, 1]$ can only be transferred from $dp[i-1, 2]$.
-- When the previous round jumped $2$ steps, the round before that could choose to jump $1$ step or $2$ steps, i.e., $dp[i, 2]$ can be transferred from $dp[i-2, 1]$ or $dp[i-2, 2]$.
+- Ha az előző körben $1$ fokot ugrottunk, az azt megelőző körben csak $2$ fokot lehetett ugrani, azaz $dp[i, 1]$ csak $dp[i-1, 2]$-ből vezethető át.
+- Ha az előző körben $2$ fokot ugrottunk, az azt megelőző körben $1$ vagy $2$ fokot lehetett ugrani, azaz $dp[i, 2]$ átvezethet $dp[i-2, 1]$-ből vagy $dp[i-2, 2]$-ből.
 
-As shown in the figure below, under this definition, $dp[i, j]$ represents the number of ways for state $[i, j]$. The state transition equation is then:
+Ahogy az alábbi ábra mutatja, e definíció alatt $dp[i, j]$ az $[i, j]$ állapothoz tartozó utak számát jelöli. Az állapot-átmeneti egyenlet ekkor:
 
 $$
 \begin{cases}
@@ -82,20 +82,20 @@ dp[i, 2] = dp[i-2, 1] + dp[i-2, 2]
 \end{cases}
 $$
 
-![Recurrence relation considering constraints](dp_problem_features.assets/climbing_stairs_constraint_state_transfer.png)
+![Korlátokat figyelembe vevő rekurzív összefüggés](dp_problem_features.assets/climbing_stairs_constraint_state_transfer.png)
 
-Finally, return $dp[n, 1] + dp[n, 2]$, where the sum of the two represents the total number of ways to climb to the $n$-th step:
+Végül visszaadjuk $dp[n, 1] + dp[n, 2]$ értékét, ahol a kettő összege az $n$-edik fokra való feljutás összes útjának számát jelenti:
 
 ```src
 [file]{climbing_stairs_constraint_dp}-[class]{}-[func]{climbing_stairs_constraint_dp}
 ```
 
-In the above case, since we only need to consider one more preceding state, we can still make the problem satisfy no aftereffects by expanding the state definition. However, some problems have very severe "aftereffects".
+A fenti esetben, mivel csak egy előző állapotot kell figyelembe venni, az állapotdefiníció bővítésével még teljesíthetjük az utóhatás-mentességet. Egyes feladatoknál azonban az "utóhatás" nagyon súlyos.
 
-!!! question "Climbing stairs with obstacle generation"
+!!! question "Lépcsőmászás akadálygenerálással"
 
-    Given a staircase with $n$ steps, where you can climb $1$ or $2$ steps at a time. **It is stipulated that when climbing to the $i$-th step, the system will automatically place an obstacle on the $2i$-th step, and thereafter no round is allowed to jump to the $2i$-th step**. For example, if the first two rounds jump to the $2$nd and $3$rd steps, then afterwards you cannot jump to the $4$th and $6$th steps. How many ways are there to climb to the top?
+    Adott egy $n$ fokos lépcső, ahol egyszerre $1$ vagy $2$ fokot lehet lépni. **Szabály, hogy ha az $i$-edik fokra lépünk, a rendszer automatikusan akadályt helyez a $2i$-edik fokra, és ezt követően egyetlen körben sem lehet a $2i$-edik fokra ugrani**. Például, ha az első két körben a $2.$ és $3.$ fokra ugrunk, utána nem lehet a $4.$ és $6.$ fokra ugrani. Hányféleképpen lehet felérni a tetejére?
 
-In this problem, the next jump depends on all past states, because each jump places obstacles on higher steps, affecting future jumps. For such problems, dynamic programming is often difficult to solve.
+Ebben a feladatban a következő ugrás az összes múltbeli állapottól függ, mert minden ugrás akadályokat helyez a magasabb fokokra, befolyásolva a jövőbeli ugrásokat. Az ilyen feladatoknál a dinamikus programozás nehezen alkalmazható.
 
-In fact, many complex combinatorial optimization problems (such as the traveling salesman problem) do not satisfy no aftereffects. For such problems, we usually choose to use other methods, such as heuristic search, genetic algorithms, reinforcement learning, etc., to obtain usable local optimal solutions within a limited time.
+Valójában sok összetett kombinatorikus optimalizálási probléma (mint például az utazóügynök-feladat) nem teljesíti az utóhatás-mentességet. Az ilyen feladatoknál általában más módszereket választunk, mint például heurisztikus keresést, genetikus algoritmusokat, megerősítéses tanulást stb., hogy korlátozott idő alatt használható lokálisan optimális megoldásokat kapjunk.

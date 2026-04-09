@@ -1,49 +1,49 @@
-# Unbounded Knapsack Problem
+# Korlátlan hátizsák-feladat
 
-In this section, we first solve another common knapsack problem: the unbounded knapsack, and then explore a special case of it: the coin change problem.
+Ebben a szakaszban először egy másik gyakori hátizsák-feladatot oldunk meg: a korlátlan hátizsák-feladatot, majd megvizsgálunk egy speciális esetét: az érmecserélési feladatot.
 
-## Unbounded Knapsack Problem
+## Korlátlan hátizsák-feladat
 
 !!! question
 
-    Given $n$ items, where the weight of the $i$-th item is $wgt[i-1]$ and its value is $val[i-1]$, and a knapsack with capacity $cap$. **Each item can be selected multiple times**. What is the maximum value that can be placed in the knapsack within the capacity limit? An example is shown in the figure below.
+    Adott $n$ tárgy, ahol az $i$-edik tárgy súlya $wgt[i-1]$, értéke $val[i-1]$, és egy $cap$ kapacitású hátizsák. **Minden tárgy többször is kiválasztható**. Mi az a maximális érték, amelyet a kapacitáskorláton belül a hátizsákba lehet helyezni? Egy példa az alábbi ábrán látható.
 
-![Example data for unbounded knapsack problem](unbounded_knapsack_problem.assets/unbounded_knapsack_example.png)
+![Korlátlan hátizsák-feladat példa adatok](unbounded_knapsack_problem.assets/unbounded_knapsack_example.png)
 
-### Dynamic Programming Approach
+### Dinamikus programozásos megközelítés
 
-The unbounded knapsack problem is very similar to the 0-1 knapsack problem, **differing only in that there is no limit on the number of times an item can be selected**.
+A korlátlan hátizsák-feladat nagyon hasonló a 0-1 hátizsák-feladathoz, **csupán abban különbözik, hogy nincs korlátozás arra, hogy hányszor lehet kiválasztani egy tárgyat**.
 
-- In the 0-1 knapsack problem, there is only one of each type of item, so after placing item $i$ in the knapsack, we can only choose from the first $i-1$ items.
-- In the unbounded knapsack problem, the quantity of each type of item is unlimited, so after placing item $i$ in the knapsack, **we can still choose from the first $i$ items**.
+- A 0-1 hátizsák-feladatban minden típusból csak egy tárgy van, ezért az $i$ tárgy hátizsákba helyezése után csak az első $i-1$ tárgyból választhatunk.
+- A korlátlan hátizsák-feladatban minden tárgy mennyisége korlátlan, ezért az $i$ tárgy hátizsákba helyezése után **még mindig az első $i$ tárgyból választhatunk**.
 
-Under the rules of the unbounded knapsack problem, the changes in state $[i, c]$ are divided into two cases.
+A korlátlan hátizsák-feladat szabályai alatt az $[i, c]$ állapot változásai két esetre oszthatók.
 
-- **Not putting item $i$**: Same as the 0-1 knapsack problem, transfer to $[i-1, c]$.
-- **Putting item $i$**: Different from the 0-1 knapsack problem, transfer to $[i, c-wgt[i-1]]$.
+- **Nem rakjuk be az $i$ tárgyat**: Ugyanúgy, mint a 0-1 hátizsák-feladatban, $[i-1, c]$-re vezet át.
+- **Berakjuk az $i$ tárgyat**: A 0-1 hátizsák-feladattól eltérően, $[i, c-wgt[i-1]]$-re vezet át.
 
-Thus, the state transition equation becomes:
+Az állapot-átmeneti egyenlet ezáltal:
 
 $$
 dp[i, c] = \max(dp[i-1, c], dp[i, c - wgt[i-1]] + val[i-1])
 $$
 
-### Code Implementation
+### Kódmegvalósítás
 
-Comparing the code for the two problems, there is one change in state transition from $i-1$ to $i$, with everything else identical:
+A két feladat kódjának összehasonlításakor az állapot-átmenetben egy változás van: $i-1$-ről $i$-re, minden más azonos:
 
 ```src
 [file]{unbounded_knapsack}-[class]{}-[func]{unbounded_knapsack_dp}
 ```
 
-### Space Optimization
+### Tárhelyoptimalizálás
 
-Since the current state is transferred from states on the left and above, **after space optimization, each row in the $dp$ table should be traversed in forward order**.
+Mivel az aktuális állapot a bal oldali és a felső állapotokból vezethető át, **tárhelyoptimalizálás után a $dp$ tábla minden sorát előre haladó sorrendben kell bejárni**.
 
-This traversal order is exactly opposite to the 0-1 knapsack. Please refer to the figure below to understand the difference between the two.
+Ez a bejárási sorrend pontosan ellentétes a 0-1 hátizsák-feladatéval. Kérjük, tekintse meg az alábbi ábrát a kettő közötti különbség megértéséhez.
 
 === "<1>"
-    ![Space-optimized dynamic programming process for unbounded knapsack problem](unbounded_knapsack_problem.assets/unbounded_knapsack_dp_comp_step1.png)
+    ![Korlátlan hátizsák tárhelyoptimalizált dinamikus programozási folyamata](unbounded_knapsack_problem.assets/unbounded_knapsack_dp_comp_step1.png)
 
 === "<2>"
     ![unbounded_knapsack_dp_comp_step2](unbounded_knapsack_problem.assets/unbounded_knapsack_dp_comp_step2.png)
@@ -60,67 +60,67 @@ This traversal order is exactly opposite to the 0-1 knapsack. Please refer to th
 === "<6>"
     ![unbounded_knapsack_dp_comp_step6](unbounded_knapsack_problem.assets/unbounded_knapsack_dp_comp_step6.png)
 
-The code implementation is relatively simple, just delete the first dimension of the array `dp`:
+A kód megvalósítása viszonylag egyszerű, csak töröljük a `dp` tömb első dimenzióját:
 
 ```src
 [file]{unbounded_knapsack}-[class]{}-[func]{unbounded_knapsack_dp_comp}
 ```
 
-## Coin Change Problem
+## Érmecserélési feladat
 
-The knapsack problem represents a large class of dynamic programming problems and has many variants, such as the coin change problem.
+A hátizsák-feladat dinamikus programozási feladatok egy nagy osztályát képviseli, és sok változata van, például az érmecserélési feladat.
 
 !!! question
 
-    Given $n$ types of coins, where the denomination of the $i$-th type of coin is $coins[i - 1]$, and the target amount is $amt$. **Each type of coin can be selected multiple times**. What is the minimum number of coins needed to make up the target amount? If it is impossible to make up the target amount, return $-1$. An example is shown in the figure below.
+    Adott $n$ típusú érme, ahol az $i$-edik típusú érme névértéke $coins[i - 1]$, és a célösszeg $amt$. **Minden típusú érme többször is kiválasztható**. Mi az a minimális érmeszám, amellyel a célösszeget ki lehet fizetni? Ha a célösszeget nem lehet kifizetni, adjunk vissza $-1$-et. Egy példa az alábbi ábrán látható.
 
-![Example data for coin change problem](unbounded_knapsack_problem.assets/coin_change_example.png)
+![Érmecserélési feladat példa adatok](unbounded_knapsack_problem.assets/coin_change_example.png)
 
-### Dynamic Programming Approach
+### Dinamikus programozásos megközelítés
 
-**The coin change problem can be viewed as a special case of the unbounded knapsack problem**, with the following connections and differences.
+**Az érmecserélési feladat a korlátlan hátizsák-feladat speciális eseteként tekinthető**, a következő kapcsolatokkal és különbségekkel.
 
-- The two problems can be converted to each other: "item" corresponds to "coin", "item weight" corresponds to "coin denomination", and "knapsack capacity" corresponds to "target amount".
-- The optimization goals are opposite: the unbounded knapsack problem aims to maximize item value, while the coin change problem aims to minimize the number of coins.
-- The unbounded knapsack problem seeks solutions "not exceeding" the knapsack capacity, while the coin change problem seeks solutions that "exactly" make up the target amount.
+- A két feladat egymásba alakítható: a "tárgy" a "érmének", a "tárgy súlya" a "érme névértékének", a "hátizsák kapacitása" a "célösszegnek" felel meg.
+- Az optimalizálási célok ellentétesek: a korlátlan hátizsák-feladat a tárgyak értékének maximalizálására törekszik, míg az érmecserélési feladat az érmék számának minimalizálására.
+- A korlátlan hátizsák-feladat olyan megoldásokat keres, amelyek "nem haladják meg" a hátizsák kapacitását, míg az érmecserélési feladat olyan megoldásokat keres, amelyek "pontosan" kifizetik a célösszeget.
 
-**Step 1: Think about the decisions in each round, define the state, and thus obtain the $dp$ table**
+**1. lépés: Gondolja végig az egyes körök döntéseit, definiálja az állapotot, és így kapja meg a $dp$ táblát**
 
-State $[i, a]$ corresponds to the subproblem: **the minimum number of coins among the first $i$ types of coins that can make up amount $a$**, denoted as $dp[i, a]$.
+Az $[i, a]$ állapot a következő részproblémának felel meg: **az első $i$ típusú érmék közül az $a$ összeg kifizetéséhez szükséges minimális érmeszám**, amelyet $dp[i, a]$-val jelölünk.
 
-The two-dimensional $dp$ table has size $(n+1) \times (amt+1)$.
+A kétdimenziós $dp$ tábla mérete $(n+1) \times (amt+1)$.
 
-**Step 2: Identify the optimal substructure, and then derive the state transition equation**
+**2. lépés: Azonosítsa az optimális részstruktúrát, majd vezesse le az állapot-átmeneti egyenletet**
 
-This problem differs from the unbounded knapsack problem in the following two aspects regarding the state transition equation.
+Ez a feladat két szempontból különbözik a korlátlan hátizsák-feladattól az állapot-átmeneti egyenletet illetően.
 
-- This problem seeks the minimum value, so the operator $\max()$ needs to be changed to $\min()$.
-- The optimization target is the number of coins rather than item value, so when a coin is selected, simply execute $+1$.
+- Ez a feladat a minimális értéket keresi, ezért a $\max()$ operátort $\min()$-re kell cserélni.
+- Az optimalizálási cél az érmék száma, nem a tárgyak értéke, ezért egy érme kiválasztásakor egyszerűen $+1$-et hajtunk végre.
 
 $$
 dp[i, a] = \min(dp[i-1, a], dp[i, a - coins[i-1]] + 1)
 $$
 
-**Step 3: Determine boundary conditions and state transition order**
+**3. lépés: Határozza meg a határfeltételeket és az állapot-átmeneti sorrendet**
 
-When the target amount is $0$, the minimum number of coins needed to make it up is $0$, so all $dp[i, 0]$ in the first column equal $0$.
+Ha a célösszeg $0$, a kifizetéshez szükséges minimális érmeszám $0$, ezért az első oszlop összes $dp[i, 0]$ értéke $0$.
 
-When there are no coins, **it is impossible to make up any amount $> 0$**, which is an invalid solution. To enable the $\min()$ function in the state transition equation to identify and filter out invalid solutions, we consider using $+ \infty$ to represent them, i.e., set all $dp[0, a]$ in the first row to $+ \infty$.
+Ha nincsenek érmék, **egyetlen $> 0$ összeg sem fizethető ki**, ami érvénytelen megoldás. Az állapot-átmeneti egyenlet $\min()$ függvényének lehetővé tétele érdekében az érvénytelen megoldások azonosításához és kiszűréséhez $+ \infty$ értéket használunk ezek jelölésére, azaz az első sor összes $dp[0, a]$ értékét $+ \infty$-re állítjuk.
 
-### Code Implementation
+### Kódmegvalósítás
 
-Most programming languages do not provide a $+ \infty$ variable, and can only use the maximum value of integer type `int` as a substitute. However, this can lead to large number overflow: the $+ 1$ operation in the state transition equation may cause overflow.
+A legtöbb programozási nyelv nem biztosít $+ \infty$ változót, és csak az egész típus `int` maximális értékét lehet helyettesítőként használni. Ez azonban nagy szám túlcsorduláshoz vezethet: az állapot-átmeneti egyenletben szereplő $+ 1$ művelet túlcsordulást okozhat.
 
-For this reason, we use the number $amt + 1$ to represent invalid solutions, because the maximum number of coins needed to make up $amt$ is at most $amt$. Before returning, check whether $dp[n, amt]$ equals $amt + 1$; if so, return $-1$, indicating that the target amount cannot be made up. The code is as follows:
+Emiatt az $amt + 1$ számot használjuk az érvénytelen megoldások jelölésére, mert az $amt$ kifizetéséhez szükséges érmék maximális száma legfeljebb $amt$. Visszatérés előtt ellenőrizzük, hogy $dp[n, amt]$ egyenlő-e $amt + 1$-gyel; ha igen, $-1$-et adunk vissza, jelezve, hogy a célösszeg nem fizethető ki. A kód a következő:
 
 ```src
 [file]{coin_change}-[class]{}-[func]{coin_change_dp}
 ```
 
-The figure below shows the dynamic programming process for coin change, which is very similar to the unbounded knapsack problem.
+Az alábbi ábra az érmecserélési feladat dinamikus programozási folyamatát mutatja, amely nagyon hasonló a korlátlan hátizsák-feladathoz.
 
 === "<1>"
-    ![Dynamic programming process for coin change problem](unbounded_knapsack_problem.assets/coin_change_dp_step1.png)
+    ![Érmecserélési feladat dinamikus programozási folyamata](unbounded_knapsack_problem.assets/coin_change_dp_step1.png)
 
 === "<2>"
     ![coin_change_dp_step2](unbounded_knapsack_problem.assets/coin_change_dp_step2.png)
@@ -164,43 +164,43 @@ The figure below shows the dynamic programming process for coin change, which is
 === "<15>"
     ![coin_change_dp_step15](unbounded_knapsack_problem.assets/coin_change_dp_step15.png)
 
-### Space Optimization
+### Tárhelyoptimalizálás
 
-The space optimization for the coin change problem is handled in the same way as the unbounded knapsack problem:
+Az érmecserélési feladat tárhelyoptimalizálása ugyanúgy kezelhető, mint a korlátlan hátizsák-feladaté:
 
 ```src
 [file]{coin_change}-[class]{}-[func]{coin_change_dp_comp}
 ```
 
-## Coin Change Problem Ii
+## Érmecserélési feladat II
 
 !!! question
 
-    Given $n$ types of coins, where the denomination of the $i$-th type of coin is $coins[i - 1]$, and the target amount is $amt$. Each type of coin can be selected multiple times. **What is the number of coin combinations that can make up the target amount?** An example is shown in the figure below.
+    Adott $n$ típusú érme, ahol az $i$-edik típusú érme névértéke $coins[i - 1]$, és a célösszeg $amt$. Minden típusú érme többször is kiválasztható. **Hányféle érmekombinációval fizethető ki a célösszeg?** Egy példa az alábbi ábrán látható.
 
-![Example data for coin change problem II](unbounded_knapsack_problem.assets/coin_change_ii_example.png)
+![Érmecserélési feladat II példa adatok](unbounded_knapsack_problem.assets/coin_change_ii_example.png)
 
-### Dynamic Programming Approach
+### Dinamikus programozásos megközelítés
 
-Compared to the previous problem, this problem's goal is to find the number of combinations, so the subproblem becomes: **the number of combinations among the first $i$ types of coins that can make up amount $a$**. The $dp$ table remains a two-dimensional matrix of size $(n+1) \times (amt + 1)$.
+Az előző feladathoz képest ennek a feladatnak a célja a kombinációk számának megtalálása, ezért a részprobléma: **az első $i$ típusú érmék közül az $a$ összeget kifizetni képes kombinációk száma**. A $dp$ tábla továbbra is $(n+1) \times (amt + 1)$ méretű kétdimenziós mátrix.
 
-The number of combinations for the current state equals the sum of the combinations from not selecting the current coin and selecting the current coin. The state transition equation is:
+Az aktuális állapot kombinációinak száma egyenlő az aktuális érme ki nem választásából és kiválasztásából eredő kombinációk összegével. Az állapot-átmeneti egyenlet:
 
 $$
 dp[i, a] = dp[i-1, a] + dp[i, a - coins[i-1]]
 $$
 
-When the target amount is $0$, no coins need to be selected to make up the target amount, so all $dp[i, 0]$ in the first column should be initialized to $1$. When there are no coins, it is impossible to make up any amount $>0$, so all $dp[0, a]$ in the first row equal $0$.
+Ha a célösszeg $0$, nem kell érméket kiválasztani a célösszeg kifizetéséhez, ezért az első oszlop összes $dp[i, 0]$ értékét $1$-re kell inicializálni. Ha nincsenek érmék, egyetlen $>0$ összeg sem fizethető ki, ezért az első sor összes $dp[0, a]$ értéke $0$.
 
-### Code Implementation
+### Kódmegvalósítás
 
 ```src
 [file]{coin_change_ii}-[class]{}-[func]{coin_change_ii_dp}
 ```
 
-### Space Optimization
+### Tárhelyoptimalizálás
 
-The space optimization is handled in the same way, just delete the coin dimension:
+A tárhelyoptimalizálás ugyanúgy kezelhető, csak töröljük az érme dimenzióját:
 
 ```src
 [file]{coin_change_ii}-[class]{}-[func]{coin_change_ii_dp_comp}

@@ -1,143 +1,143 @@
-# Dynamic Programming Problem-Solving Approach
+# Dinamikus programozási feladatok megoldási megközelítése
 
-The previous two sections introduced the main characteristics of dynamic programming problems. Next, let us explore two more practical issues together.
+Az előző két szakasz a dinamikus programozási feladatok főbb jellemzőit mutatta be. Most vizsgáljunk meg együtt két további gyakorlati kérdést.
 
-1. How to determine whether a problem is a dynamic programming problem?
-2. What is the complete process for solving a dynamic programming problem, and where should we start?
+1. Hogyan állapítható meg, hogy egy feladat dinamikus programozási feladat-e?
+2. Mi a teljes folyamata egy dinamikus programozási feladat megoldásának, és hol kezdjük?
 
-## Problem Determination
+## A feladat azonosítása
 
-Generally speaking, if a problem contains overlapping subproblems, optimal substructure, and satisfies no aftereffects, then it is usually suitable for solving with dynamic programming. However, it is difficult to directly extract these characteristics from the problem description. Therefore, we usually relax the conditions and **first observe whether the problem is suitable for solving with backtracking (exhaustive search)**.
+Általánosságban elmondható, hogy ha egy feladat átfedő részproblémákat, optimális részstruktúrát tartalmaz, és teljesíti az utóhatás-mentességet, akkor általában dinamikus programozással megoldható. Azonban nehéz közvetlenül kinyerni ezeket a jellemzőket a feladat leírásából. Ezért általában lazítunk a feltételeken, és **először megvizsgáljuk, hogy a feladat alkalmas-e visszalépéssel (kimerítő kereséssel) való megoldásra**.
 
-**Problems suitable for solving with backtracking usually satisfy the "decision tree model"**, which means the problem can be described using a tree structure, where each node represents a decision and each path represents a sequence of decisions.
+**A visszalépéssel megoldható feladatok általában teljesítik a "döntési fa modellt"**, ami azt jelenti, hogy a feladat leírható fa struktúrával, ahol minden csomópont egy döntést, minden útvonal pedig döntések sorozatát jelöli.
 
-In other words, if a problem contains an explicit concept of decisions, and the solution is generated through a series of decisions, then it satisfies the decision tree model and can usually be solved using backtracking.
+Más szóval, ha egy feladat tartalmaz explicit döntési fogalmat, és a megoldás döntések sorozatán keresztül generálódik, akkor teljesíti a döntési fa modellt, és általában visszalépéssel megoldható.
 
-On this basis, dynamic programming problems also have some "bonus points" for determination.
+Ezen az alapon a dinamikus programozási feladatoknak van néhány "bónuszpontja" az azonosításhoz.
 
-- The problem contains descriptions such as maximum (minimum) or most (least), indicating optimization.
-- The problem's state can be represented using a list, multi-dimensional matrix, or tree, and a state has a recurrence relation with its surrounding states.
+- A feladat olyan leírásokat tartalmaz, mint maximális (minimális) vagy legtöbb (legkevesebb), ami optimalizálást jelez.
+- A feladat állapota lista, többdimenziós mátrix vagy fa segítségével ábrázolható, és az állapot rekurzív összefüggésben van a szomszédos állapotokkal.
 
-Correspondingly, there are also some "penalty points".
+Ezzel szemben vannak "büntetőpontok" is.
 
-- The goal of the problem is to find all possible solutions, rather than finding the optimal solution.
-- The problem description has obvious permutation and combination characteristics, requiring the return of specific multiple solutions.
+- A feladat célja az összes lehetséges megoldás megtalálása, nem az optimális megoldás megtalálása.
+- A feladat leírásának nyilvánvaló permutációs és kombinatorikus jellemzői vannak, amelyek meghatározott több megoldás visszaadását igénylik.
 
-If a problem satisfies the decision tree model and has relatively obvious "bonus points", we can assume it is a dynamic programming problem and verify it during the solving process.
+Ha egy feladat teljesíti a döntési fa modellt, és viszonylag nyilvánvaló "bónuszpontokkal" rendelkezik, feltételezhetjük, hogy dinamikus programozási feladat, és ezt a megoldási folyamat során ellenőrizhetjük.
 
-## Problem-Solving Steps
+## Megoldási lépések
 
-The problem-solving process for dynamic programming varies depending on the nature and difficulty of the problem, but generally follows these steps: describe decisions, define states, establish the $dp$ table, derive state transition equations, determine boundary conditions, etc.
+A dinamikus programozás megoldási folyamata a feladat természetétől és nehézségétől függően változik, de általában a következő lépéseket követi: döntések leírása, állapotok definiálása, a $dp$ tábla meghatározása, az állapot-átmeneti egyenlet levezetése, határfeltételek meghatározása stb.
 
-To illustrate the problem-solving steps more vividly, we use a classic problem "minimum path sum" as an example.
+A megoldási lépések szemléltetéséhez a klasszikus "minimális úthossz" feladatot használjuk példaként.
 
 !!! question
 
-    Given an $n \times m$ two-dimensional grid `grid`, where each cell in the grid contains a non-negative integer representing the cost of that cell. A robot starts from the top-left cell and can only move down or right at each step until reaching the bottom-right cell. Return the minimum path sum from the top-left to the bottom-right.
+    Adott egy $n \times m$ méretű kétdimenziós rács `grid`, ahol minden cella nemnegatív egész számot tartalmaz, amely az adott cella költségét jelöli. Egy robot a bal felső cellától indul, és minden lépésben csak lefelé vagy jobbra haladhat, amíg el nem éri a jobb alsó cellát. Adja vissza a bal felső saroktól a jobb alsó sarokig vezető minimális útköltséget.
 
-The figure below shows an example where the minimum path sum for the given grid is $13$.
+Az alábbi ábra egy példát mutat, ahol az adott rács minimális útköltsége $13$.
 
-![Minimum path sum example data](dp_solution_pipeline.assets/min_path_sum_example.png)
+![Minimális útköltség példa adatok](dp_solution_pipeline.assets/min_path_sum_example.png)
 
-**Step 1: Think about the decisions in each round, define the state, and thus obtain the $dp$ table**
+**1. lépés: Gondolja végig az egyes körök döntéseit, definiálja az állapotot, és így kapja meg a $dp$ táblát**
 
-The decision in each round of this problem is to move one step down or right from the current cell. Let the row and column indices of the current cell be $[i, j]$. After moving down or right, the indices become $[i+1, j]$ or $[i, j+1]$. Therefore, the state should include two variables, the row index and column index, denoted as $[i, j]$.
+Ebben a feladatban minden kör döntése az, hogy az aktuális cellából egy lépéssel lefelé vagy jobbra haladunk. Legyen az aktuális cella sor- és oszlopindexe $[i, j]$. Lefelé vagy jobbra haladás után az indexek $[i+1, j]$ vagy $[i, j+1]$ lesznek. Ezért az állapotnak két változót kell tartalmaznia: a sorindexet és az oszlopindexet, amelyeket $[i, j]$-vel jelölünk.
 
-State $[i, j]$ corresponds to the subproblem: **the minimum path sum from the starting point $[0, 0]$ to $[i, j]$**, denoted as $dp[i, j]$.
+Az $[i, j]$ állapot a következő részproblémának felel meg: **a $[0, 0]$ kiindulóponttól $[i, j]$-ig vezető minimális útköltség**, amelyet $dp[i, j]$-vel jelölünk.
 
-From this, we obtain the two-dimensional $dp$ matrix shown in the figure below, whose size is the same as the input grid $grid$.
+Ebből megkapjuk az alábbi ábrán látható kétdimenziós $dp$ mátrixot, amelynek mérete megegyezik a bemeneti `grid` ráccsal.
 
-![State definition and dp table](dp_solution_pipeline.assets/min_path_sum_solution_state_definition.png)
+![Állapotdefiníció és dp tábla](dp_solution_pipeline.assets/min_path_sum_solution_state_definition.png)
 
 !!! note
 
-    The dynamic programming and backtracking processes can be described as a sequence of decisions, and the state consists of all decision variables. It should contain all variables describing the progress of problem-solving, and should contain sufficient information to derive the next state.
+    A dinamikus programozás és a visszalépéses folyamatok döntések sorozataként írhatók le, az állapot pedig az összes döntési változóból áll. Tartalmaznia kell az összes változót, amely leírja a problémamegoldás előrehaladását, és elegendő információt kell tartalmaznia a következő állapot levezetéséhez.
 
-    Each state corresponds to a subproblem, and we define a $dp$ table to store the solutions to all subproblems. Each independent variable of the state is a dimension of the $dp$ table. Essentially, the $dp$ table is a mapping between states and solutions to subproblems.
+    Minden állapot egy részproblémának felel meg, és definiálunk egy $dp$ táblát az összes részprobléma megoldásának tárolásához. Az állapot minden független változója a $dp$ tábla egy dimenziója. Lényegében a $dp$ tábla egy leképezés az állapotok és a részproblémák megoldásai között.
 
-**Step 2: Identify the optimal substructure, and then derive the state transition equation**
+**2. lépés: Azonosítsa az optimális részstruktúrát, majd vezesse le az állapot-átmeneti egyenletet**
 
-For state $[i, j]$, it can only be transferred from the cell above $[i-1, j]$ or the cell to the left $[i, j-1]$. Therefore, the optimal substructure is: the minimum path sum to reach $[i, j]$ is determined by the smaller of the minimum path sums of $[i, j-1]$ and $[i-1, j]$.
+Az $[i, j]$ állapot csak a felette lévő $[i-1, j]$ cellából vagy a tőle balra lévő $[i, j-1]$ cellából vezethető át. Ezért az optimális részstruktúra: az $[i, j]$-re vezető minimális útköltséget az $[i, j-1]$ és $[i-1, j]$ minimális útköltségeinek kisebbike határozza meg.
 
-Based on the above analysis, the state transition equation shown in the figure below can be derived:
+A fenti elemzés alapján az alábbi ábrán látható állapot-átmeneti egyenlet vezethető le:
 
 $$
 dp[i, j] = \min(dp[i-1, j], dp[i, j-1]) + grid[i, j]
 $$
 
-![Optimal substructure and state transition equation](dp_solution_pipeline.assets/min_path_sum_solution_state_transition.png)
+![Optimális részstruktúra és állapot-átmeneti egyenlet](dp_solution_pipeline.assets/min_path_sum_solution_state_transition.png)
 
 !!! note
 
-    Based on the defined $dp$ table, think about the relationship between the original problem and subproblems, and find the method to construct the optimal solution to the original problem from the optimal solutions to the subproblems, which is the optimal substructure.
+    A definiált $dp$ tábla alapján gondolja át az eredeti probléma és a részproblémák kapcsolatát, és találja meg azt a módszert, amellyel az eredeti probléma optimális megoldása felépíthető a részproblémák optimális megoldásaiból — ez az optimális részstruktúra.
 
-    Once we identify the optimal substructure, we can use it to construct the state transition equation.
+    Ha azonosítottuk az optimális részstruktúrát, felhasználhatjuk az állapot-átmeneti egyenlet megalkotásához.
 
-**Step 3: Determine boundary conditions and state transition order**
+**3. lépés: Határozza meg a határfeltételeket és az állapot-átmeneti sorrendet**
 
-In this problem, states in the first row can only come from the state to their left, and states in the first column can only come from the state above them. Therefore, the first row $i = 0$ and first column $j = 0$ are boundary conditions.
+Ebben a feladatban az első sor állapotai csak a tőlük balra lévő állapotból eredhetnek, az első oszlop állapotai csak a felettük lévő állapotból eredhetnek. Ezért az első sor $i = 0$ és az első oszlop $j = 0$ a határfeltételek.
 
-As shown in the figure below, since each cell is transferred from the cell to its left and the cell above it, we use loops to traverse the matrix, with the outer loop traversing rows and the inner loop traversing columns.
+Az alábbi ábrán látható, hogy mivel minden cellát a tőle balra és felette lévő cellából vezetünk át, ciklusokkal járjuk be a mátrixot, ahol a külső ciklus a sorokat, a belső ciklus az oszlopokat járja be.
 
-![Boundary conditions and state transition order](dp_solution_pipeline.assets/min_path_sum_solution_initial_state.png)
+![Határfeltételek és állapot-átmeneti sorrend](dp_solution_pipeline.assets/min_path_sum_solution_initial_state.png)
 
 !!! note
 
-    Boundary conditions in dynamic programming are used to initialize the $dp$ table, and in search are used for pruning.
+    A dinamikus programozásban a határfeltételek a $dp$ tábla inicializálására, keresésnél metszésre szolgálnak.
 
-    The core of state transition order is to ensure that when computing the solution to the current problem, all the smaller subproblems it depends on have already been computed correctly.
+    Az állapot-átmeneti sorrend lényege annak biztosítása, hogy az aktuális probléma megoldásának kiszámításakor az összes kisebb részprobléma, amelytől függ, már helyesen ki lett számítva.
 
-Based on the above analysis, we can directly write the dynamic programming code. However, subproblem decomposition is a top-down approach, so implementing in the order "brute force search $\rightarrow$ memoization $\rightarrow$ dynamic programming" is more aligned with thinking habits.
+A fenti elemzés alapján közvetlenül megírhatjuk a dinamikus programozási kódot. Mivel azonban a részprobléma-felbontás felülről lefelé haladó megközelítés, a "nyers erő keresés $\rightarrow$ memoizálás $\rightarrow$ dinamikus programozás" sorrendben való megvalósítás jobban illeszkedik a gondolkodási szokásokhoz.
 
-### Method 1: Brute Force Search
+### 1. módszer: Nyers erő keresés
 
-Starting from state $[i, j]$, continuously decompose into smaller states $[i-1, j]$ and $[i, j-1]$. The recursive function includes the following elements.
+Az $[i, j]$ állapotból kiindulva folyamatosan bontjuk kisebb $[i-1, j]$ és $[i, j-1]$ állapotokra. A rekurzív függvény a következő elemeket tartalmazza.
 
-- **Recursive parameters**: state $[i, j]$.
-- **Return value**: minimum path sum from $[0, 0]$ to $[i, j]$, which is $dp[i, j]$.
-- **Termination condition**: when $i = 0$ and $j = 0$, return cost $grid[0, 0]$.
-- **Pruning**: when $i < 0$ or $j < 0$, the index is out of bounds, return cost $+\infty$, representing infeasibility.
+- **Rekurzív paraméterek**: $[i, j]$ állapot.
+- **Visszatérési érték**: $[0, 0]$-tól $[i, j]$-ig vezető minimális útköltség, vagyis $dp[i, j]$.
+- **Leállítási feltétel**: ha $i = 0$ és $j = 0$, visszaadjuk a $grid[0, 0]$ költséget.
+- **Metszés**: ha $i < 0$ vagy $j < 0$, az index túlmegy a határokon, visszaadjuk a $+\infty$ költséget, ami megvalósíthatatlanságot jelez.
 
-The implementation code is as follows:
+A megvalósítási kód a következő:
 
 ```src
 [file]{min_path_sum}-[class]{}-[func]{min_path_sum_dfs}
 ```
 
-The figure below shows the recursion tree rooted at $dp[2, 1]$, which includes some overlapping subproblems whose number will increase sharply as the size of grid `grid` grows.
+Az alábbi ábra a $dp[2, 1]$ gyökerű rekurziós fát mutatja, amely néhány átfedő részproblémát tartalmaz, amelyek száma élesebben nő, ahogy a `grid` rács mérete növekszik.
 
-Essentially, the reason for overlapping subproblems is: **there are multiple paths from the top-left corner to reach a certain cell**.
+Lényegében az átfedő részproblémák oka: **több útvonal vezet a bal felső sarokból egy adott cellába**.
 
-![Brute force search recursion tree](dp_solution_pipeline.assets/min_path_sum_dfs.png)
+![Nyers erő keresés rekurziós fája](dp_solution_pipeline.assets/min_path_sum_dfs.png)
 
-Each state has two choices, down and right, so the total number of steps from the top-left corner to the bottom-right corner is $m + n - 2$, giving a worst-case time complexity of $O(2^{m + n})$, where $n$ and $m$ are the number of rows and columns of the grid, respectively. Note that this calculation does not account for situations near the grid boundaries, where only one choice remains when reaching the grid boundary, so the actual number of paths will be somewhat less.
+Minden állapotnak két választása van, le és jobbra, ezért a bal felső saroktól a jobb alsó sarokig vezető lépések teljes száma $m + n - 2$, a legrosszabb esetben $O(2^{m + n})$ időbonyolultságot adva, ahol $n$ és $m$ a rács sorainak és oszlopainak száma. Megjegyezzük, hogy ez a számítás nem veszi figyelembe a rács határai közelében lévő helyzeteket, ahol a rács határának elérésekor csak egy választás marad, ezért az utak tényleges száma valamivel kevesebb lesz.
 
-### Method 2: Memoization
+### 2. módszer: Memoizálás
 
-We introduce a memo list `mem` of the same size as grid `grid` to record the solutions to subproblems and prune overlapping subproblems:
+Bevezetünk egy, a `grid` ráccsal azonos méretű `mem` memo listát, amely rögzíti a részproblémák megoldásait és metszi az átfedő részproblémákat:
 
 ```src
 [file]{min_path_sum}-[class]{}-[func]{min_path_sum_dfs_mem}
 ```
 
-As shown in the figure below, after introducing memoization, all subproblem solutions only need to be computed once, so the time complexity depends on the total number of states, which is the grid size $O(nm)$.
+Az alábbi ábrán látható, hogy a memoizálás bevezetése után minden részprobléma megoldását csak egyszer kell kiszámítani, ezért az időbonyolultság az állapotok teljes számától függ, ami a rács mérete $O(nm)$.
 
-![Memoization recursion tree](dp_solution_pipeline.assets/min_path_sum_dfs_mem.png)
+![Memoizálás rekurziós fája](dp_solution_pipeline.assets/min_path_sum_dfs_mem.png)
 
-### Method 3: Dynamic Programming
+### 3. módszer: Dinamikus programozás
 
-Implement the dynamic programming solution based on iteration, as shown in the code below:
+A dinamikus programozásos megoldást iteráció alapján valósítjuk meg, ahogyan az alábbi kód mutatja:
 
 ```src
 [file]{min_path_sum}-[class]{}-[func]{min_path_sum_dp}
 ```
 
-The figure below shows the state transition process for minimum path sum, which traverses the entire grid, **thus the time complexity is $O(nm)$**.
+Az alábbi ábra a minimális útköltség állapot-átmeneti folyamatát mutatja, amely az egész rácsot bejárja, **ezért az időbonyolultság $O(nm)$**.
 
-The array `dp` has size $n \times m$, **thus the space complexity is $O(nm)$**.
+A `dp` tömb mérete $n \times m$, **ezért a tárkomplexitás $O(nm)$**.
 
 === "<1>"
-    ![Dynamic programming process for minimum path sum](dp_solution_pipeline.assets/min_path_sum_dp_step1.png)
+    ![A minimális útköltség dinamikus programozási folyamata](dp_solution_pipeline.assets/min_path_sum_dp_step1.png)
 
 === "<2>"
     ![min_path_sum_dp_step2](dp_solution_pipeline.assets/min_path_sum_dp_step2.png)
@@ -172,11 +172,11 @@ The array `dp` has size $n \times m$, **thus the space complexity is $O(nm)$**.
 === "<12>"
     ![min_path_sum_dp_step12](dp_solution_pipeline.assets/min_path_sum_dp_step12.png)
 
-### Space Optimization
+### Tárhelyoptimalizálás
 
-Since each cell is only related to the cell to its left and the cell above it, we can use a single-row array to implement the $dp$ table.
+Mivel minden cella csak a tőle balra és felette lévő cellával függ össze, egyetlen egysoros tömbben valósíthatjuk meg a $dp$ táblát.
 
-Note that since the array `dp` can only represent the state of one row, we cannot initialize the first column state in advance, but rather update it when traversing each row:
+Megjegyezzük, hogy mivel a `dp` tömb csak egy sor állapotát tudja ábrázolni, az első oszlop állapotát nem inicializálhatjuk előre, hanem minden sor bejárásakor frissítjük:
 
 ```src
 [file]{min_path_sum}-[class]{}-[func]{min_path_sum_dp_comp}

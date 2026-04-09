@@ -1,110 +1,110 @@
-# Introduction to Dynamic Programming
+# Bevezetés a dinamikus programozásba
 
-<u>Dynamic programming</u> is an important algorithmic paradigm that decomposes a problem into a series of smaller subproblems and avoids redundant computation by storing the solutions to subproblems, thereby significantly improving time efficiency.
+A <u>dinamikus programozás</u> egy fontos algoritmikus paradigma, amely egy problémát kisebb részproblémák sorozatára bont, és a részproblémák megoldásait tárolva elkerüli a redundáns számításokat, ezzel jelentősen javítva az időhatékonyságot.
 
-In this section, we start with a classic example, first presenting its brute force backtracking solution, observing the overlapping subproblems within it, and then gradually deriving a more efficient dynamic programming solution.
+Ebben a szakaszban egy klasszikus példával kezdünk: először bemutatjuk a nyers erőn alapuló visszalépéses megoldást, megvizsgáljuk az átfedő részproblémákat, majd fokozatosan levezetjük a hatékonyabb dinamikus programozásos megoldást.
 
-!!! question "Climbing stairs"
+!!! question "Lépcsőmászás"
 
-    Given a staircase with $n$ steps, where you can climb $1$ or $2$ steps at a time, how many different ways are there to reach the top?
+    Adott egy $n$ lépcsőfokból álló lépcső, ahol egyszerre $1$ vagy $2$ fokot lehet lépni. Hányféleképpen lehet felérni a tetejére?
 
-As shown in the figure below, for a $3$-step staircase, there are $3$ different ways to reach the top.
+Az alábbi ábrán látható, hogy egy $3$ fokos lépcsőnél $3$ különböző módon lehet elérni a tetejét.
 
-![Number of ways to reach the 3rd step](intro_to_dynamic_programming.assets/climbing_stairs_example.png)
+![A 3. fokra vezető utak száma](intro_to_dynamic_programming.assets/climbing_stairs_example.png)
 
-The goal of this problem is to find the number of ways, **we can consider using backtracking to enumerate all possibilities**. Specifically, imagine climbing stairs as a multi-round selection process: starting from the ground, choosing to go up $1$ or $2$ steps in each round, incrementing the count by $1$ whenever the top of the stairs is reached, and pruning when exceeding the top. The code is as follows:
+A feladat célja az utak számának meghatározása. **Visszalépéssel felsorolhatjuk az összes lehetőséget**. Konkrétan képzeljük el a lépcsőmászást egy többkörös kiválasztási folyamatként: a földről indulva minden körben $1$ vagy $2$ fokot lépünk fel, a számlálót $1$-gyel növeljük, ha elértük a lépcső tetejét, és megállunk, ha túlléptük. A kód a következő:
 
 ```src
 [file]{climbing_stairs_backtrack}-[class]{}-[func]{climbing_stairs_backtrack}
 ```
 
-## Method 1: Brute Force Search
+## 1. módszer: Nyers erő keresés
 
-Backtracking algorithms typically do not explicitly decompose problems, but rather treat solving the problem as a series of decision steps, searching for all possible solutions through trial and pruning.
+A visszalépéses algoritmusok általában nem bontják fel expliciten a problémákat, hanem a megoldást döntési lépések sorozataként kezelik, és próbálkozással és metszéssel keresik az összes lehetséges megoldást.
 
-We can try to analyze this problem from the perspective of problem decomposition. Let the number of ways to climb to the $i$-th step be $dp[i]$, then $dp[i]$ is the original problem, and its subproblems include:
+Megpróbálhatjuk elemezni a problémát a részproblémákra bontás szemszögéből. Legyen $dp[i]$ az $i$-edik fokra vezető utak száma. Ekkor $dp[i]$ az eredeti probléma, és a részproblémái a következők:
 
 $$
 dp[i-1], dp[i-2], \dots, dp[2], dp[1]
 $$
 
-Since we can only go up $1$ or $2$ steps in each round, when we stand on the $i$-th step, we could only have been on the $i-1$-th or $i-2$-th step in the previous round. In other words, we can only reach the $i$-th step from the $i-1$-th or $i-2$-th step.
+Mivel minden körben csak $1$ vagy $2$ fokot lehet lépni, az $i$-edik fokon állva az előző körben csak az $i-1$-edik vagy az $i-2$-edik fokon lehettünk. Más szóval, az $i$-edik fokra csak az $i-1$-edikről vagy az $i-2$-edikről lehet eljutni.
 
-This leads to an important conclusion: **the number of ways to climb to the $i-1$-th step plus the number of ways to climb to the $i-2$-th step equals the number of ways to climb to the $i$-th step**. The formula is as follows:
+Ez egy fontos következtetéshez vezet: **az $i-1$-edik fokra vezető utak száma plusz az $i-2$-edik fokra vezető utak száma egyenlő az $i$-edik fokra vezető utak számával**. A képlet a következő:
 
 $$
 dp[i] = dp[i-1] + dp[i-2]
 $$
 
-This means that in the stair climbing problem, there exists a recurrence relation among the subproblems, **the solution to the original problem can be constructed from the solutions to the subproblems**. The figure below illustrates this recurrence relation.
+Ez azt jelenti, hogy a lépcsőmászási feladatban a részproblémák között rekurzív összefüggés áll fenn: **az eredeti probléma megoldása felépíthető a részproblémák megoldásaiból**. Az alábbi ábra szemlélteti ezt a rekurzív összefüggést.
 
-![Recurrence relation for the number of ways](intro_to_dynamic_programming.assets/climbing_stairs_state_transfer.png)
+![Az utak számának rekurzív összefüggése](intro_to_dynamic_programming.assets/climbing_stairs_state_transfer.png)
 
-We can obtain a brute force search solution based on the recurrence formula. Starting from $dp[n]$, **recursively decompose a larger problem into the sum of two smaller problems**, until reaching the smallest subproblems $dp[1]$ and $dp[2]$ and returning. Among them, the solutions to the smallest subproblems are known, namely $dp[1] = 1$ and $dp[2] = 2$, representing $1$ and $2$ ways to climb to the $1$st and $2$nd steps, respectively.
+A rekurzív képlet alapján nyers erő keresési megoldást kaphatunk. A $dp[n]$-től kezdve **rekurzívan bontjuk a nagyobb problémát két kisebb probléma összegére**, amíg el nem érjük a legkisebb részproblémákat, $dp[1]$-et és $dp[2]$-t, és visszatérünk. Ezek megoldásai ismertek: $dp[1] = 1$ és $dp[2] = 2$, ami az $1$. és $2$. fokra vezető $1$, illetve $2$ utat jelenti.
 
-Observe the following code, which, like standard backtracking code, belongs to depth-first search but is more concise:
+Az alábbi kód, akárcsak a szokásos visszalépéses kód, mélységi kereséshez tartozik, de tömörebb:
 
 ```src
 [file]{climbing_stairs_dfs}-[class]{}-[func]{climbing_stairs_dfs}
 ```
 
-The figure below shows the recursion tree formed by brute force search. For the problem $dp[n]$, the depth of its recursion tree is $n$, with a time complexity of $O(2^n)$. Exponential order represents explosive growth; if we input a relatively large $n$, we will fall into a long wait.
+Az alábbi ábra a nyers erő kereséssel kialakított rekurziós fát mutatja. A $dp[n]$ probléma rekurziós fájának mélysége $n$, az időbonyolultság $O(2^n)$. Az exponenciális rend robbanásszerű növekedést jelent; ha viszonylag nagy $n$-t adunk meg, hosszú várakozásba futunk.
 
-![Recursion tree for climbing stairs](intro_to_dynamic_programming.assets/climbing_stairs_dfs_tree.png)
+![A lépcsőmászás rekurziós fája](intro_to_dynamic_programming.assets/climbing_stairs_dfs_tree.png)
 
-Observing the above figure, **the exponential time complexity is caused by "overlapping subproblems"**. For example, $dp[9]$ is decomposed into $dp[8]$ and $dp[7]$, and $dp[8]$ is decomposed into $dp[7]$ and $dp[6]$, both of which contain the subproblem $dp[7]$.
+A fenti ábrát megfigyelve láthatjuk, hogy **az exponenciális időbonyolultságot az "átfedő részproblémák" okozzák**. Például $dp[9]$ felbomlik $dp[8]$-ra és $dp[7]$-re, $dp[8]$ felbomlik $dp[7]$-re és $dp[6]$-ra, mindkettő tartalmazza a $dp[7]$ részproblémát.
 
-And so on, subproblems contain smaller overlapping subproblems, ad infinitum. The vast majority of computational resources are wasted on these overlapping subproblems.
+Így tovább, a részproblémák kisebb átfedő részproblémákat tartalmaznak, a végtelenségig. A számítási erőforrások nagy része ezekre az átfedő részproblémákra pazarlódik.
 
-## Method 2: Memoization
+## 2. módszer: Memoizálás
 
-To improve algorithm efficiency, **we want all overlapping subproblems to be computed only once**. For this purpose, we declare an array `mem` to record the solution to each subproblem and prune overlapping subproblems during the search process.
+Az algoritmus hatékonyságának javítása érdekében **szeretnénk, ha minden átfedő részproblémát csak egyszer számítanánk ki**. Ehhez egy `mem` tömböt deklarálunk, amely rögzíti az egyes részproblémák megoldásait, és a keresési folyamat során metszünk az átfedő részproblémákon.
 
-1. When computing $dp[i]$ for the first time, we record it in `mem[i]` for later use.
-2. When we need to compute $dp[i]$ again, we can directly retrieve the result from `mem[i]`, thereby avoiding redundant computation of that subproblem.
+1. Amikor először számítjuk ki $dp[i]$-t, feljegyezzük `mem[i]`-be a későbbi felhasználáshoz.
+2. Amikor ismét szükségünk van $dp[i]$-re, közvetlenül lekérdezhetjük az eredményt `mem[i]`-ből, ezzel elkerülve az adott részprobléma redundáns számítását.
 
-The code is as follows:
+A kód a következő:
 
 ```src
 [file]{climbing_stairs_dfs_mem}-[class]{}-[func]{climbing_stairs_dfs_mem}
 ```
 
-Observe the figure below, **after memoization, all overlapping subproblems only need to be computed once, optimizing the time complexity to $O(n)$**, which is a tremendous leap.
+Az alábbi ábrán látható, hogy **memoizálás után minden átfedő részproblémát csak egyszer kell kiszámítani, az időbonyolultságot $O(n)$-re optimalizálva**, ami óriási ugrás.
 
-![Recursion tree with memoization](intro_to_dynamic_programming.assets/climbing_stairs_dfs_memo_tree.png)
+![A memoizálással kiegészített rekurziós fa](intro_to_dynamic_programming.assets/climbing_stairs_dfs_memo_tree.png)
 
-## Method 3: Dynamic Programming
+## 3. módszer: Dinamikus programozás
 
-**Memoization is a "top-down" method**: we start from the original problem (root node), recursively decompose larger subproblems into smaller ones, until reaching the smallest known subproblems (leaf nodes). Afterward, by backtracking, we collect the solutions to the subproblems layer by layer to construct the solution to the original problem.
+**A memoizálás egy "felülről lefelé" haladó módszer**: az eredeti problémából (gyökércsomópontból) indulunk ki, rekurzívan bontjuk a nagyobb részproblémákat kisebbekre, amíg el nem érjük a legkisebb ismert részproblémákat (levélcsomópontokat). Ezután visszalépéssel rétegről rétegre összegyűjtjük a részproblémák megoldásait, hogy felépítsük az eredeti probléma megoldását.
 
-In contrast, **dynamic programming is a "bottom-up" method**: starting from the solutions to the smallest subproblems, iteratively constructing solutions to larger subproblems until obtaining the solution to the original problem.
+Ezzel szemben **a dinamikus programozás egy "alulról felfelé" haladó módszer**: a legkisebb részproblémák megoldásaitól kezdve iteratívan épít fel nagyobb részproblémák megoldásait, amíg meg nem kapja az eredeti probléma megoldását.
 
-Since dynamic programming does not include a backtracking process, it only requires loop iteration for implementation and does not need recursion. In the following code, we initialize an array `dp` to store the solutions to subproblems, which serves the same recording function as the array `mem` in memoization:
+Mivel a dinamikus programozás nem tartalmaz visszalépési folyamatot, csak ciklus-iterációra van szükség a megvalósításhoz, rekurzióra nincs szükség. A következő kódban inicializálunk egy `dp` tömböt a részproblémák megoldásainak tárolásához, amely ugyanazt a feljegyzési funkciót tölti be, mint a memoizálásban a `mem` tömb:
 
 ```src
 [file]{climbing_stairs_dp}-[class]{}-[func]{climbing_stairs_dp}
 ```
 
-The figure below simulates the execution process of the above code.
+Az alábbi ábra a fenti kód végrehajtási folyamatát szimulálja.
 
-![Dynamic programming process for climbing stairs](intro_to_dynamic_programming.assets/climbing_stairs_dp.png)
+![A lépcsőmászás dinamikus programozási folyamata](intro_to_dynamic_programming.assets/climbing_stairs_dp.png)
 
-Like backtracking algorithms, dynamic programming also uses the "state" concept to represent specific stages of problem solving, with each state corresponding to a subproblem and its corresponding local optimal solution. For example, the state in the stair climbing problem is defined as the current stair step number $i$.
+A visszalépéses algoritmusokhoz hasonlóan a dinamikus programozás is az "állapot" fogalmát használja a problémamegoldás egyes szakaszainak jelölésére, ahol minden állapot egy részproblémának és a megfelelő lokálisan optimális megoldásnak felel meg. Például a lépcsőmászási feladatban az állapot az aktuális lépcsőfok sorszáma $i$.
 
-Based on the above content, we can summarize the commonly used terminology in dynamic programming.
+A fentiek alapján összefoglalhatjuk a dinamikus programozásban általánosan használt terminológiát.
 
-- The array `dp` is called the <u>dp table</u>, where $dp[i]$ represents the solution to the subproblem corresponding to state $i$.
-- The states corresponding to the smallest subproblems (the $1$st and $2$nd steps) are called <u>initial states</u>.
-- The recurrence formula $dp[i] = dp[i-1] + dp[i-2]$ is called the <u>state transition equation</u>.
+- A `dp` tömböt <u>dp táblának</u> nevezzük, ahol $dp[i]$ az $i$ állapotnak megfelelő részprobléma megoldását jelöli.
+- A legkisebb részproblémáknak megfelelő állapotokat (az $1$. és $2$. fokot) <u>kezdeti állapotoknak</u> nevezzük.
+- A $dp[i] = dp[i-1] + dp[i-2]$ rekurzív képletet <u>állapot-átmeneti egyenletnek</u> nevezzük.
 
-## Space Optimization
+## Tárhelyoptimalizálás
 
-Observant readers may have noticed that **since $dp[i]$ is only related to $dp[i-1]$ and $dp[i-2]$, we do not need to use an array `dp` to store the solutions to all subproblems**, but can simply use two variables to roll forward. The code is as follows:
+Az éles szemű olvasók észrevehették, hogy **mivel $dp[i]$ csak $dp[i-1]$-től és $dp[i-2]$-től függ, nem kell `dp` tömböt használnunk az összes részprobléma megoldásának tárolásához**, hanem egyszerűen két változóval gördíthetünk előre. A kód a következő:
 
 ```src
 [file]{climbing_stairs_dp}-[class]{}-[func]{climbing_stairs_dp_comp}
 ```
 
-Observing the above code, since the space occupied by the array `dp` is saved, the space complexity is reduced from $O(n)$ to $O(1)$.
+A fenti kódot megfigyelve láthatjuk, hogy mivel a `dp` tömb által elfoglalt tér megspórolódik, a tárkomplexitás $O(n)$-ről $O(1)$-re csökken.
 
-In dynamic programming problems, the current state often depends only on a limited number of preceding states, allowing us to retain only the necessary states and save memory space through "dimension reduction". **This space optimization technique is called "rolling variable" or "rolling array"**.
+A dinamikus programozási feladatokban az aktuális állapot általában csak korlátozott számú előző állapottól függ, ami lehetővé teszi, hogy csak a szükséges állapotokat tároljuk, és memóriát takarítsunk meg "dimenziócsökkentéssel". **Ezt a tárhelyoptimalizálási technikát "gördülő változónak" vagy "gördülő tömbnek" nevezzük**.
