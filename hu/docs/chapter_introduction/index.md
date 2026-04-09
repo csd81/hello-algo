@@ -1,9 +1,9 @@
-# Encounter with Algorithms
+# Találkozás az algoritmusokkal
 
-![Encounter with Algorithms](../assets/covers/chapter_introduction.jpg)
+![Találkozás az algoritmusokkal](../assets/covers/chapter_introduction.jpg)
 
 !!! abstract
 
-    A young girl dances gracefully, intertwined with data, her skirt flowing with the melody of algorithms.
+    Egy fiatal lány kecsesen táncol, összefonódva az adatokkal, szoknyája az algoritmusok dallamával lebeg.
 
-    She invites you to dance with her. Follow her steps closely and enter the world of algorithms, full of logic and beauty.
+    Meghív, hogy táncolj vele. Kövesd szorosan a lépéseit, és lépj be az algoritmusok logikával és szépséggel teli világába.
